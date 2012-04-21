@@ -18,6 +18,7 @@ class Console extends Application
     {
         parent::init();
         $this->registerCommand('init');
+        $this->registerCommand('add');
     }
 
 
