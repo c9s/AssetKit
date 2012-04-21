@@ -20,6 +20,7 @@ class Manifest
         if( ! isset($this->stash['resource']) )
             return false;
 
+        $resDir = null;
         $r = $this->stash['resource'];
         if( isset($r['url']) ) {
             $url = $r['url'];
@@ -28,12 +29,14 @@ class Manifest
             $targetFile = $this->dir . DIRECTORY_SEPARATOR . $filename;
             system("curl -# --location $url > " . $targetFile );
 
+
             if( isset($r['zip']) ) {
                 $zip = new ZipArchive;
                 if( $zip->open( $targetFile ) === TRUE ) {
                     echo "Extracting to {$this->dir}\n";
                     $zip->extractTo( $this->dir );
                     $zip->close();
+                    $resDir = $this->dir;
                     unlink( $targetFile );
                 }
                 else {
@@ -43,8 +46,17 @@ class Manifest
         }
         elseif( isset($r['git']) ) {
             $url = $r['git'];
-            $target = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
-            system("git clone $url $target");
+            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
+            system("git clone $url $resDir");
+        }
+
+        if( isset($r['commands']) ) {
+            $cwd = getcwd();
+            chdir( $resDir );
+            foreach( $r['commands'] as $command ) {
+                system($command);
+            }
+            chdir($cwd);
         }
     }
 }
