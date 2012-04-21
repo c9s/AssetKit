@@ -23,8 +23,12 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 			ok( strlen( $content ) > 0 );
 		}
 
-#  		$loader->addCompressor('cssmin', function() {
-#  		});
+		$loader->addCompressor('js', function() {
+			return new AssetKit\Compressor\JsminCompressor;
+		});
+		$loader->addCompressor('cssmin', function() {
+			return new AssetKit\Compressor\CssminCompressor;
+		});
 
 		$writer = new AssetKit\AssetWriter( $loader );
 		ok( $writer );
