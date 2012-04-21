@@ -10,9 +10,11 @@
  *
  */
 
-require dirname(__DIR__) . '/vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
+define( 'ROOT', dirname(__DIR__) );
+require ROOT . '/vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
 $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array( 
-    'src', 'vendor/pear',
+    ROOT . '/src', 
+    ROOT . '/vendor/pear',
 ));
 $classLoader->useIncludePath(true);
 $classLoader->register();
