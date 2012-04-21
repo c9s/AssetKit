@@ -13,13 +13,13 @@ class AssetLoader
 
 	function load($name)
 	{
-		if( $config && $path = $this->config->getAssetPath($name) ) {
-			$manifestFile = $path . DIRECTORY_SEPARATOR . 'manifest.php';
+		if( $this->config && $path = $this->config->getAssetPath($name) ) {
+			$manifestFile = $path . DIRECTORY_SEPARATOR . 'manifest.yml';
 			return new Manifest( $manifestFile );
 		}
 		else {
 			foreach( $this->paths as $path ) {
-				$manifestFile = $path . DIRECTORY_SEPARATOR . 'manifest.php';
+				$manifestFile = $path . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'manifest.yml';
 				if( file_exists($manifestFile) )
 					return new Manifest( $manifestFile );
 			}
