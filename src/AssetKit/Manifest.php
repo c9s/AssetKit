@@ -15,6 +15,7 @@ class Manifest
         $serializer = new SerializerKit\Serializer('yaml');
         $this->stash = $serializer->decode(file_get_contents($file));
         $this->dir = dirname(realpath($file));
+        $this->name = basename(dirname($file));
     }
 
     public function compile()
