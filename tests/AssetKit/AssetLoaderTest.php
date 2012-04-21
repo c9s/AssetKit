@@ -30,6 +30,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 			return new AssetKit\Compressor\CssMinCompressor;
 		});
 
+        // $loader->enableCompressor = false;
+
 		$writer = new AssetKit\AssetWriter( $loader );
 		ok( $writer );
 
