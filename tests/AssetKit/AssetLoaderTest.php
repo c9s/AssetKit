@@ -18,6 +18,11 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 				file_exists($file);
 			}
 		}
+		foreach( $collections as $collection ) {
+			$content = $collection->getContent();
+			ok( $content );
+			ok( strlen( $content ) > 0 );
+		}
 	}
 }
 

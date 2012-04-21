@@ -10,8 +10,7 @@ class FileCollection
 
     public $files = array();
 
-	// save manifest object
-    public $manifest;
+    public $asset;
 
 	public $isJavascript;
 
@@ -25,7 +24,7 @@ class FileCollection
     static function create_from_manfiest($asset)
     {
         $collections = array();
-        foreach( $assets->stash['assets'] as $config ) {
+        foreach( $asset->stash['assets'] as $config ) {
             $collection = new self;
 
             if( isset($config['filters']) )
@@ -43,7 +42,7 @@ class FileCollection
 			if( isset($config['stylesheet']) )
 				$collection->isStylesheet = true;
 
-            $collection->manifest = $manifest;
+            $collection->asset = $asset;
             $collections[] = $collection;
         }
         return $collections;
@@ -51,8 +50,8 @@ class FileCollection
 
 	public function getFiles()
 	{
-		$dir = $this->manifest->dir;
-		$baseDir = $this->manifest->config->baseDir;
+		$dir = $this->asset->dir;
+		$baseDir = $this->asset->config->baseDir;
 		static $files;
 		if( $files )
 			return $files;
@@ -69,6 +68,7 @@ class FileCollection
 		}
 		return $contents;
 	}
+
 
 }
 
