@@ -54,10 +54,7 @@ class FileCollection
 	{
 		$dir = $this->asset->dir;
 		$baseDir = $this->asset->config->baseDir;
-		static $files;
-		if( $files )
-			return $files;
-		return $files = array_map( function($file) use($dir,$baseDir){ 
+		return array_map( function($file) use($dir,$baseDir){ 
 				return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
 			}, $this->files );
 	}
@@ -72,11 +69,13 @@ class FileCollection
 		if( $this->content )
 			return $this->content;
 
-		$contents = '';
+		$content = '';
 		foreach( $this->getFiles() as $file ) {
-			$contents .= file_get_contents( $file );
+            if( ! file_exists($file) )
+                throw new Exception("$file does not exist.");
+			$content .= file_get_contents( $file );
 		}
-		return $contents;
+		return $this->content = $content;
 	}
 
 }
