@@ -45,6 +45,15 @@ class FileCollection
 				return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
 			}, $this->files );
 	}
+
+	public function getContent()
+	{
+		$files = $this->getFiles();
+		$loader = $this->manifest->loader;
+		foreach( $files as $file ) {
+		}
+	}
+
 }
 
 

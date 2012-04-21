@@ -12,6 +12,8 @@ class Manifest
 
     public $config;
 
+    public $loader;
+
     public function __construct($arg)
     {
         if( is_array($arg) ) {
