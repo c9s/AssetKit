@@ -4,9 +4,9 @@ namespace AssetKit\Filter;
 class CssRewriteFilter
 {
 
-	public function dump($asset)
+	public function filter($collection)
 	{
-
+		$files = $collection->getFiles();
 	}
 
 }

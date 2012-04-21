@@ -39,16 +39,19 @@ class AssetWriter
 		foreach( $this->assets as $asset ) {
 			$collections = $asset->getFileCollections();
 			foreach( $collections as $collection ) {
-				$content = $collection->getContent();
+				$content = '';
 				if( $collection->filters ) {
 					foreach( $collection->filters as $filtername ) {
 						if( $filter = $this->loader->getFilter( $filtername ) ) {
-							$content = $filter->filter($content);
+							$content = $filter->filter($collection);
 						}
 						else {
 							throw new Exception("filter $filtername not found.");
 						}
 					}
+				}
+				else {
+					$content = $collection->getContent();
 				}
 
 				if( $this->loader->enableCompressor && $collection->compressors ) {
