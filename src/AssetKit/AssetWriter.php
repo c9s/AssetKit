@@ -33,6 +33,9 @@ class AssetWriter
     }
 
 
+    /**
+     * Aggregate stylesheet/javascript content
+     */
     public function aggregate()
     {
         $css = '';
@@ -82,7 +85,26 @@ class AssetWriter
 
     public function write()
     {
-        return $this->aggregate();
+        $contents = $this->aggregate();
+        $return = array();
+
+        if( ! file_exists($this->in) )
+            mkdir( $this->in , 0755, true );
+
+
+        if( isset($contents['stylesheet']) ) {
+            $return['stylesheet'] = $this->in . DIRECTORY_SEPARATOR 
+                        . $this->name . '-' 
+                        . md5( $contents['stylesheet']) . '.css';
+            file_put_contents( $return['stylesheet'] , $contents['stylesheet'] );
+        }
+        if( isset($contents['javascript']) ) {
+            $return['javascript'] = $this->in . DIRECTORY_SEPARATOR 
+                        . $this->name . '-' 
+                        . md5( $contents['javascript']) . '.js';
+            file_put_contents( $return['javascript'] , $contents['javascript'] );
+        }
+        return $return;
     }
 }
 
