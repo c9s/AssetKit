@@ -2,6 +2,7 @@
 namespace AssetKit;
 use ZipArchive;
 use Exception;
+use SerializerKit;
 
 class Manifest
 {
@@ -11,8 +12,20 @@ class Manifest
     public function __construct($file)
     {
         $this->file = $file;
-        $this->stash = yaml_parse(file_get_contents($file));
+        $serializer = new SerializerKit\Serializer('yaml');
+        $this->stash = $serializer->decode(file_get_contents($file));
         $this->dir = dirname(realpath($file));
+    }
+
+    public function compile()
+    {
+        $serializer = new SerializerKit\Serializer('php');
+        $php = '<php? ' .  $serializer->encode($this->stash) . '?>';
+        $ext = pathinfo($this->file, PATHINFO_EXTENSION);
+        $filename = pathinfo($this->file, PATHINFO_FILENAME);
+        $target = $this->dir . DIRECTORY_SEPARATOR . $filename . '.php';
+        file_put_contents($target, $php);
+        return $target;
     }
 
     public function initResource()

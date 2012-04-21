@@ -19,8 +19,8 @@ class AddCommand extends Command
 
         $manifest = new Manifest($manifestPath);
         $manifest->initResource();
-
-
+        $php = $manifest->compile();
+        $this->logger->info("compiled $php");
     }
 }
 
