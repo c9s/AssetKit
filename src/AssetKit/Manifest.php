@@ -18,6 +18,11 @@ class Manifest
         $this->name = basename(dirname($file));
     }
 
+    public function getFileCollections()
+    {
+        return FileCollection::create_from_manfiest($this);
+    }
+
     public function compile()
     {
         $serializer = new SerializerKit\Serializer('php');
