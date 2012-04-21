@@ -3,9 +3,9 @@ namespace AssetKit\Compressor;
 
 class JSMinCompressor
 {
-	function compress($files)
+	function compress($content)
 	{
-
+        return $content;
 	}
 }
 
