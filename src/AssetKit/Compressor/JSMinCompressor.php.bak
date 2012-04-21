@@ -1,0 +1,13 @@
+<?php
+namespace AssetKit\Compressor;
+
+class JSMinCompressor
+{
+	function compress($files)
+	{
+
+	}
+}
+
+
+
