@@ -16,6 +16,8 @@ class FileCollection
 
 	public $isStylesheet;
 
+	public $content;
+
     public function __construct()
     {
 
@@ -60,8 +62,16 @@ class FileCollection
 			}, $this->files );
 	}
 
+	public function setContent($content)
+	{
+		$this->content = $content;
+	}
+
 	public function getContent()
 	{
+		if( $this->content )
+			return $this->content;
+
 		$contents = '';
 		foreach( $this->getFiles() as $file ) {
 			$contents .= file_get_contents( $file );

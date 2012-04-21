@@ -39,25 +39,21 @@ class AssetWriter
 		foreach( $this->assets as $asset ) {
 			$collections = $asset->getFileCollections();
 			foreach( $collections as $collection ) {
-				$content = '';
 				if( $collection->filters ) {
 					foreach( $collection->filters as $filtername ) {
 						if( $filter = $this->loader->getFilter( $filtername ) ) {
-							$content = $filter->filter($collection);
+							$filter->filter($collection);
 						}
 						else {
 							throw new Exception("filter $filtername not found.");
 						}
 					}
 				}
-				else {
-					$content = $collection->getContent();
-				}
 
 				if( $this->loader->enableCompressor && $collection->compressors ) {
 					foreach( $collection->compressors as $compressorname ) {
 						if( $compressor = $this->loader->getCompressor( $compressorname ) ) {
-							$content = $compressor->compress($content);
+							$compressor->compress($collection);
 						}
 						else { 
 							throw new Exception("compressor $compressorname not found.");
@@ -66,10 +62,10 @@ class AssetWriter
 				}
 
 				if( $collection->isJavascript ) {
-					$js .= $content;
+					$js .= $collection->getContent();
 				}
 				elseif( $collection->isStylesheet ) {
-					$css .= $content;
+					$css .= $collection->getContent();
 				}
 				else {
 					throw new Exception("Unknown asset type");
