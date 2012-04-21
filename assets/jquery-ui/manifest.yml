@@ -3,11 +3,13 @@ resource:
   url: https://github.com/jquery/jquery-ui/zipball/1.8.19
   zip: 1
 assets:
-  - compressors: ['cssmin']
+  - stylesheet: 1
+    compressors: ['cssmin']
     files:
     - jquery-jquery-ui-27c4854/themes/base/jquery.ui.core.css
     - jquery-jquery-ui-27c4854/themes/base/jquery.ui.all.css
-  - compressors: ['jsmin']
+  - javascript: 1
+    compressors: ['jsmin']
     files:
     - jquery-jquery-ui-27c4854/ui/jquery.ui.core.js
     - jquery-jquery-ui-27c4854/ui/jquery.ui.mouse.js
