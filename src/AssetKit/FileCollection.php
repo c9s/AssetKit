@@ -53,24 +53,21 @@ class FileCollection
 	{
 		$dir = $this->manifest->dir;
 		$baseDir = $this->manifest->config->baseDir;
-		return array_map( function($file) use($dir,$baseDir){ 
+		static $files;
+		if( $files )
+			return $files;
+		return $files = array_map( function($file) use($dir,$baseDir){ 
 				return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
 			}, $this->files );
 	}
 
 	public function getContent()
 	{
-		$files = $this->getFiles();
-		$loader = $this->manifest->loader;
-		if( $loader->enableCompressor ) {
-			foreach( $this->compressors as $c ) {
-				if( $compressor = $loader->getCompressor($c) ) {
-					$compressor->dump( $files );
-				}
-			}
-
-
+		$contents = '';
+		foreach( $this->getFiles() as $file ) {
+			$contents .= file_get_contents( $file );
 		}
+		return $contents;
 	}
 
 }
