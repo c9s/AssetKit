@@ -2,45 +2,46 @@
 
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
-	function test()
-	{
-		$config = new AssetKit\Config('tests/config');
-		$loader = new AssetKit\AssetLoader($config, array( 'assets') );
-		$asset = $loader->load( 'jquery-ui' );
-		ok( $asset );
+    function test()
+    {
+        $config = new AssetKit\Config('tests/config');
+        $loader = new AssetKit\AssetLoader($config, array( 'assets') );
+        $asset = $loader->load( 'jquery-ui' );
+        ok( $asset );
 
-		$collections = $asset->getFileCollections();
-		foreach( $collections as $collection ) {
-			$files = $collection->getFiles();
-			ok( $files );
-			foreach( $files as $file ) {
-				file_exists($file);
-			}
-		}
-		foreach( $collections as $collection ) {
-			$content = $collection->getContent();
-			ok( $content );
-			ok( strlen( $content ) > 0 );
-		}
+        $collections = $asset->getFileCollections();
+        foreach( $collections as $collection ) {
+            $files = $collection->getFiles();
+            ok( $files );
+            foreach( $files as $file ) {
+                file_exists($file);
+            }
+        }
+        foreach( $collections as $collection ) {
+            $content = $collection->getContent();
+            ok( $content );
+            ok( strlen( $content ) > 0 );
+        }
 
-		$loader->addCompressor('jsmin', function() {
-			return new AssetKit\Compressor\JsMinCompressor;
-		});
-		$loader->addCompressor('cssmin', function() {
-			return new AssetKit\Compressor\CssMinCompressor;
-		});
+        $loader->addCompressor('jsmin', function() {
+            return new AssetKit\Compressor\JsMinCompressor;
+        });
+        $loader->addCompressor('cssmin', function() {
+            return new AssetKit\Compressor\CssMinCompressor;
+        });
 
         // $loader->enableCompressor = false;
 
-		$writer = new AssetKit\AssetWriter( $loader );
-		ok( $writer );
+        $writer = new AssetKit\AssetWriter( $loader );
+        ok( $writer );
 
-		$manifest = $writer->from( array($asset) )
+        $manifest = $writer->from( array($asset) )
             ->name( 'jqueryui' )
-			->in('tests/assets')
-			->write();
+            ->in('tests/public/assets')
+            ->publicDir('tests/public')
+            ->write();
 
         var_dump( $manifest ); 
-	}
+    }
 }
 

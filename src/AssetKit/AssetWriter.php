@@ -8,6 +8,7 @@ class AssetWriter
     public $assets;
     public $in;
     public $name;
+    public $publicDir;
 
     public function __construct($loader)
     {
@@ -23,6 +24,12 @@ class AssetWriter
     public function name($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function publicDir($dir)
+    {
+        $this->publicDir = rtrim($dir, DIRECTORY_SEPARATOR);
         return $this;
     }
 
@@ -93,16 +100,23 @@ class AssetWriter
 
 
         if( isset($contents['stylesheet']) ) {
-            $return['stylesheet'] = $this->in . DIRECTORY_SEPARATOR 
+            $cssfile = $this->in . DIRECTORY_SEPARATOR 
                         . $this->name . '-' 
                         . md5( $contents['stylesheet']) . '.css';
-            file_put_contents( $return['stylesheet'] , $contents['stylesheet'] );
+            file_put_contents( $cssfile , $contents['stylesheet'] ) !== false or die('write fail');
+
+            var_dump( $cssfile, $this->publicDir ); 
+
+            // $return['stylesheet'];
         }
         if( isset($contents['javascript']) ) {
-            $return['javascript'] = $this->in . DIRECTORY_SEPARATOR 
+            $jsfile = $this->in . DIRECTORY_SEPARATOR 
                         . $this->name . '-' 
                         . md5( $contents['javascript']) . '.js';
-            file_put_contents( $return['javascript'] , $contents['javascript'] );
+            file_put_contents( $jsfile , $contents['javascript'] ) !== false or die('write fail');
+
+            var_dump( $jsfile, $this->publicDir ); 
+            // $return['javascript'];
         }
         return $return;
     }

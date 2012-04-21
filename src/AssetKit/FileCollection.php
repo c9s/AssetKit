@@ -1,5 +1,6 @@
 <?php
 namespace AssetKit;
+use Exception;
 
 class FileCollection
 {
