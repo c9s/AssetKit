@@ -9,18 +9,43 @@ class Manifest
     public $stash;
     public $file;
 
-    public function __construct($file)
+    public function __construct($arg)
     {
-        $this->file = $file;
-        $serializer = new SerializerKit\Serializer('yaml');
-        $this->stash = $serializer->decode(file_get_contents($file));
-        $this->dir = dirname(realpath($file));
-        $this->name = basename(dirname($file));
+        if( is_array($arg) ) {
+            $this->stash = $arg['stash'];
+            $this->file = $arg['file'];
+            $this->dir = $arg['dir'];
+            $this->name = $arg['name'];
+        }
+        else {
+            $file = $arg;
+            $this->file = $file;
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+
+            if( 'yml' === $ext ) {
+                $serializer = new SerializerKit\Serializer('yaml');
+                $this->stash = $serializer->decode(file_get_contents($file));
+            } else {
+                $this->stash = require $file;
+            }
+            $this->dir = dirname($file);
+            $this->name = basename(dirname($file));
+        }
     }
 
     public function getFileCollections()
     {
         return FileCollection::create_from_manfiest($this);
+    }
+
+    public function export()
+    {
+        return array(
+            'stash' => $this->stash,
+            'file' => $this->file,
+            'dir' => $this->dir,
+            'name' => $this->name,
+        );
     }
 
     public function compile()
@@ -44,11 +69,14 @@ class Manifest
         if( isset($r['url']) ) {
             $url = $r['url'];
 
-            $filename = basename($url);
+            $info = parse_url($url);
+            $path = $info['path'];
+            $filename = basename($info['path']);
             $targetFile = $this->dir . DIRECTORY_SEPARATOR . $filename;
 
             echo "Downloading file...\n";
-            system("curl -# --location $url > " . $targetFile );
+            $cmd = "curl -# --location " . escapeshellarg($url) . " > " . escapeshellarg($targetFile);
+            system($cmd);
 
             echo "Stored at $targetFile\n";
 

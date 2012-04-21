@@ -26,6 +26,12 @@ class Config
         unset($this->config['assets'][$asset]);
     }
 
+    public function getAssetPath($name)
+    {
+        if( isset($this->config['assets'][$name] ) )
+            return $this->config['assets'][$name];
+    }
+
     public function save()
     {
         if( ! defined('JSON_PRETTY_PRINT') )
