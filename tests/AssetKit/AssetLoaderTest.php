@@ -9,7 +9,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 		$manifest = $loader->load( 'jquery-ui' );
 		ok( $manifest );
 
-
 		$collections = $manifest->getFileCollections();
 		foreach( $collections as $collection ) {
 			$files = $collection->getFiles();

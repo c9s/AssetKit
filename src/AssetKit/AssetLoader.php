@@ -16,6 +16,8 @@ class AssetLoader
 	// compressor builder
 	protected $_compressors = array();
 
+	public $enableCompressor = true;
+
 	function __construct($config,$paths = array())
 	{
 		$this->config = $config;
