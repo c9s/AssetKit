@@ -5,12 +5,14 @@ class Config
 {
     public $file;
     public $config = array();
+    public $baseDir;
 
     public function __construct($file)
     {
         $this->file = $file;
         if( file_exists($file) ) {
             $this->config = json_decode(file_get_contents($file),true);
+            $this->baseDir = dirname($file);
         }
     }
 
