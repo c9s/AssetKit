@@ -40,8 +40,9 @@ class FileCollection
 	public function getFiles()
 	{
 		$dir = $this->manifest->dir;
-		return array_map( function($file) use($dir){ 
-				return $dir . DIRECTORY_SEPARATOR . $file;
+		$baseDir = $this->manifest->config->baseDir;
+		return array_map( function($file) use($dir,$baseDir){ 
+				return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
 			}, $this->files );
 	}
 }

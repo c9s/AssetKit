@@ -13,6 +13,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 		foreach( $collections as $collection ) {
 			$files = $collection->getFiles();
 			ok( $files );
+			foreach( $files as $file ) {
+				file_exists($file);
+			}
 		}
 	}
 }
