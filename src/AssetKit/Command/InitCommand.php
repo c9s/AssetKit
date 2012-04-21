@@ -19,7 +19,6 @@ class InitCommand extends Command
             'public' => $publicRoot,
             'assets' => array(),
         );
-
         $this->logger->info('Writing config file .assetkit');
         $config->save();
     }
