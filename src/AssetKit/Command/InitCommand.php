@@ -1,6 +1,7 @@
 <?php
 namespace AssetKit\Command;
 use CLIFramework\Command;
+use AssetKit\Config;
 
 class InitCommand extends Command
 {
@@ -13,14 +14,14 @@ class InitCommand extends Command
     {
         $publicRoot = $this->options->public ?: 'public';
 
-        // write config file
-        $json = json_encode(array(
+        $config = new Config( '.assetkit' );
+        $config->config = array(
             'public' => $publicRoot,
             'assets' => array(),
-        ));
+        );
 
         $this->logger->info('Writing config file .assetkit');
-        file_put_contents('.assetkit', $json );
+        $config->save();
     }
 
 }
