@@ -1,0 +1,6 @@
+---
+resource:
+  url: http://code.jquery.com/jquery.min.js
+assets:
+  - files:
+    - jquery.min.js
