@@ -26,7 +26,7 @@ class Manifest
 
             $filename = basename($url);
             $targetFile = $this->dir . DIRECTORY_SEPARATOR . $filename;
-            system("curl --location $url > " . $targetFile );
+            system("curl -# --location $url > " . $targetFile );
 
             if( isset($r['zip']) ) {
                 $zip = new ZipArchive;
