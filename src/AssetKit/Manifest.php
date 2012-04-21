@@ -7,7 +7,10 @@ use SerializerKit;
 class Manifest
 {
     public $stash;
+
     public $file;
+
+    public $config;
 
     public function __construct($arg)
     {

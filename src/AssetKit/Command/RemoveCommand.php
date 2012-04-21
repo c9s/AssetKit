@@ -8,7 +8,7 @@ class RemoveCommand extends Command
 {
     function execute($assetName)
     {
-        $config = new Config('.assetkit');
+        $config = new Config(getcwd(),'.assetkit');
 
         $this->logger->info("Removing $assetName ...");
         $config->removeAsset( $assetName );

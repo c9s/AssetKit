@@ -37,6 +37,13 @@ class FileCollection
         return $assets;
     }
 
+	public function getFiles()
+	{
+		$dir = $this->manifest->dir;
+		return array_map( function($file) use($dir){ 
+				return $dir . DIRECTORY_SEPARATOR . $file;
+			}, $this->files );
+	}
 }
 
 

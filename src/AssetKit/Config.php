@@ -5,9 +5,11 @@ class Config
 {
     public $file;
     public $config = array();
+    public $baseDir;
 
-    public function __construct($file)
+    public function __construct($file,$baseDir = null)
     {
+        $this->baseDir = $baseDir ?: getcwd();
         $this->file = $file;
         if( file_exists($file) ) {
             $this->config = json_decode(file_get_contents($file),true);
