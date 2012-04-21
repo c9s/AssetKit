@@ -39,6 +39,11 @@ class AssetLoader
 	{
 		if( isset($this->filters[$name]) )
 			return $this->filters[$name];
+
+
+		if( ! isset($this->_filters[$name]) )
+			return;
+
 		$cb = $this->_filters[ $name ];
 		if( is_callable($cb) ) {
 			return $this->filters[ $name ] = call_user_func($cb);
@@ -52,6 +57,10 @@ class AssetLoader
 	{
 		if( isset($this->compressors[$name]) )
 			return $this->compressors[$name];
+
+		if( ! isset($this->_compressors[$name]) )
+			return;
+
 		$cb = $this->_compressors[ $name ];
 		if( is_callable($cb) ) {
 			return $this->compressors[ $name ] = call_user_func($cb);

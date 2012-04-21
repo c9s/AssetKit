@@ -1,5 +1,6 @@
 <?php
 namespace AssetKit;
+use Exception;
 
 class AssetWriter
 {
@@ -19,7 +20,7 @@ class AssetWriter
 		return $this;
 	}
 
-	public function as($as)
+	public function name($as)
 	{
 		$this->as = $as;
 		return $this;
@@ -38,21 +39,45 @@ class AssetWriter
 		foreach( $this->assets as $asset ) {
 			$collections = $asset->getFileCollections();
 			foreach( $collections as $collection ) {
+				$content = $collection->getContent();
 				if( $collection->filters ) {
 					foreach( $collection->filters as $filtername ) {
-						$filter = $loader->getFilter( $filtername );
-						$contents = $filter->read( $collection->getContent() );
+						if( $filter = $this->loader->getFilter( $filtername ) ) {
+							$content = $filter->filter($content);
+						}
+						else {
+							throw new Exception("filter $filtername not found.");
+						}
 					}
 				}
 
-				if( $this->loader->enableCompressor ) {
-					if( $collection->compressors ) {
-						$collection->getFiles();
+				if( $this->loader->enableCompressor && $collection->compressors ) {
+					foreach( $collection->compressors as $compressorname ) {
+						if( $compressor = $this->loader->getCompressor( $compressorname ) ) {
+							$content = $compressor->compress($content);
+						}
+						else { 
+							throw new Exception("compressor $compressorname not found.");
+						}
 					}
 				}
 
+				if( $collection->isJavascript ) {
+					$js .= $content;
+				}
+				elseif( $collection->isStylesheet ) {
+					$css .= $content;
+				}
+				else {
+					throw new Exception("Unknown asset type");
+				}
 			}
 		}
+
+		return array(
+			'javascript' => $js,
+			'stylesheet' => $css,
+	   	);
 	}
 }
 

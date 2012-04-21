@@ -6,10 +6,10 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 	{
 		$config = new AssetKit\Config('tests/config');
 		$loader = new AssetKit\AssetLoader($config, array( 'assets') );
-		$manifest = $loader->load( 'jquery-ui' );
-		ok( $manifest );
+		$asset = $loader->load( 'jquery-ui' );
+		ok( $asset );
 
-		$collections = $manifest->getFileCollections();
+		$collections = $asset->getFileCollections();
 		foreach( $collections as $collection ) {
 			$files = $collection->getFiles();
 			ok( $files );
@@ -22,6 +22,17 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 			ok( $content );
 			ok( strlen( $content ) > 0 );
 		}
+
+#  		$loader->addCompressor('cssmin', function() {
+#  		});
+
+		$writer = new AssetKit\AssetWriter( $loader );
+		ok( $writer );
+
+		$writer->from( array($asset) )
+			->name( 'jquery-ui' )
+			->in('tests/assets')
+			->write();
 	}
 }
 
