@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit\Compressor;
 
-class JSMinCompressor
+class JsMinCompressor
 {
 	function compress($content)
 	{
