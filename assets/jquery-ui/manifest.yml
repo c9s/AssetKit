@@ -1,0 +1,10 @@
+---
+resource:
+  url: https://github.com/jquery/jquery-ui/zipball/1.8.19
+  zip: 1
+asset:
+  - files:
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.core.js
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.mouse.js
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.position.js
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.widget.js
