@@ -1,12 +1,14 @@
 <?php
 namespace AssetKit\Compressor;
+use AssetKit\JSMin;
 
 class JsMinCompressor
 {
-	function compress($content)
-	{
-        return $content;
-	}
+    function compress($collection)
+    {
+        $content = $collection->getContent();
+        $collection->setContent( JSMin::minify( $content ) );
+    }
 }
 
 
