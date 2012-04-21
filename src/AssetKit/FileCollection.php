@@ -10,6 +10,7 @@ class FileCollection
 
     public $files = array();
 
+	// save manifest object
     public $manifest;
 
     public function __construct()
@@ -50,7 +51,14 @@ class FileCollection
 	{
 		$files = $this->getFiles();
 		$loader = $this->manifest->loader;
-		foreach( $files as $file ) {
+		if( $loader->enableCompressor ) {
+			foreach( $this->compressors as $c ) {
+				if( $compressor = $loader->getCompressor($c) ) {
+					$compressor->dump( $files );
+				}
+			}
+
+
 		}
 	}
 

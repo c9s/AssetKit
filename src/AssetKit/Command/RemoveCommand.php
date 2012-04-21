@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit\Command;
 use AssetKit\Config;
-use AssetKit\Manifest;
+use AssetKit\Asset;
 use CLIFramework\Command;
 
 class RemoveCommand extends Command

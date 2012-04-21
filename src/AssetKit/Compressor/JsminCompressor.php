@@ -4,12 +4,12 @@ namespace AssetKit\Compressor;
 class JsminCompressor
 {
 
-	function load($asset)
+	function load($files)
 	{
 
 	}
 
-	function dump($asset)
+	function dump($files)
 	{
 
 	}

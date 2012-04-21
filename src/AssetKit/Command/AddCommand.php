@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit\Command;
 use AssetKit\Config;
-use AssetKit\Manifest;
+use AssetKit\Asset;
 use CLIFramework\Command;
 
 class AddCommand extends Command
@@ -17,7 +17,7 @@ class AddCommand extends Command
         if( ! file_exists($manifestPath)) 
             throw new Exception( "$manifestPath does not exist." );
 
-        $manifest = new Manifest($manifestPath);
+        $manifest = new Asset($manifestPath);
         $manifest->initResource();
 
 #          $php = $manifest->compile();
