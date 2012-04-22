@@ -8,12 +8,11 @@ class AssetWriter
     public $assets;
     public $in;
     public $name;
-    public $publicDir;
+    public $cache;
 
+	protected $filters = array();
 
-	public $filters = array();
-
-	public $compressors = array();
+	protected $compressors = array();
 
 	// filter builder
 	protected $_filters = array();
@@ -34,15 +33,15 @@ class AssetWriter
         return $this;
     }
 
-    public function name($name)
+    public function cache($cache)
     {
-        $this->name = $name;
+        $this->cache = $cache;
         return $this;
     }
 
-    public function publicDir($dir)
+    public function name($name)
     {
-        $this->publicDir = rtrim($dir, DIRECTORY_SEPARATOR);
+        $this->name = $name;
         return $this;
     }
 
@@ -51,6 +50,51 @@ class AssetWriter
         $this->in = $in;
         return $this;
     }
+
+	public function addFilter($name,$cb)
+	{
+		$this->_filter[ $name ] = $cb;
+	}
+
+	public function addCompressor($name,$cb)
+	{
+		$this->_compressors[ $name ] = $cb;
+	}
+
+	public function getFilter($name)
+	{
+		if( isset($this->filters[$name]) )
+			return $this->filters[$name];
+
+
+		if( ! isset($this->_filters[$name]) )
+			return;
+
+		$cb = $this->_filters[ $name ];
+		if( is_callable($cb) ) {
+			return $this->filters[ $name ] = call_user_func($cb);
+		}
+		elseif( class_exists($cb,true) ) {
+			return $this->filters[ $name ] = new $cb;
+		}
+	}
+
+	public function getCompressor($name)
+	{
+		if( isset($this->compressors[$name]) )
+			return $this->compressors[$name];
+
+		if( ! isset($this->_compressors[$name]) )
+			return;
+
+		$cb = $this->_compressors[ $name ];
+		if( is_callable($cb) ) {
+			return $this->compressors[ $name ] = call_user_func($cb);
+		}
+		elseif( class_exists($cb,true) ) {
+			return $this->compressors[ $name ] = new $cb;
+		}
+	}
 
 
     /**
@@ -104,6 +148,13 @@ class AssetWriter
 
     public function write()
     {
+        if( $this->name && $this->cache ) {
+            if( $contents = $this->cache->get( 'assets:' . $this->name ) ) {
+                return $contents;
+            }
+        }
+
+
         $contents = $this->aggregate();
         $return = array();
         $dir = $this->loader->config->baseDir;
@@ -132,56 +183,12 @@ class AssetWriter
             $return['javascript'] = DIRECTORY_SEPARATOR . $path;
             $return['javascript_file'] = $jsfile;
         }
+
+        if( $this->name && $this->cache ) {
+            $this->cache->set( 'assets:' . $this->name , $return );
+        }
         return $return;
     }
-
-
-
-	function addFilter($name,$cb)
-	{
-		$this->_filter[ $name ] = $cb;
-	}
-
-	function addCompressor($name,$cb)
-	{
-		$this->_compressors[ $name ] = $cb;
-	}
-
-	function getFilter($name)
-	{
-		if( isset($this->filters[$name]) )
-			return $this->filters[$name];
-
-
-		if( ! isset($this->_filters[$name]) )
-			return;
-
-		$cb = $this->_filters[ $name ];
-		if( is_callable($cb) ) {
-			return $this->filters[ $name ] = call_user_func($cb);
-		}
-		elseif( class_exists($cb,true) ) {
-			return $this->filters[ $name ] = new $cb;
-		}
-	}
-
-	function getCompressor($name)
-	{
-		if( isset($this->compressors[$name]) )
-			return $this->compressors[$name];
-
-		if( ! isset($this->_compressors[$name]) )
-			return;
-
-		$cb = $this->_compressors[ $name ];
-		if( is_callable($cb) ) {
-			return $this->compressors[ $name ] = call_user_func($cb);
-		}
-		elseif( class_exists($cb,true) ) {
-			return $this->compressors[ $name ] = new $cb;
-		}
-	}
-
 }
 
 

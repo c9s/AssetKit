@@ -36,7 +36,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
             return new AssetKit\Compressor\CssMinCompressor;
         });
 
+        $apc = new CacheKit\ApcCache(array( 'namespace' => uniqid() , 'default_expiry' => 3 ));
         $manifest = $writer->from( array($asset) )
+            ->cache( $apc )
             ->name( 'jqueryui' )
             ->in('assets') // public/assets
             ->write();
