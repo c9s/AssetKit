@@ -12,8 +12,6 @@ class AssetLoader
         $this->paths = $paths;
     }
 
-
-
     function load($name)
     {
         if( $this->config && $path = $this->config->getAssetPath($name) ) {
