@@ -4,7 +4,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
     function test()
     {
-        $config = new AssetKit\Config('tests/config');
+        $config = new AssetKit\Config('tests_assetkit');
         $loader = new AssetKit\AssetLoader($config, array( 'assets') );
         $asset = $loader->load( 'jquery-ui' );
         ok( $asset );

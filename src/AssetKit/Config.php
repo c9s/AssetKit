@@ -9,10 +9,13 @@ class Config
 
     public function __construct($file,$baseDir = null)
     {
-        $this->baseDir = $baseDir ?: getcwd();
         $this->file = $file;
         if( file_exists($file) ) {
             $this->config = json_decode(file_get_contents($file),true);
+            $this->baseDir = $baseDir ?: dirname(realpath($file));
+        }
+        else {
+            $this->baseDir = $baseDir ?: getcwd();
         }
     }
 
