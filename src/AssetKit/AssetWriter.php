@@ -157,10 +157,10 @@ class AssetWriter
 
         $contents = $this->aggregate();
         $return = array();
-        $dir = $this->loader->config->baseDir;
+        $dir = $this->loader->config->getPublicRoot();
 
-        if( ! file_exists($dir) ) {
-            mkdir( $dir , 0755, true );
+        if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
+            mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
         }
 
         if( isset($contents['stylesheet']) ) {
