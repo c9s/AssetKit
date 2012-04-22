@@ -38,8 +38,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
         $manifest = $writer->from( array($asset) )
             ->name( 'jqueryui' )
-            ->in('tests/public/assets')
-            ->publicDir('tests/public')
+            ->in('assets') // public/assets
             ->write();
 
         var_dump( $manifest ); 

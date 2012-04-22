@@ -95,7 +95,6 @@ class AssetWriter
                 }
             }
         }
-
         return array(
             'javascript' => $js,
             'stylesheet' => $css,
@@ -107,29 +106,31 @@ class AssetWriter
     {
         $contents = $this->aggregate();
         $return = array();
+        $dir = $this->loader->config->baseDir;
 
-        if( ! file_exists($this->in) )
-            mkdir( $this->in , 0755, true );
-
+        if( ! file_exists($dir) ) {
+            mkdir( $dir , 0755, true );
+        }
 
         if( isset($contents['stylesheet']) ) {
-            $cssfile = $this->in . DIRECTORY_SEPARATOR 
-                        . $this->name . '-' 
-                        . md5( $contents['stylesheet']) . '.css';
+            $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
+                    . md5( $contents['stylesheet']) . '.css';
+
+            $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $cssfile , $contents['stylesheet'] ) !== false or die('write fail');
 
-            var_dump( $cssfile, $this->publicDir ); 
-
-            // $return['stylesheet'];
+            $return['stylesheet_file'] = $cssfile;
+            $return['stylesheet'] = DIRECTORY_SEPARATOR . $path;
         }
         if( isset($contents['javascript']) ) {
-            $jsfile = $this->in . DIRECTORY_SEPARATOR 
-                        . $this->name . '-' 
-                        . md5( $contents['javascript']) . '.js';
+            $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
+                    . md5( $contents['javascript']) . '.js';
+            
+            $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $jsfile , $contents['javascript'] ) !== false or die('write fail');
 
-            var_dump( $jsfile, $this->publicDir ); 
-            // $return['javascript'];
+            $return['javascript'] = DIRECTORY_SEPARATOR . $path;
+            $return['javascript_file'] = $jsfile;
         }
         return $return;
     }
