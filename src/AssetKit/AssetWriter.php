@@ -10,6 +10,19 @@ class AssetWriter
     public $name;
     public $publicDir;
 
+
+	public $filters = array();
+
+	public $compressors = array();
+
+	// filter builder
+	protected $_filters = array();
+
+	// compressor builder
+	protected $_compressors = array();
+
+	public $enableCompressor = true;
+
     public function __construct($loader)
     {
         $this->loader = $loader;
@@ -52,7 +65,7 @@ class AssetWriter
             foreach( $collections as $collection ) {
                 if( $collection->filters ) {
                     foreach( $collection->filters as $filtername ) {
-                        if( $filter = $this->loader->getFilter( $filtername ) ) {
+                        if( $filter = $this->getFilter( $filtername ) ) {
                             $filter->filter($collection);
                         }
                         else {
@@ -61,9 +74,9 @@ class AssetWriter
                     }
                 }
 
-                if( $this->loader->enableCompressor && $collection->compressors ) {
+                if( $this->enableCompressor && $collection->compressors ) {
                     foreach( $collection->compressors as $compressorname ) {
-                        if( $compressor = $this->loader->getCompressor( $compressorname ) ) {
+                        if( $compressor = $this->getCompressor( $compressorname ) ) {
                             $compressor->compress($collection);
                         }
                         else { 
@@ -120,6 +133,54 @@ class AssetWriter
         }
         return $return;
     }
+
+
+
+	function addFilter($name,$cb)
+	{
+		$this->_filter[ $name ] = $cb;
+	}
+
+	function addCompressor($name,$cb)
+	{
+		$this->_compressors[ $name ] = $cb;
+	}
+
+	function getFilter($name)
+	{
+		if( isset($this->filters[$name]) )
+			return $this->filters[$name];
+
+
+		if( ! isset($this->_filters[$name]) )
+			return;
+
+		$cb = $this->_filters[ $name ];
+		if( is_callable($cb) ) {
+			return $this->filters[ $name ] = call_user_func($cb);
+		}
+		elseif( class_exists($cb,true) ) {
+			return $this->filters[ $name ] = new $cb;
+		}
+	}
+
+	function getCompressor($name)
+	{
+		if( isset($this->compressors[$name]) )
+			return $this->compressors[$name];
+
+		if( ! isset($this->_compressors[$name]) )
+			return;
+
+		$cb = $this->_compressors[ $name ];
+		if( is_callable($cb) ) {
+			return $this->compressors[ $name ] = call_user_func($cb);
+		}
+		elseif( class_exists($cb,true) ) {
+			return $this->compressors[ $name ] = new $cb;
+		}
+	}
+
 }
 
 

@@ -23,17 +23,18 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
             ok( strlen( $content ) > 0 );
         }
 
-        $loader->addCompressor('jsmin', function() {
-            return new AssetKit\Compressor\JsMinCompressor;
-        });
-        $loader->addCompressor('cssmin', function() {
-            return new AssetKit\Compressor\CssMinCompressor;
-        });
 
         // $loader->enableCompressor = false;
 
         $writer = new AssetKit\AssetWriter( $loader );
         ok( $writer );
+
+        $writer->addCompressor('jsmin', function() {
+            return new AssetKit\Compressor\JsMinCompressor;
+        });
+        $writer->addCompressor('cssmin', function() {
+            return new AssetKit\Compressor\CssMinCompressor;
+        });
 
         $manifest = $writer->from( array($asset) )
             ->name( 'jqueryui' )

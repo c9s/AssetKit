@@ -6,18 +6,6 @@ class AssetLoader
 	public $paths;
 	public $config;
 
-	public $filters = array();
-
-	public $compressors = array();
-
-	// filter builder
-	protected $_filters = array();
-
-	// compressor builder
-	protected $_compressors = array();
-
-	public $enableCompressor = true;
-
 	function __construct($config,$paths = array())
 	{
 		$this->config = $config;
@@ -25,50 +13,6 @@ class AssetLoader
 	}
 
 
-	function addFilter($name,$cb)
-	{
-		$this->_filter[ $name ] = $cb;
-	}
-
-	function addCompressor($name,$cb)
-	{
-		$this->_compressors[ $name ] = $cb;
-	}
-
-	function getFilter($name)
-	{
-		if( isset($this->filters[$name]) )
-			return $this->filters[$name];
-
-
-		if( ! isset($this->_filters[$name]) )
-			return;
-
-		$cb = $this->_filters[ $name ];
-		if( is_callable($cb) ) {
-			return $this->filters[ $name ] = call_user_func($cb);
-		}
-		elseif( class_exists($cb,true) ) {
-			return $this->filters[ $name ] = new $cb;
-		}
-	}
-
-	function getCompressor($name)
-	{
-		if( isset($this->compressors[$name]) )
-			return $this->compressors[$name];
-
-		if( ! isset($this->_compressors[$name]) )
-			return;
-
-		$cb = $this->_compressors[ $name ];
-		if( is_callable($cb) ) {
-			return $this->compressors[ $name ] = call_user_func($cb);
-		}
-		elseif( class_exists($cb,true) ) {
-			return $this->compressors[ $name ] = new $cb;
-		}
-	}
 
 	function load($name)
 	{
