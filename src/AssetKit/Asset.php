@@ -44,6 +44,10 @@ class Asset
             $this->dir = dirname($file);
             $this->name = basename(dirname($file));
         }
+
+        if( isset($this->stash['assets']) ) {
+            $this->collections = FileCollection::create_from_manfiest($this);
+        }
     }
 
     public function createFileCollection()
@@ -55,7 +59,7 @@ class Asset
 
     public function getFileCollections()
     {
-        return FileCollection::create_from_manfiest($this);
+        return $this->collections;
     }
 
     public function export()

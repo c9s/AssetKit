@@ -9,6 +9,7 @@ class AssetTest extends PHPUnit_Framework_TestCase
 
         $files = $as->createFileCollection();
         ok( $files );
+
 #          $files->addFile( '...' );
 #          $files->addFile( '...' );
 #          $files->addFilter( '...' );
