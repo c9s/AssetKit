@@ -19,13 +19,16 @@ class JsCompressor
         $this->charset = $charset;
     }
 
-	function compress($collection)
+    function compress($collection)
     { 
         $pb = new ProcessBuilder(array( $this->java, '-jar', $this->jar ));
-
-		$content = $collection->getContent();
-		$collection->setContent( CssMin::minify( $content ) );
-	}
+        $input = $collection->getContent();
+        $proc = $pb->getProcess();
+        $proc->setInput($input);
+        $code = $proc->run();
+        $content = $proc->getOutput();
+        $collection->setContent($content);
+    }
 }
 
 
