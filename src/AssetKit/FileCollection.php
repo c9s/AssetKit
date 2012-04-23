@@ -75,6 +75,12 @@ class FileCollection
         return $this;
     }
 
+    public function addFilter($filter)
+    {
+        $this->filters[] = $filter;
+        return $this;
+    }
+
     public function getLastModifiedTime()
     {
         if( ! empty($this->files) ) {
