@@ -29,15 +29,16 @@ class FileCollection
         $collections = array();
         foreach( $asset->stash['assets'] as $config ) {
             $collection = new self;
-
             if( isset($config['filters']) )
                 $collection->filters = $config['filters'];
 
             if( isset($config['compressors']) )
                 $collection->compressors = $config['compressors'];
 
-            if( isset($config['files']) )
+            if( isset($config['files']) ) {
                 $collection->files = $config['files'];
+                
+            }
 
 			if( isset($config['javascript']) )
 				$collection->isJavascript = true;
@@ -64,6 +65,17 @@ class FileCollection
 	{
 		$this->content = $content;
 	}
+
+    public function addFile($path)
+    {
+        $this->files[] = $path;
+        return $this;
+    }
+
+    public function getFiles()
+    {
+        return $this->files;
+    }
 
 	public function getContent()
 	{
