@@ -27,6 +27,9 @@ class FileCollection
     static function create_from_manfiest($asset)
     {
         $collections = array();
+        if( ! isset($asset->stash['assets']) )
+            return $collections;
+
         foreach( $asset->stash['assets'] as $config ) {
             $collection = new self;
 

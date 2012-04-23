@@ -14,15 +14,21 @@ class Asset
 
     public $loader;
 
-    public function __construct($arg)
+    public function __construct($arg = null)
     {
-        if( is_array($arg) ) {
+        // load from array
+        if( $arg && is_array($arg) ) {
             $this->stash = $arg['stash'];
-            $this->file = $arg['file'];
-            $this->dir = $arg['dir'];
+            $this->file = @$arg['file'];
+            $this->dir = @$arg['dir'];
             $this->name = $arg['name'];
         }
-        else {
+        elseif( $arg && is_string($arg) ) {
+            $this->name = $arg;
+        }
+        elseif( $arg ) 
+        {
+            // load from file
             $file = $arg;
             $this->file = $file;
             $ext = pathinfo($file, PATHINFO_EXTENSION);
