@@ -145,7 +145,6 @@ class AssetWriter
         );
     }
 
-
     public function write()
     {
         if( $this->name && $this->cache ) {
@@ -153,7 +152,6 @@ class AssetWriter
                 return $contents;
             }
         }
-
 
         $contents = $this->aggregate();
         $return = array();
