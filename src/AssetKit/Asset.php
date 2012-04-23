@@ -14,6 +14,8 @@ class Asset
 
     public $loader;
 
+    public $collections = array();
+
     public function __construct($arg = null)
     {
         // load from array
@@ -42,6 +44,13 @@ class Asset
             $this->dir = dirname($file);
             $this->name = basename(dirname($file));
         }
+    }
+
+    public function createFileCollection()
+    {
+        $collection = new FileCollection;
+        $collections[] = $collection;
+        return $collection;
     }
 
     public function getFileCollections()
