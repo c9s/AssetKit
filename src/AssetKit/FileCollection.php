@@ -54,11 +54,14 @@ class FileCollection
 
 	public function getFiles()
 	{
-		$dir = $this->asset->dir;
-		$baseDir = $this->asset->config->baseDir;
-		return array_map( function($file) use($dir,$baseDir){ 
-				return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
-			}, $this->files );
+        if( $this->asset ) {
+            $dir = $this->asset->dir;
+            $baseDir = $this->asset->config->baseDir;
+            return array_map( function($file) use($dir,$baseDir){ 
+                    return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
+                }, $this->files );
+        }
+        return $this->files;
 	}
 
 	public function setContent($content)
@@ -72,9 +75,13 @@ class FileCollection
         return $this;
     }
 
-    public function getFiles()
+    public function getLastModifiedTime()
     {
-        return $this->files;
+        if( ! empty($this->files) ) {
+            $mtimes = array_map( function($file) { return filemtime($file); }, $this->files );
+            rsort($mtimes, SORT_NUMERIC);
+            return $mtimes[0];
+        }
     }
 
 	public function getContent()

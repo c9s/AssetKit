@@ -13,6 +13,8 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $files->addFile( 'assets/jssha/jsSHA/src/sha1.js' );
         $files->addFile( 'assets/jssha/jsSHA/src/sha256.js' );
 
+        $files->getLastModifiedTime();
+
 #          $files->addFile( '...' );
 #          $files->addFile( '...' );
 #          $files->addFilter( '...' );
