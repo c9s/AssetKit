@@ -3,8 +3,7 @@ AssetKit
 
 
 
-    -AssetKit (master) % php scripts/assetkit.php add assets/jquery/manifest.yml 
-    fatal: destination path 'assets/jquery/jquery' already exists and is not an empty directory.
+    -AssetKit (master) % assetkit add assets/jquery/manifest.yml 
     Submodule 'src/sizzle' () registered for path 'src/sizzle'
     Submodule 'test/qunit' () registered for path 'test/qunit'
     Submodule 'src/sizzle' () registered for path 'src/sizzle'
