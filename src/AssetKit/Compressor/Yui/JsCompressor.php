@@ -1,5 +1,5 @@
 <?php
-namespace AssetKit\Compressor;
+namespace AssetKit\Compressor\Yui;
 use Symfony\Component\Process\ProcessBuilder;
 
 class JsCompressor
@@ -8,7 +8,7 @@ class JsCompressor
     public $java;
     public $charset;
 
-    function __construct($jar,$java = 'java')
+    function __construct($jar,$java = '/usr/bin/java')
     {
         $this->jar = $jar;
         $this->java = $java;
@@ -21,11 +21,14 @@ class JsCompressor
 
     function compress($collection)
     { 
-        $pb = new ProcessBuilder(array( $this->java, '-jar', $this->jar ));
         $input = $collection->getContent();
+        $pb = new ProcessBuilder(array( $this->java, '-jar', $this->jar ));
+        $pb->add('--type')->add('js');
+        $pb->setInput($input);
+
         $proc = $pb->getProcess();
-        $proc->setInput($input);
         $code = $proc->run();
+
         $content = $proc->getOutput();
         $collection->setContent($content);
     }

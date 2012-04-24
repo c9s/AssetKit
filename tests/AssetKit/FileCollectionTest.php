@@ -19,6 +19,19 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
         $content = $cln->getContent();
         ok( $content );
 
+        // ok, now let's use a compressor
+        $compressor = new AssetKit\Compressor\Yui\JsCompressor(
+            'utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar',
+            '/usr/bin/java');
+        ok( $compressor );
+        $compressor->compress( $cln );
+
+        $content = $cln->getContent();
+
+        like( '/jQuery/', $content );
+        
+
+
     }
 }
 

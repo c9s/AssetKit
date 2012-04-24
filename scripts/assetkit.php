@@ -11,6 +11,7 @@
  */
 
 define( 'ROOT', dirname(__DIR__) );
+require ROOT . '/vendor/autoload.php';
 require ROOT . '/vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
 $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array( 
     ROOT . '/src', 
