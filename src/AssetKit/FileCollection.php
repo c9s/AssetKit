@@ -13,11 +13,11 @@ class FileCollection
 
     public $asset;
 
-	public $isJavascript;
+    public $isJavascript;
 
-	public $isStylesheet;
+    public $isStylesheet;
 
-	public $content;
+    public $content;
 
     public function __construct()
     {
@@ -40,11 +40,11 @@ class FileCollection
                 
             }
 
-			if( isset($config['javascript']) )
-				$collection->isJavascript = true;
+            if( isset($config['javascript']) )
+                $collection->isJavascript = true;
 
-			if( isset($config['stylesheet']) )
-				$collection->isStylesheet = true;
+            if( isset($config['stylesheet']) )
+                $collection->isStylesheet = true;
 
             $collection->asset = $asset;
             $collections[] = $collection;
@@ -52,8 +52,8 @@ class FileCollection
         return $collections;
     }
 
-	public function getFiles()
-	{
+    public function getFiles()
+    {
         if( $this->asset ) {
             $dir = $this->asset->dir;
             $baseDir = $this->asset->config->baseDir;
@@ -62,12 +62,12 @@ class FileCollection
                 }, $this->files );
         }
         return $this->files;
-	}
+    }
 
-	public function setContent($content)
-	{
-		$this->content = $content;
-	}
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
 
     public function addFile($path)
     {
@@ -90,19 +90,19 @@ class FileCollection
         }
     }
 
-	public function getContent()
-	{
-		if( $this->content )
-			return $this->content;
+    public function getContent()
+    {
+        if( $this->content )
+            return $this->content;
 
-		$content = '';
-		foreach( $this->getFiles() as $file ) {
+        $content = '';
+        foreach( $this->getFiles() as $file ) {
             if( ! file_exists($file) )
                 throw new Exception("$file does not exist.");
-			$content .= file_get_contents( $file );
-		}
-		return $this->content = $content;
-	}
+            $content .= file_get_contents( $file );
+        }
+        return $this->content = $content;
+    }
 
 }
 
