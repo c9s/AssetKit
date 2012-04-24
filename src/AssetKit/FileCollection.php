@@ -51,8 +51,7 @@ class FileCollection
         return $collections;
     }
 
-
-    public function getFilePaths()
+    public function getAbsoluteFilePaths()
     {
         if( $this->asset ) {
             $dir = $this->asset->dir;
@@ -61,6 +60,11 @@ class FileCollection
                     return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
                 }, $this->files );
         }
+        return $this->files;
+    }
+
+    public function getFilePaths()
+    {
         return $this->files;
     }
 
@@ -96,7 +100,7 @@ class FileCollection
             return $this->content;
 
         $content = '';
-        foreach( $this->getFilePaths() as $file ) {
+        foreach( $this->getAbsoluteFilePaths() as $file ) {
             if( ! file_exists($file) )
                 throw new Exception("$file does not exist.");
             $content .= file_get_contents( $file );
