@@ -28,6 +28,7 @@ class AssetWriter
 
     public $enableCompressor = true;
 
+    public $environment;
 
     /**
      * Create with writer with a loader.
@@ -37,6 +38,16 @@ class AssetWriter
     public function __construct($loader)
     {
         $this->loader = $loader;
+    }
+
+
+    /**
+     * @param string $environment could be 'production' or 'development'
+     */
+    public function env($environment)
+    {
+        $this->environment = $environment;
+        return $this;
     }
 
     public function from($assets)
