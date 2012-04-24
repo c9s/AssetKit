@@ -22,7 +22,7 @@ class PrecompileCommand extends Command
             throw new Exception("asset name is required.");
         }
 
-        if( null === $this->options->as ) {
+        if( null === $options->as ) {
             throw new Exception("please specify --as=name option.");
         }
 
