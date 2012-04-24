@@ -73,20 +73,13 @@ The manifest.yml file:
 
 ## Use flow
 
-### Fetch remote resource
+### Fetch remote resource and include to asset config
 
     $ assetkit init 
 
-    $ assetkit fetch assets/jquery/manifest.yml
+    $ assetkit add assets/jquery/manifest.yml
 
 fetch resource and extract it
-
-
-### Include asset
-
-Converts manifest yaml file to php file.
-
-    $ assetkit add assets/jquery/manfiest.yml
 
 ### Export static files to webroot
 

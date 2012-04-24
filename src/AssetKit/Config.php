@@ -21,7 +21,7 @@ class Config
 
     public function addAsset($asset,$path)
     {
-        if( ! $this->config['assets'] )
+        if( ! isset($this->config['assets']) )
             $this->config['assets'] = array();
         $this->config['assets'][$asset] = $path;
     }
