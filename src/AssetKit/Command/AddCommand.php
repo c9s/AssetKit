@@ -25,9 +25,11 @@ class AddCommand extends Command
 
         $options = $this->options;
         if( $options->public ) {
-            $asset->copyTo( $options->public );
+            // $asset->copyTo( $options->public );
         }
 
+        $export = $asset->export();
+        var_dump( $export ); 
         $config->addAsset( $asset->name , $asset->export() );
 
         $this->logger->info("Saving config...");

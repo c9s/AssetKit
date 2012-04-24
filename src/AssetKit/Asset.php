@@ -16,7 +16,7 @@ class Asset
     public $stash;
 
     /* manifest file */
-    public $file;
+    public $manfiest;
 
     /* manifest dir */
     public $dir;
@@ -35,7 +35,7 @@ class Asset
         // load from array
         if( $arg && is_array($arg) ) {
             $this->stash = $arg['stash'];
-            $this->file = @$arg['file'];
+            $this->manfiest = @$arg['file'];
             $this->dir = @$arg['dir'];
             $this->name = $arg['name'];
         }
@@ -43,7 +43,7 @@ class Asset
         {
             // load from file
             $file = $arg;
-            $this->file = $file;
+            $this->manifest = $file;
             $ext = pathinfo($file, PATHINFO_EXTENSION);
 
             if( 'yml' === $ext ) {
@@ -80,7 +80,7 @@ class Asset
     {
         return array(
             'stash' => $this->stash,
-            'file' => $this->file,
+            'manifest' => $this->manifest,
             'dir' => $this->dir,
             'name' => $this->name,
         );
@@ -102,8 +102,8 @@ class Asset
     {
         $serializer = new SerializerKit\Serializer('php');
         $php = '<php? ' .  $serializer->encode($this->stash) . '?>';
-        $ext = pathinfo($this->file, PATHINFO_EXTENSION);
-        $filename = pathinfo($this->file, PATHINFO_FILENAME);
+        $ext = pathinfo($this->manifest, PATHINFO_EXTENSION);
+        $filename = pathinfo($this->manifest, PATHINFO_FILENAME);
         $target = $this->dir . DIRECTORY_SEPARATOR . $filename . '.php';
         file_put_contents($target, $php);
         return $target;
