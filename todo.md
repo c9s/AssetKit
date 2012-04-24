@@ -1,6 +1,9 @@
 Todo
 =====
 
+
+- Fix CLIFramework bug.
+
 - implement precompile command.
 
 - When fetching new asset, we should copy the files into --output directory (which is public directory to www)
