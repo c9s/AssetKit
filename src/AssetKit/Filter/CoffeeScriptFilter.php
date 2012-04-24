@@ -3,15 +3,25 @@ namespace AssetKit\Filter;
 
 class CoffeeScriptFilter
 {
+    public $coffeescript;
+    public $nodejs;
 
-    function __construct($coffeescript, $nodejs = 'node' )
+    public function __construct($coffeescript, $nodejs = 'node' )
     {
-        // code...
+        $this->nodejs = $nodejs;
+        $this->coffeescript = $coffeescript;
     }
 
 	public function filter($collection)
 	{
-		$files = $collection->getFiles();
+        $pb = new ProcessBuilder(array( $this->nodejs, $this->coffeescript ));
+
+        $input = $collection->getContent();
+        $proc = $pb->getProcess();
+        $proc->setInput($input);
+        $code = $proc->run();
+        $content = $proc->getOutput();
+        $collection->setContent($content);
 	}
 
 }
