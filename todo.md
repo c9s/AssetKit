@@ -24,6 +24,14 @@ Todo
                                 asset  manifest path
                                 name 
 
+        Config:
+
+            public:  public/assets
+            assets: 
+                jquery:  
+                    files:[ 
+                        jquery/build/freq.js
+                    ]
 
 - So that we can support debug flag (separating files to include)
 

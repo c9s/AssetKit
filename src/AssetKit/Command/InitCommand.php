@@ -12,12 +12,16 @@ class InitCommand extends Command
 
     function execute()
     {
-        $publicRoot = $this->options->public ?: 'public';
+        $publicRoot = $this->options->public ?: 'public' . DIRECTORY_SEPARATOR . 'assets';
+
+        $this->logger->info( "Using public asset directory: $publicRoot" );
 
         $config = new Config( '.assetkit' );
         $config->config = array(
             'public' => $publicRoot,
-            'assets' => array(),
+            'assets' => array(
+            
+            ),
         );
         $this->logger->info('Writing config file .assetkit');
         $config->save();
