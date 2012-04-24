@@ -180,8 +180,36 @@ class AssetWriter
 
 
 
+
+    public function runCollectionFilters($collection)
+    {
+        if( empty($collection->filters) )
+            return;
+        foreach( $collection->filters as $filtername ) {
+            if( $filter = $this->getFilter( $filtername ) ) {
+                $filter->filter($collection);
+            }
+            else {
+                throw new Exception("filter $filtername not found.");
+            }
+        }
+    }
+
+    public function runCollectionCompressors($collection)
+    {
+        foreach( $collection->compressors as $compressorname ) {
+            if( $compressor = $this->getCompressor( $compressorname ) ) {
+                $compressor->compress($collection);
+            }
+            else { 
+                throw new Exception("compressor $compressorname not found.");
+            }
+        }
+    }
+
+
     /**
-     * Aggregate asset contents, 
+     * Aggregate asset contents,
      * run through filters, compressors ...
      *
      * @param  AssetKit\Asset $asset
@@ -193,29 +221,13 @@ class AssetWriter
         $css = '';
         $collections = $asset->getFileCollections();
         foreach( $collections as $collection ) {
-            if( $collection->filters ) {
-                foreach( $collection->filters as $filtername ) {
-                    if( $filter = $this->getFilter( $filtername ) ) {
-                        $filter->filter($collection);
-                    }
-                    else {
-                        throw new Exception("filter $filtername not found.");
-                    }
-                }
-            }
+            $this->runCollectionFilters( $collection );
 
             // if we are in development mode, we don't need to compress them all.
             if( $this->environment !== 'development'
                     && $this->enableCompressor
                     && $collection->compressors ) {
-                foreach( $collection->compressors as $compressorname ) {
-                    if( $compressor = $this->getCompressor( $compressorname ) ) {
-                        $compressor->compress($collection);
-                    }
-                    else { 
-                        throw new Exception("compressor $compressorname not found.");
-                    }
-                }
+                $this->runCollectionCompressors($collection);
             }
 
             if( $collection->isJavascript ) {
