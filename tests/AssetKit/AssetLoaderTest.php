@@ -36,7 +36,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $writer = new AssetKit\AssetWriter( $loader );
         ok( $writer );
 
-
         $writer->addFilter( 'css_rewrite', function() {
             // return new AssetKit\Compressor
         });

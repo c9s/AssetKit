@@ -49,6 +49,9 @@ class AssetWriter
         $this->addCompressor('cssmin', function() {
             return new \AssetKit\Compressor\CssMinCompressor;
         });
+        $this->addCompressor('yui_js', function() {
+            return new \AssetKit\Compressor\Yui\JsCompressor;
+        });
         $this->addFilter( 'coffeescript' ,function() {
             return new \AssetKit\Filter\CoffeeScriptFilter;
         });
