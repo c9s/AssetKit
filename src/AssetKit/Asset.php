@@ -86,6 +86,13 @@ class Asset
         );
     }
 
+    public function copyTo($baseDir)
+    {
+        foreach( $this->collections as $collection ) {
+
+        }
+    }
+
     public function compile()
     {
         $serializer = new SerializerKit\Serializer('php');

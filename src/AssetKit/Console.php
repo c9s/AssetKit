@@ -20,7 +20,7 @@ class Console extends Application
         $this->registerCommand('init');
         $this->registerCommand('add');
         $this->registerCommand('remove');
-        $this->registerCommand('precompile');
+        $this->registerCommand('compile');
     }
 }
 

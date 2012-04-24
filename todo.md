@@ -1,9 +1,5 @@
 Todo
 =====
-
-
-- Fix CLIFramework bug.
-
 - implement precompile command.
 
 - When fetching new asset, we should copy the files into --output directory (which is public directory to www)
@@ -23,3 +19,6 @@ Todo
 
             background: url(/assets/jquery/images/bg.png);
 
+Done
+====
+x Fix CLIFramework bug.

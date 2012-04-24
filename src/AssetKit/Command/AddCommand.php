@@ -23,6 +23,11 @@ class AddCommand extends Command
         $asset = new Asset($manifestPath);
         $asset->initResource();
 
+        $options = $this->options;
+        if( $options->public ) {
+            $asset->copyTo( $options->public );
+        }
+
         $config->addAsset( $asset->name , $asset->export() );
 
         $this->logger->info("Saving config...");

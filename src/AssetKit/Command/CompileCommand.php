@@ -5,7 +5,7 @@ use AssetKit\Config;
 use AssetKit\Asset;
 use CLIFramework\Command;
 
-class PrecompileCommand extends Command
+class CompileCommand extends Command
 {
     function options($opts)
     {
