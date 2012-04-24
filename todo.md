@@ -22,6 +22,8 @@ Todo
 
     - Front testing code (load asset from assetLoader) from other path.
 
+- Twig extension for including assets
+
 Done
 ====
 x Fix CLIFramework bug.

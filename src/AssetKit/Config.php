@@ -65,5 +65,10 @@ class Config
         return @$this->config['public'] ?: 'public';
     }
 
+    public function getRoot()
+    {
+        return $this->baseDir;
+    }
+
 }
 
