@@ -41,7 +41,7 @@ class Config
         unset($this->config['assets'][$asset]);
     }
 
-    public function getAssetPath($name)
+    public function getAsset($name)
     {
         if( isset($this->config['assets'][$name] ) )
             return $this->config['assets'][$name];

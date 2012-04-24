@@ -31,7 +31,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         }
 
 
-
         $writer = new AssetKit\AssetWriter( $config );
         $writer->enableCompressor = false;
         ok( $writer );

@@ -33,9 +33,8 @@ class AssetLoader
      */
     function load($name)
     {
-        if( $this->config && $path = $this->config->getAssetPath($name) ) {
-            $manifestFile = $path . DIRECTORY_SEPARATOR . 'manifest.yml';
-            $m = new Asset( $manifestFile );
+        if( $this->config && $assetData = $this->config->getAsset($name) ) {
+            $m = new Asset( $assetData );
             $m->config = $this->config;
             $m->loader = $this;
             return $m;
