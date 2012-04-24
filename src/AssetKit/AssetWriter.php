@@ -61,12 +61,22 @@ class AssetWriter
         $this->addCompressor('cssmin', function() {
             return new \AssetKit\Compressor\CssMinCompressor;
         });
+
+        $this->addCompressor('yui_css', function() {
+            $bin = getenv('YUI_COMPRESSOR_BIN');
+            return new \AssetKit\Compressor\Yui\CssCompressor($bin);
+        });
+
         $this->addCompressor('yui_js', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
             return new \AssetKit\Compressor\Yui\JsCompressor($bin);
         });
+
         $this->addFilter( 'coffeescript' ,function() {
             return new \AssetKit\Filter\CoffeeScriptFilter;
+        });
+        $this->addFilter( 'css_import', function() {
+            return new \AssetKit\Filter\CssImportFilter;
         });
         $this->addFilter( 'css_rewrite', function() {
             // XXX:
