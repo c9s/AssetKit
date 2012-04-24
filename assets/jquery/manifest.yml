@@ -4,10 +4,7 @@ resource:
   commands:
     - git submodule init
     - git submodule update
+    - make
 assets:
-  - filters: [ "compass" ]
-    files:
-      - css/*.sass
   - files:
-      - js/*
-      - js/javascript.js
+      - jquery/dist/jquery.js
