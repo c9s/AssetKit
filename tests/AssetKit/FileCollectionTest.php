@@ -6,8 +6,14 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
     {
         $cln = new AssetKit\FileCollection;
         $cln->addFile( 'assets/jquery/jquery/dist/jquery.js' );
-
         ok($cln);
+
+        $files = $cln->getFiles();
+        ok( $files );
+
+        foreach( $files as $file ) {
+            file_ok( $file );
+        }
     }
 }
 
