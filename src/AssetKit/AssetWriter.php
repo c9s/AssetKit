@@ -179,51 +179,63 @@ class AssetWriter
     }
 
 
+    public function aggregate($asset)
+    {
+        $js = '';
+        $css = '';
+        $collections = $asset->getFileCollections();
+        foreach( $collections as $collection ) {
+            if( $collection->filters ) {
+                foreach( $collection->filters as $filtername ) {
+                    if( $filter = $this->getFilter( $filtername ) ) {
+                        $filter->filter($collection);
+                    }
+                    else {
+                        throw new Exception("filter $filtername not found.");
+                    }
+                }
+            }
+
+            // if we are in development mode, we don't need to compress them all.
+            if( $this->environment !== 'development'
+                    && $this->enableCompressor
+                    && $collection->compressors ) {
+                foreach( $collection->compressors as $compressorname ) {
+                    if( $compressor = $this->getCompressor( $compressorname ) ) {
+                        $compressor->compress($collection);
+                    }
+                    else { 
+                        throw new Exception("compressor $compressorname not found.");
+                    }
+                }
+            }
+
+            if( $collection->isJavascript ) {
+                $js .= $collection->getContent();
+            } elseif( $collection->isStylesheet ) {
+                $css .= $collection->getContent();
+            }
+            else {
+                throw new Exception("Unknown asset type");
+            }
+        }
+        return array(
+            'js' => $js,
+            'css' => $css,
+        );
+    }
+
     /**
-     * Aggregate stylesheet/javascript content
-     *
+     * Aggregate stylesheet/javascript content from assets
      */
-    public function aggregate($assets)
+    public function aggregateThem($assets)
     {
         $css = '';
         $js = '';
         foreach( $assets as $asset ) {
-            $collections = $asset->getFileCollections();
-            foreach( $collections as $collection ) {
-                if( $collection->filters ) {
-                    foreach( $collection->filters as $filtername ) {
-                        if( $filter = $this->getFilter( $filtername ) ) {
-                            $filter->filter($collection);
-                        }
-                        else {
-                            throw new Exception("filter $filtername not found.");
-                        }
-                    }
-                }
-
-                // if we are in development mode, we don't need to compress them all.
-                if( $this->environment !== 'development'
-                        && $this->enableCompressor
-                        && $collection->compressors ) {
-                    foreach( $collection->compressors as $compressorname ) {
-                        if( $compressor = $this->getCompressor( $compressorname ) ) {
-                            $compressor->compress($collection);
-                        }
-                        else { 
-                            throw new Exception("compressor $compressorname not found.");
-                        }
-                    }
-                }
-
-                if( $collection->isJavascript ) {
-                    $js .= $collection->getContent();
-                } elseif( $collection->isStylesheet ) {
-                    $css .= $collection->getContent();
-                }
-                else {
-                    throw new Exception("Unknown asset type");
-                }
-            }
+            $ret = $this->aggregate( $asset );
+            $css .= $ret['css'];
+            $js  .= $ret['js'];
         }
         return array(
             'javascript' => $js,
@@ -278,7 +290,7 @@ class AssetWriter
             }
         }
 
-        $contents = $this->aggregate( $this->assets );
+        $contents = $this->aggregateThem( $this->assets );
         $manifest = array();
         $dir = $this->config->getPublicRoot();
 
