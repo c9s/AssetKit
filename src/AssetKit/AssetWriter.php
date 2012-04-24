@@ -2,6 +2,12 @@
 namespace AssetKit;
 use Exception;
 
+
+
+/**
+ * @class
+ *
+ */
 class AssetWriter
 {
     public $loader;
@@ -22,6 +28,12 @@ class AssetWriter
 
     public $enableCompressor = true;
 
+
+    /**
+     * Create with writer with a loader.
+     *
+     * @param AssetKit\AssetLoader $loader
+     */
     public function __construct($loader)
     {
         $this->loader = $loader;
@@ -51,16 +63,36 @@ class AssetWriter
         return $this;
     }
 
+
+    /**
+     * Register filter builder
+     *
+     * @param string $name filter name
+     * @param function $cb builder closure
+     */
     public function addFilter($name,$cb)
     {
         $this->_filter[ $name ] = $cb;
     }
 
+
+    /**
+     * Register compressor
+     *
+     * @param string $name compressor name
+     * @param function $cb function builder
+     */
     public function addCompressor($name,$cb)
     {
         $this->_compressors[ $name ] = $cb;
     }
 
+
+    /**
+     * Get Filter object
+     *
+     * @param string $name filter name
+     */
     public function getFilter($name)
     {
         if( isset($this->filters[$name]) )
@@ -79,6 +111,12 @@ class AssetWriter
         }
     }
 
+
+    /**
+     * Get compressor object
+     *
+     * @param string $name compressor name
+     */
     public function getCompressor($name)
     {
         if( isset($this->compressors[$name]) )
