@@ -29,9 +29,6 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
         $content = $cln->getContent();
 
         like( '/jQuery/', $content );
-        
-
-
     }
 }
 
