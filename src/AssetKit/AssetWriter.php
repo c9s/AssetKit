@@ -202,7 +202,7 @@ class AssetWriter
     {
         // check mtime
         if( $this->name && $this->cache ) {
-            if( $manifest = $this->cache->get( 'assets:' . $this->name ) ) {
+            if( $manifest = $this->cache->get( 'asset-manifest:' . $this->name ) ) {
                 $jsmtime = isset($manifest['javascript_file']) 
                     ? filemtime( $manifest['javascript_file'] )
                     : null;
@@ -247,7 +247,7 @@ class AssetWriter
 
 
         $contents = $this->aggregate();
-        $return = array();
+        $manifest = array();
         $dir = $this->loader->config->getPublicRoot();
 
         if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
@@ -261,8 +261,8 @@ class AssetWriter
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $cssfile , $contents['stylesheet'] ) !== false or die('write fail');
 
-            $return['stylesheet_file'] = $cssfile;
-            $return['stylesheet'] = DIRECTORY_SEPARATOR . $path;
+            $manifest['stylesheet_file'] = $cssfile;
+            $manifest['stylesheet'] = DIRECTORY_SEPARATOR . $path;
         }
         if( isset($contents['javascript']) ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
@@ -271,14 +271,14 @@ class AssetWriter
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $jsfile , $contents['javascript'] ) !== false or die('write fail');
 
-            $return['javascript'] = DIRECTORY_SEPARATOR . $path;
-            $return['javascript_file'] = $jsfile;
+            $manifest['javascript'] = DIRECTORY_SEPARATOR . $path;
+            $manifest['javascript_file'] = $jsfile;
         }
 
         if( $this->name && $this->cache ) {
-            $this->cache->set( 'assets:' . $this->name , $return );
+            $this->cache->set( 'asset-manifest:' . $this->name , $manifest );
         }
-        return $return;
+        return $manifest;
     }
 }
 
