@@ -3,6 +3,6 @@ assets:
   - filters: [ "coffeescript" ]
     files:
       - test.coffee
-  - filters: [ "yui_js" ]
+  - compressors: [ "yui_js" ]
     files:
       - test.js

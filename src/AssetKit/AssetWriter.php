@@ -62,7 +62,8 @@ class AssetWriter
             return new \AssetKit\Compressor\CssMinCompressor;
         });
         $this->addCompressor('yui_js', function() {
-            return new \AssetKit\Compressor\Yui\JsCompressor;
+            $bin = getenv('YUI_COMPRESSOR_BIN');
+            return new \AssetKit\Compressor\Yui\JsCompressor($bin);
         });
         $this->addFilter( 'coffeescript' ,function() {
             return new \AssetKit\Filter\CoffeeScriptFilter;
@@ -116,7 +117,7 @@ class AssetWriter
      */
     public function addFilter($name,$cb)
     {
-        $this->_filter[ $name ] = $cb;
+        $this->_filters[ $name ] = $cb;
     }
 
 
@@ -141,7 +142,6 @@ class AssetWriter
     {
         if( isset($this->filters[$name]) )
             return $this->filters[$name];
-
 
         if( ! isset($this->_filters[$name]) )
             return;
@@ -197,12 +197,12 @@ class AssetWriter
 
     public function runCollectionCompressors($collection)
     {
-        foreach( $collection->compressors as $compressorname ) {
-            if( $compressor = $this->getCompressor( $compressorname ) ) {
+        foreach( $collection->compressors as $n ) {
+            if( $compressor = $this->getCompressor( $n ) ) {
                 $compressor->compress($collection);
             }
             else { 
-                throw new Exception("compressor $compressorname not found.");
+                throw new Exception("compressor $n not found.");
             }
         }
     }
