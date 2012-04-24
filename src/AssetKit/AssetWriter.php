@@ -55,6 +55,10 @@ class AssetWriter
         $this->addFilter( 'coffeescript' ,function() {
             return new \AssetKit\Filter\CoffeeScriptFilter;
         });
+        $this->addFilter( 'css_rewrite', function() {
+            // XXX:
+            // return new AssetKit\Compressor
+        });
     }
 
 
