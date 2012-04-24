@@ -37,7 +37,6 @@ class FileCollection
 
             if( isset($config['files']) ) {
                 $collection->files = $config['files'];
-                
             }
 
             if( isset($config['javascript']) )
