@@ -7,14 +7,26 @@ use Exception;
 /**
  * @class
  *
+ * @code
+ *   $writer = new AssetKit\AssetWriter( $config );
+ *   $apc = new CacheKit\ApcCache(array( 'namespace' => uniqid() , 'default_expiry' => 3 ));
+ *   $manifest = $writer->from( array($asset) )
+ *       // ->cache( $apc )
+ *       ->name( 'jqueryui' )
+ *       ->in('assets') // public/assets
+ *       ->write();
+ * @code
+ *
+ * AssetLoader is only used for getPublicRoot (for writing)
  */
 class AssetWriter
 {
-    public $loader;
     public $assets;
     public $in;
     public $name;
     public $cache;
+
+    public $config;
 
     protected $filters = array();
 
@@ -31,13 +43,13 @@ class AssetWriter
     public $environment = 'development';
 
     /**
-     * Create with writer with a loader.
+     * Create with writer with config.
      *
-     * @param AssetKit\AssetLoader $loader
+     * @param AssetKit\Config $config
      */
-    public function __construct($loader)
+    public function __construct($config)
     {
-        $this->loader = $loader;
+        $this->config = $config;
         $this->init();
     }
 
@@ -269,7 +281,7 @@ class AssetWriter
 
         $contents = $this->aggregate();
         $manifest = array();
-        $dir = $this->loader->config->getPublicRoot();
+        $dir = $this->config->getPublicRoot();
 
         if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
             mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );

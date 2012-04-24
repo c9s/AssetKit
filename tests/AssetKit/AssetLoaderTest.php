@@ -31,9 +31,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         }
 
 
-        // $loader->enableCompressor = false;
 
-        $writer = new AssetKit\AssetWriter( $loader );
+        $writer = new AssetKit\AssetWriter( $config );
+        $writer->enableCompressor = false;
         ok( $writer );
 
 

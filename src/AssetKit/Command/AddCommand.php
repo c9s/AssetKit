@@ -18,7 +18,7 @@ class AddCommand extends Command
         $asset = new Asset($manifestPath);
         $asset->initResource();
 
-
+        $writer = new AssetKit\AssetWriter( $config );
 
         // get asset files and copy them into 
         $fromDir = $asset->dir;
@@ -29,7 +29,7 @@ class AddCommand extends Command
                 $srcFile = $fromDir . $subpath;
                 $targetFile = $config->getPublicRoot() . $subpath;
 
-                // we should run filters per file.
+                // We should run filters per file.
                 //   - CssRewrite
                 //   - CoffeeScript
                 $tmp = new \AssetKit\FileCollection;
@@ -38,6 +38,7 @@ class AddCommand extends Command
         }
 
         $config->addAsset( $asset->name , $asset->export() );
+
 
         $this->logger->info("Saving config...");
         $config->save();
