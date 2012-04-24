@@ -8,6 +8,7 @@ class AddCommand extends Command
 {
     function options($opts)
     {
+        $opts->add('public:=s','public directory, your web server root.');
     }
 
     function brief() { return 'add and initialize asset.'; }
@@ -19,10 +20,10 @@ class AddCommand extends Command
         if( ! file_exists($manifestPath)) 
             throw new Exception( "$manifestPath does not exist." );
 
-        $manifest = new Asset($manifestPath);
-        $manifest->initResource();
+        $asset = new Asset($manifestPath);
+        $asset->initResource();
 
-        $config->addAsset( $manifest->name , $manifest->export() );
+        $config->addAsset( $asset->name , $asset->export() );
 
         $this->logger->info("Saving config...");
         $config->save();

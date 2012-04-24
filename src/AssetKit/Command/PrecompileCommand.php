@@ -30,7 +30,8 @@ class PrecompileCommand extends Command
 
         $this->logger->info('Precompiling...');
 
-        // XXX:
+        // initialize loader and writer
+
 
         $this->logger->info("Done");
     }
