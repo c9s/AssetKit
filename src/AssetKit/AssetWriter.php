@@ -185,12 +185,12 @@ class AssetWriter
     {
         if( empty($collection->filters) )
             return;
-        foreach( $collection->filters as $filtername ) {
-            if( $filter = $this->getFilter( $filtername ) ) {
+        foreach( $collection->filters as $n ) {
+            if( $filter = $this->getFilter( $n ) ) {
                 $filter->filter($collection);
             }
             else {
-                throw new Exception("filter $filtername not found.");
+                throw new Exception("filter $n not found.");
             }
         }
     }

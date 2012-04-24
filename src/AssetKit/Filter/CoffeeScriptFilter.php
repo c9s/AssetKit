@@ -7,7 +7,7 @@ class CoffeeScriptFilter
     public $coffeescript;
     public $nodejs;
 
-    public function __construct($coffeescript, $nodejs = null )
+    public function __construct($coffeescript = 'coffee', $nodejs = null )
     {
         $this->coffeescript = $coffeescript;
         if( $nodejs ) {
