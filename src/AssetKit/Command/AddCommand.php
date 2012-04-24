@@ -42,9 +42,20 @@ class AddCommand extends Command
                 $tmp->addFile( $srcFile );
                 $writer->runCollectionFilters($tmp);
 
+                $content = $tmp->getContent();
+                if( file_exists($targetFile) ) {
+                    $contentOrig = file_get_contents($targetFile);
+                    if( ($chk1 = md5($content)) !== ($chk2 = md5($contentOrig)) ) {
+                        $this->logger->error("Checksum mismatch: ");
+                        $this->logger->error("$chk2: $targetFile (original)");
+                        $this->logger->error("$chk1: $targetFile");
+                        exit(1);
+                    }
+                }
                 $this->logger->info( "Writing $targetFile" );
 
-                // echo $tmp->getContent();
+                \AssetKit\FileUtils::mkdir_for_file( $targetFile );
+                file_put_contents( $targetFile , $content );
             }
         }
 

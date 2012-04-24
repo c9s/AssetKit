@@ -4,6 +4,14 @@ namespace AssetKit;
 class FileUtils
 {
 
+    static function mkdir_for_file($file, $mask = 0755)
+    {
+        $dir = dirname($file);
+        if( ! file_exists($dir) ) {
+            mkdir( $dir, $mask , true );
+        }
+    }
+
     static function replace_extension($path,$replacement)
     {
         if( is_array($replacement) ) {
