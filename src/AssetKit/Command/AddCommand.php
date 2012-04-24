@@ -23,6 +23,10 @@ class AddCommand extends Command
         // get asset files and copy them into 
         $fromDir = $asset->dir;
         $n       = $asset->name;
+
+        // save installed asset files
+        $installed = array();
+
         foreach( $asset->getFileCollections() as $collection ) {
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
@@ -56,10 +60,13 @@ class AddCommand extends Command
 
                 \AssetKit\FileUtils::mkdir_for_file( $targetFile );
                 file_put_contents( $targetFile , $content );
+                $installed[] = $targetFile;
             }
         }
 
-        $config->addAsset( $asset->name , $asset->export() );
+        $export = $asset->export();
+        $export['installed'] = $installed;
+        $config->addAsset( $asset->name , $export );
 
 
         $this->logger->info("Saving config...");
