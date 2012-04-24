@@ -1,6 +1,26 @@
 AssetKit
 ============
 
+
+
+    -AssetKit (master) % php scripts/assetkit.php add assets/jquery/manifest.yml 
+    fatal: destination path 'assets/jquery/jquery' already exists and is not an empty directory.
+    Submodule 'src/sizzle' () registered for path 'src/sizzle'
+    Submodule 'test/qunit' () registered for path 'test/qunit'
+    Submodule 'src/sizzle' () registered for path 'src/sizzle'
+    Submodule 'test/qunit' () registered for path 'test/qunit'
+    Checking jQuery against JSHint...
+    JSHint check passed.
+    jQuery Size - compared to last make
+      252787      (-) jquery.js
+       94771      (-) jquery.min.js
+       33635      (-) jquery.min.js.gz
+    jQuery build complete.
+    Saving config...
+    Done
+
+
+
 ## Asset structure
 
 	assets/jquery
@@ -10,6 +30,7 @@ AssetKit
 	assets/jquery/images/...
 	assets/jquery/js/...
 	assets/jqunit
+
 
 ## Requirement
 

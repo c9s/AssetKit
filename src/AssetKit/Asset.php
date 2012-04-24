@@ -8,7 +8,11 @@ class Asset
 {
     public $stash;
 
+    /* manifest file */
     public $file;
+
+    /* manifest dir */
+    public $dir;
 
     public $config;
 
@@ -25,10 +29,7 @@ class Asset
             $this->dir = @$arg['dir'];
             $this->name = $arg['name'];
         }
-        elseif( $arg && is_string($arg) ) {
-            $this->name = $arg;
-        }
-        elseif( $arg ) 
+        elseif( $arg && file_exists($arg) ) 
         {
             // load from file
             $file = $arg;
@@ -43,6 +44,9 @@ class Asset
             }
             $this->dir = dirname($file);
             $this->name = basename(dirname($file));
+        }
+        elseif( $arg && is_string($arg) ) {
+            $this->name = $arg;
         }
 
         if( isset($this->stash['assets']) ) {
@@ -85,8 +89,10 @@ class Asset
 
     public function initResource()
     {
-        if( ! isset($this->stash['resource']) )
+        if( ! isset($this->stash['resource']) ) {
+            throw new Exception( "Resource is not defined." );
             return false;
+        }
 
         $resDir = null;
         $r = $this->stash['resource'];
