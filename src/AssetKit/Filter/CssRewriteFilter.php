@@ -6,7 +6,7 @@ class CssRewriteFilter
 
 	public function filter($collection)
 	{
-		$files = $collection->getFiles();
+		$files = $collection->getFilePaths();
         foreach( $files as $file ) {
 
         }

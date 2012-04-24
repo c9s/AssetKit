@@ -9,7 +9,7 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
         $cln->addFile( 'assets/test/test.coffee' );
         ok($cln);
 
-        $files = $cln->getFiles();
+        $files = $cln->getFilePaths();
         ok( $files );
 
         foreach( $files as $file ) {
@@ -38,7 +38,7 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
         $cln->addFile( 'assets/jquery/jquery/dist/jquery.js' );
         ok($cln);
 
-        $files = $cln->getFiles();
+        $files = $cln->getFilePaths();
         ok( $files );
 
         foreach( $files as $file ) {

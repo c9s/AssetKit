@@ -88,9 +88,14 @@ class Asset
 
     public function copyTo($baseDir)
     {
-        foreach( $this->collections as $collection ) {
-
-        }
+        $cssFiles = array();
+        $jsFiles  = array();
+#          foreach( $this->collections as $collection ) {
+#              if( $collection->isJavascript ) {
+#                  foreach( $collection->getFilePaths() as $f ) 
+#                      $jsFiles[] = $f;
+#              }
+#          }
     }
 
     public function compile()

@@ -51,7 +51,8 @@ class FileCollection
         return $collections;
     }
 
-    public function getFiles()
+
+    public function getFilePaths()
     {
         if( $this->asset ) {
             $dir = $this->asset->dir;
@@ -95,7 +96,7 @@ class FileCollection
             return $this->content;
 
         $content = '';
-        foreach( $this->getFiles() as $file ) {
+        foreach( $this->getFilePaths() as $file ) {
             if( ! file_exists($file) )
                 throw new Exception("$file does not exist.");
             $content .= file_get_contents( $file );
