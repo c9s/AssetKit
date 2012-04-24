@@ -15,25 +15,33 @@ class AddCommand extends Command
         if( ! file_exists($manifestPath)) 
             throw new Exception( "$manifestPath does not exist." );
 
-        $asset = new Asset($manifestPath);
+        $asset = new \AssetKit\Asset($manifestPath);
         $asset->initResource();
 
-        $writer = new AssetKit\AssetWriter( $config );
+        $writer = new \AssetKit\AssetWriter( $config );
 
         // get asset files and copy them into 
         $fromDir = $asset->dir;
         $n       = $asset->name;
         foreach( $asset->getFileCollections() as $collection ) {
             foreach( $collection->getFilePaths() as $path ) {
-                $subpath = DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $path;
-                $srcFile = $fromDir . $subpath;
-                $targetFile = $config->getPublicRoot() . $subpath;
+                $subpath = $path;
+                $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+
+                // var_dump( $srcFile, $targetFile ); 
 
                 // We should run filters per file.
                 //   - CssRewrite
                 //   - CoffeeScript
                 $tmp = new \AssetKit\FileCollection;
+                $tmp->filters = $collection->filters;
                 $tmp->addFile( $srcFile );
+                $writer->runCollectionFilters($tmp);
+
+                $this->logger->info( "Writing to $targetFile" );
+
+                // echo $tmp->getContent();
             }
         }
 

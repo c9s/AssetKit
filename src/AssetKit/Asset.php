@@ -90,18 +90,6 @@ class Asset
         );
     }
 
-    public function copyTo($baseDir)
-    {
-        $cssFiles = array();
-        $jsFiles  = array();
-#          foreach( $this->collections as $collection ) {
-#              if( $collection->isJavascript ) {
-#                  foreach( $collection->getFilePaths() as $f ) 
-#                      $jsFiles[] = $f;
-#              }
-#          }
-    }
-
     public function compile()
     {
         $serializer = new SerializerKit\Serializer('php');
