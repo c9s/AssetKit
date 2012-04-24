@@ -15,6 +15,8 @@ class CoffeeScriptFilter
     public function filter($collection)
     {
         $pb = new ProcessBuilder(array( $this->nodejs, $this->coffeescript ));
+        // compile and print to stdout
+        $pb->add( '-cp' );
 
         $input = $collection->getContent();
         $proc = $pb->getProcess();
@@ -23,7 +25,6 @@ class CoffeeScriptFilter
         $content = $proc->getOutput();
         $collection->setContent($content);
     }
-
 }
 
 
