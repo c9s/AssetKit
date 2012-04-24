@@ -23,14 +23,19 @@ class Config
     /**
      * Register asset to config file
      *
+     * @param string $name asset name
+     * @param string $asset asset stash array, contains paths, resources .. etc
      */
-    public function addAsset($asset,$path)
+    public function addAsset($name,$asset)
     {
         if( ! isset($this->config['assets']) )
             $this->config['assets'] = array();
-        $this->config['assets'][$asset] = $path;
+        $this->config['assets'][$name] = $asset;
     }
 
+    /**
+     * Remove Asset from config file
+     */
     public function removeAsset($asset)
     {
         unset($this->config['assets'][$asset]);

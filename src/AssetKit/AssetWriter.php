@@ -186,11 +186,29 @@ class AssetWriter
 
     public function write()
     {
+        // check mtime
         if( $this->name && $this->cache ) {
-            if( $contents = $this->cache->get( 'assets:' . $this->name ) ) {
+            $cachemtime = $this->cache->get( 'asset_mtime:' . $this->name );
+
+            // In development mode, we should check file stats.
+            $expired = false;
+            foreach( $this->assets as $asset ) {
+                $collections = $asset->getFileCollections();
+                foreach( $collections as $collection ) {
+                    $mtime = $collection->getLastModifiedTime();
+                    if( $mtime > $cachemtime ) {
+                        $expired = true;
+                        break 2;
+                    }
+                }
+            }
+
+            // if the cache content is not expired, we can just return the content
+            if( ! $expired && $contents = $this->cache->get( 'assets:' . $this->name ) ) {
                 return $contents;
             }
         }
+
 
         $contents = $this->aggregate();
         $return = array();
@@ -201,7 +219,7 @@ class AssetWriter
         }
 
         if( isset($contents['stylesheet']) ) {
-            $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
+            $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-'
                 . md5( $contents['stylesheet']) . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
