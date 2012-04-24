@@ -179,6 +179,14 @@ class AssetWriter
     }
 
 
+
+    /**
+     * Aggregate asset contents, 
+     * run through filters, compressors ...
+     *
+     * @param  AssetKit\Asset $asset
+     * @return array [ css: string, js: string ]
+     */
     public function aggregate($asset)
     {
         $js = '';
