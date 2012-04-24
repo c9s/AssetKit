@@ -1,0 +1,8 @@
+---
+assets:
+  - filters: [ "coffeescript" ]
+    files:
+      - test.coffee
+  - filters: [ "yui_js" ]
+    files:
+      - test.js
