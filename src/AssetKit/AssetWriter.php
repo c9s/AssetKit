@@ -28,7 +28,7 @@ class AssetWriter
 
     public $enableCompressor = true;
 
-    public $environment;
+    public $environment = 'development';
 
     /**
      * Create with writer with a loader.
@@ -168,7 +168,10 @@ class AssetWriter
                     }
                 }
 
-                if( $this->enableCompressor && $collection->compressors ) {
+                // if we are in development mode, we don't need to compress them all.
+                if( $this->environment !== 'development'
+                        && $this->enableCompressor
+                        && $collection->compressors ) {
                     foreach( $collection->compressors as $compressorname ) {
                         if( $compressor = $this->getCompressor( $compressorname ) ) {
                             $compressor->compress($collection);
