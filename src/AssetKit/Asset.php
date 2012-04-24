@@ -104,7 +104,6 @@ class Asset
     public function initResource()
     {
         if( ! isset($this->stash['resource']) ) {
-            throw new Exception( "Resource is not defined." );
             return false;
         }
 
