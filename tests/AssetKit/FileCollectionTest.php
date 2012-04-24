@@ -14,6 +14,11 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
         foreach( $files as $file ) {
             file_ok( $file );
         }
+
+        // read content from files
+        $content = $cln->getContent();
+        ok( $content );
+
     }
 }
 
