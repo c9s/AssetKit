@@ -261,8 +261,8 @@ class AssetWriter
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $cssfile , $contents['stylesheet'] ) !== false or die('write fail');
 
+            $manifest['stylesheet'] = '/' . $path;
             $manifest['stylesheet_file'] = $cssfile;
-            $manifest['stylesheet'] = DIRECTORY_SEPARATOR . $path;
         }
         if( isset($contents['javascript']) ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
@@ -271,7 +271,7 @@ class AssetWriter
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $jsfile , $contents['javascript'] ) !== false or die('write fail');
 
-            $manifest['javascript'] = DIRECTORY_SEPARATOR . $path;
+            $manifest['javascript'] = '/' . $path;
             $manifest['javascript_file'] = $jsfile;
         }
 
