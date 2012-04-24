@@ -19,6 +19,10 @@ AssetKit
     Done
 
 
+To use YUI Compressor:
+
+    YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
+        assetkit add assets/test/manifest.yml
 
 ## Asset structure
 

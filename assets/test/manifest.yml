@@ -1,8 +1,6 @@
 ---
 assets:
-  - filters: [ "coffeescript" ]
+  - filters: [ 'coffeescript' ]
+    javascript: 1
     files:
       - test.coffee
-  - compressors: [ "yui_js" ]
-    files:
-      - test.js

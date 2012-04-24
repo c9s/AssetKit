@@ -33,6 +33,13 @@ class AddCommand extends Command
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
                 $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
+                if( $collection->isJavascript ) {
+                    $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile, 'js' );
+                }
+                elseif( $collection->isStylesheet ) {
+                    $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile , 'css' );
+                }
+
                 // var_dump( $srcFile, $targetFile ); 
 
                 $this->logger->info("Filtering content from $srcFile");
