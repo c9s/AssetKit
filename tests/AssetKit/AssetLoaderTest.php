@@ -36,12 +36,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $writer = new AssetKit\AssetWriter( $loader );
         ok( $writer );
 
-        $writer->addCompressor('jsmin', function() {
-            return new AssetKit\Compressor\JsMinCompressor;
-        });
-        $writer->addCompressor('cssmin', function() {
-            return new AssetKit\Compressor\CssMinCompressor;
-        });
 
         $writer->addFilter( 'css_rewrite', function() {
             // return new AssetKit\Compressor

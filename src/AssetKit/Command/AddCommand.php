@@ -6,11 +6,6 @@ use CLIFramework\Command;
 
 class AddCommand extends Command
 {
-    function options($opts)
-    {
-        $opts->add('public:=s','public directory, your web server root.');
-    }
-
     function brief() { return 'add and initialize asset.'; }
 
     function execute($manifestPath)
@@ -23,13 +18,25 @@ class AddCommand extends Command
         $asset = new Asset($manifestPath);
         $asset->initResource();
 
-        $options = $this->options;
-        if( $options->public ) {
-            // $asset->copyTo( $options->public );
+
+
+        // get asset files and copy them into 
+        $fromDir = $asset->dir;
+        $n       = $asset->name;
+        foreach( $asset->getFileCollections() as $collection ) {
+            foreach( $collection->getFilePaths() as $path ) {
+                $subpath = DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $path;
+                $srcFile = $fromDir . $subpath;
+                $targetFile = $config->getPublicRoot() . $subpath;
+
+                // we should run filters per file.
+                //   - CssRewrite
+                //   - CoffeeScript
+                $tmp = new \AssetKit\FileCollection;
+                $tmp->addFile( $srcFile );
+            }
         }
 
-        $export = $asset->export();
-        var_dump( $export ); 
         $config->addAsset( $asset->name , $asset->export() );
 
         $this->logger->info("Saving config...");

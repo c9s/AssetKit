@@ -38,6 +38,20 @@ class AssetWriter
     public function __construct($loader)
     {
         $this->loader = $loader;
+        $this->init();
+    }
+
+    public function init()
+    {
+        $this->addCompressor('jsmin', function() {
+            return new \AssetKit\Compressor\JsMinCompressor;
+        });
+        $this->addCompressor('cssmin', function() {
+            return new \AssetKit\Compressor\CssMinCompressor;
+        });
+        $this->addFilter( 'coffeescript' ,function() {
+            return new \AssetKit\Filter\CoffeeScriptFilter;
+        });
     }
 
 

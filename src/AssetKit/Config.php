@@ -55,9 +55,14 @@ class Config
                 JSON_PRETTY_PRINT));
     }
 
-    public function getPublicRoot()
+    public function getAbsolutePublicRoot()
     {
         return $this->baseDir .DIRECTORY_SEPARATOR . (@$this->config['public'] ?: 'public');
+    }
+
+    public function getPublicRoot()
+    {
+        return @$this->config['public'] ?: 'public';
     }
 
 }

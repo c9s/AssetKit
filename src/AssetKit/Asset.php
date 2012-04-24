@@ -15,12 +15,16 @@ class Asset
 {
     public $stash;
 
-    /* manifest file */
+    /* manifest file (related path) */
     public $manfiest;
 
-    /* manifest dir */
+    /* asset dir (related path) */
     public $dir;
 
+
+    /**
+     * @var AssetKit\Config
+     */
     public $config;
 
     public $loader;
@@ -81,7 +85,7 @@ class Asset
         return array(
             'stash' => $this->stash,
             'manifest' => $this->manifest,
-            'dir' => $this->dir,
+            'dir'  => $this->dir,
             'name' => $this->name,
         );
     }
