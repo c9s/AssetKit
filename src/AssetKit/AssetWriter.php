@@ -202,24 +202,46 @@ class AssetWriter
     {
         // check mtime
         if( $this->name && $this->cache ) {
-            $cachemtime = $this->cache->get( 'asset_mtime:' . $this->name );
+            if( $manifest = $this->cache->get( 'assets:' . $this->name ) ) {
+                $jsmtime = isset($manifest['javascript_file']) 
+                    ? filemtime( $manifest['javascript_file'] )
+                    : null;
+                $cssmtime = 
+                    isset( $manifest['stylesheet_file'] ) 
+                    ? filemtime( $manifest['stylesheet_file'] )
+                    : null;
 
-            // In development mode, we should check file stats.
-            $expired = false;
-            foreach( $this->assets as $asset ) {
-                $collections = $asset->getFileCollections();
-                foreach( $collections as $collection ) {
-                    $mtime = $collection->getLastModifiedTime();
-                    if( $mtime > $cachemtime ) {
-                        $expired = true;
-                        break 2;
+                // In development mode, we should check file stats.
+                $expired = false;
+                foreach( $this->assets as $asset ) {
+                    $collections = $asset->getFileCollections();
+                    foreach( $collections as $collection ) {
+                        $mtime = $collection->getLastModifiedTime();
+
+                        if( $collection->isJavascript 
+                            && $jsmtime 
+                            && $mtime > $jsmtime ) 
+                        {
+                            $expired = true;
+                            break 2;
+                        }
+                        elseif( $collection->isStylesheet 
+                                && $cssmtime 
+                                && $mtime > $cssmtime )
+                        {
+                            $expired = true;
+                            break 2;
+                        }
+                        else {
+                            throw new Exception("Unknown type collection.");
+                        }
                     }
                 }
-            }
 
-            // if the cache content is not expired, we can just return the content
-            if( ! $expired && $contents = $this->cache->get( 'assets:' . $this->name ) ) {
-                return $contents;
+                // if the cache content is not expired, we can just return the content
+                if( ! $expired ) {
+                    return $contents;
+                }
             }
         }
 
