@@ -183,11 +183,11 @@ class AssetWriter
      * Aggregate stylesheet/javascript content
      *
      */
-    public function aggregate()
+    public function aggregate($assets)
     {
         $css = '';
         $js = '';
-        foreach( $this->assets as $asset ) {
+        foreach( $assets as $asset ) {
             $collections = $asset->getFileCollections();
             foreach( $collections as $collection ) {
                 if( $collection->filters ) {
@@ -278,8 +278,7 @@ class AssetWriter
             }
         }
 
-
-        $contents = $this->aggregate();
+        $contents = $this->aggregate( $this->assets );
         $manifest = array();
         $dir = $this->config->getPublicRoot();
 
