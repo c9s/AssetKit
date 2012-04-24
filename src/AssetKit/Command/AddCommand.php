@@ -10,7 +10,7 @@ class AddCommand extends Command
     {
     }
 
-    function brief() { return 'add and initialize asset.' }
+    function brief() { return 'add and initialize asset.'; }
 
     function execute($manifestPath)
     {
