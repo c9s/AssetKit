@@ -1,17 +1,36 @@
 <?php
 namespace AssetKit;
 
+
+/**
+ * @class
+ *
+ * Load Asset from manifest File
+ */
 class AssetLoader
 {
     public $paths;
+
+
+    /**
+     * @var \AssetKit\Config
+     */
     public $config;
 
-    function __construct($config,$paths = array())
+    /**
+     * @param AssetKit\Config $config
+     * @param array $paths
+     */
+    function __construct( \AssetKit\Config $config,$paths = array())
     {
         $this->config = $config;
         $this->paths = $paths;
     }
 
+
+    /**
+     * @param string $name asset name
+     */
     function load($name)
     {
         if( $this->config && $path = $this->config->getAssetPath($name) ) {
