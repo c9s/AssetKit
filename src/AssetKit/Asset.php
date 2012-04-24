@@ -4,6 +4,13 @@ use ZipArchive;
 use Exception;
 use SerializerKit;
 
+
+/**
+ * Asset class
+ *
+ * Asset object can be created from a manifest file.
+ * Or can just be created with no arguments.
+ */
 class Asset
 {
     public $stash;
@@ -20,6 +27,9 @@ class Asset
 
     public $collections = array();
 
+    /**
+     * @param array|string|null $arg manifest array, manifest file path, or asset name
+     */
     public function __construct($arg = null)
     {
         // load from array

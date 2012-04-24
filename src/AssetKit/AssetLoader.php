@@ -1,7 +1,6 @@
 <?php
 namespace AssetKit;
 
-
 /**
  * @class
  *
@@ -30,6 +29,7 @@ class AssetLoader
 
     /**
      * @param string $name asset name
+     *
      */
     function load($name)
     {
@@ -52,9 +52,5 @@ class AssetLoader
             }
         }
     }
-
 }
-
-
-
 
