@@ -20,9 +20,6 @@ class AddCommand extends Command
         $manifest = new Asset($manifestPath);
         $manifest->initResource();
 
-#          $php = $manifest->compile();
-#          $this->logger->info("compiled $php");
-
         $config->addAsset( $manifest->name , $manifest->export() );
 
         $this->logger->info("Saving config...");
