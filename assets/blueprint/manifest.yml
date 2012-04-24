@@ -1,0 +1,9 @@
+---
+resource:
+  git: git://github.com/joshuaclayton/blueprint-css.git
+  commands:
+    - rake
+assets:
+  - stylesheet: 1
+    files:
+      - blueprint-css/blueprint/screen.css
