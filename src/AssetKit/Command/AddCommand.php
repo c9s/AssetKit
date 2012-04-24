@@ -31,15 +31,18 @@ class AddCommand extends Command
 
                 // var_dump( $srcFile, $targetFile ); 
 
+                $this->logger->info("Filtering content from $srcFile");
                 // We should run filters per file.
                 //   - CssRewrite
                 //   - CoffeeScript
                 $tmp = new \AssetKit\FileCollection;
+                $tmp->isJavascript = $collection->isJavascript;
+                $tmp->isStylesheet = $collection->isStylesheet;
                 $tmp->filters = $collection->filters;
                 $tmp->addFile( $srcFile );
                 $writer->runCollectionFilters($tmp);
 
-                $this->logger->info( "Writing to $targetFile" );
+                $this->logger->info( "Writing $targetFile" );
 
                 // echo $tmp->getContent();
             }
