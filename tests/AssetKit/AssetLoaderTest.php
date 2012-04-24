@@ -3,6 +3,12 @@
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
 
+    function testWriter()
+    {
+        $config = new AssetKit\Config;
+        // $loader = new AssetLoader( );
+    }
+
     function test()
     {
         $config = new AssetKit\Config('tests_assetkit');

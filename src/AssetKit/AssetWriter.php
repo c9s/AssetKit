@@ -137,6 +137,7 @@ class AssetWriter
 
     /**
      * Aggregate stylesheet/javascript content
+     *
      */
     public function aggregate()
     {

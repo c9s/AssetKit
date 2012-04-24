@@ -19,6 +19,11 @@ class Config
         }
     }
 
+
+    /**
+     * Register asset to config file
+     *
+     */
     public function addAsset($asset,$path)
     {
         if( ! isset($this->config['assets']) )
