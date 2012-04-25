@@ -18,39 +18,20 @@ class AddCommand extends Command
         $asset = new \AssetKit\Asset($manifestPath);
         $asset->initResource();
 
-        $writer = new \AssetKit\AssetWriter( $config );
-
         // get asset files and copy them into 
         $fromDir = $asset->dir;
         $n       = $asset->name;
 
-        // save installed asset files
+        $this->logger->info( "Installing {$asset->name}" );
+
+        // install into public asset root.
         foreach( $asset->getFileCollections() as $collection ) {
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
                 $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
-# XXX: move this compile operation into compile command:
-# 
-#                  if( $collection->isJavascript ) {
-#                      $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile, 'js' );
-#                  }
-#                  elseif( $collection->isStylesheet ) {
-#                      $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile , 'css' );
-#                  }
-#  
-#                  $this->logger->info("Filtering content from $srcFile");
-#                  // We should run filters per file.
-#                  //   - CssRewrite
-#                  //   - CoffeeScript
-#                  $tmp = new \AssetKit\FileCollection;
-#                  $tmp->isJavascript = $collection->isJavascript;
-#                  $tmp->isStylesheet = $collection->isStylesheet;
-#                  $tmp->filters = $collection->filters;
-#                  $tmp->addFile( $srcFile );
-#                  $writer->runCollectionFilters($tmp);
-
+                $this->logger->info("x $srcFile",1);
                 $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {
                     $contentOrig = file_get_contents($targetFile);
@@ -61,12 +42,12 @@ class AddCommand extends Command
                         exit(1);
                     }
                 }
-                $this->logger->info( "Writing $targetFile" );
 
                 \AssetKit\FileUtils::mkdir_for_file( $targetFile );
                 file_put_contents( $targetFile , $content );
             }
         }
+
 
         $export = $asset->export();
         $config->addAsset( $asset->name , $export );
