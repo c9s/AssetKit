@@ -16,6 +16,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $asset = $loader->load( 'jquery-ui' );
         ok( $asset );
 
+        $installer = new AssetKit\Installer;
+        $installer->install( $asset );
+
         $collections = $asset->getFileCollections();
         foreach( $collections as $collection ) {
             $files = $collection->getFilePaths();
@@ -37,11 +40,10 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
 
         $apc = new CacheKit\ApcCache(array( 'namespace' => uniqid() , 'default_expiry' => 3 ));
-        $manifest = $writer->from( array($asset) )
-            // ->cache( $apc )
+        $manifest = $writer 
             ->name( 'jqueryui' )
             ->in('assets') // public/assets
-            ->write();
+            ->write( array( $asset ) );
 
         var_dump( $manifest ); 
     }

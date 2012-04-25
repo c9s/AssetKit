@@ -21,8 +21,6 @@ use Exception;
  */
 class AssetWriter
 {
-    public $assets = array();
-
     public $in = 'assets';
 
     public $name;
@@ -95,12 +93,6 @@ class AssetWriter
     public function env($environment)
     {
         $this->environment = $environment;
-        return $this;
-    }
-
-    public function from($assets)
-    {
-        $this->assets = $assets;
         return $this;
     }
 
@@ -277,7 +269,7 @@ class AssetWriter
         );
     }
 
-    public function write()
+    public function write($assets)
     {
         // check mtime
         if( $this->name && $this->cache ) {
@@ -292,7 +284,7 @@ class AssetWriter
 
                 // In development mode, we should check file stats.
                 $expired = false;
-                foreach( $this->assets as $asset ) {
+                foreach( $assets as $asset ) {
                     $collections = $asset->getFileCollections();
                     foreach( $collections as $collection ) {
                         $mtime = $collection->getLastModifiedTime();
@@ -324,7 +316,7 @@ class AssetWriter
             }
         }
 
-        $contents = $this->squashThem( $this->assets );
+        $contents = $this->squashThem( $assets );
         $manifest = array();
         $dir = $this->config->getPublicRoot(true);
 

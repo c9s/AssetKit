@@ -56,10 +56,13 @@ class FileCollection
 
     public function getPublicPaths($absolute = false)
     {
-        $dir = $this->asset->getPublicDir($absolute);
-        return array_map(function($file) use ($dir) {
-            return $dir . DIRECTORY_SEPARATOR . $file;
-            }, $this->files);
+        if( $this->asset ) {
+            $dir = $this->asset->getPublicDir($absolute);
+            return array_map(function($file) use ($dir) {
+                return $dir . DIRECTORY_SEPARATOR . $file;
+                }, $this->files);
+        }
+        return $this->files;
     }
 
     public function getFilePaths()
