@@ -75,9 +75,11 @@ class AssetWriter
         $this->addFilter( 'coffeescript' ,function() {
             return new \AssetKit\Filter\CoffeeScriptFilter;
         });
+
         $this->addFilter( 'css_import', function() {
             return new \AssetKit\Filter\CssImportFilter;
         });
+
         $this->addFilter( 'css_rewrite', function() {
             // XXX:
             // return new AssetKit\Compressor
@@ -225,7 +227,7 @@ class AssetWriter
      * @param  AssetKit\Asset $asset
      * @return array [ css: string, js: string ]
      */
-    public function aggregate($asset)
+    public function squash($asset)
     {
         $js = '';
         $css = '';
@@ -258,12 +260,12 @@ class AssetWriter
     /**
      * Aggregate stylesheet/javascript content from assets
      */
-    public function aggregateThem($assets)
+    public function squashThem($assets)
     {
         $css = '';
         $js = '';
         foreach( $assets as $asset ) {
-            $ret = $this->aggregate( $asset );
+            $ret = $this->squash( $asset );
             $css .= $ret['css'];
             $js  .= $ret['js'];
         }
@@ -320,7 +322,7 @@ class AssetWriter
             }
         }
 
-        $contents = $this->aggregateThem( $this->assets );
+        $contents = $this->squashThem( $this->assets );
         $manifest = array();
         $dir = $this->config->getPublicRoot();
 
