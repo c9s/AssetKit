@@ -6,5 +6,6 @@ resource:
     - git submodule update
     - make
 assets:
-  - files:
+  - javascript: 1
+    files:
       - jquery/dist/jquery.js

@@ -238,11 +238,12 @@ class AssetWriter
 
             if( $collection->isJavascript ) {
                 $js .= $collection->getContent();
-            } elseif( $collection->isStylesheet ) {
+            } 
+            elseif( $collection->isStylesheet ) {
                 $css .= $collection->getContent();
             }
             else {
-                throw new Exception("Unknown asset type");
+                throw new Exception("Unknown asset type of {$asset->name}");
             }
         }
         return array(

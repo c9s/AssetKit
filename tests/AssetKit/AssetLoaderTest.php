@@ -3,15 +3,14 @@
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
 
-    function testWriter()
+    function getConfig()
     {
-        // $config = new AssetKit\Config;
-        // $loader = new AssetLoader( );
+        return new AssetKit\Config('.testassetkit');
     }
 
-    function test()
+    function testLoader()
     {
-        $config = new AssetKit\Config('tests_assetkit');
+        $config = $this->getConfig();
         $loader = new AssetKit\AssetLoader($config, array( 'assets') );
         $asset = $loader->load( 'jquery-ui' );
         ok( $asset );
@@ -32,20 +31,40 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
             ok( $content );
             ok( strlen( $content ) > 0 );
         }
+    }
 
 
+    function testWriter()
+    {
+        $config = $this->getConfig();
         $writer = new AssetKit\AssetWriter( $config );
         $writer->enableCompressor = false;
         ok( $writer );
 
+        $loader = new AssetKit\AssetLoader( $config , array('assets') );
+        $jquery = $loader->load('jquery');
+        $jqueryui = $loader->load('jquery-ui');
+
+        $installer = new AssetKit\Installer;
+        $installer->install( $jquery );
+        $installer->install( $jqueryui );
+
+        $assets = array();
+        $assets[] = $jquery;
+        $assets[] = $jqueryui;
 
         $apc = new CacheKit\ApcCache(array( 'namespace' => uniqid() , 'default_expiry' => 3 ));
         $manifest = $writer 
             ->name( 'jqueryui' )
             ->in('assets') // public/assets
-            ->write( array( $asset ) );
+            ->write( $assets );
 
         var_dump( $manifest ); 
+
+
+        $installer->uninstall( $jquery );
+        $installer->uninstall( $jqueryui );
+
     }
 }
 
