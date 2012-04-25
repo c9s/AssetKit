@@ -332,7 +332,8 @@ class AssetWriter
                 . md5( $contents['stylesheet']) . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $cssfile , $contents['stylesheet'] ) !== false or die('write fail');
+            file_put_contents( $cssfile , $contents['stylesheet'] ) !== false 
+                or die('write fail');
 
             $manifest['stylesheet'][] = array( 
                 'url' => '/' . $path,
@@ -345,7 +346,8 @@ class AssetWriter
                 . md5( $contents['javascript']) . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $jsfile , $contents['javascript'] ) !== false or die('write fail');
+            file_put_contents( $jsfile , $contents['javascript'] ) !== false 
+                    or die('write fail');
 
             $manifest['javascript'][] = array(
                 'path' => '/' . $path,
