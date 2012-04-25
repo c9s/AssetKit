@@ -29,6 +29,8 @@ class AssetTest extends PHPUnit_Framework_TestCase
             $urls = $c->getPublicUrls();
             ok( $paths );
         }
+        $installer->uninstall( $as );
+
 
         $files = $as->createFileCollection();
         ok( $files );
