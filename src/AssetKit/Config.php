@@ -74,6 +74,11 @@ class Config
         return $this->baseDir .DIRECTORY_SEPARATOR . (@$this->config['public'] ?: 'public');
     }
 
+    public function getPublicAssetBaseUrl()
+    {
+        return '/assets';
+    }
+
     public function getPublicAssetRoot()
     {
         return $this->getPublicRoot() . DIRECTORY_SEPARATOR . 'assets';
