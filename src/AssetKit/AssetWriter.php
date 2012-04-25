@@ -317,7 +317,10 @@ class AssetWriter
         }
 
         $contents = $this->squashThem( $assets );
-        $manifest = array();
+        $manifest = array(
+            'stylesheet' => array(),
+            'javascript' => array(),
+        );
         $dir = $this->config->getPublicRoot(true);
 
         if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
@@ -331,8 +334,11 @@ class AssetWriter
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $cssfile , $contents['stylesheet'] ) !== false or die('write fail');
 
-            $manifest['stylesheet'] = '/' . $path;
-            $manifest['stylesheet_file'] = $cssfile;
+            $manifest['stylesheet'][] = array( 
+                'url' => '/' . $path,
+                'path' => $cssfile,
+                'attrs' => array(), /* css attributes, keep for future. */
+            );
         }
         if( isset($contents['javascript']) && $contents['javascript'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
@@ -341,8 +347,10 @@ class AssetWriter
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $jsfile , $contents['javascript'] ) !== false or die('write fail');
 
-            $manifest['javascript'] = '/' . $path;
-            $manifest['javascript_file'] = $jsfile;
+            $manifest['javascript'][] = array(
+                'path' => '/' . $path,
+                'path' => $jsfile,
+            );
         }
 
         if( $this->name && $this->cache ) {

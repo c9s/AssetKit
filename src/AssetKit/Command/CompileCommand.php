@@ -35,9 +35,9 @@ class CompileCommand extends Command
         // initialize loader and writer
         $assets = $config->getAssets();
         $writer = new \AssetKit\AssetWriter( $config );
-        $manifest = $writer->from( $assets )
+        $manifest = $writer
             ->name( $as )
-            ->write();
+            ->write( $assets );
 
         var_dump( $manifest ); 
 

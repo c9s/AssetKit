@@ -14,7 +14,7 @@ class Console extends Application
         return $self;
     }
 
-    function init()
+    public function init()
     {
         parent::init();
         $this->registerCommand('init');
