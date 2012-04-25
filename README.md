@@ -1,6 +1,22 @@
 AssetKit
 ============
 
+AssetKit is powerful asset manager, provides a simple command-line interface
+and a simple PHP library, AssetKit has many built-in filters and compressors for asset files.
+
+AssetKit can fetch asset ports and initialize them from a simple manifest YAML file.
+
+You can use AssetKit library to integrate assets for your web applications very easily.
+
+
+Usage
+=====
+
+Once you got `assetkit`, you can initialize it with your public path (web root):
+
+    $ assetkit init --public public
+
+Then fetch anything you want:
 
     $ assetkit add assets/jquery/manifest.yml
     Submodule 'src/sizzle' () registered for path 'src/sizzle'
@@ -17,13 +33,33 @@ AssetKit
     Saving config...
     Done
 
+Once you've done, you can precompile the assets to a squashed javascript/stylesheet files:
+
+    $ assetkit compile --as your-app jquery jquery-ui blueprint
 
 To use YUI Compressor:
 
     YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
         assetkit add assets/test/manifest.yml
 
-## Asset manifest
+Hack
+=======
+
+Install deps:
+
+    $ git clone git://github.com/c9s/AssetKit.git
+    $ git submodule init
+    $ git submodule update
+    $ onion bundle
+    $ composer.phar install  # install Symfony Process
+
+... Hack Hack Hack ...
+
+    $ bash scripts/compile.sh
+    $ ./assetkit
+
+
+## The asset port manifest
 
 The manifest.yml file:
 
@@ -52,18 +88,18 @@ fetch resource and extract it
 
 ### Pre compile & export static files to webroot
 
-    $ assetkit compile 
+    $ assetkit compile --as app jquery-ui jquery
 
-### Load asset manifest object
+### Asset Library API
 
-	$config = new AssetKit\Config('.assetkit');
+    $config = new AssetKit\Config('.assetkit');
     $loader = new AssetLoader( $config , array( 'assets','other_assets')  );
 
-	$assets = array();
+    $assets = array();
     $jquery = $loader->load('jquery');
     $jqueryui = $loader->loadFile('assets/jquery-ui/manifest.yml');
 
-	$writer = new AssetKit\Writer($config);
+    $writer = new AssetKit\Writer($config);
 
     if( in production ) {
         $loader->addCompressorPattern('*.js', 'jsmin' );
@@ -73,51 +109,47 @@ fetch resource and extract it
     $writer->addFilterPattern('*.coffeescript', 'coffeescript' );
     $writer->addFilterPattern('*.sass', 'compass');
 
-    $writer->addCompressor( 'jsmin' , function() {
-        return new JsminCompressor( '/path/to/jsmin' );
-    });
-
     $writer->addFilter( 'compass', function() {
         return new Compass( '/path/to/compass' );
     });
 
 
-	$writer->addFilter( 'css_rewrite' , function() {
-		return new CssRewriteFilter(array( 
-			'base' => '/assets',
-			'dir' => 'public/assets',
-		));
-	});
+    $writer->addFilter( 'css_rewrite' , function() {
+        return new CssRewriteFilter(array( 
+            'base' => '/assets',
+            'dir' => 'public/assets',
+        ));
+    });
 
-	// parse css image files and copy to public/assets
-	$cssImagePreprocess = new CssImagePreprocess;
-	$cssImagePreprocess->from( $assets )
-			->in( 'public/assets' )
-			->process();
+    // parse css image files and copy to public/assets
+    $cssImagePreprocess = new CssImagePreprocess;
+    $cssImagePreprocess->from( $assets )
+            ->in( 'public/assets' )
+            ->process();
 
-	$writer = new AssetKit\AssetWriter( );
-	$manifest = $writer->from( $assets )
-			->cache( 'apc' )
-			->as( 'application' )
-			->in( 'public/assets' );
-			->write();
+    $writer = new AssetKit\AssetWriter( );
+    $manifest = $writer->from( $assets )
+            ->cache( 'apc' )
+            ->as( 'application' )
+            ->in( 'public/assets' );
+            ->write();
 
-	// public/assets/images
-	// public/assets/application-{md5}.css
-	// public/assets/application-{md5}.js
-	$manifest['stylesheet'];
-	$manifest['stylesheet_file']; // local filepath
-	$manifest['javascript'];
-	$manifest['javascript_file']; // local filepath
+    // public/assets/images
+    // public/assets/application-{md5}.css
+    // public/assets/application-{md5}.js
+    $manifest['stylesheet'];
+    $manifest['stylesheet_file']; // local filepath
+    $manifest['javascript'];
+    $manifest['javascript_file']; // local filepath
 
 
     $asset = $loader->getAsset( 'jquery' );
     $fileCollections = $asset->getFileCollections();
     $filters = $asset->getFilters();
 
-	foreach( $fileCollections as $collection ) {
-		$content = $collection->output();
-	}
+    foreach( $fileCollections as $collection ) {
+        $content = $collection->output();
+    }
 
 ### Asset Includer
 
@@ -149,36 +181,3 @@ Include javascripts only:
 Include css only:
 
     {% stylesheet 'jquery-ui' %}
-
-## Asset API
-
-    $asset = Asset::fromYaml('path/to/yaml');
-
-    $asset = new Asset;
-    $asset->glob('public/js/*.js');
-    $asset->dir('public/js/*.js');
-    $asset->filter(function($content) { 
-            return $content;
-        });
-    $asset->filter(new JsMinFilter);
-    echo $asset->output(); // get contents and filter content.
-
-
-    $loader = new AssetLoader;
-    $loader['jquery'] = $asset;
-    $loader['blueprint'] = $blueprint;
-
-    echo $loader->output( 'jquery' );
-
-    $loader = new AssetLoader;
-    $loader->load( 'path/to/manifest.yml' );
-    $loader->load( '.....' );
-
-
-## Todo
-
-* file mtime check
-* fix baseDir for config
-
-
-
