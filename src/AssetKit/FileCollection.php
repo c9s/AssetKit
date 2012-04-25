@@ -19,11 +19,6 @@ class FileCollection
 
     public $content;
 
-    public function __construct()
-    {
-
-    }
-
     static function create_from_manfiest($asset)
     {
         $collections = array();
@@ -49,6 +44,19 @@ class FileCollection
             $collections[] = $collection;
         }
         return $collections;
+    }
+
+    public function getPublicUrls()
+    {
+        # return '/assets'
+    }
+
+    public function getPublicPaths()
+    {
+        $dir = $this->asset->getPublicDir();
+        return array_map(function($file) use ($dir) {
+            return $dir . DIRECTORY_SEPARATOR . $file;
+            }, $this->files);
     }
 
     public function getAbsoluteFilePaths()

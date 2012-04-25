@@ -30,7 +30,7 @@ class AddCommand extends Command
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
-                $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
                 $this->logger->info("x $srcFile",1);
                 $content = file_get_contents($srcFile);
