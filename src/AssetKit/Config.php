@@ -84,9 +84,9 @@ class Config
         return $this->getPublicRoot() . DIRECTORY_SEPARATOR . 'assets';
     }
 
-    public function getPublicRoot()
+    public function getPublicRoot($absolute = false)
     {
-        return @$this->config['public'] ?: 'public';
+        return ( $absolute ? $this->baseDir . DIRECTORY_SEPARATOR : '' ) . (@$this->config['public'] ?: 'public');
     }
 
     public function getRoot()

@@ -108,9 +108,9 @@ class Asset
     /**
      * Return the public dir of this asset
      */
-    public function getPublicDir()
+    public function getPublicDir($absolute = false)
     {
-        $public = $this->config->getPublicRoot();
+        $public = $this->config->getPublicRoot($absolute);
         return $public . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $this->name;
     }
 

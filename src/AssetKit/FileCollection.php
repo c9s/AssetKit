@@ -54,24 +54,12 @@ class FileCollection
         },$this->files);
     }
 
-    public function getPublicPaths()
+    public function getPublicPaths($absolute = false)
     {
-        $dir = $this->asset->getPublicDir();
+        $dir = $this->asset->getPublicDir($absolute);
         return array_map(function($file) use ($dir) {
             return $dir . DIRECTORY_SEPARATOR . $file;
             }, $this->files);
-    }
-
-    public function getAbsoluteFilePaths()
-    {
-        if( $this->asset ) {
-            $dir = $this->asset->dir;
-            $baseDir = $this->asset->config->baseDir;
-            return array_map( function($file) use($dir,$baseDir){ 
-                    return $baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $file;
-                }, $this->files );
-        }
-        return $this->files;
     }
 
     public function getFilePaths()
@@ -111,7 +99,7 @@ class FileCollection
             return $this->content;
 
         $content = '';
-        foreach( $this->getAbsoluteFilePaths() as $file ) {
+        foreach( $this->getPublicPaths(true) as $file ) {
             if( ! file_exists($file) )
                 throw new Exception("$file does not exist.");
             $content .= file_get_contents( $file );
