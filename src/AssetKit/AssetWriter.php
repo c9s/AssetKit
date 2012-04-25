@@ -318,8 +318,8 @@ class AssetWriter
 
         $contents = $this->squashThem( $assets );
         $manifest = array(
-            'stylesheet' => array(),
-            'javascript' => array(),
+            'stylesheets' => array(),
+            'javascripts' => array(),
         );
         $dir = $this->config->getPublicRoot(true);
 
@@ -327,29 +327,29 @@ class AssetWriter
             mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
         }
 
-        if( isset($contents['stylesheet']) && $contents['stylesheet'] ) {
+        if( isset($contents['stylesheets']) && $contents['stylesheets'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-'
-                . md5( $contents['stylesheet']) . '.css';
+                . md5( $contents['stylesheets']) . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $cssfile , $contents['stylesheet'] ) !== false 
+            file_put_contents( $cssfile , $contents['stylesheets'] ) !== false 
                 or die('write fail');
 
-            $manifest['stylesheet'][] = array( 
+            $manifest['stylesheets'][] = array( 
                 'url' => '/' . $path,
                 'path' => $cssfile,
                 'attrs' => array(), /* css attributes, keep for future. */
             );
         }
-        if( isset($contents['javascript']) && $contents['javascript'] ) {
+        if( isset($contents['javascripts']) && $contents['javascripts'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
-                . md5( $contents['javascript']) . '.js';
+                . md5( $contents['javascripts']) . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $jsfile , $contents['javascript'] ) !== false 
+            file_put_contents( $jsfile , $contents['javascripts'] ) !== false 
                     or die('write fail');
 
-            $manifest['javascript'][] = array(
+            $manifest['javascripts'][] = array(
                 'path' => '/' . $path,
                 'path' => $jsfile,
             );

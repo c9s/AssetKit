@@ -3,13 +3,6 @@ namespace AssetKit;
 
 class IncludeRender
 {
-    public $manifest;
-
-    public function __construct($manifest)
-    {
-        $this->manifest = $manifest;
-    }
-
     public function getJavascriptTag($url,$attributes = array())
     {
         $html = '<script type="text/javascript" ';
@@ -32,8 +25,11 @@ class IncludeRender
         return $html;
     }
 
-    public function render()
+    public function renderManifest($manifest)
     {
+        foreach( $manifest['stylesheet'] as $stylesheet ) {
+
+        }
 
     }
 }
