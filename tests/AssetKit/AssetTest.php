@@ -32,21 +32,16 @@ class AssetTest extends PHPUnit_Framework_TestCase
         }
         $installer->uninstall( $as );
 
+        $jssha = $loader->load('jssha');
+        $jssha->initResource();
 
-        $files = $as->createFileCollection();
-        ok( $files );
-        $files->addFile( 'assets/jssha/jsSHA/src/sha1.js' );
-        $files->addFile( 'assets/jssha/jsSHA/src/sha256.js' );
-        $files->addFilter( 'yui_js' );
-        $mtime = $files->getLastModifiedTime();
-        ok( $mtime );
-        
-
-#          $files->addFile( '...' );
-#          $files->addFile( '...' );
-#          $files->addFilter( '...' );
-#          $files->addCompressor( '...' );
-
+#          $files = $as->createFileCollection();
+#          ok( $files );
+#          $files->addFile( 'assets/jssha/jsSHA/src/sha1.js' );
+#          $files->addFile( 'assets/jssha/jsSHA/src/sha256.js' );
+#          $files->addFilter( 'yui_js' );
+#          $mtime = $files->getLastModifiedTime();
+#          ok( $mtime );
     }
 }
 
