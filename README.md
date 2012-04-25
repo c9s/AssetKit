@@ -1,7 +1,7 @@
 AssetKit
 ============
 
-
+**Working in progress**
 
     -AssetKit (master) % assetkit add assets/jquery/manifest.yml 
     Submodule 'src/sizzle' () registered for path 'src/sizzle'
