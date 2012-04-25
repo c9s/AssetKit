@@ -55,14 +55,6 @@ class AddCommand extends Command
         $this->logger->info("Saving config...");
         $config->save();
 
-#          $loader = new \AssetKit\AssetLoader($config);
-#          $a = $loader->load( $asset->name );
-#          $files = $a->getInstalledFiles();
-#          $this->logger->info("Installed files:");
-#          foreach( $files as $f ) {
-#              $this->logger->info("x $f",1);
-#          }
-
         $this->logger->info("Done");
     }
 }
