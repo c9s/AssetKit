@@ -31,7 +31,6 @@ class AddCommand extends Command
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
                 $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
-
 # XXX: move this compile operation into compile command:
 # 
 #                  if( $collection->isJavascript ) {

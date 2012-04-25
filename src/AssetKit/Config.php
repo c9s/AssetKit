@@ -19,6 +19,13 @@ class Config
         }
     }
 
+    public function getAssets()
+    {
+        if( isset($this->config['assets'] ) ) {
+            return $this->config['assets'];
+        }
+    }
+
 
     /**
      * Register asset to config file
