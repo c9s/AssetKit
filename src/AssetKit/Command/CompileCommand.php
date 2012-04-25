@@ -37,7 +37,7 @@ class CompileCommand extends Command
         $writer = new \AssetKit\AssetWriter( $config );
         $manifest = $writer
             ->name( $as )
-            ->write( $assets );
+            ->writeForProduction( $assets );
 
         var_dump( $manifest ); 
 
