@@ -32,11 +32,6 @@ class Asset
     public $collections = array();
 
     /**
-     * installed files, which is loaded asset config 
-     */
-    public $installed = array();
-
-    /**
      * @param array|string|null $arg manifest array, manifest file path, or asset name
      */
     public function __construct($arg = null)
@@ -47,7 +42,6 @@ class Asset
             $this->manfiest  = @$arg['file'];
             $this->dir       = @$arg['dir'];
             $this->name      = isset($arg['name']) ? $arg['name'] : null;
-            $this->installed = isset($arg['installed']) ? $arg['installed'] : null;
         }
         elseif( $arg && file_exists($arg) ) 
         {

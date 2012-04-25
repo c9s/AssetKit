@@ -31,9 +31,7 @@ class CompileCommand extends Command
         $this->logger->info('Precompiling...');
 
         // initialize loader and writer
-		$assets = $config->getAssets();
-
-
+        $assets = $config->getAssets();
 
         $writer = new \AssetKit\AssetWriter( $config );
 
