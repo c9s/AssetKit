@@ -129,7 +129,7 @@ fetch resource and extract it
 
     $writer = new AssetKit\AssetWriter( );
     $manifest = $writer->from( $assets )
-            ->cache( 'apc' )
+            ->cache( $cache )
             ->as( 'application' )
             ->in( 'public/assets' );
             ->write();
@@ -137,10 +137,6 @@ fetch resource and extract it
     // public/assets/images
     // public/assets/application-{md5}.css
     // public/assets/application-{md5}.js
-    $manifest['stylesheet'];
-    $manifest['stylesheet_file']; // local filepath
-    $manifest['javascript'];
-    $manifest['javascript_file']; // local filepath
 
 
     $asset = $loader->getAsset( 'jquery' );
@@ -150,18 +146,6 @@ fetch resource and extract it
     foreach( $fileCollections as $collection ) {
         $content = $collection->output();
     }
-
-### Asset Includer
-
-    $include  = new AssetKit\AssetIncluder( $writer );
-    $include->add( 'jquery-ui' );
-    $include->add( 'jquery' );
-    $include->render();
-
-which renders:
-
-    <link rel="stylesheet" href="...." type="text/css" media="screen"/>
-    <script type="text/javascript" src="...."></script>
 
 ### Include stylesheets and javascripts in front-end page
 
