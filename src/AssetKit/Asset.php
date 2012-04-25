@@ -111,7 +111,7 @@ class Asset
     public function getPublicDir()
     {
         $public = $this->config->getPublicRoot();
-        return $public . DIRECTORY_SEPARATOR . $this->name;
+        return $public . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $this->name;
     }
 
     public function getBaseUrl()
@@ -120,6 +120,8 @@ class Asset
     }
 
 
+
+    // XXX: This should be in installer 
     public function install()
     {
         // get asset files and copy them into 
