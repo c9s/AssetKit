@@ -27,8 +27,6 @@ class Asset
      */
     public $config;
 
-    public $loader;
-
     public $collections = array();
 
     /**
@@ -96,7 +94,6 @@ class Asset
 
 
     }
-
 
     public function getPathName()
     {

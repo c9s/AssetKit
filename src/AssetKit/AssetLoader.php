@@ -42,7 +42,6 @@ class AssetLoader
                 if( file_exists($manifestFile) ) {
                     $m = new Asset( $manifestFile );
                     $m->config = $this->config;
-                    $m->loader = $this;
                     return $m;
                 }
             }
