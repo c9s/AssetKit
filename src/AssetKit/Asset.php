@@ -112,6 +112,11 @@ class Asset
         return $public . DIRECTORY_SEPARATOR . $this->name;
     }
 
+    public function getBaseUrl()
+    {
+        return $this->config->getPublicAssetBaseUrl() . '/' . $this->name;
+    }
+
 
     public function initResource()
     {
