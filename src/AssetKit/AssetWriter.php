@@ -223,7 +223,7 @@ class AssetWriter
 
 
     /**
-     * Aggregate asset contents,
+     * Squash asset contents,
      * run through filters, compressors ...
      *
      * @param  AssetKit\Asset $asset
@@ -260,7 +260,7 @@ class AssetWriter
     }
 
     /**
-     * Aggregate stylesheet/javascript content from assets
+     * Squash stylesheet/javascript content from assets
      */
     public function squashThem($assets)
     {
