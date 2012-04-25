@@ -6,7 +6,7 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
     function testCoffeeFiles()
     {
         $cln = new AssetKit\FileCollection;
-        $cln->addFile( 'assets/test/test.coffee' );
+        $cln->addFile( 'tests/assets/test/test.coffee' );
         ok($cln);
 
         $files = $cln->getFilePaths();

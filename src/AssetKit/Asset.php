@@ -170,7 +170,7 @@ class Asset
                 system("git pull origin HEAD");
                 chdir($dir);
             } else {
-                system("git clone $url $resDir");
+                system("git clone -q $url $resDir");
             }
         }
         elseif( isset($r['svn']) ) {

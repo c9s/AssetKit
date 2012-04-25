@@ -15,6 +15,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $asset = $loader->load( 'jquery-ui' );
         ok( $asset );
 
+        $asset->initResource();
+
         $installer = new AssetKit\Installer;
         $installer->enableLog = false;
         $installer->install( $asset );
@@ -45,6 +47,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new AssetKit\AssetLoader( $config , array('assets') );
         $jquery = $loader->load('jquery');
         $jqueryui = $loader->load('jquery-ui');
+
+        $jquery->initResource();
+        $jqueryui->initResource();
 
         ok( $jquery );
         ok( $jqueryui );
