@@ -48,7 +48,10 @@ class FileCollection
 
     public function getPublicUrls()
     {
-        # return '/assets'
+        $url = $this->asset->getBaseUrl();
+        return array_map(function($file) use ($url) { 
+            return $url . '/' . $file;
+        },$this->files);
     }
 
     public function getPublicPaths()

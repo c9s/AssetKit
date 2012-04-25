@@ -3,6 +3,7 @@ namespace AssetKit;
 use ZipArchive;
 use Exception;
 use SerializerKit;
+use AssetKit\FileUtils;
 
 
 /**
@@ -69,6 +70,7 @@ class Asset
     public function createFileCollection()
     {
         $collection = new FileCollection;
+        $collection->asset = $this;
         $collections[] = $collection;
         return $collection;
     }
@@ -115,6 +117,40 @@ class Asset
     public function getBaseUrl()
     {
         return $this->config->getPublicAssetBaseUrl() . '/' . $this->name;
+    }
+
+
+    public function install()
+    {
+        // get asset files and copy them into 
+        $fromDir = $this->dir;
+        $n       = $this->name;
+
+        // install into public asset root.
+        foreach( $this->getFileCollections() as $collection ) {
+            foreach( $collection->getFilePaths() as $path ) {
+                $subpath = $path;
+                $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $this->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+
+                echo "x $targetFile\n";
+
+                $content = file_get_contents($srcFile);
+                if( file_exists($targetFile) ) {
+                    $contentOrig = file_get_contents($targetFile);
+                    if( ($chk1 = md5($content)) !== ($chk2 = md5($contentOrig)) ) {
+                        echo "Checksum mismatch: \n";
+                        echo "$chk2: $targetFile (original)";
+                        echo "$chk1: $targetFile";
+                        exit(1);
+                    }
+                }
+
+                FileUtils::mkdir_for_file( $targetFile );
+                file_put_contents( $targetFile , $content );
+            }
+        }
+
     }
 
 
