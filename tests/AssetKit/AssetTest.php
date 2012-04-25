@@ -17,6 +17,7 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $config->addAsset( 'jquery-ui', $as );
 
         $installer = new \AssetKit\Installer;
+        $installer->enableLog = false;
         $installer->install( $as );
 
         is('/assets/jquery-ui', $as->getBaseUrl() );

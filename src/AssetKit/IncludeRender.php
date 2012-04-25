@@ -25,7 +25,7 @@ class IncludeRender
         return $html;
     }
 
-    public function renderManifest($manifest)
+    public function render($manifest)
     {
         $html = '';
         // render stylesheets first.

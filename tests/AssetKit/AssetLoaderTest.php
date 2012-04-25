@@ -59,7 +59,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $assets[] = $jqueryui;
 
         $manifest = $writer 
-            ->name( 'jquery' )
+            ->name( 'app' )
             ->in('assets') // public/assets
             ->write( $assets );
 
@@ -75,6 +75,14 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
             ok( $file['url'] );
             file_ok( $file['path'] );
         }
+
+
+        $render = new AssetKit\IncludeRender;
+        $html = $render->render( $manifest );
+
+        is( '<link rel="stylesheet" type="text/css"  href="/assets/app-107f707ccc0b1f7ae125b2be5e3912d1.css"/>'
+             . '<script type="text/javascript"  src="/assets/app-d47a95dd5de878c4895d1ffde07e0805.js" />',
+                $html );
 
         $installer->uninstall( $jquery );
         $installer->uninstall( $jqueryui );
