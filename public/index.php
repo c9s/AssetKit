@@ -1,4 +1,9 @@
 <?php
-require '../tests/bootstrap.php';
-
+require '../vendor/autoload.php';
+require '../vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
+$classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
+    'src', 'vendor/pear',
+));
+$classLoader->useIncludePath(false);
+$classLoader->register();
 
