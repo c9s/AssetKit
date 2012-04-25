@@ -45,6 +45,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $jquery = $loader->load('jquery');
         $jqueryui = $loader->load('jquery-ui');
 
+        ok( $jquery );
+        ok( $jqueryui );
+
         $installer = new AssetKit\Installer;
         $installer->install( $jquery );
         $installer->install( $jqueryui );
@@ -53,14 +56,23 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $assets[] = $jquery;
         $assets[] = $jqueryui;
 
-        $apc = new CacheKit\ApcCache(array( 'namespace' => uniqid() , 'default_expiry' => 3 ));
         $manifest = $writer 
-            ->name( 'jqueryui' )
+            ->name( 'jquery' )
             ->in('assets') // public/assets
             ->write( $assets );
 
-        var_dump( $manifest ); 
+        ok( $manifest['javascripts'] );
+        ok( $manifest['stylesheets'] );
 
+        foreach( $manifest['javascripts'] as $file ) {
+            ok( $file['url'] );
+            file_ok( $file['path'] );
+        }
+
+        foreach( $manifest['stylesheets'] as $file ) {
+            ok( $file['url'] );
+            file_ok( $file['path'] );
+        }
 
         $installer->uninstall( $jquery );
         $installer->uninstall( $jqueryui );

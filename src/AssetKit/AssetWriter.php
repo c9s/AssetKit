@@ -318,6 +318,7 @@ class AssetWriter
         }
 
         $contents = $this->squashThem( $assets );
+
         $manifest = array(
             'stylesheets' => array(),
             'javascripts' => array(),
@@ -328,12 +329,12 @@ class AssetWriter
             mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
         }
 
-        if( isset($contents['stylesheets']) && $contents['stylesheets'] ) {
+        if( isset($contents['stylesheet']) && $contents['stylesheet'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-'
-                . md5( $contents['stylesheets']) . '.css';
+                . md5( $contents['stylesheet']) . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $cssfile , $contents['stylesheets'] ) !== false 
+            file_put_contents( $cssfile , $contents['stylesheet'] ) !== false 
                 or die('write fail');
 
             $manifest['stylesheets'][] = array( 
@@ -342,16 +343,16 @@ class AssetWriter
                 'attrs' => array(), /* css attributes, keep for future. */
             );
         }
-        if( isset($contents['javascripts']) && $contents['javascripts'] ) {
+        if( isset($contents['javascript']) && $contents['javascript'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
-                . md5( $contents['javascripts']) . '.js';
+                . md5( $contents['javascript']) . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $jsfile , $contents['javascripts'] ) !== false 
+            file_put_contents( $jsfile , $contents['javascript'] ) !== false 
                     or die('write fail');
 
             $manifest['javascripts'][] = array(
-                'path' => '/' . $path,
+                'url' => '/' . $path,
                 'path' => $jsfile,
                 'attrs' => array(),
             );
