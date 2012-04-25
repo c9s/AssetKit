@@ -91,8 +91,6 @@ class Asset
     public function compile()
     {
         // compile assets
-
-
     }
 
     public function getName()
@@ -162,6 +160,18 @@ class Asset
                 chdir($dir);
             } else {
                 system("git clone $url $resDir");
+            }
+        }
+        elseif( isset($r['svn']) ) {
+            $url = $r['svn'];
+            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url);
+            if( file_exists($resDir) ) {
+                $dir = getcwd();
+                chdir($resDir);
+                system("svn update");
+                chdir($dir);
+            } else {
+                system("svn checkout $url $resDir");
             }
         }
         elseif( isset($r['hg']) ) {
