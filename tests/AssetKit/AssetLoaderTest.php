@@ -66,7 +66,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $manifest = $writer 
             ->name( 'app' )
             ->in('assets') // public/assets
-            ->write( $assets );
+            ->writeForProduction( $assets );
 
         ok( $manifest['javascripts'] );
         ok( $manifest['stylesheets'] );

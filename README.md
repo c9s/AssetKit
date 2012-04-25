@@ -1,9 +1,8 @@
 AssetKit
 ============
 
-**Working in progress**
 
-    -AssetKit (master) % assetkit add assets/jquery/manifest.yml 
+    $ assetkit add assets/jquery/manifest.yml
     Submodule 'src/sizzle' () registered for path 'src/sizzle'
     Submodule 'test/qunit' () registered for path 'test/qunit'
     Submodule 'src/sizzle' () registered for path 'src/sizzle'
@@ -23,40 +22,6 @@ To use YUI Compressor:
 
     YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
         assetkit add assets/test/manifest.yml
-
-## Asset structure
-
-	assets/jquery
-	assets/jquery/manifest.php
-	assets/jquery/manifest.yml
-	assets/jquery/css/...
-	assets/jquery/images/...
-	assets/jquery/js/...
-	assets/jqunit
-
-
-## Requirement
-
-* when using development mode, do not apply compressors.
-
-* when using production mode, apply compressors.
-
-* must-apply filters are: *.sass => CompassFilter, *.coffeescript => CoffeeScript filter
-
-* when using compressors
-  we can store the compressed content in a cached content.
-
-* an asset may contains many file collection
-
-* a file collection may contains many filters, compressors
-
-* when not using compressors
-  we simply rewrite css and image paths
-
-  CSS path rewrite:
-    * parse for image paths
-    * copy these image path to webroot/assets/{asset name}/{image path}
-    * replace image paths with /assets/{asset name}/{image path}
 
 ## Asset manifest
 
@@ -85,22 +50,20 @@ The manifest.yml file:
 
 fetch resource and extract it
 
-### Export static files to webroot
+### Pre compile & export static files to webroot
 
-    $ assetkit export 
-
-### Precompile assets
+    $ assetkit compile 
 
 ### Load asset manifest object
 
 	$config = new AssetKit\Config('.assetkit');
-    $loader = new AssetLoader( array( 'assets','other_assets')  );
+    $loader = new AssetLoader( $config , array( 'assets','other_assets')  );
 
 	$assets = array();
-    $assets[] = $loader->load('jquery');
-    $assets[] = $loader->loadFile('assets/jquery/manifest.yml');
+    $jquery = $loader->load('jquery');
+    $jqueryui = $loader->loadFile('assets/jquery-ui/manifest.yml');
 
-	$writer = new AssetKit\Writer;
+	$writer = new AssetKit\Writer($config);
 
     if( in production ) {
         $loader->addCompressorPattern('*.js', 'jsmin' );

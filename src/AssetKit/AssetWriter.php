@@ -254,6 +254,8 @@ class AssetWriter
 
     /**
      * Squash stylesheet/javascript content from assets
+     *
+     * @return array [ javascript => string , stylesheet => string ]
      */
     public function squashThem($assets)
     {
@@ -265,23 +267,37 @@ class AssetWriter
             $js  .= $ret['js'];
         }
         return array(
-            'javascript' => $js,
-            'stylesheet' => $css,
+            'js' => $js,
+            'css' => $css,
         );
     }
 
-    public function write($assets)
+    public function writeForDevelopment($assets)
+    {
+
+    }
+
+    public function writeForProduction($assets)
     {
         // check mtime
         if( $this->name && $this->cache ) {
             if( $manifest = $this->cache->get( 'asset-manifest:' . $this->name ) ) {
-                $jsmtime = isset($manifest['javascript_file']) 
-                    ? filemtime( $manifest['javascript_file'] )
-                    : null;
-                $cssmtime = 
-                    isset( $manifest['stylesheet_file'] ) 
-                    ? filemtime( $manifest['stylesheet_file'] )
-                    : null;
+
+                // find the last modified time of squashed files
+                $jsmtime = 0;
+                $cssmtime = 0;
+                foreach( array('javascripts','stylesheets') as $t ) {
+                    foreach( $manifest[$t] as $file ) {
+                        $path = $file['path'];
+                        $mtime = filemtime($path);
+                        if( $mtime > $jsmtime ) {
+                            if( 'javascripts' === $t )
+                                $jsmtime = $mtime;
+                            elseif( 'stylesheets' === $t )
+                                $cssmtime = $mtime;
+                        }
+                    }
+                }
 
                 // In development mode, we should check file stats.
                 $expired = false;
@@ -289,7 +305,6 @@ class AssetWriter
                     $collections = $asset->getFileCollections();
                     foreach( $collections as $collection ) {
                         $mtime = $collection->getLastModifiedTime();
-
                         if( $collection->isJavascript 
                             && $jsmtime 
                             && $mtime > $jsmtime ) 
@@ -317,8 +332,9 @@ class AssetWriter
             }
         }
 
-        $contents = $this->squashThem( $assets );
 
+        // squash new content from assets
+        $contents = $this->squashThem( $assets );
         $manifest = array(
             'stylesheets' => array(),
             'javascripts' => array(),
@@ -329,12 +345,12 @@ class AssetWriter
             mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
         }
 
-        if( isset($contents['stylesheet']) && $contents['stylesheet'] ) {
+        if( isset($contents['css']) && $contents['css'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-'
-                . md5( $contents['stylesheet']) . '.css';
+                . md5( $contents['css']) . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $cssfile , $contents['stylesheet'] ) !== false 
+            file_put_contents( $cssfile , $contents['css'] ) !== false 
                 or die('write fail');
 
             $manifest['stylesheets'][] = array( 
@@ -343,12 +359,12 @@ class AssetWriter
                 'attrs' => array(), /* css attributes, keep for future. */
             );
         }
-        if( isset($contents['javascript']) && $contents['javascript'] ) {
+        if( isset($contents['js']) && $contents['js'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
-                . md5( $contents['javascript']) . '.js';
+                . md5( $contents['js']) . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $jsfile , $contents['javascript'] ) !== false 
+            file_put_contents( $jsfile , $contents['js'] ) !== false 
                     or die('write fail');
 
             $manifest['javascripts'][] = array(
