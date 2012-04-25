@@ -16,6 +16,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         ok( $asset );
 
         $installer = new AssetKit\Installer;
+        $installer->enableLog = false;
         $installer->install( $asset );
 
         $collections = $asset->getFileCollections();
@@ -49,6 +50,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         ok( $jqueryui );
 
         $installer = new AssetKit\Installer;
+        $installer->enableLog = false;
         $installer->install( $jquery );
         $installer->install( $jqueryui );
 

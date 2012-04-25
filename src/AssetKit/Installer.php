@@ -3,6 +3,14 @@ namespace AssetKit;
 
 class Installer
 {
+    public $enableLog = true;
+
+    public function log($msg)
+    {
+        if( $this->enableLog )
+            echo $msg , "\n";
+    }
+
 
     public function uninstall($asset)
     {
@@ -17,7 +25,7 @@ class Installer
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
                 $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
-                echo "x $targetFile\n";
+                $this->log("x $targetFile");
                 unlink( $targetFile );
             }
         }
@@ -36,7 +44,7 @@ class Installer
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
                 $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
-                echo "x $targetFile\n";
+                $this->log("x $targetFile");
 
                 $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {
