@@ -1,6 +1,0 @@
----
-assets:
-  - filters: [ 'coffeescript' ]
-    javascript: 1
-    files:
-      - test.coffee
