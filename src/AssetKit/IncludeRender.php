@@ -27,10 +27,21 @@ class IncludeRender
 
     public function renderManifest($manifest)
     {
-        foreach( $manifest['stylesheet'] as $stylesheet ) {
-
+        $html = '';
+        // render stylesheets first.
+        foreach( $manifest['stylesheets'] as $stylesheet ) {
+            /*
+            $stylesheet['url'];
+            $stylesheet['path'];
+            $stylesheet['attrs'];
+            */
+            $html .= $this->getStylesheetTag( $stylesheet['url'] , $stylesheet['attrs'] );
         }
 
+        foreach( $manifest['javascripts'] as $javascript ) {
+            $html .= $this->getJavascriptTag( $javascript['url'] , $javascript['attrs'] );
+        }
+        return $html;
     }
 }
 

@@ -352,6 +352,7 @@ class AssetWriter
             $manifest['javascripts'][] = array(
                 'path' => '/' . $path,
                 'path' => $jsfile,
+                'attrs' => array(),
             );
         }
 
