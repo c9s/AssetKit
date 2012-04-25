@@ -22,7 +22,9 @@ class AddCommand extends Command
         $this->logger->info( "Installing {$asset->name}" );
 
         $asset->config = $config;
-        $asset->install();
+
+        $installer = new \AssetKit\Installer;
+        $installer->install( $asset );
 
         $export = $asset->export();
         $config->addAsset( $asset->name , $export );
