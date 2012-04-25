@@ -38,7 +38,7 @@ class CompileCommand extends Command
         {
 
             // get asset files and copy them into 
-            $fromDir = $asset->dir;
+            $fromDir = $asset->getPathName();
             $n       = $asset->name;
 
             // save installed asset files

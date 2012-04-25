@@ -95,6 +95,11 @@ class Asset
 
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function getPathName()
     {
         return $this->dir;
