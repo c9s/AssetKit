@@ -2,6 +2,7 @@
 namespace AssetKit\Command;
 use AssetKit\Config;
 use AssetKit\Asset;
+use AssetKit\FileUtils;
 use CLIFramework\Command;
 
 class AddCommand extends Command
@@ -43,7 +44,7 @@ class AddCommand extends Command
                     }
                 }
 
-                \AssetKit\FileUtils::mkdir_for_file( $targetFile );
+                FileUtils::mkdir_for_file( $targetFile );
                 file_put_contents( $targetFile , $content );
             }
         }
