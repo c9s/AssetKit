@@ -39,7 +39,13 @@ class CompileCommand extends Command
             ->name( $as )
             ->writeForProduction( $assets );
 
-        var_dump( $manifest ); 
+        foreach( $manifest['javascripts'] as $file ) {
+            $this->logger->info("x {$file["path"]}");
+        }
+
+        foreach( $manifest['stylesheets'] as $file ) {
+            $this->logger->info("x {$file["path"]}");
+        }
 
         $this->logger->info("Done");
     }

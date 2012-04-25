@@ -13,6 +13,10 @@ class AddCommand extends Command
     {
         $config = new Config('.assetkit');
 
+        if( is_dir($manifestPath) ) {
+            $manifestPath = $manifestPath  . DIRECTORY_SEPARATOR . 'manifest.yml';
+        }
+
         if( ! file_exists($manifestPath)) 
             throw new Exception( "$manifestPath does not exist." );
 
