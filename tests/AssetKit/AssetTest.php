@@ -17,18 +17,16 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $config->addAsset( 'jquery-ui', $as );
 
         $installer = new \AssetKit\Installer;
-        $installer->install( $asset );
+        $installer->install( $as );
 
         is('/assets/jquery-ui', $as->getBaseUrl() );
         foreach( $as->getFileCollections() as $c ) {
             $paths = $c->getPublicPaths();
-            ok( $paths );
             foreach( $paths as $p ) { 
                 file_ok( $p );
             }
 
             $urls = $c->getPublicUrls();
-            var_dump( $urls ); 
             ok( $paths );
         }
 

@@ -4,6 +4,25 @@ namespace AssetKit;
 class Installer
 {
 
+    public function uninstall($asset)
+    {
+        // get asset files and copy them into 
+        $fromDir = $asset->dir;
+        $n       = $asset->name;
+
+        // install into public asset root.
+        foreach( $asset->getFileCollections() as $collection ) {
+            foreach( $collection->getFilePaths() as $path ) {
+                $subpath = $path;
+                $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+
+                echo "x $targetFile\n";
+                unlink( $targetFile );
+            }
+        }
+    }
+
     public function install($asset)
     {
         // get asset files and copy them into 
