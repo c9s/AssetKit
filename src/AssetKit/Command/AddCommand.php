@@ -25,35 +25,34 @@ class AddCommand extends Command
         $n       = $asset->name;
 
         // save installed asset files
-		$installed = array( 
-			'css' => array(),
-			'js'  => array(),
-		);
         foreach( $asset->getFileCollections() as $collection ) {
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
                 $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
-                if( $collection->isJavascript ) {
-                    $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile, 'js' );
-                }
-                elseif( $collection->isStylesheet ) {
-                    $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile , 'css' );
-                }
 
-                $this->logger->info("Filtering content from $srcFile");
-                // We should run filters per file.
-                //   - CssRewrite
-                //   - CoffeeScript
-                $tmp = new \AssetKit\FileCollection;
-                $tmp->isJavascript = $collection->isJavascript;
-                $tmp->isStylesheet = $collection->isStylesheet;
-                $tmp->filters = $collection->filters;
-                $tmp->addFile( $srcFile );
-                $writer->runCollectionFilters($tmp);
+# XXX: move this compile operation into compile command:
+# 
+#                  if( $collection->isJavascript ) {
+#                      $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile, 'js' );
+#                  }
+#                  elseif( $collection->isStylesheet ) {
+#                      $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile , 'css' );
+#                  }
+#  
+#                  $this->logger->info("Filtering content from $srcFile");
+#                  // We should run filters per file.
+#                  //   - CssRewrite
+#                  //   - CoffeeScript
+#                  $tmp = new \AssetKit\FileCollection;
+#                  $tmp->isJavascript = $collection->isJavascript;
+#                  $tmp->isStylesheet = $collection->isStylesheet;
+#                  $tmp->filters = $collection->filters;
+#                  $tmp->addFile( $srcFile );
+#                  $writer->runCollectionFilters($tmp);
 
-                $content = $tmp->getContent();
+                $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {
                     $contentOrig = file_get_contents($targetFile);
                     if( ($chk1 = md5($content)) !== ($chk2 = md5($contentOrig)) ) {
@@ -67,12 +66,10 @@ class AddCommand extends Command
 
                 \AssetKit\FileUtils::mkdir_for_file( $targetFile );
                 file_put_contents( $targetFile , $content );
-                $installed[] = $targetFile;
             }
         }
 
         $export = $asset->export();
-        $export['installed'] = $installed;
         $config->addAsset( $asset->name , $export );
 
         $this->logger->info("Saving config...");
