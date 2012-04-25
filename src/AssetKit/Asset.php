@@ -92,8 +92,16 @@ class Asset
 
     public function compile()
     {
+        // compile assets
+
+
     }
 
+
+    public function getPathName()
+    {
+        return $this->dir;
+    }
 
     /**
      * Return the public dir of this asset

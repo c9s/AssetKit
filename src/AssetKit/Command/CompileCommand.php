@@ -34,7 +34,8 @@ class CompileCommand extends Command
         $assets = $config->getAssets();
         $writer = new \AssetKit\AssetWriter( $config );
 
-        foreach( $assets as $asset ) {
+        foreach( $assets as $asset ) 
+        {
 
             // get asset files and copy them into 
             $fromDir = $asset->dir;
