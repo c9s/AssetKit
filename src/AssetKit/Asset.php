@@ -107,6 +107,7 @@ class Asset
         return $target;
     }
 
+
     public function initResource()
     {
         if( ! isset($this->stash['resource']) ) {
@@ -146,7 +147,27 @@ class Asset
         elseif( isset($r['git']) ) {
             $url = $r['git'];
             $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
-            system("git clone $url $resDir");
+            if( file_exists($resDir) ) {
+                $dir = getcwd();
+                chdir($resDir);
+                system("git remote update --prune");
+                system("git pull origin HEAD");
+                chdir($dir);
+            } else {
+                system("git clone $url $resDir");
+            }
+        }
+        elseif( isset($r['hg']) ) {
+            $url = $r['hg'];
+            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url);
+            if( file_exists($resDir) ) {
+                $dir = getcwd();
+                chdir($resDir);
+                system("hg pull -u");
+                chdir($dir);
+            } else {
+                system("hg clone $url $resDir");
+            }
         }
 
         if( isset($r['commands']) ) {
