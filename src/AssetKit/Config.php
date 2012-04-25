@@ -21,9 +21,13 @@ class Config
 
     public function getAssets()
     {
+        $assets = array();
         if( isset($this->config['assets'] ) ) {
-            return $this->config['assets'];
+            foreach( $this->config['assets'] as $k => $v ) {
+                $assets[] = $this->getAsset($k);
+            }
         }
+        return $assets;
     }
 
 
@@ -50,8 +54,11 @@ class Config
 
     public function getAsset($name)
     {
-        if( isset($this->config['assets'][$name] ) )
-            return $this->config['assets'][$name];
+        if( isset($this->config['assets'][$name] ) ) {
+            $a = new Asset( $this->config['assets'][$name] );
+            $a->config = $this;
+            return $a;
+        }
     }
 
     public function save()

@@ -33,11 +33,8 @@ class AssetLoader
      */
     function load($name)
     {
-        if( $this->config && $assetData = $this->config->getAsset($name) ) {
-            $m = new Asset( $assetData );
-            $m->config = $this->config;
-            $m->loader = $this;
-            return $m;
+        if( $this->config && $asset = $this->config->getAsset($name) ) {
+            return $asset;
         }
         else {
             foreach( $this->paths as $path ) {

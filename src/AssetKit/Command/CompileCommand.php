@@ -32,22 +32,21 @@ class CompileCommand extends Command
 
         // initialize loader and writer
         $assets = $config->getAssets();
-
         $writer = new \AssetKit\AssetWriter( $config );
 
-        // get asset files and copy them into 
-        $fromDir = $asset->dir;
-        $n       = $asset->name;
+        foreach( $assets as $asset ) {
 
-        // save installed asset files
-        foreach( $asset->getFileCollections() as $collection ) {
-            foreach( $collection->getFilePaths() as $path ) {
-                $subpath = $path;
-                $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
-                $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+            // get asset files and copy them into 
+            $fromDir = $asset->dir;
+            $n       = $asset->name;
 
-# XXX: move this compile operation into compile command:
-# 
+            // save installed asset files
+            foreach( $asset->getFileCollections() as $collection ) {
+                foreach( $collection->getFilePaths() as $path ) {
+                    $subpath = $path;
+                    $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
+                    $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+
 #                  if( $collection->isJavascript ) {
 #                      $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile, 'js' );
 #                  }
@@ -65,25 +64,11 @@ class CompileCommand extends Command
 #                  $tmp->filters = $collection->filters;
 #                  $tmp->addFile( $srcFile );
 #                  $writer->runCollectionFilters($tmp);
-
-                $content = file_get_contents($srcFile);
-                if( file_exists($targetFile) ) {
-                    $contentOrig = file_get_contents($targetFile);
-                    if( ($chk1 = md5($content)) !== ($chk2 = md5($contentOrig)) ) {
-                        $this->logger->error("Checksum mismatch: ");
-                        $this->logger->error("$chk2: $targetFile (original)");
-                        $this->logger->error("$chk1: $targetFile");
-                        exit(1);
-                    }
+                    # \AssetKit\FileUtils::mkdir_for_file( $targetFile );
+                    # file_put_contents( $targetFile , $content );
                 }
-                $this->logger->info( "Writing $targetFile" );
-
-                \AssetKit\FileUtils::mkdir_for_file( $targetFile );
-                file_put_contents( $targetFile , $content );
             }
         }
-
-
 
         $this->logger->info("Done");
     }

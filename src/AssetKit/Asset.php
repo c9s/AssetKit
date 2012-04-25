@@ -92,13 +92,16 @@ class Asset
 
     public function compile()
     {
-        $serializer = new SerializerKit\Serializer('php');
-        $php = '<php? ' .  $serializer->encode($this->stash) . '?>';
-        $ext = pathinfo($this->manifest, PATHINFO_EXTENSION);
-        $filename = pathinfo($this->manifest, PATHINFO_FILENAME);
-        $target = $this->dir . DIRECTORY_SEPARATOR . $filename . '.php';
-        file_put_contents($target, $php);
-        return $target;
+    }
+
+
+    /**
+     * Return the public dir of this asset
+     */
+    public function getPublicDir()
+    {
+        $public = $this->config->getPublicRoot();
+        return $public . DIRECTORY_SEPARATOR . $this->name;
     }
 
 
