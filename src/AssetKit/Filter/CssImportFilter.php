@@ -13,7 +13,8 @@ class CssImportFilter
 			$content = file_get_contents( $file );
 			preg_replace_callback('#url\(([^)]+)\)#' , function($matches) {
 				list($orig,$url) = $matches;
-				var_dump( $url ); 
+
+				return '';
 			}, $content );
 #  			preg_replace_callback('#@import\s+"[^"]*"#', function($matches) { 
 #  				var_dump( $matches ); 

@@ -25,8 +25,10 @@ class AddCommand extends Command
         $n       = $asset->name;
 
         // save installed asset files
-        $installed = array();
-
+		$installed = array( 
+			'css' => array(),
+			'js'  => array(),
+		);
         foreach( $asset->getFileCollections() as $collection ) {
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
@@ -39,8 +41,6 @@ class AddCommand extends Command
                 elseif( $collection->isStylesheet ) {
                     $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile , 'css' );
                 }
-
-                // var_dump( $srcFile, $targetFile ); 
 
                 $this->logger->info("Filtering content from $srcFile");
                 // We should run filters per file.
@@ -78,13 +78,13 @@ class AddCommand extends Command
         $this->logger->info("Saving config...");
         $config->save();
 
-        $loader = new \AssetKit\AssetLoader($config);
-        $a = $loader->load( $asset->name );
-        $files = $a->getInstalledFiles();
-        $this->logger->info("Installed files:");
-        foreach( $files as $f ) {
-            $this->logger->info("x $f",1);
-        }
+#          $loader = new \AssetKit\AssetLoader($config);
+#          $a = $loader->load( $asset->name );
+#          $files = $a->getInstalledFiles();
+#          $this->logger->info("Installed files:");
+#          foreach( $files as $f ) {
+#              $this->logger->info("x $f",1);
+#          }
 
         $this->logger->info("Done");
     }

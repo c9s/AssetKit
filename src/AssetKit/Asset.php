@@ -81,11 +81,6 @@ class Asset
         return $collection;
     }
 
-    public function getInstalledFiles()
-    {
-        return $this->installed;
-    }
-
     public function getFileCollections()
     {
         return $this->collections;
