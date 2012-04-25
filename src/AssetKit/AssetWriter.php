@@ -21,8 +21,10 @@ use Exception;
  */
 class AssetWriter
 {
-    public $assets;
-    public $in;
+    public $assets = array();
+
+    public $in = 'assets';
+
     public $name;
     public $cache;
 
@@ -324,13 +326,13 @@ class AssetWriter
 
         $contents = $this->squashThem( $this->assets );
         $manifest = array();
-        $dir = $this->config->getPublicRoot();
+        $dir = $this->config->getPublicRoot(true);
 
         if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
             mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
         }
 
-        if( isset($contents['stylesheet']) ) {
+        if( isset($contents['stylesheet']) && $contents['stylesheet'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-'
                 . md5( $contents['stylesheet']) . '.css';
 
@@ -340,7 +342,7 @@ class AssetWriter
             $manifest['stylesheet'] = '/' . $path;
             $manifest['stylesheet_file'] = $cssfile;
         }
-        if( isset($contents['javascript']) ) {
+        if( isset($contents['javascript']) && $contents['javascript'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
                 . md5( $contents['javascript']) . '.js';
 

@@ -35,48 +35,11 @@ class CompileCommand extends Command
         // initialize loader and writer
         $assets = $config->getAssets();
         $writer = new \AssetKit\AssetWriter( $config );
-        $manfiest = $writer->from( $assets )
+        $manifest = $writer->from( $assets )
             ->name( $as )
             ->write();
 
-#          foreach( $assets as $asset ) 
-#          {
-#  
-#              // get asset files and copy them into 
-#              $fromDir = $asset->getPathName();
-#              $n       = $asset->name;
-#  
-#              // save installed asset files
-#              foreach( $asset->getFileCollections() as $collection ) {
-#                  foreach( $collection->getFilePaths() as $path ) {
-#                      $subpath = $path;
-#                      $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
-#                      $targetFile = $config->getPublicRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
-#  
-#  
-#  
-#                      if( $collection->isJavascript ) {
-#                          $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile, 'js' );
-#                      }
-#                      elseif( $collection->isStylesheet ) {
-#                          $targetFile = \AssetKit\FileUtils::replace_extension( $targetFile , 'css' );
-#                      }
-#  #  
-#  #                  $this->logger->info("Filtering content from $srcFile");
-#  #                  // We should run filters per file.
-#  #                  //   - CssRewrite
-#  #                  //   - CoffeeScript
-#  #                  $tmp = new \AssetKit\FileCollection;
-#  #                  $tmp->isJavascript = $collection->isJavascript;
-#  #                  $tmp->isStylesheet = $collection->isStylesheet;
-#  #                  $tmp->filters = $collection->filters;
-#  #                  $tmp->addFile( $srcFile );
-#  #                  $writer->runCollectionFilters($tmp);
-#                      # \AssetKit\FileUtils::mkdir_for_file( $targetFile );
-#                      # file_put_contents( $targetFile , $content );
-#                  }
-#              }
-#          }
+        var_dump( $manifest ); 
 
         $this->logger->info("Done");
     }
