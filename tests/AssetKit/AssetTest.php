@@ -7,7 +7,7 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $config = new AssetKit\Config('.tests_assetkit');
         $config->public = 'public';
 
-        $loader = new AssetKit\AssetLoader($config);
+        $loader = new AssetKit\AssetLoader($config,array('assets','tests/assets'));
         ok( $loader );
 
         $as = new AssetKit\Asset('assets/jquery-ui/manifest.yml');
