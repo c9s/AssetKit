@@ -36,6 +36,10 @@ Then fetch anything you want:
 Once you've done, you can precompile the assets to a squashed javascript/stylesheet files:
 
     $ assetkit compile --as your-app jquery jquery-ui blueprint
+    Compiling...
+    x /Users/c9s/git/Work/AssetKit/public/assets/your-app-f39c1144ad2911d574ec59d78329f2ba.js
+    x /Users/c9s/git/Work/AssetKit/public/assets/your-app-c9f4db7954ea479dea822e0b665c1501.css
+    Done
 
 To use YUI Compressor:
 
