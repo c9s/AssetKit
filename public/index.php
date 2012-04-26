@@ -19,7 +19,7 @@ $assets[] = $jqueryui;
 
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
-        ->writeForProduction( $assets );
+        ->write( $assets );
 
 $includer = new AssetKit\IncludeRender;
 $head = $includer->render( $manifest );

@@ -46,7 +46,11 @@ class Asset
         {
             // load from file
             $file = $arg;
+
+            $this->dir = dirname($file);
+            $this->name = basename(dirname($file));
             $this->manifest = $file;
+
             $ext = pathinfo($file, PATHINFO_EXTENSION);
 
             if( 'yml' === $ext ) {
@@ -55,8 +59,25 @@ class Asset
             } else {
                 $this->stash = require $file;
             }
-            $this->dir = dirname($file);
-            $this->name = basename(dirname($file));
+
+            // expand manifest glob pattern
+            foreach( $this->stash['assets'] as & $a ) {
+                $dir = $this->dir;
+                $files = array();
+                foreach( $a['files'] as $p ) {
+                    if( strpos($p,'*') !== false ) {
+                        $expanded = array_map(function($item) use ($dir) { 
+                            return substr($item,strlen($dir) + 1);
+                                 }, glob($this->dir . DIRECTORY_SEPARATOR . $p));
+                        $files = array_merge( $files , $expanded );
+                    }
+                    else {
+                        $files[] = $p;
+                    }
+                }
+                $a['files'] = $files;
+            }
+
         }
         elseif( $arg && is_string($arg) ) {
             $this->name = $arg;

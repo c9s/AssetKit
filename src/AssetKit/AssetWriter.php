@@ -274,10 +274,10 @@ class AssetWriter
 
     public function write($assets)
     {
-        if( $this->env === 'production' ) {
+        if( $this->environment === 'production' ) {
             return $this->writeForProduction($assets);
         }
-        elseif( $this->env === 'development' ) {
+        elseif( $this->environment === 'development' ) {
             return $this->writeForDevelopment($assets);
         }
         else {
@@ -287,11 +287,15 @@ class AssetWriter
 
 
     /**
-     * Write asset for development mode.
+     * Write asset for development mode,
+     *
+     * In development mode, we don't compress any asset files.
      *
      * 1. Read asset files from source directory.
-     * 2. For collections that has filters (like coffeescript or sass),
-     *    Run through the filters , and replace file extensions (for coffeescript or sass)
+     * 2. If there is no filters, just return the file list (with file types)
+     * 3. For collections that has filters (like coffeescript or sass),
+     *    Run through the filters , and replace file extensions (for 
+     *    coffeescript or sass) to js or css
      * 3. Separate stylesheet and javascript files and return.
      *
      * @param array $assets
@@ -302,16 +306,35 @@ class AssetWriter
             'javascripts' => array(),
             'stylesheets' => array(),
         );
-
         foreach( $assets as $asset ) {
+            $publicDir = $asset->getPublicDir();
+            $baseUrl   = $asset->getBaseUrl();
+            foreach( $asset->getFileCollections() as $c ) {
+                $paths = $c->getFilePaths();
+                if( $filters = $c->getFilters() ) {
+                    // run collection filter and output to js or css file
 
+                }
+                else {
+                    $k = ( $c->isJavascript ) ? 'javascripts' : $c->isStylesheet ? 'stylesheets' : null;
+                    if($k) {
+                        foreach( $paths as $path ) {
+                            $manifest[$k][] = array(
+                                'path' => $publicDir . DIRECTORY_SEPARATOR . $path,
+                                'url'  => $baseUrl   . '/' . $path,
+                                'attrs' => array(),
+                            );
+                        }
+                    }
+                }
+            }
         }
-        return $manfiest;
+        return $manifest;
     }
 
 
     /**
-     * squash assets and return a manfiest
+     * squash assets and return a manifest
      *
      * @param array $assets
      */
