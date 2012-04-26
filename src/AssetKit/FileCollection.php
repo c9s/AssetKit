@@ -118,7 +118,8 @@ class FileCollection
     public function getLastModifiedTime()
     {
         if( ! empty($this->files) ) {
-            $mtimes = array_map( function($file) { return filemtime($file); }, $this->files );
+            $mtimes = array_map( function($file) { 
+                return filemtime($file); }, $this->getSourcePaths() );
             rsort($mtimes, SORT_NUMERIC);
             return $mtimes[0];
         }

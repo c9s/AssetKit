@@ -385,15 +385,12 @@ class AssetWriter
                             $expired = true;
                             break 2;
                         }
-                        else {
-                            throw new Exception("Unknown type collection.");
-                        }
                     }
                 }
 
                 // if the cache content is not expired, we can just return the content
                 if( ! $expired ) {
-                    return $contents;
+                    return $manifest;
                 }
             }
         }
