@@ -61,6 +61,9 @@ class Asset
             }
 
             // expand manifest glob pattern
+            if( ! isset($this->stash['assets']) ) {
+                throw new Exception('assets tag is not defined.');
+            }
             foreach( $this->stash['assets'] as & $a ) {
                 $dir = $this->dir;
                 $files = array();

@@ -97,6 +97,8 @@ fetch resource and extract it
 
 ### Include assetkit in your application
 
+Please check public/index.php file for example.
+
 
 
 

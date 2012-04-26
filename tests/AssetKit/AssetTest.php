@@ -30,7 +30,7 @@ class AssetTest extends PHPUnit_Framework_TestCase
             $urls = $c->getPublicUrls();
             ok( $paths );
         }
-        $installer->uninstall( $as );
+#          $installer->uninstall( $as );
 
         $jssha = $loader->load('jssha');
         $jssha->initResource();

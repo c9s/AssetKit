@@ -7,3 +7,18 @@ $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
 ));
 $classLoader->useIncludePath(false);
 $classLoader->register();
+
+class Test 
+{
+    static function getConfig()
+    {
+        return new AssetKit\Config('.assetkit');
+    }
+
+    static function getLoader($config)
+    {
+        return new AssetKit\AssetLoader($config,array(
+            'assets', 'tests/assets'
+        ));
+    }
+}

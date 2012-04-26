@@ -13,6 +13,12 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
         $jqueryui = $loader->load( 'jquery-ui' );
         $jqueryui->initResource();
+
+
+        $installer = new AssetKit\Installer;
+        $installer->enableLog = false;
+        $installer->install( $jquery );
+        $installer->install( $jqueryui );
     }
 
 
@@ -32,10 +38,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $loader = $this->getLoader($config);
         $asset = $loader->load( 'jquery-ui' );
         ok( $asset );
-
-        $installer = new AssetKit\Installer;
-        $installer->enableLog = false;
-        $installer->install( $asset );
 
         $collections = $asset->getFileCollections();
         foreach( $collections as $collection ) {
@@ -101,13 +103,16 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $render = new AssetKit\IncludeRender;
         $html = $render->render( $manifest );
 
-        is( '<link rel="stylesheet" type="text/css"  href="/assets/app-107f707ccc0b1f7ae125b2be5e3912d1.css"/>'
-             . '<script type="text/javascript"  src="/assets/app-d47a95dd5de878c4895d1ffde07e0805.js" />',
-                $html );
+        is( '<link rel="stylesheet" type="text/css"  href="/assets/app-2a865438b4cf7b29e856f2920fd873d6.css"/>
+<script type="text/javascript"  src="/assets/app-f39c1144ad2911d574ec59d78329f2ba.js" > </script>
+', $html );
 
-        $installer->uninstall( $jquery );
-        $installer->uninstall( $jqueryui );
+    }
 
+    function tearDown()
+    {
+#          $installer->uninstall( $jquery );
+#          $installer->uninstall( $jqueryui );
     }
 }
 

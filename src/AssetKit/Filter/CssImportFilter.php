@@ -8,18 +8,31 @@ class CssImportFilter
     {
         // get css files and find @import statement to import related content
         $assetDir = $collection->asset->getPublicDir();
-        foreach( $collection->getPublicPaths() as $path ) {
+        foreach( $collection->getSourcePaths() as $path ) {
+            $dir = dirname($path);
             $content = file_get_contents( $path );
 
-            preg_replace_callback('#url\(([^)]+)\)#' , function($matches) {
-                list($orig,$url) = $matches;
 
-                return '';
+            /**
+             * Looking for things like:
+             *
+             *    @import url("jquery.ui.core.css");
+             *
+             */
+            preg_replace_callback('#
+                @import 
+                \s+
+                url\(   
+                    (\'|"|)
+                    (?<url>.*?)
+                    (\'|"|)
+                \);
+                #x', 
+                function($matches) use ($path,$dir) {
+                    var_dump( $matches ); 
+
+                    return '';
             }, $content );
-
-#           preg_replace_callback('#@import\s+"[^"]*"#', function($matches) { 
-#               var_dump( $matches ); 
-#           });
         }
     }
 
