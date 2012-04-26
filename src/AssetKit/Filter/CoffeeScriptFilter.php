@@ -17,6 +17,9 @@ class CoffeeScriptFilter
 
     public function filter($collection)
     {
+        if( ! $collection->isJavascript )
+            return;
+
         $input = $collection->getContent();
 
         if( $this->nodejs ) {

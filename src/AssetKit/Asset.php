@@ -74,6 +74,17 @@ class Asset
                                  }, glob($this->dir . DIRECTORY_SEPARATOR . $p));
                         $files = array_merge( $files , $expanded );
                     }
+                    elseif( is_dir( $dir . DIRECTORY_SEPARATOR . $p ) ) {
+                        // expand files from dir
+                        $ite = new RecursiveDirectoryIterator( $dir . DIRECTORY_SEPARATOR . $p );
+                        $expanded = array();
+                        foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
+                            $expanded[] = $path;
+                        }
+                        $expanded = array_map(function($path) use ($dir) { 
+                            return substr($item,strlen($dir) + 1);
+                                } , $expanded);
+                        $files = array_merge( $files , $expanded );
                     else {
                         $files[] = $p;
                     }

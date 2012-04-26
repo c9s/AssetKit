@@ -7,6 +7,9 @@ class CssImportFilter
 
     public function filter($collection) 
     {
+        if( ! $collection->isStylesheet )
+            return;
+
         // get css files and find @import statement to import related content
         $assetDir = $collection->asset->getPublicDir();
         $urlBase = $collection->asset->getBaseUrl();

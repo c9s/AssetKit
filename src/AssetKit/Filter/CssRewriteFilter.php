@@ -50,6 +50,8 @@ class CssRewriteFilter
 
     public function filter($collection)
     {
+        if( ! $collection->isStylesheet )
+            return;
 
         //  path:  /assets/{asset name}
         $urlBase = $collection->asset->getBaseUrl();
