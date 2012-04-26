@@ -227,6 +227,11 @@ class AssetWriter
         $collections = $asset->getFileCollections();
 
         foreach( $collections as $collection ) {
+
+            // skip unknown types
+            if( ! $collection->isJavascript && ! $collection->isStylesheet )
+                continue;
+
             $this->runCollectionFilters( $collection );
 
             // if we are in development mode, we don't need to compress them all.
@@ -241,9 +246,6 @@ class AssetWriter
             } 
             elseif( $collection->isStylesheet ) {
                 $css .= $collection->getContent();
-            }
-            else {
-                throw new Exception("Unknown asset type of {$asset->name}");
             }
         }
         return array(
