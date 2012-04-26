@@ -1,8 +1,19 @@
 <?php
 namespace AssetKit;
+use Exception;
 
+/**
+ *
+ * $render = new IncludeRender;
+ * $render->render( $manifest );
+ */
 class IncludeRender
 {
+
+    /**
+     * @param string $url
+     * @param array $attributes
+     */
     public function getJavascriptTag($url,$attributes = array())
     {
         $html = '<script type="text/javascript" ';
@@ -14,6 +25,11 @@ class IncludeRender
         return $html;
     }
 
+
+    /**
+     * @param string $url
+     * @param array $attributes
+     */
     public function getStylesheetTag($url,$attributes = array())
     {
         $html = '<link rel="stylesheet" type="text/css" ';
@@ -25,6 +41,10 @@ class IncludeRender
         return $html;
     }
 
+
+    /**
+     * @param array $manifest
+     */
     public function render($manifest)
     {
         $html = '';
