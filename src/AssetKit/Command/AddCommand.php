@@ -3,6 +3,7 @@ namespace AssetKit\Command;
 use AssetKit\Config;
 use AssetKit\Asset;
 use AssetKit\FileUtils;
+use AssetKit\Installer;
 use CLIFramework\Command;
 
 class AddCommand extends Command
@@ -20,13 +21,13 @@ class AddCommand extends Command
         if( ! file_exists($manifestPath)) 
             throw new Exception( "$manifestPath does not exist." );
 
-        $asset = new \AssetKit\Asset($manifestPath);
+        $asset = new Asset($manifestPath);
         $asset->config = $config;
         $asset->initResource();
 
         $this->logger->info( "Installing {$asset->name}" );
 
-        $installer = new \AssetKit\Installer;
+        $installer = new Installer;
         $installer->install( $asset );
 
         $export = $asset->export();
