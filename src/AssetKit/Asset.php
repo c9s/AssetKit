@@ -166,6 +166,9 @@ class Asset
         return true;
     }
 
+
+
+
     public function initResource($update = false)
     {
         if( ! isset($this->stash['resource']) ) {
@@ -207,6 +210,20 @@ class Asset
                     throw new Exception('Zip fail');
                 }
             }
+        }
+        elseif( isset($r['github']) ) {
+            $url = 'git://github.com/' . $r['github'] . '.git';
+            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
+            if( file_exists($resDir) && $update ) {
+                $dir = getcwd();
+                chdir($resDir);
+                system("git remote update --prune");
+                system("git pull origin HEAD");
+                chdir($dir);
+            } else {
+                system("git clone -q $url $resDir");
+            }
+
         }
         elseif( isset($r['git']) ) {
             $url = $r['git'];
