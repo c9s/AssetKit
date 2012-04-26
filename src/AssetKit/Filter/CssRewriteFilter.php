@@ -13,7 +13,14 @@ class CssRewriteFilter
 {
 
 
-    public function rewritePath($content,$urlBase,$dir)
+    /**
+     * Rewrite css path
+     *
+     * @param string $content  stylesheet content
+     * @param string $urlBase  base url of assets
+     * @param string $dir      the dirname of stylesheet file
+     */
+    public function rewrite($content,$urlBase,$dir)
     {
         return preg_replace_callback('#
             url\( 
@@ -51,7 +58,7 @@ class CssRewriteFilter
         foreach( $paths as $path ) {
             $dir = dirname($path);
             $content = file_get_contents($path);
-            $content = $this->rewritePath($content,$urlBase,$dir);
+            $content = $this->rewrite($content,$urlBase,$dir);
             $contents .= $content;
         }
         $collection->setContent($contents);
