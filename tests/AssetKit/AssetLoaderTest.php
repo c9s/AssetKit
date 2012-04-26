@@ -51,6 +51,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $jquery->initResource();
         $jqueryui->initResource();
 
+        is( 'public/assets/jquery', $jquery->getPublicDir() );
+        is( 'assets/jquery', $jquery->getSourceDir() );
+
         ok( $jquery );
         ok( $jqueryui );
 

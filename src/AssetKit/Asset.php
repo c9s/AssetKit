@@ -105,6 +105,14 @@ class Asset
         return $this->dir;
     }
 
+    public function getSourceDir($absolute = false)
+    {
+        if( $absolute ) {
+            $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->dir;
+        }
+        return $this->dir;
+    }
+
     /**
      * Return the public dir of this asset
      */
