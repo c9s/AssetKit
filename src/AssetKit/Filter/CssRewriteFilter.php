@@ -39,10 +39,10 @@ class CssRewriteFilter
 
                     // rewrite with public asset baseurl
                     while (0 === strpos($url, '../') && 2 <= substr_count($dir, '/')) {
-                        $url = substr($url, 0, strrpos(rtrim($url, '/'), '/') + 1);
+                        $dir = substr($dir, 0, strrpos(rtrim($dir, '/'), '/') + 1);
                         $url = substr($url, 3);
                     }
-                    echo "Replace " , $matches['url'] , " to " , '/' . $dir . '/' . $url , "\n";
+                    // echo "Replacing " , $matches['url'] , " to " , '/' . $dir . '/' . $url , "\n";
                     return str_replace( $matches['url'], '/' . $dir . '/' . $url , $matches[0]);
                 }, $content );
             $contents .= $content;
