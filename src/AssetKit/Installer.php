@@ -42,10 +42,9 @@ class Installer
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
+
                 $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
-
                 $this->log("x $targetFile");
-
                 $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {
                     $contentOrig = file_get_contents($targetFile);
@@ -56,7 +55,6 @@ class Installer
                         exit(1);
                     }
                 }
-
                 FileUtils::mkdir_for_file( $targetFile );
                 file_put_contents( $targetFile , $content );
             }

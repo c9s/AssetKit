@@ -4,6 +4,8 @@ use ZipArchive;
 use Exception;
 use SerializerKit;
 use AssetKit\FileUtils;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 
 /**
@@ -72,7 +74,7 @@ class Asset
                         $expanded = array_map(function($item) use ($dir) { 
                             return substr($item,strlen($dir) + 1);
                                  }, glob($this->dir . DIRECTORY_SEPARATOR . $p));
-                        $files = array_merge( $files , $expanded );
+                        $files = array_unique( array_merge( $files , $expanded ) );
                     }
                     elseif( is_dir( $dir . DIRECTORY_SEPARATOR . $p ) ) {
                         // expand files from dir
@@ -82,10 +84,10 @@ class Asset
                             $expanded[] = $path;
                         }
                         $expanded = array_map(function($path) use ($dir) { 
-                            return substr($item,strlen($dir) + 1);
+                            return substr($path,strlen($dir) + 1);
                                 } , $expanded);
-                        $files = array_merge( $files , $expanded );
-                    else {
+                        $files = array_unique(array_merge( $files , $expanded ));
+                    } else {
                         $files[] = $p;
                     }
                 }
@@ -191,7 +193,7 @@ class Asset
 
         // if we have the source files , we 
         // should skip initializing resource from remotes.
-        if( $this->hasSourceFiles() ) {
+        if( ! $update && $this->hasSourceFiles() ) {
             return;
         }
 
