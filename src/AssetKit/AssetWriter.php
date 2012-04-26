@@ -285,11 +285,36 @@ class AssetWriter
         }
     }
 
+
+    /**
+     * Write asset for development mode.
+     *
+     * 1. Read asset files from source directory.
+     * 2. For collections that has filters (like coffeescript or sass),
+     *    Run through the filters , and replace file extensions (for coffeescript or sass)
+     * 3. Separate stylesheet and javascript files and return.
+     *
+     * @param array $assets
+     */
     public function writeForDevelopment($assets)
     {
+        $manifest = array(
+            'javascripts' => array(),
+            'stylesheets' => array(),
+        );
 
+        foreach( $assets as $asset ) {
+
+        }
+        return $manfiest;
     }
 
+
+    /**
+     * squash assets and return a manfiest
+     *
+     * @param array $assets
+     */
     public function writeForProduction($assets)
     {
         // check mtime
