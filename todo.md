@@ -5,9 +5,12 @@ Todo
 x When installing files, we should only copy them into the public asset root,
 x Then provide a method to get file paths based on public asset root.
 
-- So that we can support debug flag (separating files to include)
 
-- Add css import filter.
+- support directory option in manifest:
+    - can copy directory (add command)
+
+- rewrite coffee script with .js extension.
+
 - Add css rewrite filter.
 
     - Since we are copying css files into --output directory, we should also rewrite the 
@@ -16,7 +19,6 @@ x Then provide a method to get file paths based on public asset root.
         image copy
         
         for example, in public/assets/jquery/app.css
-            
             background: url(images/bg.png);
 
         should be rewrited into:

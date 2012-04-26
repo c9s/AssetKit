@@ -139,7 +139,6 @@ class FileCollection
         return $this->content = $content;
     }
 
-
     public function getIterator()
     {
         return new ArrayIterator($this->getSourcePaths(true));

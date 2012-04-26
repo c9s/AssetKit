@@ -9,15 +9,17 @@ class CssImportFilterTest extends PHPUnit_Framework_TestCase
 
         $jqueryui = $loader->load('jquery-ui');
 
+        $rewriteFilter = new AssetKit\Filter\CssRewriteFilter;
+
         $filter = new AssetKit\Filter\CssImportFilter;
 
         foreach( $jqueryui->getFileCollections() as $c ) {
             if( $c->isStylesheet ) {
-                $filter->filter( $c );
+                $rewriteFilter->filter( $c );
 
-
+                // $filter->filter( $c );
                 $content = $c->getContent();
-                echo $content;
+                // echo $content;
             }
         }
 
