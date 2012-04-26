@@ -90,9 +90,15 @@ The manifest.yml file:
 
 fetch resource and extract it
 
-### Pre compile & export static files to webroot
+### Pre-compile & export static files to webroot
 
     $ assetkit compile --as app jquery-ui jquery
+
+
+### Include assetkit in your application
+
+
+
 
 ### Asset Library API
 
