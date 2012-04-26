@@ -81,8 +81,7 @@ class AssetWriter
         });
 
         $this->addFilter( 'css_rewrite', function() {
-            // XXX:
-            // return new AssetKit\Compressor
+            return new \AssetKit\Filter\CssRewriteFilter;
         });
     }
 
@@ -226,6 +225,7 @@ class AssetWriter
         $js = '';
         $css = '';
         $collections = $asset->getFileCollections();
+
         foreach( $collections as $collection ) {
             $this->runCollectionFilters( $collection );
 
