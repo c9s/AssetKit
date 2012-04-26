@@ -1,8 +1,10 @@
 <?php
 namespace AssetKit;
 use Exception;
+use IteratorAggregate;
 
 class FileCollection
+    implements IteratorAggregate
 {
 
     public $filters = array();
@@ -56,14 +58,28 @@ class FileCollection
 
     public function getPublicPaths($absolute = false)
     {
-        if( $this->asset ) {
-            $dir = $this->asset->getPublicDir($absolute);
-            return array_map(function($file) use ($dir) {
-                return $dir . DIRECTORY_SEPARATOR . $file;
-                }, $this->files);
+        if( ! $this->asset ) {
+            throw new Exception("file collection requires asset object, but it's undefined.");
         }
-        return $this->files;
+
+        $dir = $this->asset->getPublicDir($absolute);
+        return array_map(function($file) use ($dir) {
+            return $dir . DIRECTORY_SEPARATOR . $file;
+            }, $this->files);
     }
+
+    public function getSourcePaths($absolute = false)
+    {
+        if( ! $this->asset ) {
+            throw new Exception("file collection requires asset object, but it's undefined.");
+        }
+
+        $dir = $this->asset->getSourceDir($absolute);
+        return array_map(function($file) use ($dir) {
+            return $dir . DIRECTORY_SEPARATOR . $file;
+            }, $this->files);
+    }
+
 
     public function getFilePaths()
     {
@@ -102,12 +118,18 @@ class FileCollection
             return $this->content;
 
         $content = '';
-        foreach( $this->getPublicPaths(true) as $file ) {
+        foreach( $this->getSourcePaths(true) as $file ) {
             if( ! file_exists($file) )
                 throw new Exception("$file does not exist.");
             $content .= file_get_contents( $file );
         }
         return $this->content = $content;
+    }
+
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->getSourcePaths(true));
     }
 
 }

@@ -3,6 +3,24 @@
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
 
+    function setup()
+    {
+        $config = $this->getConfig();
+        $loader = $this->getLoader($config);
+
+        $jquery = $loader->load( 'jquery' );
+        $jquery->initResource();
+
+        $jqueryui = $loader->load( 'jquery-ui' );
+        $jqueryui->initResource();
+    }
+
+
+    function getLoader($config)
+    {
+        return new AssetKit\AssetLoader($config, array( 'assets','tests/assets' ) );
+    }
+
     function getConfig()
     {
         return new AssetKit\Config('.testassetkit');
@@ -11,11 +29,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
     function testLoader()
     {
         $config = $this->getConfig();
-        $loader = new AssetKit\AssetLoader($config, array( 'assets') );
+        $loader = $this->getLoader($config);
         $asset = $loader->load( 'jquery-ui' );
         ok( $asset );
-
-        $asset->initResource();
 
         $installer = new AssetKit\Installer;
         $installer->enableLog = false;
@@ -36,20 +52,17 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         }
     }
 
-
     function testWriter()
     {
         $config = $this->getConfig();
+        $loader = $this->getLoader($config);
+
         $writer = new AssetKit\AssetWriter( $config );
         $writer->enableCompressor = false;
         ok( $writer );
 
-        $loader = new AssetKit\AssetLoader( $config , array('assets') );
         $jquery = $loader->load('jquery');
         $jqueryui = $loader->load('jquery-ui');
-
-        $jquery->initResource();
-        $jqueryui->initResource();
 
         is( 'public/assets/jquery', $jquery->getPublicDir() );
         is( 'assets/jquery', $jquery->getSourceDir() );

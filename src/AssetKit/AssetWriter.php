@@ -339,7 +339,7 @@ class AssetWriter
             'stylesheets' => array(),
             'javascripts' => array(),
         );
-        $dir = $this->config->getPublicRoot(true);
+        $dir = $this->config->getPublicRoot(true); // public web root
 
         if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
             mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );

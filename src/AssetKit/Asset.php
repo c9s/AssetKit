@@ -16,10 +16,10 @@ class Asset
 {
     public $stash;
 
-    /* manifest file (related path) */
+    /* manifest file (related path, relate to config file) */
     public $manfiest;
 
-    /* asset dir (related path) */
+    /* asset dir (related path, relate to config file) */
     public $dir;
 
 
@@ -132,10 +132,29 @@ class Asset
     }
 
 
-    public function initResource()
+    public function hasSourceFiles()
+    {
+        $this->dir;
+        foreach( $this->collections as $collection ) {
+            $paths = $collection->getSourcePaths(true);
+            foreach( $paths as $path ) {
+                if( ! file_exists($path) )
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public function initResource($update = false)
     {
         if( ! isset($this->stash['resource']) ) {
             return false;
+        }
+
+        // if we have the source files , we 
+        // should skip initializing resource from remotes.
+        if( $this->hasSourceFiles() ) {
+            return;
         }
 
         $resDir = null;
@@ -171,7 +190,7 @@ class Asset
         elseif( isset($r['git']) ) {
             $url = $r['git'];
             $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
-            if( file_exists($resDir) ) {
+            if( file_exists($resDir) && $update ) {
                 $dir = getcwd();
                 chdir($resDir);
                 system("git remote update --prune");
@@ -184,7 +203,7 @@ class Asset
         elseif( isset($r['svn']) ) {
             $url = $r['svn'];
             $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url);
-            if( file_exists($resDir) ) {
+            if( file_exists($resDir) && $update ) {
                 $dir = getcwd();
                 chdir($resDir);
                 system("svn update");
@@ -196,7 +215,7 @@ class Asset
         elseif( isset($r['hg']) ) {
             $url = $r['hg'];
             $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url);
-            if( file_exists($resDir) ) {
+            if( file_exists($resDir) && $update ) {
                 $dir = getcwd();
                 chdir($resDir);
                 system("hg pull -u");
