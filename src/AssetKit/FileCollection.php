@@ -97,6 +97,18 @@ class FileCollection
         return $this;
     }
 
+
+    public function getCompressors()
+    {
+        return $this->compressors;
+    }
+
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+
     public function addFilter($filter)
     {
         $this->filters[] = $filter;
