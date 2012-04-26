@@ -21,11 +21,10 @@ class AddCommand extends Command
             throw new Exception( "$manifestPath does not exist." );
 
         $asset = new \AssetKit\Asset($manifestPath);
+        $asset->config = $config;
         $asset->initResource();
 
         $this->logger->info( "Installing {$asset->name}" );
-
-        $asset->config = $config;
 
         $installer = new \AssetKit\Installer;
         $installer->install( $asset );

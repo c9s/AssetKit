@@ -15,7 +15,7 @@ $jqueryui = $loader->load( 'jquery-ui' );
 
 $assets = array();
 $assets[] = $jquery;
-#  $assets[] = $jqueryui;
+$assets[] = $jqueryui;
 
 
 $writer = new AssetKit\AssetWriter($config);
