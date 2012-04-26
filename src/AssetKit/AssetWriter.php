@@ -332,6 +332,7 @@ class AssetWriter
             }
         }
 
+        // die('squash...');
 
         // squash new content from assets
         $contents = $this->squashThem( $assets );

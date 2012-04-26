@@ -46,6 +46,7 @@ class AssetLoader
                 }
             }
         }
+        throw new Exception("Can not load asset $name.");
     }
 }
 

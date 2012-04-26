@@ -21,7 +21,7 @@ class IncludeRender
         foreach( $attributes as $name => $value ) {
             $html .= ' ' . $name . '="' . $value . '"'; 
         }
-        $html .= '/>';
+        $html .= '> </script>';
         return $html;
     }
 

@@ -108,7 +108,7 @@ class Asset
     public function getSourceDir($absolute = false)
     {
         if( $absolute ) {
-            $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->dir;
+            return $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->dir;
         }
         return $this->dir;
     }
