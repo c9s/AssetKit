@@ -24,9 +24,9 @@ class CssImportFilter
                 url\(   
                     (\'|"|)
                     (?<url>.*?)
-                    (\'|"|)
-                \);
-                #x', 
+                    \1
+                \)\s*;
+                #xs', 
                 function($matches) use ($path,$dir) {
                     $path = $matches['url'];
                     $content = '/*****************************' . "\n"
