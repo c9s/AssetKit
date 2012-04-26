@@ -5,18 +5,6 @@ Todo
 x When installing files, we should only copy them into the public asset root,
 x Then provide a method to get file paths based on public asset root.
 
-
-- When running asset writer from compile command:
-    - compile assets from asset source
-    - make sure the apc is working in CLI mode.
-    - run filters and compressors
-
-- When running asset writer from web front-end:
-    development:
-        run filters
-    produnction:
-        run filters, then compressors
-
 - So that we can support debug flag (separating files to include)
 
 - Add css import filter.
