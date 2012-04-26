@@ -4,29 +4,11 @@ Todo
 
 x When installing files, we should only copy them into the public asset root,
 x Then provide a method to get file paths based on public asset root.
+x support directory option in manifest:
+    x can copy directory (add command)
 
-
-- support directory option in manifest:
-    - can copy directory (add command)
-
-- rewrite coffee script with .js extension.
-
+- can rewrite coffee script with .js extension.
 - Add css rewrite filter.
-
-    - Since we are copying css files into --output directory, we should also rewrite the 
-        image paths with related css image url.
-
-        image copy
-        
-        for example, in public/assets/jquery/app.css
-            background: url(images/bg.png);
-
-        should be rewrited into:
-
-            background: url(/assets/jquery/images/bg.png);
-
-    - Front testing code (load asset from assetLoader) from other path.
-
 - Twig extension for including assets
 
 Done
