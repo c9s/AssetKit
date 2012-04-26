@@ -47,7 +47,25 @@ class CompileCommand extends Command
             $this->logger->info("x {$file["path"]}");
         }
 
+        $php = '<?php return ' . var_export($manifest,1) . '; ?>';
+        $this->logger->info("Generating manfiest file...");
+        $manifestFile = 'manifest.php';
+        file_put_contents( $manifestFile ,$php);
+        $this->logger->info("x $manifestFile");
+
         $this->logger->info("Done");
+
+        $this->logger->info(<<<END
+
+Manifest file is generated, now you can simply require the manifest.php in your 
+PHP application:
+
+    \$manifest = require 'manifest.php';
+    \$includer = new AssetKit\\IncludeRender;
+    echo \$includer->render( \$manifest );
+
+END
+        );
     }
 }
 
