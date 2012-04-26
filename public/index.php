@@ -17,22 +17,20 @@ $assets = array();
 $assets[] = $jquery;
 $assets[] = $jqueryui;
 
-
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
         ->writeForProduction( $assets );
 
 $includer = new AssetKit\IncludeRender;
-$html = $includer->render( $manifest );
+$head = $includer->render( $manifest );
 ?>
 <html>
 <head>
-    <?=$html?>
+    <?=$head?>
 </head>
 <body>
 <?php
 var_dump( $manifest );
-var_dump( $html );
 ?>
 </body>
 </html>

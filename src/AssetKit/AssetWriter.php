@@ -272,6 +272,19 @@ class AssetWriter
         );
     }
 
+    public function write($assets)
+    {
+        if( $this->env === 'production' ) {
+            return $this->writeForProduction($assets);
+        }
+        elseif( $this->env === 'development' ) {
+            return $this->writeForDevelopment($assets);
+        }
+        else {
+            throw new Exception("Unknown environment type: {$this->env}");
+        }
+    }
+
     public function writeForDevelopment($assets)
     {
 
