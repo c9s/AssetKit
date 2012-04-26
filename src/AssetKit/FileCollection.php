@@ -36,11 +36,11 @@ class FileCollection
                 $collection->files = $config['files'];
             }
 
-            if( isset($config['javascript']) )
+            if( isset($config['javascript']) || isset($config['js']) ) {
                 $collection->isJavascript = true;
-
-            if( isset($config['stylesheet']) )
+            } elseif( isset($config['stylesheet']) || isset($config['css']) ) {
                 $collection->isStylesheet = true;
+            }
 
             $collection->asset = $asset;
             $collections[] = $collection;

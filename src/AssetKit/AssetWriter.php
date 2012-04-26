@@ -316,7 +316,9 @@ class AssetWriter
 
                 }
                 else {
-                    $k = ( $c->isJavascript ) ? 'javascripts' : $c->isStylesheet ? 'stylesheets' : null;
+                    $k = $c->isJavascript 
+                        ? 'javascripts' : $c->isStylesheet 
+                            ? 'stylesheets' : null;
                     if($k) {
                         foreach( $paths as $path ) {
                             $manifest[$k][] = array(
