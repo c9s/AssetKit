@@ -112,28 +112,17 @@ The manifest.yml file:
     resource:
       git: git@github.com:blah/blah.git
     asset:
-      - filters: [ "compass" ]
+      - css: 1
+        filters: [ "css_import" ]
         files:
           - css/*.sass
-      - filters: [  ]
+      - coffeescript: 1
+        files:
+          - js/*.coffee
+      - js: 1
         files:
           - js/*
           - js/javascript.js
-
-
-## Use flow
-
-### Fetch remote resource and include to asset config
-
-    $ assetkit init 
-
-    $ assetkit add assets/jquery/manifest.yml
-
-fetch resource and extract it
-
-### Pre-compile & export static files to webroot
-
-    $ assetkit compile --as app jquery-ui jquery
 
 
 ### Include assetkit in your application
@@ -142,69 +131,9 @@ Please check public/index.php file for example.
 
 
 
-
-### Asset Library API
-
-
-```php
-<?php
-    $config = new AssetKit\Config('.assetkit');
-    $loader = new AssetLoader( $config , array( 'assets','other_assets')  );
-
-    $assets = array();
-    $jquery = $loader->load('jquery');
-    $jqueryui = $loader->loadFile('assets/jquery-ui/manifest.yml');
-
-    $writer = new AssetKit\Writer($config);
-
-    if( in production ) {
-        $loader->addCompressorPattern('*.js', 'jsmin' );
-        $loader->addCompressorPattern('*.css', 'cssmin' );
-    }
-
-    $writer->addFilterPattern('*.coffeescript', 'coffeescript' );
-    $writer->addFilterPattern('*.sass', 'compass');
-
-    $writer->addFilter( 'compass', function() {
-        return new Compass( '/path/to/compass' );
-    });
-
-
-    $writer->addFilter( 'css_rewrite' , function() {
-        return new CssRewriteFilter(array( 
-            'base' => '/assets',
-            'dir' => 'public/assets',
-        ));
-    });
-
-    // parse css image files and copy to public/assets
-    $cssImagePreprocess = new CssImagePreprocess;
-    $cssImagePreprocess->from( $assets )
-            ->in( 'public/assets' )
-            ->process();
-
-    $writer = new AssetKit\AssetWriter( );
-    $manifest = $writer->from( $assets )
-            ->cache( $cache )
-            ->as( 'application' )
-            ->in( 'public/assets' );
-            ->write();
-
-    // public/assets/images
-    // public/assets/application-{md5}.css
-    // public/assets/application-{md5}.js
-
-
-    $asset = $loader->getAsset( 'jquery' );
-    $fileCollections = $asset->getFileCollections();
-    $filters = $asset->getFilters();
-
-    foreach( $fileCollections as $collection ) {
-        $content = $collection->output();
-    }
-```
-
 ### Include stylesheets and javascripts in front-end page
+
+**Working in progress**
 
 Include specified asset:
 
