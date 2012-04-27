@@ -33,7 +33,7 @@ class CompileCommand extends Command
         $writer = new \AssetKit\AssetWriter( $config );
 
         if( $as )
-            $writer->name( $as )
+            $writer->name( $as );
 
         $manifest = $writer
             ->production()
