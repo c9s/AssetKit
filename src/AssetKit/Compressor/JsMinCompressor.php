@@ -22,7 +22,7 @@ class JsMinCompressor
             $content = $proc->getOutput();
         }
         else {
-            JSMin::minify( $content );
+            $content = JSMin::minify( $content );
         }
         $collection->setContent($content);
     }

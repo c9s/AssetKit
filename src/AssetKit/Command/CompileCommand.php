@@ -37,7 +37,8 @@ class CompileCommand extends Command
         $writer = new \AssetKit\AssetWriter( $config );
         $manifest = $writer
             ->name( $as )
-            ->writeForProduction( $assets );
+            ->production()
+            ->write( $assets );
 
         foreach( $manifest['javascripts'] as $file ) {
             $this->logger->info("x {$file["path"]}");
