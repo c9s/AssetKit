@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2012-04-27</date>
-  <time>18:34:56</time>
+  <time>19:05:42</time>
   <version>
     <release>1.0.0</release>
     <api>1.0.0</api>
@@ -58,6 +58,7 @@
       <file name="src/AssetKit/Installer.php" role="php" md5sum="c3cd8eb8f5541c8b4b2cf99dd9c72825"/>
       <file name="src/AssetKit/JSMin.php" role="php" md5sum="aab66b8b8b2f3c9459f6c83fcb1c1c3d"/>
       <file name="src/AssetKit/Process.php" role="php" md5sum="444ce7c2c22f5a354500158333270251"/>
+      <file name="assetkit" role="script" md5sum="1b9fe6c05bdccabbf3a1204e09aae0ac"/>
     </dir>
   </contents>
   <dependencies>
@@ -121,6 +122,7 @@
       <install name="src/AssetKit/Installer.php" as="AssetKit/Installer.php"/>
       <install name="src/AssetKit/JSMin.php" as="AssetKit/JSMin.php"/>
       <install name="src/AssetKit/Process.php" as="AssetKit/Process.php"/>
+      <install name="assetkit" as="assetkit"/>
     </filelist>
   </phprelease>
 </package>
