@@ -25,6 +25,7 @@ class JsMinCompressor
             $content = jsmin( $content );
         }
         else {
+            // pure php jsmin
             $content = JSMin::minify( $content );
         }
         $collection->setContent($content);
