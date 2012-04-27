@@ -237,7 +237,7 @@ class Asset
                 system("git pull origin HEAD");
                 chdir($dir);
             } else {
-                system("git clone -q $url $resDir");
+                system("git clone $url $resDir");
             }
 
         }

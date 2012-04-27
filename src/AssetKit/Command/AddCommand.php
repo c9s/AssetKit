@@ -24,6 +24,9 @@ class AddCommand extends Command
 
         $asset = new Asset($manifestPath);
         $asset->config = $config;
+
+
+        $this->logger->info("Initializing resource...");
         $asset->initResource(true); // update it
 
         $this->logger->info( "Installing {$asset->name}" );
