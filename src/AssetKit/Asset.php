@@ -284,7 +284,6 @@ class Asset
             }
         }
 
-
         // run commands for resources to initialize
         if( isset($r['commands']) ) {
             $cwd = getcwd();
