@@ -23,10 +23,6 @@ class CompileCommand extends Command
             throw new Exception("asset name is required.");
         }
 
-        if( null === $options->as ) {
-            throw new Exception("please specify --as=name option.");
-        }
-
         $as = $options->as;
         $config = new Config('.assetkit');
 
@@ -35,8 +31,11 @@ class CompileCommand extends Command
         // initialize loader and writer
         $assets = $config->getAssets();
         $writer = new \AssetKit\AssetWriter( $config );
+
+        if( $as )
+            $writer->name( $as )
+
         $manifest = $writer
-            ->name( $as )
             ->production()
             ->write( $assets );
 
