@@ -462,8 +462,9 @@ class AssetWriter
         }
 
         if( isset($contents['css']) && $contents['css'] ) {
-            $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-'
-                . md5( $contents['css']) . '.css';
+            $path = $this->in . DIRECTORY_SEPARATOR 
+                . ($this->name ? $this->name . '-' . md5( $contents['css']) : md5( $contents['css'] ) )
+                . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $cssfile , $contents['css'] ) !== false 
@@ -476,8 +477,9 @@ class AssetWriter
             );
         }
         if( isset($contents['js']) && $contents['js'] ) {
-            $path = $this->in . DIRECTORY_SEPARATOR . $this->name . '-' 
-                . md5( $contents['js']) . '.js';
+            $path = $this->in . DIRECTORY_SEPARATOR 
+                . ($this->name ? $this->name . '-' . md5( $contents['js']) : md5( $contents['js'] ))
+                . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
             file_put_contents( $jsfile , $contents['js'] ) !== false 
