@@ -21,8 +21,8 @@ $assets[] = $jqueryui;
 $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
-        ->cache($cache)
         ->env('production')
+        // ->cache($cache)
         // ->env('development')
         ->write( $assets );
 

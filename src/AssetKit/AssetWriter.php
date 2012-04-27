@@ -202,12 +202,25 @@ class AssetWriter
 
     public function runCollectionCompressors($collection)
     {
-        foreach( $collection->compressors as $n ) {
-            if( $compressor = $this->getCompressor( $n ) ) {
-                $compressor->compress($collection);
+        // if custom compresor is not define, use default compressors
+        if( empty($collection->compressors) ) {
+            if( $collection->isJavascript || $collection->isCoffeescript ) {
+                $jsmin = new Compressor\JsMinCompressor;
+                $jsmin->compress($collection);
             }
-            else { 
-                throw new Exception("compressor $n not found.");
+            elseif( $collection->isStylesheet ) {
+                $cssmin = new Compressor\CssMinCompressor;
+                $cssmin->compress($collection);
+            }
+        }
+        else {
+            foreach( $collection->compressors as $n ) {
+                if( $compressor = $this->getCompressor( $n ) ) {
+                    $compressor->compress($collection);
+                }
+                else { 
+                    throw new Exception("compressor $n not found.");
+                }
             }
         }
     }
@@ -235,8 +248,7 @@ class AssetWriter
 
             // if we are in development mode, we don't need to compress them all.
             if( $this->environment === 'production'
-                    && $this->enableCompressor
-                    && $collection->compressors ) 
+                    && $this->enableCompressor ) 
             {
                 // for stylesheets, before compress it, we should import the css contents
                 if( $collection->isStylesheet ) {
