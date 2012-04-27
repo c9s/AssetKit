@@ -1,5 +1,4 @@
 <?php
-require '../vendor/autoload.php';
 require '../vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
 define( 'ROOT', dirname(dirname(__FILE__) ));
 $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
