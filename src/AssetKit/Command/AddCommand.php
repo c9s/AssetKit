@@ -5,6 +5,7 @@ use AssetKit\Asset;
 use AssetKit\FileUtils;
 use AssetKit\Installer;
 use CLIFramework\Command;
+use Exception;
 
 class AddCommand extends Command
 {

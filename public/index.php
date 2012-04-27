@@ -12,6 +12,7 @@ $config = new AssetKit\Config( ROOT . '/.assetkit');
 $loader = new AssetKit\AssetLoader( $config , array( ROOT . '/assets' ) );
 $jquery = $loader->load( 'jquery' );
 $jqueryui = $loader->load( 'jquery-ui' );
+$ext4js = $loader->load( 'ext4js-gpl' );
 
 $assets = array();
 $assets[] = $jquery;
