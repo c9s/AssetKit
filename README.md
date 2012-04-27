@@ -44,6 +44,8 @@ Once you've done, you can precompile the asset files to a squashed javascript/st
     x /Users/c9s/git/Work/AssetKit/public/assets/your-app-c9f4db7954ea479dea822e0b665c1501.css
     Done
 
+You can simply include these files in your pages, or use the asset writer in your application.
+
 To use assetkit in your application, just few lines to write:
 
 ```php
