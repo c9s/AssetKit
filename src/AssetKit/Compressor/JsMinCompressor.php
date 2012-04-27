@@ -1,6 +1,6 @@
 <?php
 namespace AssetKit\Compressor;
-use Symfony\Component\Process\ProcessBuilder;
+use AssetKit\Process;
 use AssetKit\JSMin;
 
 class JsMinCompressor
@@ -17,10 +17,8 @@ class JsMinCompressor
         // C version jsmin is faster,
         $content = $collection->getContent();
         if( $this->bin ) {
-            $pb = new ProcessBuilder(array( $this->bin ));
-            $pb->setInput($content);
-            $proc = $pb->getProcess();
-            $code = $proc->run();
+            $proc = new Process(array($this->bin));
+            $code = $proc->input($content)->run();
             $content = $proc->getOutput();
         }
         else {

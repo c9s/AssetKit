@@ -10,7 +10,6 @@ use RuntimeException;
  */
 class Process
 {
-
     public $args = array();
 
     public $input;
@@ -25,6 +24,12 @@ class Process
     {
         $this->args = $args;
         $this->cwd = getcwd();
+    }
+
+    function arg($arg)
+    {
+        $this->args[] = $arg;
+        return $this;
     }
 
     function input($input)

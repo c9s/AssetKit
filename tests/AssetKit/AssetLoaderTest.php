@@ -103,9 +103,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $render = new AssetKit\IncludeRender;
         $html = $render->render( $manifest );
 
-        is( '<link rel="stylesheet" type="text/css"  href="/assets/app-2a865438b4cf7b29e856f2920fd873d6.css"/>
-<script type="text/javascript"  src="/assets/app-f39c1144ad2911d574ec59d78329f2ba.js" > </script>
-', $html );
+        like( '#<link rel="stylesheet" type="text/css"  href="/assets/app-\w+.css"/>
+<script type="text/javascript"  src="/assets/app-\w+.js" > </script>#', $html );
 
     }
 
