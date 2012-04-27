@@ -2,7 +2,6 @@
 onion -d compile \
     --lib src \
     --lib vendor/pear \
-    --lib vendor/symfony/process \
     --classloader \
     --bootstrap scripts/assetkit.embed.php \
     --executable \
