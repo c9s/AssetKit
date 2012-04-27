@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2012-04-27</date>
-  <time>12:13:05</time>
+  <time>13:07:20</time>
   <version>
     <release>0.0.1</release>
     <api>0.0.1</api>
@@ -35,14 +35,14 @@
       <file name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" role="test" md5sum="f0f84b9d4ba04b0127ed3b6603719f44"/>
       <file name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" role="test" md5sum="f84f104a6339cd161cd3561f45a1207d"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="f898fc8646d91bf0d1270c57603b2d28"/>
-      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="8e15111aedf2088f6d52efe2909c5aa5"/>
+      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="a55662ac282476d50c452630ab2c69c2"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="c77316112a69f3ed2a98128d2bd863cd"/>
-      <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="90e76b32875e692a59dcc9935de7e11e"/>
+      <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="7777e9af1219aa4ff893d78e6758233f"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="9b77f0416a5c868f60a2baf5b852fc46"/>
       <file name="src/AssetKit/Command/InitCommand.php" role="php" md5sum="4f2318e6e18cc53aecf2683d2075e61a"/>
       <file name="src/AssetKit/Command/RemoveCommand.php" role="php" md5sum="31494897b23acebf29788e3cdb208d62"/>
       <file name="src/AssetKit/Compressor/CssMinCompressor.php" role="php" md5sum="dbe81a32f1bdc3bc6e8a07c2c79289ee"/>
-      <file name="src/AssetKit/Compressor/JsMinCompressor.php" role="php" md5sum="a82b29b560e0f6bf23650b236af6abbf"/>
+      <file name="src/AssetKit/Compressor/JsMinCompressor.php" role="php" md5sum="f7d08377a086e44484c332aa7043ce19"/>
       <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="ef7cc5a9726d7176a7b12f2b81a8369d"/>
       <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="71cd8ddc59e6dd4e4e6aac223369191b"/>
       <file name="src/AssetKit/Config.php" role="php" md5sum="cec77e99c9bf2e61eaf51144cd17977d"/>
