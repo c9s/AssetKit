@@ -24,6 +24,7 @@ class Process
     {
         $this->args = $args;
         $this->cwd = getcwd();
+        $this->env['PATH'] = getenv('PATH'); // inherit PATH env
     }
 
     function arg($arg)
@@ -76,7 +77,6 @@ class Process
             // 0 => writeable handle connected to child stdin
             // 1 => readable handle connected to child stdout
             // Any error output will be appended to /tmp/error-output.txt
-
             fwrite($pipes[0], $this->input );
             fclose($pipes[0]); // close input
 

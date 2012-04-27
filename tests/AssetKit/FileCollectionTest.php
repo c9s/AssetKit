@@ -29,7 +29,7 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
             ok( $content );
 
             // ok, now let's use a compressor
-            $filter = new AssetKit\Filter\CoffeeScriptFilter('coffee');
+            $filter = new AssetKit\Filter\CoffeeScriptFilter;
             ok( $filter );
 
             $filter->filter( $cln );

@@ -30,8 +30,6 @@ class CoffeeScriptFilter
             $proc = new Process(array( $this->coffeescript ));
         }
 
-        var_dump( $input ); 
-
         // compile and print to stdout
         $proc->arg( '-cp' )->arg('--stdio')->input($input);
 

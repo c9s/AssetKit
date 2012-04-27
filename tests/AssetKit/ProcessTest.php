@@ -30,5 +30,14 @@ class ProcessTest extends PHPUnit_Framework_TestCase
         like('#package\.xml#',$output);
     }
 
+    function testCoffee()
+    {
+        $input = file_get_contents('tests/assets/test/test.coffee');
+        $proc = new Process(array('coffee','-cps'));
+        $code = $proc->run();
+        is( 0 , $code );
+    }
+
+
 }
 
