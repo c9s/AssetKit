@@ -135,9 +135,20 @@ Please check public/index.php file for example.
 ### FileCollection API
 
 
+
+
+
+# Working in progress
+
+### Can use create file collection directly
+
+    $cln = new FileCollection;
+    $cln->fromDir('path/to/dir');
+    $cln->fromGlob('path/to/dir/*');
+    $cln->addFile('path/to/file');
+
 ### Include stylesheets and javascripts in front-end page
 
-**Working in progress**
 
 Include specified asset:
 
