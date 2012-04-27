@@ -59,7 +59,9 @@ class Process
             2 => array('pipe', 'w')
         );
 
-        $command = join(' ',$this->args);
+        $command = join(' ', array_map(function($arg) { 
+                return escapeshellarg($arg);
+                    } ,$this->args));
 
         $pipes = array();
         $process = proc_open($command, $descriptorspec, $pipes, $this->cwd, $this->env);
