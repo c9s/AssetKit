@@ -227,7 +227,10 @@ class Asset
                 }
             }
         }
-        elseif( isset($r['github']) ) {
+        elseif( isset($r['github']) ) 
+        {
+
+            // read-only
             $url = 'git://github.com/' . $r['github'] . '.git';
             $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
             if( file_exists($resDir) && $update ) {
@@ -241,7 +244,8 @@ class Asset
             }
 
         }
-        elseif( isset($r['git']) ) {
+        elseif( isset($r['git']) ) 
+        {
             $url = $r['git'];
             $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
             if( file_exists($resDir) && $update ) {
@@ -254,7 +258,8 @@ class Asset
                 system("git clone -q $url $resDir");
             }
         }
-        elseif( isset($r['svn']) ) {
+        elseif( isset($r['svn']) ) 
+        {
             $url = $r['svn'];
             $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url);
             if( file_exists($resDir) && $update ) {
@@ -279,6 +284,8 @@ class Asset
             }
         }
 
+
+        // run commands for resources to initialize
         if( isset($r['commands']) ) {
             $cwd = getcwd();
             chdir( $resDir );
