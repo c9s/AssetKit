@@ -37,7 +37,13 @@ class AssetLoader
      */
     function load($name)
     {
-        if( $this->config && $asset = $this->config->getAsset($name) ) {
+        if( $this->config && is_array($name) )  {
+            $self = $this;
+            return array_map(function($n) use($self) { 
+                        return $self->assets[$n] = $self->config->getAsset($name);
+                    },$name);
+        } 
+        elseif( $this->config && $asset = $this->config->getAsset($name) ) {
             return $this->assets[ $name ] = $asset;
         }
         else {
