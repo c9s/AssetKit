@@ -8,13 +8,14 @@ AssetKit can fetch asset ports and initialize them from a simple manifest YAML f
 
 You can use AssetKit library to integrate assets for your web applications very easily.
 
-
 Usage
 =====
 
 Once you got `assetkit`, you can initialize it with your public path (web root):
 
     $ assetkit init --public public
+
+The config is stored at `.assetkit` file.
 
 Then fetch anything you want:
 
@@ -33,7 +34,9 @@ Then fetch anything you want:
     Saving config...
     Done
 
-Once you've done, you can precompile the assets to a squashed javascript/stylesheet files:
+And your `.assetkit` file will be updated.
+
+Once you've done, you can precompile the asset files to a squashed javascript/stylesheet files:
 
     $ assetkit compile --as your-app jquery jquery-ui blueprint
     Compiling...
@@ -41,10 +44,43 @@ Once you've done, you can precompile the assets to a squashed javascript/stylesh
     x /Users/c9s/git/Work/AssetKit/public/assets/your-app-c9f4db7954ea479dea822e0b665c1501.css
     Done
 
-To use YUI Compressor:
+To use assetkit in your application, just few lines to write:
 
-    YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
-        assetkit add assets/test/manifest.yml
+    // load your asset config file
+    $config = new AssetKit\Config( '../.assetkit');
+
+    // initialize an asset loader
+    $loader = new AssetKit\AssetLoader( $config );
+
+    // load the required assets (of your page, application or controller)
+    $assets = array();
+    $assets[]   = $loader->load( 'jquery' );
+    $assets[]   = $loader->load( 'jquery-ui' );
+    $assets[]   = $loader->load( 'extjs4-gpl' );
+
+    // initialize a cache (if you need one)
+    $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
+
+    $writer = new AssetKit\AssetWriter($config);
+    $manifest = $writer
+            ->cache($cache)
+            ->production()          // generate for production code, (the alternative is `development`)
+            ->name('app')
+            ->write( $assets );
+
+    // then use include renderer to render html for asset files
+    $includer = new AssetKit\IncludeRender;
+    $html = $includer->render( $manifest );
+
+    // show html !
+    echo $html;
+
+
+
+    To use YUI Compressor:
+
+        YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
+            assetkit add assets/test/manifest.yml
 
 Hack
 =======
