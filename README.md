@@ -46,6 +46,9 @@ Once you've done, you can precompile the asset files to a squashed javascript/st
 
 To use assetkit in your application, just few lines to write:
 
+```php
+<?php
+
     // load your asset config file
     $config = new AssetKit\Config( '../.assetkit');
 
@@ -74,7 +77,7 @@ To use assetkit in your application, just few lines to write:
 
     // show html !
     echo $html;
-
+```
 
 
     To use YUI Compressor:
@@ -140,6 +143,9 @@ Please check public/index.php file for example.
 
 ### Asset Library API
 
+
+```php
+<?php
     $config = new AssetKit\Config('.assetkit');
     $loader = new AssetLoader( $config , array( 'assets','other_assets')  );
 
@@ -194,6 +200,7 @@ Please check public/index.php file for example.
     foreach( $fileCollections as $collection ) {
         $content = $collection->output();
     }
+```
 
 ### Include stylesheets and javascripts in front-end page
 
