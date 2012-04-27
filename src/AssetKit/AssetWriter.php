@@ -95,6 +95,18 @@ class AssetWriter
         return $this;
     }
 
+    public function production()
+    {
+        $this->environment = 'production';
+        return $this;
+    }
+
+    public function development()
+    {
+        $this->environment = 'development';
+        return $this;
+    }
+
     public function cache($cache)
     {
         $this->cache = $cache;
