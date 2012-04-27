@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2012-04-27</date>
-  <time>13:07:20</time>
+  <time>15:47:24</time>
   <version>
-    <release>0.0.1</release>
-    <api>0.0.1</api>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -24,27 +24,28 @@
   <notes>-</notes>
   <contents>
     <dir name="/">
-      <file name="tests/AssetKit/AssetLoaderTest.php" role="test" md5sum="a87fcc1caa319c1d24d97f596f1be989"/>
+      <file name="tests/AssetKit/AssetLoaderTest.php" role="test" md5sum="2fd3afdeff1ea9eb76a6aafe8d236d70"/>
       <file name="tests/AssetKit/AssetTest.php" role="test" md5sum="5694ea295fd6e379a1105ced6c750010"/>
       <file name="tests/AssetKit/FileCollectionTest.php" role="test" md5sum="95e628d722e8e845951521834eda582b"/>
       <file name="tests/AssetKit/FileUtilsTest.php" role="test" md5sum="4adb97c2d708df2621a53ff21f0a7847"/>
       <file name="tests/AssetKit/Filter/CssImportFilterTest.php" role="test" md5sum="249424a6e584f241206833fb279290f5"/>
+      <file name="tests/AssetKit/ProcessTest.php" role="test" md5sum="24a06656efd527f9825a45ae84513dbd"/>
       <file name="tests/assets/test/manifest.yml" role="test" md5sum="6444310ecfd4373f43a3f8e8767ac994"/>
       <file name="tests/assets/test/test.coffee" role="test" md5sum="5b57aa8d8856a39cf6a11529982de8ed"/>
       <file name="tests/bootstrap.php" role="test" md5sum="1fc91147324e8c02393e8f06855ed7ea"/>
       <file name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" role="test" md5sum="f0f84b9d4ba04b0127ed3b6603719f44"/>
       <file name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" role="test" md5sum="f84f104a6339cd161cd3561f45a1207d"/>
-      <file name="src/AssetKit/Asset.php" role="php" md5sum="f898fc8646d91bf0d1270c57603b2d28"/>
+      <file name="src/AssetKit/Asset.php" role="php" md5sum="b296a2e3d92f325a155abe2673c43f59"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="a55662ac282476d50c452630ab2c69c2"/>
-      <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="c77316112a69f3ed2a98128d2bd863cd"/>
-      <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="7777e9af1219aa4ff893d78e6758233f"/>
+      <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="b93e7c6aafc5d96700215a6de144ce58"/>
+      <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="37458943afa605489450903461d1412b"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="9b77f0416a5c868f60a2baf5b852fc46"/>
       <file name="src/AssetKit/Command/InitCommand.php" role="php" md5sum="4f2318e6e18cc53aecf2683d2075e61a"/>
       <file name="src/AssetKit/Command/RemoveCommand.php" role="php" md5sum="31494897b23acebf29788e3cdb208d62"/>
       <file name="src/AssetKit/Compressor/CssMinCompressor.php" role="php" md5sum="dbe81a32f1bdc3bc6e8a07c2c79289ee"/>
-      <file name="src/AssetKit/Compressor/JsMinCompressor.php" role="php" md5sum="f7d08377a086e44484c332aa7043ce19"/>
-      <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="ef7cc5a9726d7176a7b12f2b81a8369d"/>
-      <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="71cd8ddc59e6dd4e4e6aac223369191b"/>
+      <file name="src/AssetKit/Compressor/JsMinCompressor.php" role="php" md5sum="a4719c8b1538858014957388b653422e"/>
+      <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="ab607c58c9d2afdec092ad6898baa509"/>
+      <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="ea820e7899226d3848352ad9ec2afa97"/>
       <file name="src/AssetKit/Config.php" role="php" md5sum="cec77e99c9bf2e61eaf51144cd17977d"/>
       <file name="src/AssetKit/Console.php" role="php" md5sum="10e96502dd44ac8fe97dbc1e45903752"/>
       <file name="src/AssetKit/CssImagePreprocess.php" role="php" md5sum="c577959fe31cd331e31995b0458d1ded"/>
@@ -56,6 +57,7 @@
       <file name="src/AssetKit/IncludeRender.php" role="php" md5sum="c157b7be0912f97af4dc8b0e325ef35d"/>
       <file name="src/AssetKit/Installer.php" role="php" md5sum="c3cd8eb8f5541c8b4b2cf99dd9c72825"/>
       <file name="src/AssetKit/JSMin.php" role="php" md5sum="aab66b8b8b2f3c9459f6c83fcb1c1c3d"/>
+      <file name="src/AssetKit/Process.php" role="php" md5sum="444ce7c2c22f5a354500158333270251"/>
     </dir>
   </contents>
   <dependencies>
@@ -90,6 +92,7 @@
       <install name="tests/AssetKit/FileCollectionTest.php" as="AssetKit/FileCollectionTest.php"/>
       <install name="tests/AssetKit/FileUtilsTest.php" as="AssetKit/FileUtilsTest.php"/>
       <install name="tests/AssetKit/Filter/CssImportFilterTest.php" as="AssetKit/Filter/CssImportFilterTest.php"/>
+      <install name="tests/AssetKit/ProcessTest.php" as="AssetKit/ProcessTest.php"/>
       <install name="tests/assets/test/manifest.yml" as="assets/test/manifest.yml"/>
       <install name="tests/assets/test/test.coffee" as="assets/test/test.coffee"/>
       <install name="tests/bootstrap.php" as="bootstrap.php"/>
@@ -117,6 +120,7 @@
       <install name="src/AssetKit/IncludeRender.php" as="AssetKit/IncludeRender.php"/>
       <install name="src/AssetKit/Installer.php" as="AssetKit/Installer.php"/>
       <install name="src/AssetKit/JSMin.php" as="AssetKit/JSMin.php"/>
+      <install name="src/AssetKit/Process.php" as="AssetKit/Process.php"/>
     </filelist>
   </phprelease>
 </package>
