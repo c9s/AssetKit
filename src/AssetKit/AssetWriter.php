@@ -40,6 +40,14 @@ class AssetWriter
 
     public $enableCompressor = true;
 
+    /**
+     * for production mode, 
+     * check squashed file mtime and source files
+     *
+     * You can turn off this to increase performance (about 11ms on iMac)
+     */
+    public $checkExpiry = true;
+
     public $environment = 'development';
 
     /**
@@ -386,19 +394,25 @@ class AssetWriter
         // check mtime
         if( $this->name && $this->cache ) {
             if( $manifest = $this->cache->get( 'asset-manifest:' . $this->name ) ) {
+                if( ! $this->checkExpiry )
+                    return $manifest;
 
                 // find the last modified time of squashed files
-                $jsmtime = 0;
-                $cssmtime = 0;
-                foreach( array('javascripts','stylesheets') as $t ) {
-                    foreach( $manifest[$t] as $file ) {
-                        $path = $file['path'];
-                        $mtime = filemtime($path);
-                        if( $mtime > $jsmtime ) {
-                            if( 'javascripts' === $t )
-                                $jsmtime = $mtime;
-                            elseif( 'stylesheets' === $t )
-                                $cssmtime = $mtime;
+                $jsmtime  = $this->cache->get( 'asset-manifest-jsmtime:' . $this->name ) ?: 0;
+                $cssmtime = $this->cache->get( 'asest-manifest-cssmtime:' . $this->name ) ?: 0;
+
+                if( $jsmtime == 0 || $cssmtime == 0 ) {
+                    foreach( array('javascripts','stylesheets') as $t ) {
+                        foreach( $manifest[$t] as $file ) {
+                            $path = $file['path'];
+                            $mtime = filemtime($path);
+                            if( $mtime > $jsmtime ) {
+                                if( 'javascripts' === $t ) {
+                                    $jsmtime = $mtime;
+                                } elseif( 'stylesheets' === $t ) {
+                                    $cssmtime = $mtime;
+                                }
+                            }
                         }
                     }
                 }
