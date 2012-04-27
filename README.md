@@ -50,8 +50,11 @@ To use assetkit in your application, just few lines to write:
 
 ```php
 <?php
+    // pick up a SPL classloader, we need this to load library files
+    // you can check public/index.php for examples
+    require 'bootstrap.php';
 
-    // load your asset config file
+    // load your asset config file, this contains asset manifest and types
     $config = new AssetKit\Config( '../.assetkit');
 
     // initialize an asset loader
@@ -96,7 +99,6 @@ Install deps:
     $ git submodule init
     $ git submodule update
     $ onion bundle
-    $ composer.phar install  # install Symfony Process
 
 ... Hack Hack Hack ...
 
