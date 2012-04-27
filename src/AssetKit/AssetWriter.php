@@ -232,13 +232,25 @@ class AssetWriter
             if( ! $collection->isJavascript && ! $collection->isStylesheet )
                 continue;
 
-            $this->runCollectionFilters( $collection );
 
             // if we are in development mode, we don't need to compress them all.
-            if( $this->environment !== 'development'
+            if( $this->environment === 'production'
                     && $this->enableCompressor
-                    && $collection->compressors ) {
+                    && $collection->compressors ) 
+            {
+                // for stylesheets, before compress it, we should import the css contents
+                if( $collection->isStylesheet ) {
+                    $import = new Filter\CssImportFilter;
+                    $import->filter( $collection );
+                }
+                elseif( $collection->isCoffeescript ) {
+                    $coffee = new Filter\CoffeeScriptFilter;
+                    $coffee->filter( $collection );
+                }
                 $this->runCollectionCompressors($collection);
+            }
+            else {
+                $this->runCollectionFilters( $collection );
             }
 
             if( $collection->isJavascript ) {

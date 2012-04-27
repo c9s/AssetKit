@@ -22,8 +22,8 @@ $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
         ->cache($cache)
-#          ->env('production')
-        ->env('development')
+        ->env('production')
+        // ->env('development')
         ->write( $assets );
 
 $includer = new AssetKit\IncludeRender;

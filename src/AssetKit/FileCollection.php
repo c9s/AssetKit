@@ -19,6 +19,8 @@ class FileCollection
 
     public $isStylesheet;
 
+    public $isCoffeescript;
+
     public $content;
 
     static function create_from_manfiest($asset)
@@ -40,6 +42,8 @@ class FileCollection
                 $collection->isJavascript = true;
             } elseif( isset($config['stylesheet']) || isset($config['css']) ) {
                 $collection->isStylesheet = true;
+            } elseif( isset($config['coffeescript']) ) {
+                $collection->isCoffeescript = true;
             }
 
             $collection->asset = $asset;
