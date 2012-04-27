@@ -417,7 +417,7 @@ class AssetWriter
                     }
                 }
 
-                // In development mode, we should check file stats.
+                // We should check file stats to update squshed files.
                 $expired = false;
                 foreach( $assets as $asset ) {
                     $collections = $asset->getFileCollections();
