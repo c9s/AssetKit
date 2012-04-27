@@ -12,6 +12,8 @@ class AssetLoader
 {
     public $paths;
 
+    public $assets = array();
+
 
     /**
      * @var \AssetKit\Config
@@ -36,19 +38,25 @@ class AssetLoader
     function load($name)
     {
         if( $this->config && $asset = $this->config->getAsset($name) ) {
-            return $asset;
+            return $this->assets[ $name ] = $asset;
         }
         else {
             foreach( $this->paths as $path ) {
                 $manifestFile = $path . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'manifest.yml';
                 if( file_exists($manifestFile) ) {
-                    $m = new Asset( $manifestFile );
-                    $m->config = $this->config;
-                    return $m;
+                    $a = new Asset( $manifestFile );
+                    $a->config = $this->config;
+                    $this->assets[ $name ] = $a;
+                    return $a;
                 }
             }
         }
         throw new Exception("Can not load asset $name.");
+    }
+
+    function getAssets()
+    {
+        return $this->assets;
     }
 }
 
