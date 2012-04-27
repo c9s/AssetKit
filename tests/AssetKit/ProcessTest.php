@@ -11,6 +11,24 @@ class ProcessTest extends PHPUnit_Framework_TestCase
 
         $output = $proc->getOutput();
         ok( $output );
+        like( '#README.md#',$output);
+        return $output;
     }
+
+
+    /**
+     * @depends test
+     */
+    function testInput($input)
+    {
+        $proc = new Process(array('grep','package'));
+        $code = $proc->input($input)->run();
+        ok($code == 0);
+
+        $output = $proc->getOutput();
+        like('#package\.ini#',$output);
+        like('#package\.xml#',$output);
+    }
+
 }
 

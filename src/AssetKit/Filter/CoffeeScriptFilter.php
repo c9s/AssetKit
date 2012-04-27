@@ -1,6 +1,7 @@
 <?php
 namespace AssetKit\Filter;
-use Symfony\Component\Process\ProcessBuilder;
+use RuntimeException;
+use AssetKit\Process;
 
 class CoffeeScriptFilter
 {
@@ -21,20 +22,24 @@ class CoffeeScriptFilter
             return;
 
         $input = $collection->getContent();
-
+        $proc = null;
         if( $this->nodejs ) {
-            $pb = new ProcessBuilder(array( $this->nodejs, $this->coffeescript ));
+            $proc = new Process(array( $this->nodejs, $this->coffeescript ));
         }
         else {
-            $pb = new ProcessBuilder(array( $this->coffeescript ));
+            $proc = new Process(array( $this->coffeescript ));
         }
-        // compile and print to stdout
-        $pb->add( '-cp' );
-        $pb->add( '--stdio');
-        $pb->setInput($input);
 
-        $proc = $pb->getProcess();
+        var_dump( $input ); 
+
+        // compile and print to stdout
+        $proc->arg( '-cp' )->arg('--stdio')->input($input);
+
         $code = $proc->run();
+
+        if( $code != 0 )
+            throw new RuntimeException("process error: $code");
+        
         $content = $proc->getOutput();
         $collection->setContent($content);
     }

@@ -129,6 +129,7 @@ The manifest.yml file:
 
 Please check public/index.php file for example.
 
+### FileCollection API
 
 
 ### Include stylesheets and javascripts in front-end page

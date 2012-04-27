@@ -223,7 +223,7 @@ class AssetWriter
     public function runCollectionCompressors($collection)
     {
         // if custom compresor is not define, use default compressors
-        if( empty($collection->compressors) ) {
+        if( ! $collection->compressors || empty($collection->compressors) ) {
             if( $collection->isJavascript || $collection->isCoffeescript ) {
                 $jsmin = new Compressor\JsMinCompressor;
                 $jsmin->compress($collection);
@@ -359,11 +359,11 @@ class AssetWriter
                 $paths = $c->getFilePaths();
                 if( $filters = $c->getFilters() ) {
                     // run collection filter and output to js or css file
-
+                    $this->runCollectionFilters($c);
                 }
                 else {
                     $k = null;
-                    if( $c->isJavascript )
+                    if( $c->isJavascript || $c->isCoffeescript )
                         $k = 'javascripts';
                     elseif( $c->isStylesheet )
                         $k = 'stylesheets';

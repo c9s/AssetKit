@@ -9,22 +9,16 @@ $classLoader->register();
 
 $config = new AssetKit\Config( ROOT . '/.assetkit');
 $loader = new AssetKit\AssetLoader( $config , array( ROOT . '/assets' ) );
-$jquery = $loader->load( 'jquery' );
-$jqueryui = $loader->load( 'jquery-ui' );
-$extjs4 = $loader->load( 'extjs4-gpl' );
 
 $assets = array();
-$assets[] = $jquery;
-$assets[] = $jqueryui;
-$assets[] = $extjs4;
-
+$assets[] = $loader->load( 'jquery' );
+$assets[] = $loader->load( 'jquery-ui' );
 
 $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
-        ->env('production')
-        ->cache($cache)
-
+        ->production()
+        // ->cache($cache)
         // ->env('development')
         ->write( $assets );
 

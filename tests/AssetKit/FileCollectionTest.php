@@ -3,6 +3,15 @@
 class FileCollectionTest extends PHPUnit_Framework_TestCase
 {
 
+
+    function testCollection()
+    {
+        $cln = new AssetKit\FileCollection;
+        $cln->addFile( 'public/assets/jquery/jquery/dist/jquery.js' );
+        ok($cln);
+    }
+
+
     function testCoffeeFiles()
     {
         $config = Test::getConfig();
@@ -35,7 +44,6 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
     {
         $config = Test::getConfig();
         $loader = Test::getLoader($config);
-
         $jquery = $loader->load('jquery');
 
         foreach( $jquery->getFileCollections() as $cln ) {
