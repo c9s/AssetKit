@@ -5,6 +5,13 @@ use AssetKit\Config;
 
 class InitCommand extends Command
 {
+
+
+    function brief()
+    {
+        return 'initialize .assetkit file.';
+    }
+
     function options($opts)
     {
         $opts->add('p|public:','public static root');
