@@ -21,6 +21,9 @@ class JsMinCompressor
             $code = $proc->input($content)->run();
             $content = $proc->getOutput();
         }
+        elseif( extension_loaded('jsmin') ) {
+            $content = jsmin( $content );
+        }
         else {
             $content = JSMin::minify( $content );
         }
