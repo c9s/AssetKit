@@ -12,18 +12,20 @@ $config = new AssetKit\Config( ROOT . '/.assetkit');
 $loader = new AssetKit\AssetLoader( $config , array( ROOT . '/assets' ) );
 $jquery = $loader->load( 'jquery' );
 $jqueryui = $loader->load( 'jquery-ui' );
-$ext4js = $loader->load( 'ext4js-gpl' );
+$extjs4 = $loader->load( 'extjs4-gpl' );
 
 $assets = array();
 $assets[] = $jquery;
 $assets[] = $jqueryui;
+$assets[] = $extjs4;
 
 
 $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
         ->env('production')
-        // ->cache($cache)
+        ->cache($cache)
+
         // ->env('development')
         ->write( $assets );
 
