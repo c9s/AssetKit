@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2012-04-28</date>
-  <time>01:01:40</time>
+  <time>01:26:35</time>
   <version>
-    <release>1.0.1</release>
-    <api>1.0.1</api>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -36,7 +36,7 @@
       <file name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" role="test" md5sum="f0f84b9d4ba04b0127ed3b6603719f44"/>
       <file name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" role="test" md5sum="f84f104a6339cd161cd3561f45a1207d"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="b296a2e3d92f325a155abe2673c43f59"/>
-      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="63362da67a44f215d1b51d075a5f630a"/>
+      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="4a08878dfadf1b4769d1bae991c9c221"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="29d75ae489fcf647d793f4fe6f94cda3"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="37458943afa605489450903461d1412b"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="938972d082a050fa91a4e4eddc2cc03c"/>
