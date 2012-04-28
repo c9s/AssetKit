@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2012-04-28</date>
-  <time>01:27:05</time>
+  <time>16:09:26</time>
   <version>
-    <release>1.0.2</release>
-    <api>1.0.2</api>
+    <release>1.1.0</release>
+    <api>1.1.0</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -31,34 +31,32 @@
       <file name="tests/AssetKit/Filter/CssImportFilterTest.php" role="test" md5sum="249424a6e584f241206833fb279290f5"/>
       <file name="tests/AssetKit/ProcessTest.php" role="test" md5sum="9ce246602db20471288efe4995e90891"/>
       <file name="tests/assets/test/manifest.yml" role="test" md5sum="6444310ecfd4373f43a3f8e8767ac994"/>
-      <file name="tests/assets/test/test.coffee" role="test" md5sum="5b57aa8d8856a39cf6a11529982de8ed"/>
-      <file name="tests/bootstrap.php" role="test" md5sum="1fc91147324e8c02393e8f06855ed7ea"/>
-      <file name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" role="test" md5sum="f0f84b9d4ba04b0127ed3b6603719f44"/>
-      <file name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" role="test" md5sum="f84f104a6339cd161cd3561f45a1207d"/>
+      <file name="tests/bootstrap.php" role="test" md5sum="e38eede7a039bc03ec4bb3bc56334fa9"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="b296a2e3d92f325a155abe2673c43f59"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="4a08878dfadf1b4769d1bae991c9c221"/>
-      <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="29d75ae489fcf647d793f4fe6f94cda3"/>
+      <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="aa6fcb9d9a1332674724e6a6e498c0e7"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="37458943afa605489450903461d1412b"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="938972d082a050fa91a4e4eddc2cc03c"/>
       <file name="src/AssetKit/Command/InitCommand.php" role="php" md5sum="4f2318e6e18cc53aecf2683d2075e61a"/>
       <file name="src/AssetKit/Command/RemoveCommand.php" role="php" md5sum="31494897b23acebf29788e3cdb208d62"/>
+      <file name="src/AssetKit/Command/UpdateCommand.php" role="php" md5sum="3dc662fcd33d7ef7e61f05e61be41dfd"/>
       <file name="src/AssetKit/Compressor/CssMinCompressor.php" role="php" md5sum="dbe81a32f1bdc3bc6e8a07c2c79289ee"/>
       <file name="src/AssetKit/Compressor/JsMinCompressor.php" role="php" md5sum="2f55643e0c3d7264cc689136289b931e"/>
       <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="ab607c58c9d2afdec092ad6898baa509"/>
       <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="ea820e7899226d3848352ad9ec2afa97"/>
-      <file name="src/AssetKit/Config.php" role="php" md5sum="cec77e99c9bf2e61eaf51144cd17977d"/>
-      <file name="src/AssetKit/Console.php" role="php" md5sum="10e96502dd44ac8fe97dbc1e45903752"/>
+      <file name="src/AssetKit/Config.php" role="php" md5sum="ca8a84ce04e8e7b92dda5a247d3b52f0"/>
+      <file name="src/AssetKit/Console.php" role="php" md5sum="bbb439bac95eac4e61300ac39d54b4bd"/>
       <file name="src/AssetKit/CssImagePreprocess.php" role="php" md5sum="c577959fe31cd331e31995b0458d1ded"/>
-      <file name="src/AssetKit/FileCollection.php" role="php" md5sum="73f0a74865d18ae0c6de7a4a2e21a1a8"/>
-      <file name="src/AssetKit/FileUtils.php" role="php" md5sum="23b6f7e1ed6dbc87e3ae0977917425fe"/>
+      <file name="src/AssetKit/FileCollection.php" role="php" md5sum="87b73a0d26d3f60bdaf77a1942bd8d51"/>
+      <file name="src/AssetKit/FileUtils.php" role="php" md5sum="169d7901eb516b7b365416975472da94"/>
       <file name="src/AssetKit/Filter/CoffeeScriptFilter.php" role="php" md5sum="c4315c86fe7f57d1648b5ab8b0fa2891"/>
       <file name="src/AssetKit/Filter/CssImportFilter.php" role="php" md5sum="4bf77b4854c2f376fda130893d606694"/>
       <file name="src/AssetKit/Filter/CssRewriteFilter.php" role="php" md5sum="49a9a9c4c20f1247279a28bd1b8c8c7d"/>
       <file name="src/AssetKit/IncludeRender.php" role="php" md5sum="c157b7be0912f97af4dc8b0e325ef35d"/>
-      <file name="src/AssetKit/Installer.php" role="php" md5sum="c3cd8eb8f5541c8b4b2cf99dd9c72825"/>
+      <file name="src/AssetKit/Installer.php" role="php" md5sum="748318e9927877a14545774485ecc6b6"/>
       <file name="src/AssetKit/JSMin.php" role="php" md5sum="aab66b8b8b2f3c9459f6c83fcb1c1c3d"/>
       <file name="src/AssetKit/Process.php" role="php" md5sum="5f268a661bac0314b30f50051fd47a8d"/>
-      <file name="assetkit" role="script" md5sum="3a2f2eb1125b08f53c58d4e8cd045ce2"/>
+      <file name="assetkit" role="script" md5sum="639fcf53349332bd0604291c847560b3"/>
     </dir>
   </contents>
   <dependencies>
@@ -95,10 +93,7 @@
       <install name="tests/AssetKit/Filter/CssImportFilterTest.php" as="AssetKit/Filter/CssImportFilterTest.php"/>
       <install name="tests/AssetKit/ProcessTest.php" as="AssetKit/ProcessTest.php"/>
       <install name="tests/assets/test/manifest.yml" as="assets/test/manifest.yml"/>
-      <install name="tests/assets/test/test.coffee" as="assets/test/test.coffee"/>
       <install name="tests/bootstrap.php" as="bootstrap.php"/>
-      <install name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" as="public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css"/>
-      <install name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" as="public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js"/>
       <install name="src/AssetKit/Asset.php" as="AssetKit/Asset.php"/>
       <install name="src/AssetKit/AssetLoader.php" as="AssetKit/AssetLoader.php"/>
       <install name="src/AssetKit/AssetWriter.php" as="AssetKit/AssetWriter.php"/>
@@ -106,6 +101,7 @@
       <install name="src/AssetKit/Command/CompileCommand.php" as="AssetKit/Command/CompileCommand.php"/>
       <install name="src/AssetKit/Command/InitCommand.php" as="AssetKit/Command/InitCommand.php"/>
       <install name="src/AssetKit/Command/RemoveCommand.php" as="AssetKit/Command/RemoveCommand.php"/>
+      <install name="src/AssetKit/Command/UpdateCommand.php" as="AssetKit/Command/UpdateCommand.php"/>
       <install name="src/AssetKit/Compressor/CssMinCompressor.php" as="AssetKit/Compressor/CssMinCompressor.php"/>
       <install name="src/AssetKit/Compressor/JsMinCompressor.php" as="AssetKit/Compressor/JsMinCompressor.php"/>
       <install name="src/AssetKit/Compressor/Yui/CssCompressor.php" as="AssetKit/Compressor/Yui/CssCompressor.php"/>
