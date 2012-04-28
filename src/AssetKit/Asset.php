@@ -19,7 +19,7 @@ class Asset
     public $stash;
 
     /* manifest file (related path, relate to config file) */
-    public $manfiest;
+    public $manifest;
 
     /* asset dir (related path, relate to config file) */
     public $dir;
@@ -40,7 +40,7 @@ class Asset
         // load from array
         if( $arg && is_array($arg) ) {
             $this->stash     = @$arg['stash'];
-            $this->manfiest  = @$arg['file'];
+            $this->manifest  = @$arg['manifest'];
             $this->dir       = @$arg['dir'];
             $this->name      = isset($arg['name']) ? $arg['name'] : null;
         }
