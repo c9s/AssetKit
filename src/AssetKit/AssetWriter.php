@@ -219,11 +219,13 @@ class AssetWriter
              }, $this->_compressors);
     }
 
+
+
     public function runCollectionFilters($collection)
     {
-        if( empty($collection->_filters) )
+        if( empty($collection->filters) )
             return;
-        foreach( $collection->_filters as $n ) {
+        foreach( $collection->filters as $n ) {
             if( $filter = $this->getFilter( $n ) ) {
                 $filter->filter($collection);
             }
@@ -236,7 +238,7 @@ class AssetWriter
     public function runCollectionCompressors($collection)
     {
         // if custom compresor is not define, use default compressors
-        if( empty($collection->_compressors) ) {
+        if( empty($collection->compressors) ) {
             if( $collection->isJavascript || $collection->isCoffeescript ) {
                 $jsmin = new Compressor\JsMinCompressor;
                 $jsmin->compress($collection);
@@ -247,7 +249,7 @@ class AssetWriter
             }
         }
         else {
-            foreach( $collection->_compressors as $n ) {
+            foreach( $collection->compressors as $n ) {
                 if( $compressor = $this->getCompressor( $n ) ) {
                     $compressor->compress($collection);
                 }
