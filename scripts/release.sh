@@ -1,6 +1,5 @@
 #!/bin/bash
 rm -rf .onion/
-rm -rf vendor/
 
 # bundle with new dependencies
 onion bundle || exit
