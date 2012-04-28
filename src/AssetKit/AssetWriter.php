@@ -225,6 +225,10 @@ class AssetWriter
     {
         if( empty($collection->filters) )
             return;
+
+        if( $collection->hasFilter('no') )
+            return;
+
         foreach( $collection->filters as $n ) {
             if( $filter = $this->getFilter( $n ) ) {
                 $filter->filter($collection);
@@ -249,6 +253,9 @@ class AssetWriter
             }
         }
         else {
+            if( $collection->hasCompressor('no') )
+                return;
+
             foreach( $collection->compressors as $n ) {
                 if( $compressor = $this->getCompressor( $n ) ) {
                     $compressor->compress($collection);

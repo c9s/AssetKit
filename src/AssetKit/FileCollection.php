@@ -102,6 +102,16 @@ class FileCollection
     }
 
 
+    public function hasCompressor($name)
+    {
+        return in_array( $name, $this->compressors );
+    }
+
+    public function hasFilter($name)
+    {
+        return in_array( $name, $this->filters );
+    }
+
     public function getCompressors()
     {
         return $this->compressors;
