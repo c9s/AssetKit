@@ -7,9 +7,9 @@ use AssetKit\Installer;
 use CLIFramework\Command;
 use Exception;
 
-class AddCommand extends Command
+class UpdateCommand extends Command
 {
-    function brief() { return 'add and initialize asset.'; }
+    function brief() { return 'update and install assets'; }
 
     function execute()
     {
