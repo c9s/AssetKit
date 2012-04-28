@@ -3,13 +3,13 @@ rm -rf .onion/
 rm -rf vendor/
 
 # bundle with new dependencies
-php onion bundle || exit
+onion bundle || exit
 
 # compile to phar file
 scripts/compile.sh || exit
 
 # build new package.xml
-php onion -d build || exit
+onion -d build || exit
 
 # use pear to install 
 sudo pear install -a -f package.xml || exit
