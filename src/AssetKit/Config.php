@@ -6,16 +6,34 @@ class Config
     public $file;
     public $config = array();
     public $baseDir;
+    public $apc = false;
 
-    public function __construct($file,$baseDir = null)
+    public function __construct($file,$options = null)
     {
         $this->file = $file;
         if( file_exists($file) ) {
-            $this->config = json_decode(file_get_contents($file),true);
-            $this->baseDir = $baseDir ?: dirname(realpath($file));
+            $this->baseDir = isset($options['base_dir']) 
+                ? $options['base_dir'] 
+                : dirname(realpath($file));
+
+            if( isset($options['cache']) 
+                && $this->apc = extension_loaded('apc') 
+                && $d = apc_fetch($this->baseDir) )
+            {
+                $this->config = $d;
+            } else {
+                $this->config = json_decode(file_get_contents($file),true);
+
+                // cache this if we have apc
+                if( $this->apc ) {
+                    apc_store($this->baseDir, $this->config, isset($options['cache_expiry']) ? $options['cache_expiry'] : 0 );
+                }
+            }
         }
         else {
-            $this->baseDir = $baseDir ?: getcwd();
+            $this->baseDir = isset($options['base_dir']) 
+                ? $options['base_dir'] 
+                : getcwd();
         }
     }
 

@@ -56,7 +56,7 @@ class Installer
                     }
                 }
                 FileUtils::mkdir_for_file( $targetFile );
-                file_put_contents( $targetFile , $content );
+                file_put_contents( $targetFile , $content ) or die("$targetFile write failed.");
             }
         }
     }

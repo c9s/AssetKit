@@ -8,8 +8,9 @@ class FileUtils
     {
         $dir = dirname($file);
         if( ! file_exists($dir) ) {
-            mkdir( $dir, $mask , true );
+            return mkdir( $dir, $mask , true );
         }
+        return true;
     }
 
     static function replace_extension($path,$replacement)
