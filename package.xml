@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2012-04-28</date>
-  <time>16:23:01</time>
+  <time>16:24:53</time>
   <version>
     <release>1.1.0</release>
     <api>1.1.0</api>
@@ -56,7 +56,7 @@
       <file name="src/AssetKit/Installer.php" role="php" md5sum="748318e9927877a14545774485ecc6b6"/>
       <file name="src/AssetKit/JSMin.php" role="php" md5sum="aab66b8b8b2f3c9459f6c83fcb1c1c3d"/>
       <file name="src/AssetKit/Process.php" role="php" md5sum="5f268a661bac0314b30f50051fd47a8d"/>
-      <file name="assetkit" role="script" md5sum="559e37e20aaf9244d869fd3c6f0c5b57"/>
+      <file name="assetkit" role="script" md5sum="989f8f31ec50005959dde20f8fac9336"/>
     </dir>
   </contents>
   <dependencies>
