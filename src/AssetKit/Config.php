@@ -42,7 +42,7 @@ class Config
         $assets = array();
         if( isset($this->config['assets'] ) ) {
             foreach( $this->config['assets'] as $k => $v ) {
-                $assets[] = $this->getAsset($k);
+                $assets[$k] = $this->getAsset($k);
             }
         }
         return $assets;
