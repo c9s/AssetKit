@@ -60,6 +60,11 @@ class AssetLoader
         throw new Exception("Can not load asset $name.");
     }
 
+    function clear()
+    {
+        $this->assets = array();
+    }
+
     function getAssets()
     {
         return $this->assets;
