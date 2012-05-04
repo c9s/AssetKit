@@ -10,8 +10,8 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2012-04-28</date>
-  <time>16:24:53</time>
+  <date>2012-05-04</date>
+  <time>18:02:32</time>
   <version>
     <release>1.1.0</release>
     <api>1.1.0</api>
@@ -31,9 +31,12 @@
       <file name="tests/AssetKit/Filter/CssImportFilterTest.php" role="test" md5sum="249424a6e584f241206833fb279290f5"/>
       <file name="tests/AssetKit/ProcessTest.php" role="test" md5sum="9ce246602db20471288efe4995e90891"/>
       <file name="tests/assets/test/manifest.yml" role="test" md5sum="6444310ecfd4373f43a3f8e8767ac994"/>
+      <file name="tests/assets/test/test.coffee" role="test" md5sum="5b57aa8d8856a39cf6a11529982de8ed"/>
       <file name="tests/bootstrap.php" role="test" md5sum="e38eede7a039bc03ec4bb3bc56334fa9"/>
+      <file name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" role="test" md5sum="f0f84b9d4ba04b0127ed3b6603719f44"/>
+      <file name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" role="test" md5sum="f84f104a6339cd161cd3561f45a1207d"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="d373bbdadc44eafd84ab34ea8e2f00d0"/>
-      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="4a08878dfadf1b4769d1bae991c9c221"/>
+      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="f2428b5f50eccd98fa2468a688930bf4"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="aa6fcb9d9a1332674724e6a6e498c0e7"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="37458943afa605489450903461d1412b"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="938972d082a050fa91a4e4eddc2cc03c"/>
@@ -56,7 +59,7 @@
       <file name="src/AssetKit/Installer.php" role="php" md5sum="748318e9927877a14545774485ecc6b6"/>
       <file name="src/AssetKit/JSMin.php" role="php" md5sum="aab66b8b8b2f3c9459f6c83fcb1c1c3d"/>
       <file name="src/AssetKit/Process.php" role="php" md5sum="5f268a661bac0314b30f50051fd47a8d"/>
-      <file name="assetkit" role="script" md5sum="989f8f31ec50005959dde20f8fac9336"/>
+      <file name="assetkit" role="script" md5sum="2b36650ecc04595198c8164a9cb670fe"/>
     </dir>
   </contents>
   <dependencies>
@@ -93,7 +96,10 @@
       <install name="tests/AssetKit/Filter/CssImportFilterTest.php" as="AssetKit/Filter/CssImportFilterTest.php"/>
       <install name="tests/AssetKit/ProcessTest.php" as="AssetKit/ProcessTest.php"/>
       <install name="tests/assets/test/manifest.yml" as="assets/test/manifest.yml"/>
+      <install name="tests/assets/test/test.coffee" as="assets/test/test.coffee"/>
       <install name="tests/bootstrap.php" as="bootstrap.php"/>
+      <install name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" as="public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css"/>
+      <install name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" as="public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js"/>
       <install name="src/AssetKit/Asset.php" as="AssetKit/Asset.php"/>
       <install name="src/AssetKit/AssetLoader.php" as="AssetKit/AssetLoader.php"/>
       <install name="src/AssetKit/AssetWriter.php" as="AssetKit/AssetWriter.php"/>
