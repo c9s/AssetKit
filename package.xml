@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2012-05-04</date>
-  <time>18:42:11</time>
+  <time>18:46:50</time>
   <version>
-    <release>1.1.1</release>
-    <api>1.1.1</api>
+    <release>1.1.2</release>
+    <api>1.1.2</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -33,7 +33,7 @@
       <file name="tests/assets/test/manifest.yml" role="test" md5sum="6444310ecfd4373f43a3f8e8767ac994"/>
       <file name="tests/assets/test/test.coffee" role="test" md5sum="5b57aa8d8856a39cf6a11529982de8ed"/>
       <file name="tests/bootstrap.php" role="test" md5sum="e38eede7a039bc03ec4bb3bc56334fa9"/>
-      <file name="src/AssetKit/Asset.php" role="php" md5sum="d373bbdadc44eafd84ab34ea8e2f00d0"/>
+      <file name="src/AssetKit/Asset.php" role="php" md5sum="0ec26b9a2bf3da324b658760db5172c7"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="f2428b5f50eccd98fa2468a688930bf4"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="aa6fcb9d9a1332674724e6a6e498c0e7"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="37458943afa605489450903461d1412b"/>
