@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2012-05-04</date>
-  <time>18:03:17</time>
+  <time>18:39:10</time>
   <version>
     <release>1.1.1</release>
     <api>1.1.1</api>
@@ -33,8 +33,6 @@
       <file name="tests/assets/test/manifest.yml" role="test" md5sum="6444310ecfd4373f43a3f8e8767ac994"/>
       <file name="tests/assets/test/test.coffee" role="test" md5sum="5b57aa8d8856a39cf6a11529982de8ed"/>
       <file name="tests/bootstrap.php" role="test" md5sum="e38eede7a039bc03ec4bb3bc56334fa9"/>
-      <file name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" role="test" md5sum="f0f84b9d4ba04b0127ed3b6603719f44"/>
-      <file name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" role="test" md5sum="f84f104a6339cd161cd3561f45a1207d"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="d373bbdadc44eafd84ab34ea8e2f00d0"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="f2428b5f50eccd98fa2468a688930bf4"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="aa6fcb9d9a1332674724e6a6e498c0e7"/>
@@ -98,8 +96,6 @@
       <install name="tests/assets/test/manifest.yml" as="assets/test/manifest.yml"/>
       <install name="tests/assets/test/test.coffee" as="assets/test/test.coffee"/>
       <install name="tests/bootstrap.php" as="bootstrap.php"/>
-      <install name="tests/public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css" as="public/assets/jqueryui-f0f84b9d4ba04b0127ed3b6603719f44.css"/>
-      <install name="tests/public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js" as="public/assets/jqueryui-f84f104a6339cd161cd3561f45a1207d.js"/>
       <install name="src/AssetKit/Asset.php" as="AssetKit/Asset.php"/>
       <install name="src/AssetKit/AssetLoader.php" as="AssetKit/AssetLoader.php"/>
       <install name="src/AssetKit/AssetWriter.php" as="AssetKit/AssetWriter.php"/>
