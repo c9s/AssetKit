@@ -43,6 +43,11 @@ class Installer
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
 
+                if( ! file_exists($srcFile) ) {
+                    $this->log("$targetFile not found.");
+                    continue;
+                }
+
                 $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
                 $this->log("x $targetFile");
                 $content = file_get_contents($srcFile);
