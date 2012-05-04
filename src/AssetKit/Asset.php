@@ -81,6 +81,8 @@ class Asset
                         $ite = new RecursiveDirectoryIterator( $dir . DIRECTORY_SEPARATOR . $p );
                         $expanded = array();
                         foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
+                            if( $path === '.' || $path === '..' )
+                                continue;
                             $expanded[] = $path;
                         }
                         $expanded = array_map(function($path) use ($dir) { 
