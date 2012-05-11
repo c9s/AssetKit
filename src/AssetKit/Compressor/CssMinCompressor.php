@@ -1,7 +1,6 @@
 <?php
 namespace AssetKit\Compressor;
-use CssMinifier;
-use CssMin;
+use AssetKit\CssMin;
 
 class CssMinCompressor
 {

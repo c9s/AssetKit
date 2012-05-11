@@ -1,4 +1,5 @@
 <?php
+namespace AssetKit;
 /**
  * CssMin - A (simple) css minifier with benefits
  * 
