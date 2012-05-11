@@ -44,7 +44,7 @@ class Installer
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
 
                 if( ! file_exists($srcFile) ) {
-                    $this->log("$targetFile not found.");
+                    $this->log("$srcFile not found.");
                     continue;
                 }
 

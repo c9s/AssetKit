@@ -66,6 +66,22 @@ class Asset
             if( ! isset($this->stash['assets']) ) {
                 throw new Exception('assets tag is not defined.');
             }
+            else {
+                $this->expandManifest();
+            }
+
+        }
+        elseif( $arg && is_string($arg) ) {
+            $this->name = $arg;
+        }
+
+        if( isset($this->stash['assets']) ) {
+            $this->collections = FileCollection::create_from_manfiest($this);
+        }
+    }
+
+    public function expandManifest()
+    {
             foreach( $this->stash['assets'] as & $a ) {
                 $dir = $this->dir;
                 $files = array();
@@ -81,7 +97,7 @@ class Asset
                         $ite = new RecursiveDirectoryIterator( $dir . DIRECTORY_SEPARATOR . $p );
                         $expanded = array();
                         foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
-                            if( $path === '.' || $path === '..' )
+                            if( $info->getFilename() === '.' || $info->getFilename() === '..' )
                                 continue;
                             $expanded[] = $path;
                         }
@@ -95,15 +111,6 @@ class Asset
                 }
                 $a['files'] = $files;
             }
-
-        }
-        elseif( $arg && is_string($arg) ) {
-            $this->name = $arg;
-        }
-
-        if( isset($this->stash['assets']) ) {
-            $this->collections = FileCollection::create_from_manfiest($this);
-        }
     }
 
     public function createFileCollection()
