@@ -383,7 +383,7 @@ class AssetWriter
                     // run collection filter and output to js or css file
                     $this->runCollectionFilters($c);
 
-                    if( $c->isJavascript ) {
+                    if( $c->isCoffeescript ) {
                         $content = $c->getContent();
                         $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
 
