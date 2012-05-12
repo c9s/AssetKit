@@ -26,8 +26,8 @@ class LinkInstaller extends Installer
                     unlink($targetFile);
                 }
                 FileUtils::mkdir_for_file( $targetFile );
-                $this->log("x $targetFile");
-                symlink($srcFile,$targetFile) or die("$targetFile link failed.");
+                $this->log("* $targetFile");
+                symlink(realpath($srcFile),$targetFile) or die("$targetFile link failed.");
             }
         }
     }
