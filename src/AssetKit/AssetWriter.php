@@ -423,7 +423,7 @@ class AssetWriter
                             'attrs' => array(),
                         );
                     }
-                    else if($k) {
+                    else if( $k ) {
                         foreach( $paths as $path ) {
                             $manifest[$k][] = array(
                                 'path' => $publicDir . DIRECTORY_SEPARATOR . $path,
@@ -441,9 +441,11 @@ class AssetWriter
 
 
     /**
-     * squash assets and return a manifest
+     * Squash assets and return a manifest.
      *
-     * @param array $assets
+     * @param Asset[] $assets
+     *
+     * @return array manifest
      */
     public function writeForProduction($assets)
     {
