@@ -4,6 +4,7 @@ use AssetKit\Config;
 use AssetKit\Asset;
 use AssetKit\FileUtils;
 use AssetKit\Installer;
+use AssetKit\LinkInstaller;
 use CLIFramework\Command;
 use Exception;
 
@@ -11,8 +12,14 @@ class AddCommand extends Command
 {
     function brief() { return 'add and initialize asset.'; }
 
+    function options($opts)
+    {
+        $opts->add('l|link','link asset files, instead of copy install.');
+    }
+
     function execute($manifestPath)
     {
+        $options = $this->options;
         $config = new Config('.assetkit');
 
         if( is_dir($manifestPath) ) {
@@ -31,8 +38,14 @@ class AddCommand extends Command
 
         $this->logger->info( "Installing {$asset->name}" );
 
-        $installer = new Installer;
-        $installer->install( $asset );
+        if( $options->link ) {
+            $installer = new LinkInstaller;
+            $installer->install( $asset );
+        } 
+        else {
+            $installer = new Installer;
+            $installer->install( $asset );
+        }
 
         $export = $asset->export();
         $config->addAsset( $asset->name , $export );
