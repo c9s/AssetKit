@@ -63,6 +63,11 @@ class Installer
                             continue;
                         }
                     }
+                    else {
+                        // skip existing files
+                        $this->log("- $targetFile");
+                        continue;
+                    }
                 }
                 FileUtils::mkdir_for_file( $targetFile );
                 $this->log("x $targetFile");
