@@ -63,9 +63,12 @@ class AssetWriter
 
     public function init()
     {
+
+
         $this->addCompressor('jsmin', function() {
             return new \AssetKit\Compressor\JsMinCompressor;
         });
+
         $this->addCompressor('cssmin', function() {
             return new \AssetKit\Compressor\CssMinCompressor;
         });
@@ -92,9 +95,24 @@ class AssetWriter
             return new \AssetKit\Filter\SassFilter;
         });
 
+        $this->addFilter( 'scss' , function() {
+            return new \AssetKit\Filter\ScssFilter;
+        });
+
         $this->addFilter( 'css_rewrite', function() {
             return new \AssetKit\Filter\CssRewriteFilter;
         });
+
+
+        /**
+         * XXX:
+         
+         // convert sass file to css (using sass filter), replace .sass with .css extension
+         $this->addPatternFilter( '.sass' , '.css' , 'sass' );
+         $this->addPatternFilter( '.scss' , '.css' , 'scss' );
+         */
+
+
     }
 
 
