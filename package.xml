@@ -10,11 +10,11 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2012-05-12</date>
-  <time>15:03:00</time>
+  <date>2012-05-13</date>
+  <time>01:17:00</time>
   <version>
-    <release>1.3.0</release>
-    <api>1.3.0</api>
+    <release>1.4.0</release>
+    <api>1.4.0</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -30,12 +30,13 @@
       <file name="tests/AssetKit/FileUtilsTest.php" role="test" md5sum="4adb97c2d708df2621a53ff21f0a7847"/>
       <file name="tests/AssetKit/Filter/CssImportFilterTest.php" role="test" md5sum="249424a6e584f241206833fb279290f5"/>
       <file name="tests/AssetKit/ProcessTest.php" role="test" md5sum="9ce246602db20471288efe4995e90891"/>
-      <file name="tests/assets/test/manifest.yml" role="test" md5sum="6444310ecfd4373f43a3f8e8767ac994"/>
+      <file name="tests/assets/test/manifest.yml" role="test" md5sum="55b9cf3726d5a191de9c0fe8ad673a91"/>
+      <file name="tests/assets/test/sass-test.sass" role="test" md5sum="090ee7affa62d1c763341e910541e0df"/>
       <file name="tests/assets/test/test.coffee" role="test" md5sum="0effe3cdce872d2af97208d4bc818861"/>
       <file name="tests/bootstrap.php" role="test" md5sum="e38eede7a039bc03ec4bb3bc56334fa9"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="29c0c75053059ddb6b6ce9c62c816577"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="f2428b5f50eccd98fa2468a688930bf4"/>
-      <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="dc0dd1b87ee204a23aa8701e0fea5e96"/>
+      <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="ea86d4947e959289b90704245d2383b2"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="d9ffba7b79e780e1988c2a5fe062eec7"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="938972d082a050fa91a4e4eddc2cc03c"/>
       <file name="src/AssetKit/Command/InitCommand.php" role="php" md5sum="4f2318e6e18cc53aecf2683d2075e61a"/>
@@ -51,15 +52,17 @@
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="b71da62f354cf3fee026841c24e88472"/>
       <file name="src/AssetKit/FileCollection.php" role="php" md5sum="87b73a0d26d3f60bdaf77a1942bd8d51"/>
       <file name="src/AssetKit/FileUtils.php" role="php" md5sum="169d7901eb516b7b365416975472da94"/>
-      <file name="src/AssetKit/Filter/CoffeeScriptFilter.php" role="php" md5sum="c4315c86fe7f57d1648b5ab8b0fa2891"/>
+      <file name="src/AssetKit/Filter/CoffeeScriptFilter.php" role="php" md5sum="134ae6843c47ce3f23a39a1af8fce3d8"/>
       <file name="src/AssetKit/Filter/CssImportFilter.php" role="php" md5sum="4bf77b4854c2f376fda130893d606694"/>
       <file name="src/AssetKit/Filter/CssRewriteFilter.php" role="php" md5sum="49a9a9c4c20f1247279a28bd1b8c8c7d"/>
+      <file name="src/AssetKit/Filter/SassFilter.php" role="php" md5sum="e9d81cd2ae1b1e232d267066ef833e65"/>
+      <file name="src/AssetKit/Filter/ScssFilter.php" role="php" md5sum="2848199b3a4807fe3ac60f87950a8465"/>
       <file name="src/AssetKit/IncludeRender.php" role="php" md5sum="c157b7be0912f97af4dc8b0e325ef35d"/>
       <file name="src/AssetKit/Installer.php" role="php" md5sum="97fca4be2a9ee28b910bf7c0c562cee0"/>
       <file name="src/AssetKit/JSMin.php" role="php" md5sum="aab66b8b8b2f3c9459f6c83fcb1c1c3d"/>
       <file name="src/AssetKit/LinkInstaller.php" role="php" md5sum="90ba31851f2794ac785d8db544b7ab07"/>
-      <file name="src/AssetKit/Process.php" role="php" md5sum="5f268a661bac0314b30f50051fd47a8d"/>
-      <file name="assetkit" role="script" md5sum="7a7daedb592628f5f7f61a7e9f126c97"/>
+      <file name="src/AssetKit/Process.php" role="php" md5sum="a76b62dcf90d34b5fdd83970171563a3"/>
+      <file name="assetkit" role="script" md5sum="439de2e4989934afb282c98a27ea3825"/>
     </dir>
   </contents>
   <dependencies>
@@ -96,6 +99,7 @@
       <install name="tests/AssetKit/Filter/CssImportFilterTest.php" as="AssetKit/Filter/CssImportFilterTest.php"/>
       <install name="tests/AssetKit/ProcessTest.php" as="AssetKit/ProcessTest.php"/>
       <install name="tests/assets/test/manifest.yml" as="assets/test/manifest.yml"/>
+      <install name="tests/assets/test/sass-test.sass" as="assets/test/sass-test.sass"/>
       <install name="tests/assets/test/test.coffee" as="assets/test/test.coffee"/>
       <install name="tests/bootstrap.php" as="bootstrap.php"/>
       <install name="src/AssetKit/Asset.php" as="AssetKit/Asset.php"/>
@@ -119,6 +123,8 @@
       <install name="src/AssetKit/Filter/CoffeeScriptFilter.php" as="AssetKit/Filter/CoffeeScriptFilter.php"/>
       <install name="src/AssetKit/Filter/CssImportFilter.php" as="AssetKit/Filter/CssImportFilter.php"/>
       <install name="src/AssetKit/Filter/CssRewriteFilter.php" as="AssetKit/Filter/CssRewriteFilter.php"/>
+      <install name="src/AssetKit/Filter/SassFilter.php" as="AssetKit/Filter/SassFilter.php"/>
+      <install name="src/AssetKit/Filter/ScssFilter.php" as="AssetKit/Filter/ScssFilter.php"/>
       <install name="src/AssetKit/IncludeRender.php" as="AssetKit/IncludeRender.php"/>
       <install name="src/AssetKit/Installer.php" as="AssetKit/Installer.php"/>
       <install name="src/AssetKit/JSMin.php" as="AssetKit/JSMin.php"/>
