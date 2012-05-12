@@ -26,7 +26,7 @@ class SassFilter
 
         if( $code != 0 )
             throw new RuntimeException("process error: $code");
-        
+
         $content = $proc->getOutput();
         $collection->setContent($content);
     }

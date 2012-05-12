@@ -418,7 +418,8 @@ class AssetWriter
                         $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
                     elseif( $c->isStylesheet ) {
-                        $newpath = str_replace( '.css' , '-filtered.css' , $paths[0] );
+                        $info = pathinfo($paths[0]);
+                        $newpath = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '-filtered.css';
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
                         file_put_contents( $path , $content) or die("write fail.");

@@ -5,11 +5,11 @@ use RuntimeException;
 
 class ScssFilter 
 {
-    public $scss;
+    public $sass;
 
-    public function __construct($scss = 'scss')
+    public function __construct($sass = 'sass')
     {
-        $this->scss = $scss;
+        $this->sass = $sass;
     }
 
     public function filter($collection)
@@ -18,7 +18,7 @@ class ScssFilter
             return;
 
         $input = $collection->getContent();
-        $proc = new Process(array( $this->scss ));
+        $proc = new Process(array( $this->sass ));
 
         // compile and print to stdout
         $proc->arg( '-s' )->arg('--scss')->input($input);
