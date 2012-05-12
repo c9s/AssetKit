@@ -88,6 +88,10 @@ class AssetWriter
             return new \AssetKit\Filter\CssImportFilter;
         });
 
+        $this->addFilter( 'sass' , function() {
+            return new \AssetKit\Filter\SassFilter;
+        });
+
         $this->addFilter( 'css_rewrite', function() {
             return new \AssetKit\Filter\CssRewriteFilter;
         });
