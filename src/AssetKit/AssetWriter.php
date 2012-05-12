@@ -381,26 +381,38 @@ class AssetWriter
         foreach( $assets as $asset ) {
             $publicDir = $asset->getPublicDir(true);
             $baseUrl   = $asset->getBaseUrl();
+
             foreach( $asset->getFileCollections() as $c ) {
                 $paths = $c->getFilePaths();
+
+
+                // for collections has filters, pipe content through these filters.
                 if( $filters = $c->getFilters() ) {
-                    // run collection filter and output to js or css file
                     $this->runCollectionFilters($c);
 
-                    if( $c->isCoffeescript ) {
-                        $content = $c->getContent();
-                        $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
+                    $content = $c->getContent();
 
+                    if( $c->isCoffeescript ) {
+                        $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
                         file_put_contents( $path , $content) or die("write fail.");
-                        $manifest['javascripts'][] = array(
-                            'path' => $path,
-                            'url'  => $url,
-                            'attrs' => array(),
-                        );
+                        $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
-                    // XXX: for stylesheets
+                    elseif( $c->isStylesheet ) {
+                        $newpath = str_replace( '.css' , '-filtered.css' , $paths[0] );
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
+                        file_put_contents( $path , $content) or die("write fail.");
+                        $manifest['stylesheets'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
+                    }
+                    elseif( $c->isJavascript ) {
+                        $newpath = str_replace( '.js' , '-filtered.js' , $paths[0] );
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
+                        file_put_contents( $path , $content) or die("write fail.");
+                        $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
+                    }
                 }
                 else {
                     $k = null;
@@ -415,6 +427,7 @@ class AssetWriter
                         $coffee = new Filter\CoffeeScriptFilter;
                         $coffee->filter( $c );
                         $content = $c->getContent();
+
                         $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
                         // put content and append into manifest
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
@@ -426,7 +439,7 @@ class AssetWriter
                             'attrs' => array(),
                         );
                     }
-                    else if($k) {
+                    else if( $c->isStylesheet || $c->isJavascript ) {
                         foreach( $paths as $path ) {
                             $manifest[$k][] = array(
                                 'path' => $publicDir . DIRECTORY_SEPARATOR . $path,
@@ -435,7 +448,6 @@ class AssetWriter
                             );
                         }
                     }
-
                 }
             }
         }
@@ -444,9 +456,11 @@ class AssetWriter
 
 
     /**
-     * squash assets and return a manifest
+     * Squash assets and return a manifest.
      *
-     * @param array $assets
+     * @param Asset[] $assets
+     *
+     * @return array manifest
      */
     public function writeForProduction($assets)
     {
