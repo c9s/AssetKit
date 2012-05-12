@@ -34,7 +34,11 @@ Then fetch anything you want:
     Saving config...
     Done
 
-And your `.assetkit` file will be updated.
+And your `.assetkit` file will be updated, these asset files will be installed into `public/assets`.
+
+>   NOTE:
+>   To install asset files with symbol link, use --link option,
+>   Which is convenient for asset development.
 
 Once you've done, you can precompile the asset files to a squashed javascript/stylesheet files:
 
