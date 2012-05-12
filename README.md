@@ -8,6 +8,14 @@ AssetKit can fetch asset ports and initialize them from a simple manifest YAML f
 
 You can use AssetKit library to integrate assets for your web applications very easily.
 
+Features
+========
+
+- CSSMin compressor
+- YUI compressor
+- JSMin compressor
+- CoffeeScript filter
+- APC cache support
 
 Installation
 ============
