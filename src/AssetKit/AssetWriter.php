@@ -375,13 +375,27 @@ class AssetWriter
             'stylesheets' => array(),
         );
         foreach( $assets as $asset ) {
-            $publicDir = $asset->getPublicDir();
+            $publicDir = $asset->getPublicDir(true);
             $baseUrl   = $asset->getBaseUrl();
             foreach( $asset->getFileCollections() as $c ) {
                 $paths = $c->getFilePaths();
                 if( $filters = $c->getFilters() ) {
                     // run collection filter and output to js or css file
                     $this->runCollectionFilters($c);
+
+                    if( $c->isJavascript ) {
+                        $content = $c->getContent();
+                        $md5 = md5($content);
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $md5 . '.js';
+                        $url  = $baseUrl . '/' . $md5 . '.js';
+                        file_put_contents( $path , $content);
+                        $manifest['javascripts'][] = array(
+                            'path' => $path,
+                            'url'  => $url,
+                            'attrs' => array(),
+                        );
+                    }
+                    // XXX: for stylesheets
                 }
                 else {
                     $k = null;
@@ -390,7 +404,26 @@ class AssetWriter
                     elseif( $c->isStylesheet )
                         $k = 'stylesheets';
 
-                    if($k) {
+                    // XXX: we should refactor this, for other generic filters
+                    // if it's coffee, we should squash this collection
+                    if( $c->isCoffeescript ) {
+                        $coffee = new Filter\CoffeeScriptFilter;
+                        $coffee->filter( $c );
+                        $content = $c->getContent();
+                        // put content and append into manifest
+
+                        $md5 = md5($content);
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $md5 . '.js';
+                        $url  = $baseUrl . '/' . $md5 . '.js';
+                        file_put_contents( $path , $content);
+
+                        $manifest['javascripts'][] = array(
+                            'path' => $path,
+                            'url'  => $url,
+                            'attrs' => array(),
+                        );
+                    }
+                    else if($k) {
                         foreach( $paths as $path ) {
                             $manifest[$k][] = array(
                                 'path' => $publicDir . DIRECTORY_SEPARATOR . $path,
@@ -399,6 +432,7 @@ class AssetWriter
                             );
                         }
                     }
+
                 }
             }
         }
