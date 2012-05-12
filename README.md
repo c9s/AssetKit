@@ -8,6 +8,13 @@ AssetKit can fetch asset ports and initialize them from a simple manifest YAML f
 
 You can use AssetKit library to integrate assets for your web applications very easily.
 
+
+Installation
+============
+
+    $ pear channel-discover pear.corneltek.com
+    $ pear install corneltek/AssetKit
+
 Usage
 =====
 
