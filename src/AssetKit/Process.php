@@ -87,7 +87,7 @@ class Process
             // It is important that you close any pipes before calling
             // proc_close in order to avoid a deadlock
             $returnValue = proc_close($process);
-        } 
+        }
         else {
             throw new RuntimeException;
         }

@@ -18,8 +18,9 @@ class CoffeeScriptFilter
 
     public function filter($collection)
     {
-        if( ! $collection->isJavascript )
+        if( ! $collection->isJavascript && ! $collection->isCoffeescript ) {
             return;
+        }
 
         $input = $collection->getContent();
         $proc = null;
@@ -37,7 +38,7 @@ class CoffeeScriptFilter
 
         if( $code != 0 )
             throw new RuntimeException("process error: $code");
-        
+
         $content = $proc->getOutput();
         $collection->setContent($content);
     }

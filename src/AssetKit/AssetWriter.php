@@ -411,6 +411,7 @@ class AssetWriter
                         $coffee = new Filter\CoffeeScriptFilter;
                         $coffee->filter( $c );
                         $content = $c->getContent();
+
                         $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
                         // put content and append into manifest
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
