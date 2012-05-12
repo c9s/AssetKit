@@ -389,7 +389,7 @@ class AssetWriter
 
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        file_put_contents( $path , $content);
+                        file_put_contents( $path , $content) or die("write fail.");
                         $manifest['javascripts'][] = array(
                             'path' => $path,
                             'url'  => $url,
@@ -415,7 +415,7 @@ class AssetWriter
                         // put content and append into manifest
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        file_put_contents( $path , $content);
+                        file_put_contents( $path , $content) or die("write fail");
                         $manifest['javascripts'][] = array(
                             'path' => $path,
                             'url'  => $url,
