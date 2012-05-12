@@ -385,9 +385,10 @@ class AssetWriter
 
                     if( $c->isJavascript ) {
                         $content = $c->getContent();
-                        $md5 = md5($content);
-                        $path = $publicDir . DIRECTORY_SEPARATOR . $md5 . '.js';
-                        $url  = $baseUrl . '/' . $md5 . '.js';
+                        $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
+
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
                         file_put_contents( $path , $content);
                         $manifest['javascripts'][] = array(
                             'path' => $path,
@@ -410,13 +411,11 @@ class AssetWriter
                         $coffee = new Filter\CoffeeScriptFilter;
                         $coffee->filter( $c );
                         $content = $c->getContent();
+                        $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
                         // put content and append into manifest
-
-                        $md5 = md5($content);
-                        $path = $publicDir . DIRECTORY_SEPARATOR . $md5 . '.js';
-                        $url  = $baseUrl . '/' . $md5 . '.js';
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
                         file_put_contents( $path , $content);
-
                         $manifest['javascripts'][] = array(
                             'path' => $path,
                             'url'  => $url,
