@@ -83,7 +83,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
         $manifest = $writer 
             ->name( 'app' )
-            ->in('assets') // public/assets
             ->writeForProduction( $assets );
 
         ok( $manifest['javascripts'] );
@@ -103,8 +102,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $render = new AssetKit\IncludeRender;
         $html = $render->render( $manifest );
 
-        like( '#<link rel="stylesheet" type="text/css"  href="/assets/app-\w+.css"/>
-<script type="text/javascript"  src="/assets/app-\w+.js" > </script>#', $html );
+        like( '#<link rel="stylesheet" type="text/css"  href="assets/app-\w+.css"/>
+<script type="text/javascript"  src="assets/app-\w+.js" > </script>#', $html );
 
     }
 
