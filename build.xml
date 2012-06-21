@@ -157,6 +157,11 @@
  <!-- may we have a simple condition for phpunit.xml and phpunit-ci.xml ? -->
  <target name="phpunit" description="Run unit tests with PHPUnit">
 
+     <exec executable="php" failonerror="true">
+         <arg value="scripts/assetkit.php"/>
+         <arg value="update"/>
+     </exec>
+
     <if>
         <available file="phpunit-ci.xml"/>
         <then>
