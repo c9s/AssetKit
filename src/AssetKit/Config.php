@@ -87,25 +87,26 @@ class Config
                 JSON_PRETTY_PRINT));
     }
 
-    public function getAbsolutePublicRoot()
-    {
-        return $this->baseDir .DIRECTORY_SEPARATOR . (@$this->config['public'] ?: 'public');
-    }
-
-    public function getPublicAssetBaseUrl()
-    {
-        return '/assets';
-    }
-
     public function getPublicAssetRoot()
     {
         return $this->getPublicRoot() . DIRECTORY_SEPARATOR . 'assets';
     }
 
+    /**
+     * Get public root path
+     *
+     * Relative path is for Command-line
+     * Absolute path is for Web
+     *
+     * @param $absolute bool
+     *
+     * @return string Path
+     */
     public function getPublicRoot($absolute = false)
     {
         return ( $absolute ? $this->baseDir . DIRECTORY_SEPARATOR : '' ) . (@$this->config['public'] ?: 'public');
     }
+
 
     public function getRoot()
     {

@@ -22,7 +22,7 @@ class Asset
     public $manifest;
 
     /* asset dir (related path, relate to config file) */
-    public $dir;
+    public $sourceDir;
 
 
     /**
@@ -41,7 +41,7 @@ class Asset
         if( $arg && is_array($arg) ) {
             $this->stash     = @$arg['stash'];
             $this->manifest  = @$arg['manifest'];
-            $this->dir       = @$arg['dir'];
+            $this->sourceDir       = @$arg['source_dir'];
             $this->name      = isset($arg['name']) ? $arg['name'] : null;
         }
         elseif( $arg && file_exists($arg) ) 
@@ -49,7 +49,7 @@ class Asset
             // load from file
             $file = $arg;
 
-            $this->dir = dirname($file);
+            $this->sourceDir = dirname($file);
             $this->name = basename(dirname($file));
             $this->manifest = $file;
 
@@ -83,13 +83,13 @@ class Asset
     public function expandManifest()
     {
             foreach( $this->stash['assets'] as & $a ) {
-                $dir = $this->dir;
+                $dir = $this->sourceDir;
                 $files = array();
                 foreach( $a['files'] as $p ) {
                     if( strpos($p,'*') !== false ) {
                         $expanded = array_map(function($item) use ($dir) { 
                             return substr($item,strlen($dir) + 1);
-                                 }, glob($this->dir . DIRECTORY_SEPARATOR . $p));
+                                 }, glob($this->sourceDir . DIRECTORY_SEPARATOR . $p));
                         $files = array_unique( array_merge( $files , $expanded ) );
                     }
                     elseif( is_dir( $dir . DIRECTORY_SEPARATOR . $p ) ) {
@@ -131,7 +131,7 @@ class Asset
         return array(
             'stash' => $this->stash,
             'manifest' => $this->manifest,
-            'dir'  => $this->dir,
+            'source_dir'  => $this->sourceDir,
             'name' => $this->name,
         );
     }
@@ -148,15 +148,15 @@ class Asset
 
     public function getPathName()
     {
-        return $this->dir;
+        return $this->sourceDir;
     }
 
     public function getSourceDir($absolute = false)
     {
         if( $absolute ) {
-            return $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->dir;
+            return $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->sourceDir;
         }
-        return $this->dir;
+        return $this->sourceDir;
     }
 
     /**
@@ -168,19 +168,9 @@ class Asset
         return $public . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $this->name;
     }
 
-
-    /**
-     * Return asset base url
-     */
-    public function getBaseUrl()
-    {
-        return $this->config->getPublicAssetBaseUrl() . '/' . $this->name;
-    }
-
-
     public function hasSourceFiles()
     {
-        $this->dir;
+        $this->sourceDir;
         foreach( $this->collections as $collection ) {
             $paths = $collection->getSourcePaths(true);
             foreach( $paths as $path ) {
@@ -191,117 +181,13 @@ class Asset
         return true;
     }
 
-
-
-
+    /**
+     * Init Resource file and update to public asset dir ?
+     */
     public function initResource($update = false)
     {
-        if( ! isset($this->stash['resource']) ) {
-            return false;
-        }
-
-        // if we have the source files , we 
-        // should skip initializing resource from remotes.
-        if( ! $update && $this->hasSourceFiles() ) {
-            return;
-        }
-
-        $resDir = null;
-        $r = $this->stash['resource'];
-        if( isset($r['url']) ) {
-            $url = $r['url'];
-
-            $info = parse_url($url);
-            $path = $info['path'];
-            $filename = basename($info['path']);
-            $targetFile = $this->dir . DIRECTORY_SEPARATOR . $filename;
-
-            echo "Downloading file...\n";
-            $cmd = "curl -# --location " . escapeshellarg($url) . " > " . escapeshellarg($targetFile);
-            system($cmd);
-
-            echo "Stored at $targetFile\n";
-
-            if( isset($r['zip']) ) {
-                $zip = new ZipArchive;
-                if( $zip->open( $targetFile ) === TRUE ) {
-                    echo "Extracting to {$this->dir}\n";
-                    $zip->extractTo( $this->dir );
-                    $zip->close();
-                    $resDir = $this->dir;
-                    unlink( $targetFile );
-                }
-                else {
-                    throw new Exception('Zip fail');
-                }
-            }
-        }
-        elseif( isset($r['github']) ) 
-        {
-
-            // read-only
-            $url = 'git://github.com/' . $r['github'] . '.git';
-            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
-            if( file_exists($resDir) && $update ) {
-                $dir = getcwd();
-                chdir($resDir);
-                system("git remote update --prune");
-                system("git pull origin HEAD");
-                chdir($dir);
-            } else {
-                system("git clone $url $resDir");
-            }
-
-        }
-        elseif( isset($r['git']) ) 
-        {
-            $url = $r['git'];
-            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url,'.git');
-            if( file_exists($resDir) && $update ) {
-                $dir = getcwd();
-                chdir($resDir);
-                system("git remote update --prune");
-                system("git pull origin HEAD");
-                chdir($dir);
-            } else {
-                system("git clone -q $url $resDir");
-            }
-        }
-        elseif( isset($r['svn']) ) 
-        {
-            $url = $r['svn'];
-            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url);
-            if( file_exists($resDir) && $update ) {
-                $dir = getcwd();
-                chdir($resDir);
-                system("svn update");
-                chdir($dir);
-            } else {
-                system("svn checkout $url $resDir");
-            }
-        }
-        elseif( isset($r['hg']) ) {
-            $url = $r['hg'];
-            $resDir = $this->dir . DIRECTORY_SEPARATOR . basename($url);
-            if( file_exists($resDir) && $update ) {
-                $dir = getcwd();
-                chdir($resDir);
-                system("hg pull -u");
-                chdir($dir);
-            } else {
-                system("hg clone $url $resDir");
-            }
-        }
-
-        // run commands for resources to initialize
-        if( isset($r['commands']) ) {
-            $cwd = getcwd();
-            chdir( $resDir );
-            foreach( $r['commands'] as $command ) {
-                system($command);
-            }
-            chdir($cwd);
-        }
+        $updater = new \AssetKit\ResourceUpdater($this);
+        return $updater->update($update);
     }
 }
 

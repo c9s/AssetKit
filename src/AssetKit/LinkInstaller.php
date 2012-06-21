@@ -7,7 +7,7 @@ class LinkInstaller extends Installer
     public function install($asset)
     {
         // get asset files and copy them into 
-        $fromDir = $asset->dir;
+        $fromDir = $asset->sourceDir;
         $n       = $asset->name;
 
         // install into public asset root.

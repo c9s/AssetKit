@@ -52,26 +52,6 @@ class FileCollection
         return $collections;
     }
 
-    public function getPublicUrls()
-    {
-        $url = $this->asset->getBaseUrl();
-        return array_map(function($file) use ($url) { 
-            return $url . '/' . $file;
-        },$this->files);
-    }
-
-    public function getPublicPaths($absolute = false)
-    {
-        if( ! $this->asset ) {
-            throw new Exception("file collection requires asset object, but it's undefined.");
-        }
-
-        $dir = $this->asset->getPublicDir($absolute);
-        return array_map(function($file) use ($dir) {
-            return $dir . DIRECTORY_SEPARATOR . $file;
-            }, $this->files);
-    }
-
     public function getSourcePaths($absolute = false)
     {
         if( ! $this->asset ) {
@@ -80,7 +60,7 @@ class FileCollection
 
         $dir = $this->asset->getSourceDir($absolute);
         return array_map(function($file) use ($dir) {
-            return $dir . DIRECTORY_SEPARATOR . $file;
+                return $dir . DIRECTORY_SEPARATOR . $file;
             }, $this->files);
     }
 

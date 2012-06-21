@@ -12,17 +12,15 @@ class CssImportFilter
 
         // get css files and find @import statement to import related content
         $assetDir = $collection->asset->getPublicDir();
-        $urlBase = $collection->asset->getBaseUrl();
         $contents = '';
 
         $rewrite = new CssRewriteFilter;
-
 
         foreach( $collection->getSourcePaths() as $path ) {
             $dir = dirname($path);
             $content = file_get_contents( $path );
 
-            $content = $rewrite->rewrite($content,$urlBase,$dir);
+            $content = $rewrite->rewrite($content,$dir);
 
             // rewrite css paths
             // before importing file, we should rewrite the path first.

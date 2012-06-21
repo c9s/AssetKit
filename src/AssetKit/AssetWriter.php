@@ -13,7 +13,7 @@ use Exception;
  *   $manifest = $writer->from( array($asset) )
  *       // ->cache( $apc )
  *       ->name( 'jqueryui' )
- *       ->in('assets') // public/assets
+ *       ->in('assets') // baseUrl: public/assets
  *       ->write();
  * @code
  *
@@ -21,7 +21,7 @@ use Exception;
  */
 class AssetWriter
 {
-    public $in = 'assets';
+    public $in;
 
     public $name;
     public $cache;
@@ -398,7 +398,14 @@ class AssetWriter
         );
         foreach( $assets as $asset ) {
             $publicDir = $asset->getPublicDir(true);
-            $baseUrl   = $asset->getBaseUrl();
+
+            $baseUrl = $this->in 
+                ? $this->in . '/assets/' . $asset->name
+                : 'assets/' . $asset->name
+                ;
+
+            // $baseUrl = $this->in;
+            // $baseUrl   = $asset->getBaseUrl(); // XXX: remove this getBaseUrl
 
             foreach( $asset->getFileCollections() as $c ) {
                 $paths = $c->getFilePaths();
@@ -414,7 +421,9 @@ class AssetWriter
                         $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        file_put_contents( $path , $content) or die("write fail.");
+                        if( false === file_put_contents( $path , $content) ) {
+                            throw new Exception("Asset $path write failed.");
+                        }
                         $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
                     elseif( $c->isStylesheet ) {
@@ -422,14 +431,18 @@ class AssetWriter
                         $newpath = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '-filtered.css';
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        file_put_contents( $path , $content) or die("write fail.");
+                        if( false === file_put_contents( $path , $content) or die("write fail.") ) {
+                            throw new Exception("Asset $path write failed.");
+                        }
                         $manifest['stylesheets'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
                     elseif( $c->isJavascript ) {
                         $newpath = str_replace( '.js' , '-filtered.js' , $paths[0] );
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        file_put_contents( $path , $content) or die("write fail.");
+                        if( false === file_put_contents( $path , $content) ) {
+                            throw new Exception("Asset $path write failed.");
+                        }
                         $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
                 }
@@ -451,7 +464,9 @@ class AssetWriter
                         // put content and append into manifest
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        file_put_contents( $path , $content) or die("write fail");
+                        if( false === file_put_contents( $path , $content) ) {
+                            throw new Exception("Asset $path write failed." );
+                        }
                         $manifest['javascripts'][] = array(
                             'path' => $path,
                             'url'  => $url,
@@ -547,11 +562,19 @@ class AssetWriter
             'stylesheets' => array(),
             'javascripts' => array(),
         );
-        $dir = $this->config->getPublicRoot(true); // public web root
 
+        $dir = $this->config->getPublicRoot(true); // public web root
         if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
             mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
         }
+
+        // production static file base url
+        $baseUrl = $this->in 
+            ? $this->in . '/assets'
+            : 'assets'
+            ;
+
+
 
         if( isset($contents['css']) && $contents['css'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR 
@@ -563,7 +586,7 @@ class AssetWriter
                 or die('write fail');
 
             $manifest['stylesheets'][] = array( 
-                'url' => '/' . $path,
+                'url' => $baseUrl . $path,
                 'path' => $cssfile,
                 'attrs' => array(), /* css attributes, keep for future. */
             );
@@ -578,7 +601,7 @@ class AssetWriter
                     or die('write fail');
 
             $manifest['javascripts'][] = array(
-                'url' => '/' . $path,
+                'url' => $baseUrl . $path,
                 'path' => $jsfile,
                 'attrs' => array(),
             );
