@@ -128,6 +128,8 @@ class Asset
 
     public function export()
     {
+        // we should also save installed_dir
+        // installed_dir = public dir + source dir
         return array(
             'stash' => $this->stash,
             'manifest' => $this->manifest,
@@ -146,16 +148,25 @@ class Asset
         return $this->name;
     }
 
+    public function getInstalledDir($absolute = false)
+    {
+        return $this->config->getPublicAssetRoot($absolute) . DIRECTORY_SEPARATOR . $this->name;
+    }
+
     public function getSourceDir($absolute = false)
     {
-        if( $absolute ) {
-            return $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->sourceDir;
-        }
-        return $this->sourceDir;
+        return $absolute
+            ? $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->sourceDir
+            : $this->sourceDir
+            ;
     }
 
     /**
      * Return the public dir of this asset
+     *
+     *   Asset public dir = Public dir + Asset source path
+     *
+     * @param bool $absolute should return absolute path or relative path ?
      */
     public function getPublicDir($absolute = false)
     {
@@ -163,6 +174,12 @@ class Asset
         return $public . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $this->name;
     }
 
+
+    /**
+     * Check source file existence.
+     *
+     * @return bool
+     */
     public function hasSourceFiles()
     {
         $this->sourceDir;

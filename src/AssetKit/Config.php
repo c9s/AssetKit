@@ -87,9 +87,16 @@ class Config
                 JSON_PRETTY_PRINT));
     }
 
-    public function getPublicAssetRoot()
+
+    /**
+     * Return public dir + '/assets'
+     *
+     * @param bool $absolute
+     * @return string path
+     */
+    public function getPublicAssetRoot($absolute = false)
     {
-        return $this->getPublicRoot() . DIRECTORY_SEPARATOR . 'assets';
+        return $this->getPublicRoot($absolute) . DIRECTORY_SEPARATOR . 'assets';
     }
 
     /**
