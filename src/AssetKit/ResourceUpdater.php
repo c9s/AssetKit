@@ -9,6 +9,7 @@ class ResourceUpdater
 
     function __construct($asset)
     {
+        // check zip extension and ZipArchive class (which might be pure php version)
         if( ! extension_loaded('zip') && ! class_exists('ZipArchive') ) {
             throw new Exception('zip extension or ZipArchive class is required.');
         }

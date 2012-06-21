@@ -146,11 +146,6 @@ class Asset
         return $this->name;
     }
 
-    public function getPathName()
-    {
-        return $this->sourceDir;
-    }
-
     public function getSourceDir($absolute = false)
     {
         if( $absolute ) {
