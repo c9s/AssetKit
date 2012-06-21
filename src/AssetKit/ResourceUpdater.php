@@ -1,5 +1,7 @@
 <?php
 namespace AssetKit;
+use ZipArchive;
+use Exception;
 
 class ResourceUpdater
 {
@@ -7,6 +9,9 @@ class ResourceUpdater
 
     function __construct($asset)
     {
+        if( ! extension_loaded('zip') && ! class_exists('ZipArchive') ) {
+            throw new Exception('zip extension or ZipArchive class is required.');
+        }
         $this->asset = $asset;
     }
 
