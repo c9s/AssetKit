@@ -66,11 +66,12 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $jquery = $loader->load('jquery');
         $jqueryui = $loader->load('jquery-ui');
 
-        is( 'public/assets/jquery', $jquery->getPublicDir() );
-        is( 'assets/jquery', $jquery->getSourceDir() );
 
         ok( $jquery );
         ok( $jqueryui );
+
+        is( 'public/assets/jquery', $jquery->getPublicDir() );
+        is( 'assets/jquery', $jquery->getSourceDir() );
 
         $installer = new AssetKit\Installer;
         $installer->enableLog = false;

@@ -12,13 +12,15 @@ class CssImportFilter
 
         // get css files and find @import statement to import related content
         $assetDir = $collection->asset->getPublicDir();
+        $rootDir  = $collection->asset->config->getRoot();
+        
         $contents = '';
 
         $rewrite = new CssRewriteFilter;
 
         foreach( $collection->getSourcePaths() as $path ) {
             $dir = dirname($path);
-            $content = file_get_contents( $path );
+            $content = file_get_contents( $rootDir . DIRECTORY_SEPARATOR . $path );
 
             $content = $rewrite->rewrite($content,$dir);
 
@@ -39,7 +41,7 @@ class CssImportFilter
                     \1
                 \)\s*;
                 #xs', 
-                function($matches) use ($path,$dir) {
+                function($matches) use ($path,$dir,$rootDir) {
                     $path = $matches['url'];
                     $content = '/*****************************' . "\n"
                         . "IMPORT FROM $path \n*********************/\n\n";
@@ -48,7 +50,7 @@ class CssImportFilter
                         $content .= file_get_contents( $path );
                     }
                     else {
-                        $path = $dir . DIRECTORY_SEPARATOR . $path;
+                        $path = $rootDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $path;
                         if( ! file_exists( $path ) )
                             throw new Exception("CSS Import error, file $path not found.");
                         $content .= file_get_contents($path);
