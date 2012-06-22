@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit;
 use Exception;
-
+use AssetKit\Utils;
 
 
 /**
@@ -421,9 +421,8 @@ class AssetWriter
                         $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        if( false === file_put_contents( $path , $content) ) {
-                            throw new Exception("Asset $path write failed.");
-                        }
+
+                        Utils::write_file($path,$content);
                         $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
                     elseif( $c->isStylesheet ) {
@@ -431,18 +430,15 @@ class AssetWriter
                         $newpath = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '-filtered.css';
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        if( false === file_put_contents( $path , $content) or die("write fail.") ) {
-                            throw new Exception("Asset $path write failed.");
-                        }
+
+                        Utils::write_file($path,$content);
                         $manifest['stylesheets'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
                     elseif( $c->isJavascript ) {
                         $newpath = str_replace( '.js' , '-filtered.js' , $paths[0] );
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        if( false === file_put_contents( $path , $content) ) {
-                            throw new Exception("Asset $path write failed.");
-                        }
+                        Utils::write_file($path,$content);
                         $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
                     }
                 }
@@ -464,9 +460,9 @@ class AssetWriter
                         // put content and append into manifest
                         $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
                         $url  = $baseUrl . '/' . $newpath;
-                        if( false === file_put_contents( $path , $content) ) {
-                            throw new Exception("Asset $path write failed." );
-                        }
+
+                        Utils::write_file($path,$content);
+
                         $manifest['javascripts'][] = array(
                             'path' => $path,
                             'url'  => $url,
@@ -574,16 +570,14 @@ class AssetWriter
             : 'assets'
             ;
 
-
-
         if( isset($contents['css']) && $contents['css'] ) {
             $path = $this->in . DIRECTORY_SEPARATOR 
                 . ($this->name ? $this->name . '-' . md5( $contents['css']) : md5( $contents['css'] ) )
                 . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $cssfile , $contents['css'] ) !== false 
-                or die('write fail');
+
+            Utils::write_file( $cssfile , $contents['css'] );
 
             $manifest['stylesheets'][] = array( 
                 'url' => $baseUrl . $path,
@@ -597,8 +591,8 @@ class AssetWriter
                 . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $jsfile , $contents['js'] ) !== false 
-                    or die('write fail');
+
+            Utils::write_file( $cssfile , $contents['js'] );
 
             $manifest['javascripts'][] = array(
                 'url' => $baseUrl . $path,

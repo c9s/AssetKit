@@ -18,7 +18,6 @@ $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'test' );
 
-var_dump( $_SERVER['PATH'] ); 
 
 $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 $writer = new AssetKit\AssetWriter($config);
@@ -36,6 +35,7 @@ $head = $includer->render( $manifest );
 </head>
 <body>
 <?php
+var_dump( $_SERVER['PATH'] ); 
 var_dump( $manifest );
 ?>
 </body>
