@@ -41,7 +41,7 @@ class Asset
         if( $arg && is_array($arg) ) {
             $this->stash     = @$arg['stash'];
             $this->manifest  = @$arg['manifest'];
-            $this->sourceDir       = @$arg['source_dir'];
+            $this->sourceDir       = @$arg['source_dir'] ?: @$arg['dir'];  // "dir" is for backward-compatible
             $this->name      = isset($arg['name']) ? $arg['name'] : null;
         }
         elseif( $arg && file_exists($arg) ) 
