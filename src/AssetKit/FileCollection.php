@@ -57,7 +57,6 @@ class FileCollection
         if( ! $this->asset ) {
             throw new Exception("file collection requires asset object, but it's undefined.");
         }
-
         $dir = $this->asset->getSourceDir($absolute);
         return array_map(function($file) use ($dir) {
                 return $dir . DIRECTORY_SEPARATOR . $file;

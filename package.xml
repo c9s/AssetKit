@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2012-06-23</date>
-  <time>09:28:35</time>
+  <time>09:56:14</time>
   <version>
     <release>1.4.1</release>
     <api>1.4.1</api>
@@ -36,7 +36,7 @@
       <file name="tests/assets/test/test.coffee" role="test" md5sum="0effe3cdce872d2af97208d4bc818861"/>
       <file name="tests/bootstrap.php" role="test" md5sum="e38eede7a039bc03ec4bb3bc56334fa9"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="892d65f37fcb4959e9b6d07bf780f016"/>
-      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="f2428b5f50eccd98fa2468a688930bf4"/>
+      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="96a96cc9f85711c46e75e6d20414dc82"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="57b0c752918465777a1f1eccfa2ec744"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="d9ffba7b79e780e1988c2a5fe062eec7"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="938972d082a050fa91a4e4eddc2cc03c"/>
@@ -52,7 +52,7 @@
       <file name="src/AssetKit/Console.php" role="php" md5sum="19c9851d2e2208044062f1b2b32d9429"/>
       <file name="src/AssetKit/CssImagePreprocess.php" role="php" md5sum="c577959fe31cd331e31995b0458d1ded"/>
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="32fff263d702f9034018cc32a064198f"/>
-      <file name="src/AssetKit/FileCollection.php" role="php" md5sum="57e033d608cd916fd5e28b0561cd45f5"/>
+      <file name="src/AssetKit/FileCollection.php" role="php" md5sum="b290997fa3fdd93f5d0c6cbbd31571d3"/>
       <file name="src/AssetKit/FileUtils.php" role="php" md5sum="169d7901eb516b7b365416975472da94"/>
       <file name="src/AssetKit/Filter/CoffeeScriptFilter.php" role="php" md5sum="a8973ce4ea0fe0d95df032dade23aa46"/>
       <file name="src/AssetKit/Filter/CssImportFilter.php" role="php" md5sum="2d180e48597a00294ae74c9115d129bf"/>
@@ -66,7 +66,7 @@
       <file name="src/AssetKit/Process.php" role="php" md5sum="a76b62dcf90d34b5fdd83970171563a3"/>
       <file name="src/AssetKit/ResourceUpdater.php" role="php" md5sum="cec2a876e054f2649177805097b5d5a2"/>
       <file name="src/AssetKit/Utils.php" role="php" md5sum="f7ba55477a119bd00f7d08066f8b9e1b"/>
-      <file name="assetkit" role="script" md5sum="439de2e4989934afb282c98a27ea3825"/>
+      <file name="assetkit" role="script" md5sum="7e8f47150c42c7c75051aba72246ac09"/>
     </dir>
   </contents>
   <dependencies>
