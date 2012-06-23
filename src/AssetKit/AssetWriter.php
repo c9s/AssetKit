@@ -309,7 +309,6 @@ class AssetWriter
             if( ! $collection->isJavascript && ! $collection->isStylesheet )
                 continue;
 
-
             // if we are in development mode, we don't need to compress them all.
             if( $this->environment === 'production'
                     && $this->enableCompressor ) 
@@ -324,6 +323,7 @@ class AssetWriter
                     $coffee->filter( $collection );
                 }
                 $this->runCollectionCompressors($collection);
+
             }
             else {
                 $this->runCollectionFilters( $collection );
@@ -496,6 +496,10 @@ class AssetWriter
     {
         // check mtime
         if( $this->name && $this->cache ) {
+
+
+            // check if we have manifest hash already, if so, check the file 
+            // modification time to decide filter & compress files.
             if( $manifest = $this->cache->get( 'asset-manifest:' . $this->name ) ) {
                 if( ! $this->checkExpiry )
                     return $manifest;
@@ -504,6 +508,8 @@ class AssetWriter
                 $jsmtime  = $this->cache->get( 'asset-manifest-jsmtime:' . $this->name ) ?: 0;
                 $cssmtime = $this->cache->get( 'asest-manifest-cssmtime:' . $this->name ) ?: 0;
 
+
+                // XXX: simplify this
                 if( $jsmtime == 0 || $cssmtime == 0 ) {
                     foreach( array('javascripts','stylesheets') as $t ) {
                         foreach( $manifest[$t] as $file ) {
@@ -520,6 +526,7 @@ class AssetWriter
                     }
                 }
 
+                // XXX: simplify this
                 // We should check file stats to update squshed files.
                 $expired = false;
                 foreach( $assets as $asset ) {
@@ -545,12 +552,13 @@ class AssetWriter
 
                 // if the cache content is not expired, we can just return the content
                 if( ! $expired ) {
+                    // we should check squashed items
                     return $manifest;
                 }
             }
         }
 
-        // die('squash...');
+        // die('squashing...');
 
         // squash new content from assets
         $contents = $this->squashThem( $assets );
@@ -570,8 +578,12 @@ class AssetWriter
             : 'assets'
             ;
 
+        // XXX:
+        $basePath = $baseUrl;
+            
+
         if( isset($contents['css']) && $contents['css'] ) {
-            $path = $this->in . DIRECTORY_SEPARATOR 
+            $path = $basePath . DIRECTORY_SEPARATOR 
                 . ($this->name ? $this->name . '-' . md5( $contents['css']) : md5( $contents['css'] ) )
                 . '.css';
 
@@ -580,22 +592,22 @@ class AssetWriter
             Utils::write_file( $cssfile , $contents['css'] );
 
             $manifest['stylesheets'][] = array( 
-                'url' => $baseUrl . $path,
+                'url' => $path,
                 'path' => $cssfile,
                 'attrs' => array(), /* css attributes, keep for future. */
             );
         }
         if( isset($contents['js']) && $contents['js'] ) {
-            $path = $this->in . DIRECTORY_SEPARATOR 
+            $path = $basePath . DIRECTORY_SEPARATOR 
                 . ($this->name ? $this->name . '-' . md5( $contents['js']) : md5( $contents['js'] ))
                 . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
 
-            Utils::write_file( $cssfile , $contents['js'] );
+            Utils::write_file( $jsfile , $contents['js'] );
 
             $manifest['javascripts'][] = array(
-                'url' => $baseUrl . $path,
+                'url' => $path,
                 'path' => $jsfile,
                 'attrs' => array(),
             );

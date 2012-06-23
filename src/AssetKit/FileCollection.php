@@ -121,8 +121,9 @@ class FileCollection
 
     public function getContent()
     {
-        if( $this->content )
+        if( $this->content !== null ) {
             return $this->content;
+        }
 
         $content = '';
         foreach( $this->getSourcePaths(true) as $file ) {

@@ -18,7 +18,6 @@ $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'test' );
 
-
 $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
