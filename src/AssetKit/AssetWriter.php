@@ -282,7 +282,7 @@ class AssetWriter
                 if( $compressor = $this->getCompressor( $n ) ) {
                     $compressor->compress($collection);
                 }
-                else { 
+                else {
                     throw new Exception("compressor $n not found.");
                 }
             }
@@ -322,8 +322,11 @@ class AssetWriter
                     $coffee = new Filter\CoffeeScriptFilter;
                     $coffee->filter( $collection );
                 }
-                $this->runCollectionCompressors($collection);
 
+                if( $collection->getFilters() ) {
+                    $this->runCollectionFilters( $collection );
+                }
+                $this->runCollectionCompressors($collection);
             }
             else {
                 $this->runCollectionFilters( $collection );
@@ -347,7 +350,7 @@ class AssetWriter
      *
      * @return array [ javascript => string , stylesheet => string ]
      */
-    public function squashThem($assets)
+    public function squashAssets($assets)
     {
         $css = '';
         $js = '';
@@ -409,7 +412,6 @@ class AssetWriter
 
             foreach( $asset->getFileCollections() as $c ) {
                 $paths = $c->getFilePaths();
-
 
                 // for collections has filters, pipe content through these filters.
                 if( $filters = $c->getFilters() ) {
@@ -561,7 +563,7 @@ class AssetWriter
         // die('squashing...');
 
         // squash new content from assets
-        $contents = $this->squashThem( $assets );
+        $contents = $this->squashAssets( $assets );
         $manifest = array(
             'stylesheets' => array(),
             'javascripts' => array(),

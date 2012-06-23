@@ -37,7 +37,7 @@ class CoffeeScriptFilter
         $code = $proc->run();
 
         if( $code != 0 )
-            throw new RuntimeException("process error: $code");
+            throw new RuntimeException("Process error: $code");
 
         $content = $proc->getOutput();
         $collection->setContent($content);
