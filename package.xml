@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2012-06-23</date>
-  <time>09:56:14</time>
+  <time>10:17:21</time>
   <version>
     <release>1.4.1</release>
     <api>1.4.1</api>
@@ -35,7 +35,7 @@
       <file name="tests/assets/test/sass-test.sass" role="test" md5sum="090ee7affa62d1c763341e910541e0df"/>
       <file name="tests/assets/test/test.coffee" role="test" md5sum="0effe3cdce872d2af97208d4bc818861"/>
       <file name="tests/bootstrap.php" role="test" md5sum="e38eede7a039bc03ec4bb3bc56334fa9"/>
-      <file name="src/AssetKit/Asset.php" role="php" md5sum="892d65f37fcb4959e9b6d07bf780f016"/>
+      <file name="src/AssetKit/Asset.php" role="php" md5sum="6f50221ceef00aac4f0dba4e4f2ad942"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="96a96cc9f85711c46e75e6d20414dc82"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="57b0c752918465777a1f1eccfa2ec744"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="d9ffba7b79e780e1988c2a5fe062eec7"/>
@@ -66,7 +66,7 @@
       <file name="src/AssetKit/Process.php" role="php" md5sum="a76b62dcf90d34b5fdd83970171563a3"/>
       <file name="src/AssetKit/ResourceUpdater.php" role="php" md5sum="cec2a876e054f2649177805097b5d5a2"/>
       <file name="src/AssetKit/Utils.php" role="php" md5sum="f7ba55477a119bd00f7d08066f8b9e1b"/>
-      <file name="assetkit" role="script" md5sum="7e8f47150c42c7c75051aba72246ac09"/>
+      <file name="assetkit" role="script" md5sum="b9ef5cbbf7d1976c5aeb1a7d7e8d2995"/>
     </dir>
   </contents>
   <dependencies>
