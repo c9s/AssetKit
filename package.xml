@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2012-06-23</date>
-  <time>09:10:51</time>
+  <time>09:28:35</time>
   <version>
-    <release>1.4.0</release>
-    <api>1.4.0</api>
+    <release>1.4.1</release>
+    <api>1.4.1</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -41,6 +41,7 @@
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="d9ffba7b79e780e1988c2a5fe062eec7"/>
       <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="938972d082a050fa91a4e4eddc2cc03c"/>
       <file name="src/AssetKit/Command/InitCommand.php" role="php" md5sum="4f2318e6e18cc53aecf2683d2075e61a"/>
+      <file name="src/AssetKit/Command/InstallCommand.php" role="php" md5sum="478034813b2833e57e7533961e6d5b14"/>
       <file name="src/AssetKit/Command/RemoveCommand.php" role="php" md5sum="31494897b23acebf29788e3cdb208d62"/>
       <file name="src/AssetKit/Command/UpdateCommand.php" role="php" md5sum="563b4ac13fc545b6e2b90f9283d32c2c"/>
       <file name="src/AssetKit/Compressor/CssMinCompressor.php" role="php" md5sum="b75813bdcf1469e78eef38e94dbc394f"/>
@@ -48,7 +49,7 @@
       <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="ab607c58c9d2afdec092ad6898baa509"/>
       <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="ea820e7899226d3848352ad9ec2afa97"/>
       <file name="src/AssetKit/Config.php" role="php" md5sum="aff5531d4c71705db8c2d1e5858ceb78"/>
-      <file name="src/AssetKit/Console.php" role="php" md5sum="bbb439bac95eac4e61300ac39d54b4bd"/>
+      <file name="src/AssetKit/Console.php" role="php" md5sum="19c9851d2e2208044062f1b2b32d9429"/>
       <file name="src/AssetKit/CssImagePreprocess.php" role="php" md5sum="c577959fe31cd331e31995b0458d1ded"/>
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="32fff263d702f9034018cc32a064198f"/>
       <file name="src/AssetKit/FileCollection.php" role="php" md5sum="57e033d608cd916fd5e28b0561cd45f5"/>
@@ -112,6 +113,7 @@
       <install name="src/AssetKit/Command/AddCommand.php" as="AssetKit/Command/AddCommand.php"/>
       <install name="src/AssetKit/Command/CompileCommand.php" as="AssetKit/Command/CompileCommand.php"/>
       <install name="src/AssetKit/Command/InitCommand.php" as="AssetKit/Command/InitCommand.php"/>
+      <install name="src/AssetKit/Command/InstallCommand.php" as="AssetKit/Command/InstallCommand.php"/>
       <install name="src/AssetKit/Command/RemoveCommand.php" as="AssetKit/Command/RemoveCommand.php"/>
       <install name="src/AssetKit/Command/UpdateCommand.php" as="AssetKit/Command/UpdateCommand.php"/>
       <install name="src/AssetKit/Compressor/CssMinCompressor.php" as="AssetKit/Compressor/CssMinCompressor.php"/>
