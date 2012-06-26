@@ -17,10 +17,9 @@ class CssRewriteFilter
      * Rewrite css path
      *
      * @param string $content  stylesheet content
-     * @param string $urlBase  base url of assets
      * @param string $dir      the dirname of stylesheet file
      */
-    public function rewrite($content,$urlBase,$dir)
+    public function rewrite($content,$dir)
     {
         return preg_replace_callback('#
             url\( 
@@ -28,7 +27,7 @@ class CssRewriteFilter
                 (?<url>.*?)
                 \1
             \)
-            #xs', function($matches) use($urlBase,$dir) {
+            #xs', function($matches) use($dir) {
                 $url = $matches['url'];
                 // XXX: dirty, do not rewrite @import css syntax
                 if( preg_match('/\.css$/',$url) ) {
@@ -54,13 +53,12 @@ class CssRewriteFilter
             return;
 
         //  path:  /assets/{asset name}
-        $urlBase = $collection->asset->getBaseUrl();
         $paths = $collection->getSourcePaths();
         $contents = '';
         foreach( $paths as $path ) {
             $dir = dirname($path);
             $content = file_get_contents($path);
-            $content = $this->rewrite($content,$urlBase,$dir);
+            $content = $this->rewrite($content,$dir);
             $contents .= $content;
         }
         $collection->setContent($contents);

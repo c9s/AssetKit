@@ -32,15 +32,16 @@ class AssetLoader
 
 
     /**
-     * @param string $name asset name
+     * @param string|array $name asset name or asset name array
      *
+     * @return Asset|Asset[]
      */
     function load($name)
     {
         if( $this->config && is_array($name) )  {
             $self = $this;
-            return array_map(function($n) use($self) { 
-                        return $self->assets[$n] = $self->config->getAsset($name);
+            return array_map(function($n) use($self) {
+                        return $this->load($n);
                     },$name);
         } 
         elseif( $this->config && $asset = $this->config->getAsset($name) ) {

@@ -8,6 +8,21 @@ AssetKit can fetch asset ports and initialize them from a simple manifest YAML f
 
 You can use AssetKit library to integrate assets for your web applications very easily.
 
+Features
+========
+
+- CSSMin compressor
+- YUI compressor
+- JSMin compressor
+- CoffeeScript filter
+- APC cache support
+
+Installation
+============
+
+    $ pear channel-discover pear.corneltek.com
+    $ pear install corneltek/AssetKit
+
 Usage
 =====
 
@@ -34,7 +49,11 @@ Then fetch anything you want:
     Saving config...
     Done
 
-And your `.assetkit` file will be updated.
+And your `.assetkit` file will be updated, these asset files will be installed into `public/assets`.
+
+>   NOTE:
+>   To install asset files with symbol link, use --link option,
+>   Which is convenient for asset development.
 
 Once you've done, you can precompile the asset files to a squashed javascript/stylesheet files:
 

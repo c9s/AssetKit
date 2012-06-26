@@ -66,11 +66,12 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $jquery = $loader->load('jquery');
         $jqueryui = $loader->load('jquery-ui');
 
-        is( 'public/assets/jquery', $jquery->getPublicDir() );
-        is( 'assets/jquery', $jquery->getSourceDir() );
 
         ok( $jquery );
         ok( $jqueryui );
+
+        is( 'public/assets/jquery', $jquery->getPublicDir() );
+        is( 'assets/jquery', $jquery->getSourceDir() );
 
         $installer = new AssetKit\Installer;
         $installer->enableLog = false;
@@ -83,7 +84,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
         $manifest = $writer 
             ->name( 'app' )
-            ->in('assets') // public/assets
             ->writeForProduction( $assets );
 
         ok( $manifest['javascripts'] );
@@ -103,8 +103,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $render = new AssetKit\IncludeRender;
         $html = $render->render( $manifest );
 
-        like( '#<link rel="stylesheet" type="text/css"  href="/assets/app-\w+.css"/>
-<script type="text/javascript"  src="/assets/app-\w+.js" > </script>#', $html );
+        like( '#<link rel="stylesheet" type="text/css"  href="assets/app-\w+.css"/>
+<script type="text/javascript"  src="assets/app-\w+.js" > </script>#', $html );
 
     }
 

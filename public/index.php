@@ -4,6 +4,9 @@ define( 'ROOT', dirname(dirname(__FILE__) ));
 $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
     ROOT . '/src', ROOT . '/vendor/pear',
 ));
+
+$baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+
 $classLoader->useIncludePath(false);
 $classLoader->register();
 
@@ -13,11 +16,12 @@ $loader = new AssetKit\AssetLoader( $config , array( ROOT . '/assets' ) );
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
+$assets[] = $loader->load( 'test' );
 
 $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 $writer = new AssetKit\AssetWriter($config);
 $manifest = $writer->name('app')
-        ->cache($cache)
+        // ->cache($cache)
         ->production()
         ->write( $assets );
 
@@ -30,6 +34,7 @@ $head = $includer->render( $manifest );
 </head>
 <body>
 <?php
+var_dump( $_SERVER['PATH'] ); 
 var_dump( $manifest );
 ?>
 </body>

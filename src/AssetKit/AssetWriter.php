@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit;
 use Exception;
-
+use AssetKit\Utils;
 
 
 /**
@@ -13,7 +13,7 @@ use Exception;
  *   $manifest = $writer->from( array($asset) )
  *       // ->cache( $apc )
  *       ->name( 'jqueryui' )
- *       ->in('assets') // public/assets
+ *       ->in('assets') // baseUrl: public/assets
  *       ->write();
  * @code
  *
@@ -21,7 +21,7 @@ use Exception;
  */
 class AssetWriter
 {
-    public $in = 'assets';
+    public $in;
 
     public $name;
     public $cache;
@@ -63,9 +63,12 @@ class AssetWriter
 
     public function init()
     {
+
+
         $this->addCompressor('jsmin', function() {
             return new \AssetKit\Compressor\JsMinCompressor;
         });
+
         $this->addCompressor('cssmin', function() {
             return new \AssetKit\Compressor\CssMinCompressor;
         });
@@ -88,9 +91,28 @@ class AssetWriter
             return new \AssetKit\Filter\CssImportFilter;
         });
 
+        $this->addFilter( 'sass' , function() {
+            return new \AssetKit\Filter\SassFilter;
+        });
+
+        $this->addFilter( 'scss' , function() {
+            return new \AssetKit\Filter\ScssFilter;
+        });
+
         $this->addFilter( 'css_rewrite', function() {
             return new \AssetKit\Filter\CssRewriteFilter;
         });
+
+
+        /**
+         * XXX:
+         
+         // convert sass file to css (using sass filter), replace .sass with .css extension
+         $this->addPatternFilter( '.sass' , '.css' , 'sass' );
+         $this->addPatternFilter( '.scss' , '.css' , 'scss' );
+         */
+
+
     }
 
 
@@ -260,7 +282,7 @@ class AssetWriter
                 if( $compressor = $this->getCompressor( $n ) ) {
                     $compressor->compress($collection);
                 }
-                else { 
+                else {
                     throw new Exception("compressor $n not found.");
                 }
             }
@@ -287,7 +309,6 @@ class AssetWriter
             if( ! $collection->isJavascript && ! $collection->isStylesheet )
                 continue;
 
-
             // if we are in development mode, we don't need to compress them all.
             if( $this->environment === 'production'
                     && $this->enableCompressor ) 
@@ -300,6 +321,10 @@ class AssetWriter
                 elseif( $collection->isCoffeescript ) {
                     $coffee = new Filter\CoffeeScriptFilter;
                     $coffee->filter( $collection );
+                }
+
+                if( $collection->getFilters() ) {
+                    $this->runCollectionFilters( $collection );
                 }
                 $this->runCollectionCompressors($collection);
             }
@@ -325,7 +350,7 @@ class AssetWriter
      *
      * @return array [ javascript => string , stylesheet => string ]
      */
-    public function squashThem($assets)
+    public function squashAssets($assets)
     {
         $css = '';
         $js = '';
@@ -375,13 +400,49 @@ class AssetWriter
             'stylesheets' => array(),
         );
         foreach( $assets as $asset ) {
-            $publicDir = $asset->getPublicDir();
-            $baseUrl   = $asset->getBaseUrl();
+            $publicDir = $asset->getPublicDir(true);
+
+            $baseUrl = $this->in 
+                ? $this->in . '/' . $asset->name
+                : 'assets/' . $asset->name
+                ;
+
+            // $baseUrl = $this->in;
+            // $baseUrl   = $asset->getBaseUrl(); // XXX: remove this getBaseUrl
+
             foreach( $asset->getFileCollections() as $c ) {
                 $paths = $c->getFilePaths();
+
+                // for collections has filters, pipe content through these filters.
                 if( $filters = $c->getFilters() ) {
-                    // run collection filter and output to js or css file
                     $this->runCollectionFilters($c);
+
+                    $content = $c->getContent();
+
+                    if( $c->isCoffeescript ) {
+                        $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
+
+                        Utils::write_file($path,$content);
+                        $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
+                    }
+                    elseif( $c->isStylesheet ) {
+                        $info = pathinfo($paths[0]);
+                        $newpath = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '-filtered.css';
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
+
+                        Utils::write_file($path,$content);
+                        $manifest['stylesheets'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
+                    }
+                    elseif( $c->isJavascript ) {
+                        $newpath = str_replace( '.js' , '-filtered.js' , $paths[0] );
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
+                        Utils::write_file($path,$content);
+                        $manifest['javascripts'][] = array( 'path' => $path, 'url'  => $url, 'attrs' => array() );
+                    }
                 }
                 else {
                     $k = null;
@@ -390,7 +451,27 @@ class AssetWriter
                     elseif( $c->isStylesheet )
                         $k = 'stylesheets';
 
-                    if($k) {
+                    // XXX: we should refactor this, for other generic filters
+                    // if it's coffee, we should squash this collection
+                    if( $c->isCoffeescript ) {
+                        $coffee = new Filter\CoffeeScriptFilter;
+                        $coffee->filter( $c );
+                        $content = $c->getContent();
+
+                        $newpath = str_replace( '.coffee' , '.js' , $paths[0] );
+                        // put content and append into manifest
+                        $path = $publicDir . DIRECTORY_SEPARATOR . $newpath;
+                        $url  = $baseUrl . '/' . $newpath;
+
+                        Utils::write_file($path,$content);
+
+                        $manifest['javascripts'][] = array(
+                            'path' => $path,
+                            'url'  => $url,
+                            'attrs' => array(),
+                        );
+                    }
+                    else if( $c->isStylesheet || $c->isJavascript ) {
                         foreach( $paths as $path ) {
                             $manifest[$k][] = array(
                                 'path' => $publicDir . DIRECTORY_SEPARATOR . $path,
@@ -407,14 +488,20 @@ class AssetWriter
 
 
     /**
-     * squash assets and return a manifest
+     * Squash assets and return a manifest.
      *
-     * @param array $assets
+     * @param Asset[] $assets
+     *
+     * @return array manifest
      */
     public function writeForProduction($assets)
     {
         // check mtime
         if( $this->name && $this->cache ) {
+
+
+            // check if we have manifest hash already, if so, check the file 
+            // modification time to decide filter & compress files.
             if( $manifest = $this->cache->get( 'asset-manifest:' . $this->name ) ) {
                 if( ! $this->checkExpiry )
                     return $manifest;
@@ -423,6 +510,8 @@ class AssetWriter
                 $jsmtime  = $this->cache->get( 'asset-manifest-jsmtime:' . $this->name ) ?: 0;
                 $cssmtime = $this->cache->get( 'asest-manifest-cssmtime:' . $this->name ) ?: 0;
 
+
+                // XXX: simplify this
                 if( $jsmtime == 0 || $cssmtime == 0 ) {
                     foreach( array('javascripts','stylesheets') as $t ) {
                         foreach( $manifest[$t] as $file ) {
@@ -439,6 +528,7 @@ class AssetWriter
                     }
                 }
 
+                // XXX: simplify this
                 // We should check file stats to update squshed files.
                 $expired = false;
                 foreach( $assets as $asset ) {
@@ -464,51 +554,58 @@ class AssetWriter
 
                 // if the cache content is not expired, we can just return the content
                 if( ! $expired ) {
+                    // we should check squashed items
                     return $manifest;
                 }
             }
         }
 
-        // die('squash...');
+        // die('squashing...');
 
         // squash new content from assets
-        $contents = $this->squashThem( $assets );
+        $contents = $this->squashAssets( $assets );
         $manifest = array(
             'stylesheets' => array(),
             'javascripts' => array(),
         );
-        $dir = $this->config->getPublicRoot(true); // public web root
 
-        if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
-            mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
-        }
+        $dir = $this->config->getPublicRoot(true); // public web root
+        // production static file base url
+        $baseUrl = $this->in 
+            ? $this->in . '/'
+            : 'assets/'
+            ;
+
+        // XXX:
+        $basePath = $baseUrl;
+            
 
         if( isset($contents['css']) && $contents['css'] ) {
-            $path = $this->in . DIRECTORY_SEPARATOR 
+            $path = $basePath . DIRECTORY_SEPARATOR 
                 . ($this->name ? $this->name . '-' . md5( $contents['css']) : md5( $contents['css'] ) )
                 . '.css';
 
             $cssfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $cssfile , $contents['css'] ) !== false 
-                or die('write fail');
+
+            Utils::write_file( $cssfile , $contents['css'] );
 
             $manifest['stylesheets'][] = array( 
-                'url' => '/' . $path,
+                'url' => $path,
                 'path' => $cssfile,
                 'attrs' => array(), /* css attributes, keep for future. */
             );
         }
         if( isset($contents['js']) && $contents['js'] ) {
-            $path = $this->in . DIRECTORY_SEPARATOR 
+            $path = $basePath . DIRECTORY_SEPARATOR 
                 . ($this->name ? $this->name . '-' . md5( $contents['js']) : md5( $contents['js'] ))
                 . '.js';
 
             $jsfile = $dir . DIRECTORY_SEPARATOR . $path;
-            file_put_contents( $jsfile , $contents['js'] ) !== false 
-                    or die('write fail');
+
+            Utils::write_file( $jsfile , $contents['js'] );
 
             $manifest['javascripts'][] = array(
-                'url' => '/' . $path,
+                'url' => $path,
                 'path' => $jsfile,
                 'attrs' => array(),
             );

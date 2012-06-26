@@ -1,5 +1,9 @@
 ---
 assets:
+  - filters: [ 'sass' ]
+    stylesheet: 1
+    files:
+      - sass-test.sass
   - filters: [ 'coffeescript' ]
     javascript: 1
     files:

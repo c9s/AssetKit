@@ -15,7 +15,7 @@ class Installer
     public function uninstall($asset)
     {
         // get asset files and copy them into 
-        $fromDir = $asset->dir;
+        $fromDir = $asset->sourceDir;
         $n       = $asset->name;
 
         // install into public asset root.
@@ -34,7 +34,7 @@ class Installer
     public function install($asset)
     {
         // get asset files and copy them into 
-        $fromDir = $asset->dir;
+        $fromDir = $asset->sourceDir;
         $n       = $asset->name;
 
         // install into public asset root.
@@ -43,19 +43,34 @@ class Installer
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
 
+                if( ! file_exists($srcFile) ) {
+                    $this->log("$srcFile not found.");
+                    continue;
+                }
+
                 $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
-                $this->log("x $targetFile");
                 $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {
                     $contentOrig = file_get_contents($targetFile);
                     if( ($chk1 = md5($content)) !== ($chk2 = md5($contentOrig)) ) {
                         echo "Checksum mismatch: \n";
-                        echo "$chk2: $targetFile (original)";
-                        echo "$chk1: $targetFile";
-                        exit(1);
+                        echo "$chk2: $targetFile (original)\n";
+                        echo "$chk1: $targetFile\n";
+                        echo ">> Overwrite ? (Y/n) ";
+                        $line = trim(fgets(STDIN));
+                        if( $line == "n" ) {
+                            echo "Skip\n";
+                            continue;
+                        }
+                    }
+                    else {
+                        // skip existing files
+                        $this->log("- $targetFile");
+                        continue;
                     }
                 }
                 FileUtils::mkdir_for_file( $targetFile );
+                $this->log("x $targetFile");
                 file_put_contents( $targetFile , $content ) or die("$targetFile write failed.");
             }
         }

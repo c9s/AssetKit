@@ -8,9 +8,9 @@ use AssetKit\LinkInstaller;
 use CLIFramework\Command;
 use Exception;
 
-class UpdateCommand extends Command
+class InstallCommand extends Command
 {
-    function brief() { return 'update and install assets'; }
+    function brief() { return 'install assets'; }
 
     function options($opts)
     {
@@ -40,5 +40,6 @@ class UpdateCommand extends Command
         $this->logger->info("Done");
     }
 }
+
 
 

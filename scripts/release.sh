@@ -11,7 +11,7 @@ scripts/compile.sh || exit
 onion -d build || exit
 
 # use pear to install 
-sudo pear install -a -f package.xml || exit
+pear install -a -f package.xml || exit
 
 # git commit -a -m 'Make new release'
 # git push origin HEAD
