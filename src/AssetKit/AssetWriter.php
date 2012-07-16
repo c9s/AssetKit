@@ -403,7 +403,7 @@ class AssetWriter
             $publicDir = $asset->getPublicDir(true);
 
             $baseUrl = $this->in 
-                ? $this->in . '/assets/' . $asset->name
+                ? $this->in . '/' . $asset->name
                 : 'assets/' . $asset->name
                 ;
 
@@ -570,14 +570,10 @@ class AssetWriter
         );
 
         $dir = $this->config->getPublicRoot(true); // public web root
-        if( ! file_exists($dir . DIRECTORY_SEPARATOR . $this->in ) ) {
-            mkdir( $dir . DIRECTORY_SEPARATOR . $this->in , 0755, true );
-        }
-
         // production static file base url
         $baseUrl = $this->in 
-            ? $this->in . '/assets'
-            : 'assets'
+            ? $this->in . '/'
+            : 'assets/'
             ;
 
         // XXX:
