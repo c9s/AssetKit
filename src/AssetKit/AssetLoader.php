@@ -41,7 +41,7 @@ class AssetLoader
         if( $this->config && is_array($name) )  {
             $self = $this;
             return array_map(function($n) use($self) {
-                        return $this->load($n);
+                        return $self->load($n);
                     },$name);
         } 
         elseif( $this->config && $asset = $this->config->getAsset($name) ) {
