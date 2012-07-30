@@ -6,7 +6,7 @@ class Config
     public $file;
     public $config = array();
     public $baseDir;
-    public $apc = false;
+    public $apcSupport = false;
 
     public function __construct($file,$options = null)
     {
@@ -17,7 +17,7 @@ class Config
                 : dirname(realpath($file));
 
             if( isset($options['cache']) 
-                && $this->apc = extension_loaded('apc') 
+                && $this->apcSupport = extension_loaded('apc') 
                 && $d = apc_fetch($this->baseDir) )
             {
                 $this->config = $d;
@@ -25,7 +25,7 @@ class Config
                 $this->config = json_decode(file_get_contents($file),true);
 
                 // cache this if we have apc
-                if( $this->apc ) {
+                if( $this->apcSupport ) {
                     apc_store($this->baseDir, $this->config, isset($options['cache_expiry']) ? $options['cache_expiry'] : 0 );
                 }
             }
