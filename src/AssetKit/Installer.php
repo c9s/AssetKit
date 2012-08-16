@@ -4,11 +4,17 @@ namespace AssetKit;
 class Installer
 {
     public $enableLog = true;
+    public $logger;
 
     public function log($msg)
     {
-        if( $this->enableLog )
-            echo $msg , "\n";
+        if( $this->enableLog ) {
+            if( $this->logger ) {
+                $this->logger->info( $msg );
+            } else {
+                echo $msg , "\n";
+            }
+        }
     }
 
 

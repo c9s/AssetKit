@@ -26,6 +26,8 @@ class UpdateCommand extends Command
                 ? new LinkInstaller
                 : new Installer;
 
+        $installer->logger = $this->logger;
+
         foreach( $config->getAssets() as $name => $asset ) {
             $this->logger->info("Updating $name ...");
             $asset->initResource(true); // update it
