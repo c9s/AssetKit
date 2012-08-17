@@ -70,10 +70,11 @@ class ResourceUpdater
                 $dir = getcwd();
                 chdir($resDir);
                 system("git remote update --prune");
-                system("git pull origin HEAD");
+                $current = system('git rev-parse --abbrev-ref HEAD');
+                system("git pull --quiet origin $current");
                 chdir($dir);
             } else {
-                system("git clone $url $resDir");
+                system("git clone --quiet $url $resDir");
             }
 
         }
@@ -85,10 +86,10 @@ class ResourceUpdater
                 $dir = getcwd();
                 chdir($resDir);
                 system("git remote update --prune");
-                system("git pull origin HEAD");
+                system("git pull --quiet origin HEAD");
                 chdir($dir);
             } else {
-                system("git clone -q $url $resDir");
+                system("git clone --quiet $url $resDir");
             }
         }
         elseif( isset($r['svn']) ) 
