@@ -145,6 +145,32 @@ class Config
     }
 
 
+
+
+    /**
+     * Write current config to file
+     *
+     * @param string $filename 
+     * @param integer $format Can be FORMAT_PHP, FORMAT_JSON.
+     */
+    public function writeFile($path, $config, $format = Data::FORMAT_PHP )
+    {
+        return Data::encode_file($path, $config, $format);
+    }
+
+
+    /**
+     * Save current asset config with $format
+     *
+     * @param integer $format FORMAT_PHP or FORMAT_JSON
+     */
+    public function save($format = self::FORMAT_PHP)
+    {
+        return $this->writeFile($this->file, $this->config, $format);
+    }
+
+
+
     /**
      * Get registered assets and return asset objects.
      *
@@ -263,28 +289,6 @@ class Config
         return $this->config;
     }
 
-
-    /**
-     * Write current config to file
-     *
-     * @param string $filename 
-     * @param integer $format Can be FORMAT_PHP, FORMAT_JSON.
-     */
-    public function writeFile($path, $config, $format = Data::FORMAT_PHP )
-    {
-        return Data::encode_file($path, $config, $format);
-    }
-
-
-    /**
-     * Save current asset config with $format
-     *
-     * @param integer $format FORMAT_PHP or FORMAT_JSON
-     */
-    public function save($format = self::FORMAT_PHP)
-    {
-        return $this->writeFile($this->file, $this->config, $format);
-    }
 
 
     /**
