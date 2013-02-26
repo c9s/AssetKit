@@ -8,18 +8,18 @@ namespace AssetKit;
  */
 class CssImagePreprocess
 {
-	public $assets;
+    public $assets;
 
-	public function from($assets)
-	{
-		$this->assets = $assets;
-		return $this;
-	}
+    public function from($assets)
+    {
+        $this->assets = $assets;
+        return $this;
+    }
 
-	public function to($dir)
-	{
+    public function to($dir)
+    {
 
-	}
+    }
 }
 
 

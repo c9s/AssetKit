@@ -23,6 +23,35 @@ Installation
     $ pear channel-discover pear.corneltek.com
     $ pear install corneltek/AssetKit
 
+
+Definitions
+============
+To use AssetKit, you have to know some basic component concepts in AssetKit.
+
+One asset can have multiple file collection, the file collection can be css,
+coffee-script, live-script, javascript collection.
+
+Each file collection has its own filter and compressor. so that CSS file
+collection can use "cssmin" and "yui_css" compressor, and SASS file collection 
+can use "sass" filter and "cssmin" compressor to generate the minified files.
+
+To define file collections, you need to create a manifest.yml file in your asset directory,
+for example, the backbonejs manifest.yml file:
+
+```yaml
+---
+resource:
+  url: http://backbonejs.org/backbone.js
+assets:
+  - js: 1
+    files:
+    - backbone.js
+```
+
+You can also define the resource, assetkit would fetch it for you. currently assetkit supports 
+svn, git, hg resource types.
+
+
 Usage
 =====
 
