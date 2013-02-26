@@ -15,21 +15,12 @@ class Config
 
     /**
      * @var array $config the config hash.
+     *
+     *    'baseDir': the base directory for public files.
+     *    'baseUrl': The base url for front-end
      */
     public $config;
 
-
-
-    /**
-     * @var string $baseDir the base directory for public files.
-     */
-    public $baseDir;
-
-
-    /**
-     * @var string $baseUrl The base url for front-end
-     */
-    public $baseUrl;
 
     public $cacheEnable = true;
 
@@ -196,20 +187,32 @@ class Config
      */
     public function getBaseDir($absolute = false) 
     {
-        return $this->config['baseDir'];
+        if( isset($this->config['baseDir']) ) 
+            return $this->config['baseDir'];
     }
 
 
     /**
      * Get baseUrl for front-end including
      * 
-     * @param bool $absolute return absolute path or not.
      * @return string the path.
      */
-    public function getBaseUrl($absolute = false)
+    public function getBaseUrl()
     {
-        return $this->config['baseUrl'];
+        if( isset($this->config['baseUrl']) ) 
+            return $this->config['baseUrl'];
     }
+
+    public function setBaseUrl($url) 
+    {
+        $this->config['baseUrl'] = $url;
+    }
+
+    public function setBaseDir($dir) 
+    {
+        $this->config['baseDir'] = $dir;
+    }
+
 }
 
 

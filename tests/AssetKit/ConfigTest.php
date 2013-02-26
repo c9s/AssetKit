@@ -13,6 +13,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
             unlink($configFile);
         }
 
+
         $config = new AssetKit\Config($configFile,array(  
             'cache' => true,
             'cache_id' => 'custom_app_id',
@@ -20,34 +21,15 @@ class ConfigTest extends PHPUnit_Framework_TestCase
         ));
         ok($config);
 
+        // test force reload
+        $config->load();
 
         $assets = $config->getRegisteredAssets();
         ok( empty($asset) );
+
 
         $config->save();
         unlink($configFile);
     }
-
-
-    public function testAddingAssetConfig()
-    {
-        $configFile = "tests/.adding_config";
-        if( file_exists($configFile) ) {
-            unlink($configFile);
-        }
-
-        $config = new AssetKit\Config($configFile);
-        ok($config);
-
-
-        $loader = new AssetKit\AssetLoader($config);
-
-
-        $assets = $config->getRegisteredAssets();
-        ok( empty($asset) );
-
-        $config->save();
-    }
-
 }
 
