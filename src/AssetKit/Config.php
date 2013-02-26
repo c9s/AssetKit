@@ -134,39 +134,34 @@ class Config
     }
 
 
+    public function getBaseUrl($absolute = false) 
+    {
+
+
+    }
 
 
     /**
-     * Return public dir + '/assets'
+     * Get baseDir, this is usually used for compiling and minifing.
      *
-     * @param bool $absolute
-     * @return string path
+     * @param bool $absolute reutrn absolute path or not 
+     * @return string the path
      */
-    public function getPublicAssetRoot($absolute = false)
+    public function getBaseDir($absolute = false) 
     {
-        return $this->getPublicRoot($absolute) . DIRECTORY_SEPARATOR . 'assets';
+        return $this->config['baseDir'];
     }
+
 
     /**
-     * Get public root path
-     *
-     * Relative path is for Command-line
-     * Absolute path is for Web
-     *
-     * @param $absolute bool
-     *
-     * @return string Path
+     * Get baseUrl for front-end including
+     * 
+     * @param bool $absolute return absolute path or not.
+     * @return string the path.
      */
-    public function getPublicRoot($absolute = false)
+    public function getBaseUrl($absolute = false)
     {
-        return ( $absolute ? $this->baseDir . DIRECTORY_SEPARATOR : '' ) . (@$this->config['public'] ?: 'public');
+        return $this->config['baseUrl'];
     }
-
-
-    public function getRoot()
-    {
-        return $this->baseDir;
-    }
-
 }
 
