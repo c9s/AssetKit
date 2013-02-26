@@ -12,6 +12,8 @@ class Config
      */
     public $file;
 
+    public $fileDirectory;
+
 
     /**
      * @var array $config the config hash.
@@ -29,6 +31,7 @@ class Config
     public function __construct($file,$options = array())
     {
         $this->file = $file;
+        $this->fileDirectory = dirname(realpath($file));
 
         if(isset($options['cache']) ) {
             $this->cacheEnable = $options['cache'];
@@ -212,7 +215,5 @@ class Config
     {
         $this->config['baseDir'] = $dir;
     }
-
 }
-
 
