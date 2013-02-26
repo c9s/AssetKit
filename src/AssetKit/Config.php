@@ -4,6 +4,9 @@ namespace AssetKit;
 class Config
 {
 
+    const JSON_FORMAT = 1;
+    const PHP_FORMAT = 1;
+
     /**
      * @var string $file the config file path
      */
@@ -99,13 +102,39 @@ class Config
     }
 
 
-    public function save()
+
+    /**
+     * Write current config to file
+     *
+     * @param string $filename 
+     * @param integer $format Can be PHP_FORMAT, JSON_FORMAT.
+     */
+    public function write($path, $config, $format = PHP_FORMAT )
     {
-        if( ! defined('JSON_PRETTY_PRINT') )
-            define('JSON_PRETTY_PRINT',0);
-        file_put_contents($this->file, json_encode($this->config, 
+        if( $format == self::JSON_FORMAT ) {
+            if( ! defined('JSON_PRETTY_PRINT') )
+                define('JSON_PRETTY_PRINT',0);
+            return file_put_contents($path, json_encode($config,
                 JSON_PRETTY_PRINT));
+        } else if ($format == self::PHP_FORMAT ) {
+            $php = '<?php return ' .  var_export($config,true) . ';';
+            return file_put_contents($path, $php);
+        }
     }
+
+
+    /**
+     * Save current asset config with $format
+     *
+     * @param integer $format PHP_FORMAT or JSON_FORMAT
+     */
+    public function save($format = PHP_FORMAT)
+    {
+        return $this->write($this->file, $this->config, $format);
+    }
+
+
+
 
     /**
      * Return public dir + '/assets'
