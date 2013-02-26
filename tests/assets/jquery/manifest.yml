@@ -1,11 +1,7 @@
 ---
 resource:
-  github: jquery/jquery
-  commands:
-    - git submodule init
-    - git submodule update
-    - make
+  url: http://code.jquery.com/jquery-1.9.1.min.js
 assets:
   - javascript: 1
     files:
-      - jquery/dist/jquery.js
+      - jquery-1.9.1.min.js
