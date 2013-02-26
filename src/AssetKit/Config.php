@@ -76,11 +76,26 @@ class Config
         }
     }
 
+
+
+    /**
+     * Load or reload the config file.
+     * 
+     * @param integer $format FORMAT_PHP or FORMAT_JSON
+     */
     public function load($format = self::FORMAT_PHP )
     {
         return $this->config = $this->readFile( $this->file , $format );
     }
 
+
+    /**
+     * Read a config from a file.
+     *
+     * @param string $file
+     * @param integer $format FORMAT_PHP or FORMAT_JSON
+     * @return array config array
+     */
     public function readFile($file,$format = self::FORMAT_PHP ) 
     {
         if($format == self::FORMAT_PHP ) {
