@@ -23,9 +23,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $config->setBaseDir('tests/assets');
         $config->addAssetDirectory('vendor/assets');
 
-
         $loader = new AssetKit\AssetLoader($config);
-
 
 
         $assets = $config->getRegisteredAssets();

@@ -184,6 +184,18 @@ class Config
 
 
     /**
+     * Add asset to the config stash.
+     *
+     * @param string $name
+     * @param array $config
+     */
+    public function setAssetConfig($name,$config)
+    {
+        $this->config['assets'][$name] = $config;
+    }
+
+
+    /**
      * Remove asset from config
      *
      * @param string $name asset name
