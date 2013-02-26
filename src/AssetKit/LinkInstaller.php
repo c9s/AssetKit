@@ -8,7 +8,9 @@ class LinkInstaller extends Installer
     {
         // get asset files and copy them into 
         $fromDir = $asset->sourceDir;
-        $n       = $asset->name;
+
+        // asset name
+        $name       = $asset->name;
 
         // install into public asset root.
         foreach( $asset->getFileCollections() as $collection ) {
@@ -21,7 +23,7 @@ class LinkInstaller extends Installer
                     continue;
                 }
 
-                $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $subpath;
                 if( file_exists($targetFile) ) {
                     unlink($targetFile);
                 }
