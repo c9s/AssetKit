@@ -6,6 +6,10 @@ class ConfigTest extends PHPUnit_Framework_TestCase
     {
         $config = new AssetKit\Config("tests/assetkit.config");
         ok($config);
+
+        $config->getRegisteredAssets();
+
+
     }
 }
 

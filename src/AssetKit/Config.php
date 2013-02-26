@@ -100,6 +100,17 @@ class Config
     }
 
 
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+
     /**
      * Write current config to file
      *
