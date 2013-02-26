@@ -1,0 +1,11 @@
+build/dist
+build/size
+build/build/.sizecache.json
+docs
+.project
+*~
+*.diff
+*.patch
+.DS_Store
+node_modules
+dist

@@ -18,6 +18,8 @@ class LinkInstaller extends Installer
             if( file_exists($targetFile) ) {
                 unlink($targetFile);
             }
+
+            // simply use symbol link
             FileUtils::mkdir_for_file( $targetFile );
             symlink(realpath($srcFile),$targetFile) 
                     or die("$targetFile link failed.");

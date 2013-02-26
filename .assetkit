@@ -58,9 +58,22 @@
                         "compressors": [
                             "cssmin"
                         ],
-                        "files": [
-                            "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.all.css"
-                        ]
+                        "files": {
+                            "0": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.base.css",
+                            "1": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.core.css",
+                            "2": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.accordion.css",
+                            "3": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.all.css",
+                            "4": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.autocomplete.css",
+                            "6": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.button.css",
+                            "8": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.datepicker.css",
+                            "9": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.dialog.css",
+                            "10": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.progressbar.css",
+                            "11": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.resizable.css",
+                            "12": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.selectable.css",
+                            "13": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.slider.css",
+                            "14": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.tabs.css",
+                            "15": "jquery-jquery-ui-27c4854\/themes\/base\/jquery.ui.theme.css"
+                        }
                     },
                     {
                         "files": [
@@ -106,8 +119,8 @@
                     }
                 ]
             },
-            "manifest": "assets\/jquery-ui\/manifest.yml",
-            "source_dir": "assets\/jquery-ui",
+            "manifest": "tests\/assets\/jquery-ui\/manifest.yml",
+            "source_dir": "tests\/assets\/jquery-ui",
             "name": "jquery-ui"
         }
     }
