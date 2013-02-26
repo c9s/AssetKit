@@ -3,40 +3,90 @@ namespace AssetKit;
 
 class Config
 {
-    public $file;
-    public $config = array();
-    public $baseDir;
-    public $apcSupport = false;
 
-    public function __construct($file,$options = null)
+    /**
+     * @var string $file the config file path
+     */
+    public $file;
+
+
+    /**
+     * @var array $config the config hash.
+     */
+    public $config;
+
+
+
+    /**
+     * @var string $baseDir the base directory for public files.
+     */
+    public $baseDir;
+
+
+    /**
+     * @var string $baseUrl The base url for front-end
+     */
+    public $baseUrl;
+
+    public $cacheEnable = true;
+    public $cacheSupport = false;
+
+    public function __construct($file,$options = array())
     {
         $this->file = $file;
-        if( file_exists($file) ) {
-            $this->baseDir = isset($options['base_dir']) 
-                ? $options['base_dir'] 
-                : dirname(realpath($file));
 
-            if( isset($options['cache']) 
-                && $this->apcSupport = extension_loaded('apc') 
-                && $d = apc_fetch($this->baseDir) )
-            {
-                $this->config = $d;
-            } else {
-                $this->config = json_decode(file_get_contents($file),true);
-
-                // cache this if we have apc
-                if( $this->apcSupport ) {
-                    apc_store($this->baseDir, $this->config, isset($options['cache_expiry']) ? $options['cache_expiry'] : 0 );
-                }
-            }
+        if(isset($options['cache']) ) {
+            $this->cacheEnable = $options['cache'];
         }
-        else {
-            $this->baseDir = isset($options['base_dir']) 
-                ? $options['base_dir'] 
-                : getcwd();
+
+        $useCache = $this->cacheEnabled();
+        if($useCache) {
+            // get apc cache
+            $cacheId = isset($options['cache_id'] 
+                ? $options['cache_id']
+                : __DIR__;
+            $this->config = apc_fetch($cacheId);
+        }
+
+        if ( ! $this->config ) {
+            // read the config file
+            if( file_exists($file) ) {
+                $this->config = json_decode(file_get_contents($file),true);
+                if($useCache) {
+                    apc_store($cacheId, 
+                        $this->config, 
+                        isset($options['cache_expiry']) 
+                        ? $options['cache_expiry'] 
+                        : 0 
+                    );
+                }
+            } else {
+                $this->config = array();
+            }
         }
     }
 
+
+
+    /**
+     * Check if apc cache is supported and is cache enabled by user.
+     *
+     * @return bool 
+     */
+    public function cacheEnabled() 
+    {
+        if($this->cacheEnable) {
+            return $this->cacheSupport = extension_loaded('apc') ;
+        }
+        return false;
+    }
+
+
+    /**
+     * Get registered assets and return asset objects.
+     *
+     * @return AssetKit\Asset[]
+     */
     public function getAssets()
     {
         $assets = array();
@@ -49,36 +99,6 @@ class Config
     }
 
 
-    /**
-     * Register asset to config file
-     *
-     * @param string $name asset name
-     * @param string $asset asset stash array, contains paths, resources .. etc
-     */
-    public function addAsset($name,$asset)
-    {
-        if( ! isset($this->config['assets']) )
-            $this->config['assets'] = array();
-        $this->config['assets'][$name] = $asset;
-    }
-
-    /**
-     * Remove Asset from config file
-     */
-    public function removeAsset($asset)
-    {
-        unset($this->config['assets'][$asset]);
-    }
-
-    public function getAsset($name)
-    {
-        if( isset($this->config['assets'][$name] ) ) {
-            $a = new Asset( $this->config['assets'][$name] );
-            $a->config = $this;
-            return $a;
-        }
-    }
-
     public function save()
     {
         if( ! defined('JSON_PRETTY_PRINT') )
@@ -86,7 +106,6 @@ class Config
         file_put_contents($this->file, json_encode($this->config, 
                 JSON_PRETTY_PRINT));
     }
-
 
     /**
      * Return public dir + '/assets'

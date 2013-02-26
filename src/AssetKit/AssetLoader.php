@@ -24,7 +24,7 @@ class AssetLoader
      * @param AssetKit\Config $config
      * @param array $paths
      */
-    function __construct( \AssetKit\Config $config,$paths = array())
+    public function __construct( \AssetKit\Config $config,$paths = array())
     {
         $this->config = $config;
         $this->paths = $paths;
@@ -36,8 +36,10 @@ class AssetLoader
      *
      * @return Asset|Asset[]
      */
-    function load($name)
+    public function load($name)
     {
+
+        // for asset names in an array.
         if( $this->config && is_array($name) )  {
             $self = $this;
             return array_map(function($n) use($self) {
@@ -60,12 +62,12 @@ class AssetLoader
         }
     }
 
-    function clear()
+    public function clear()
     {
         $this->assets = array();
     }
 
-    function getAssets()
+    public function getAssets()
     {
         return $this->assets;
     }

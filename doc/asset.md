@@ -11,4 +11,12 @@ $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'extjs4-gpl' );
 ```
 
+The asset config spec:
 
+
+```js
+{
+    baseDir: 'public'
+    baseUrl: '/assets'
+}
+```
