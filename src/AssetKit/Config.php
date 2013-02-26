@@ -45,7 +45,7 @@ class Config
         $useCache = $this->cacheEnabled();
         if($useCache) {
             // get apc cache
-            $cacheId = isset($options['cache_id'] 
+            $cacheId = isset($options['cache_id'])
                 ? $options['cache_id']
                 : __DIR__;
             $this->config = apc_fetch($cacheId);
@@ -131,13 +131,6 @@ class Config
     public function save($format = PHP_FORMAT)
     {
         return $this->write($this->file, $this->config, $format);
-    }
-
-
-    public function getBaseUrl($absolute = false) 
-    {
-
-
     }
 
 
