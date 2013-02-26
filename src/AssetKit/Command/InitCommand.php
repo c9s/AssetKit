@@ -12,22 +12,35 @@ class InitCommand extends Command
 
     public function options($opts)
     {
+        // required options
         $opts->add('baseUrl:','base URL');
         $opts->add('baseDir:','base directory');
+
+        // optinoal option
+        $opts->add('config?','config file');
     }
 
     public function execute()
     {
-        $publicRoot = $this->options->public ?: 'public' . DIRECTORY_SEPARATOR . 'assets';
-        $this->logger->info( "Using public asset directory: $publicRoot" );
+        $configFile = $this->options->config ?: ".assetkit.php";
+
+        if(! $this->options->baseUrl) {
+            return $this->logger->error("--baseUrl option is required.");
+        }
+
+        if(! $this->options->baseDir) {
+            return $this->logger->error("--baseDir option is required.");
+        }
+
+        $this->logger->info( "Reading $configFile file" );
 
         // create asset config
-        $config = new Config('.assetkit.php');
+        $config = new Config($configFile);
 
         $config->setBaseUrl($this->options->baseUrl );
         $config->setBaseDir($this->options->baseDir );
 
-        $this->logger->info('Writing config file .assetkit.php');
+        $this->logger->info("Writing config file $configFile");
         $config->save();
     }
 
