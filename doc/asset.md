@@ -1,6 +1,7 @@
 Asset
 ============
 
+Asset config contains registered assets, and asset directories.
 
 ```php
 $config = new AssetKit\Config( '../.assetkit');
