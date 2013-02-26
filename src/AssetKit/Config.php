@@ -117,7 +117,7 @@ class Config
      * @param string $filename 
      * @param integer $format Can be PHP_FORMAT, JSON_FORMAT.
      */
-    public function write($path, $config, $format = PHP_FORMAT )
+    public function write($path, $config, $format = self::PHP_FORMAT )
     {
         if( $format == self::JSON_FORMAT ) {
             if( ! defined('JSON_PRETTY_PRINT') )
@@ -136,7 +136,7 @@ class Config
      *
      * @param integer $format PHP_FORMAT or JSON_FORMAT
      */
-    public function save($format = PHP_FORMAT)
+    public function save($format = self::PHP_FORMAT)
     {
         return $this->write($this->file, $this->config, $format);
     }

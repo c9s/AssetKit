@@ -16,6 +16,8 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 
         $assets = $config->getRegisteredAssets();
         ok( empty($asset) );
+
+        $config->save();
     }
 }
 
