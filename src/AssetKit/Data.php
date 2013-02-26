@@ -42,7 +42,7 @@ class Data
         }
     }
 
-    static function encode_file($path, $data, $format) 
+    static function encode_file($path, $data, $format = self::FORMAT_PHP) 
     {
         if( $format === self::FORMAT_JSON ) {
             return file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
@@ -50,7 +50,7 @@ class Data
             $php = '<?php return ' .  var_export($data,true) . ';';
             return file_put_contents($path, $php);
         } else if ($format === self::FORMAT_YAML ) {
-            return yaml_emit_file($file, $data);
+            return file_put_contents($path, yaml_emit($data));
         }
     }
 }

@@ -2,7 +2,6 @@
 namespace AssetKit;
 use Exception;
 
-
 /**
  * @class
  *
@@ -36,7 +35,6 @@ class AssetLoader
      */
     public function load($name)
     {
-        // $paths = $this->config->getAssetDirectories();
         $names = (array) $name;
         foreach( $names as $n ) {
 
@@ -52,6 +50,31 @@ class AssetLoader
 
             // register asset into the pool
             $this->assets[$n] = $a;
+        }
+    }
+
+    public function lookup($name)
+    {
+        $paths = $this->config->getAssetDirectories();
+        foreach($paths as $path) {
+            $target = $path . DIRECTORY_SEPARATOR . $name;
+            $manifestYaml = $target . DIRECTORY_SEPARATOR . 'manifest.yml';
+            $manifestPhp = $target . DIRECTORY_SEPARATOR . 'manifest.php';
+            $manifestJson = $target . DIRECTORY_SEPARATOR . 'manifest.json';
+            if(! is_dir($target))
+                continue;
+
+            $config = null;
+            if( file_exists($manifestPhp) ) {
+                $config = require $manifestPhp;
+            } elseif ( file_exists($manifestJson) ) {
+                $config = json_decode(file_get_contents($manifestJson),true);
+            } elseif ( file_exists($manifestYaml) ) {
+                $config = yaml_parse_file($manifestYaml);
+            } 
+            if($config) {
+                // loaded
+            }
         }
     }
 
