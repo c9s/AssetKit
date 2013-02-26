@@ -1,0 +1,11 @@
+---
+resource:
+  github: jquery/jquery
+  commands:
+    - git submodule init
+    - git submodule update
+    - make
+assets:
+  - javascript: 1
+    files:
+      - jquery/dist/jquery.js
