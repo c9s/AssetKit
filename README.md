@@ -32,7 +32,7 @@ One asset can have multiple file collection, the file collection can be css,
 coffee-script, live-script, javascript collection.
 
 Each file collection has its own filter and compressor. so that CSS file
-collection can use "cssmin" and "yui_css" compressor, and SASS file collection 
+collection can use "cssmin" and "yuicss" compressor, and SASS file collection 
 can use "sass" filter and "cssmin" compressor to generate the minified files.
 
 To define file collections, you need to create a manifest.yml file in your asset directory,
