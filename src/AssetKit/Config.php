@@ -18,8 +18,9 @@ class Config
     /**
      * @var array $config the config hash.
      *
-     *    'baseDir': the base directory for public files.
-     *    'baseUrl': The base url for front-end
+     *    'baseDir': The base directory for public files.
+     *    'baseUrl': The base url for front-end.
+     *    'dirs': asset directories.
      */
     public $config;
 
@@ -125,6 +126,7 @@ class Config
         }
         return array();
     }
+
 
     public function getAssetDirectories()
     {
