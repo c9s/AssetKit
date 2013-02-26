@@ -2,6 +2,41 @@
 
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
+
+
+    public function testAssetLoader()
+    {
+        $configFile = "tests/.assetkit";
+        if( file_exists($configFile) ) {
+            unlink($configFile);
+        }
+
+        $config = new AssetKit\Config($configFile,array(  
+            'cache' => true,
+            'cache_id' => 'asset-loader-test',
+            'cache_expiry' => 3600
+        ));
+        ok($config);
+
+        // test force reload
+        $config->setBaseUrl('/assets');
+        $config->setBaseDir('tests/assets');
+        $config->addAssetDirectory('vendor/assets');
+
+
+        $loader = new AssetKit\AssetLoader($config);
+
+
+
+        $assets = $config->getRegisteredAssets();
+        ok( empty($asset) );
+        $config->save();
+        unlink($configFile);
+    }
+
+
+
+    /*
     public function setup()
     {
         $config = $this->getConfig();
@@ -112,5 +147,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 #          $installer->uninstall( $jquery );
 #          $installer->uninstall( $jqueryui );
     }
+    */
 }
 

@@ -121,11 +121,13 @@ class Config
 
 
 
+
+
+
     public function configExists()
     {
         return file_exists($this->file);
     }
-
 
 
     /**
@@ -159,14 +161,64 @@ class Config
     }
 
 
+
+    /**
+     * Get the config of name asset.
+     *
+     * The asset config contains:
+     *
+     *   "manifest": "tests\/assets\/jquery\/manifest.yml"
+     *   "source_dir": "tests\/assets\/jquery"
+     *   "name": "jquery"
+     *
+     * @param string $name asset name
+     */
+    public function getAssetConfig($name)
+    {
+        if( isset($this->config['assets'][$name]) ) {
+            return $this->config['assets'][$name];
+        }
+        return null;
+    }
+
+
+
+    /**
+     * Remove asset from config
+     *
+     * @param string $name asset name
+     */
+    public function removeAssetConfig($name)
+    {
+        unset($this->config['assets'][$name]);
+    }
+
+
+
+    /**
+     * Add asset directory, this asset directory is for looking up asset to 
+     * register.
+     *
+     * @param string $dir
+     */
     public function addAssetDirectory($dir)
     {
         $this->config['dirs'][] = $dir;
     }
 
+
+
+    /**
+     * Return asset directories
+     *
+     * @return array
+     */
     public function getAssetDirectories()
     {
-        return $this->config['dirs'];
+        if(isset($this->config['dirs']) ) {
+            return $this->config['dirs'];
+        }
+        return array();
     }
 
 

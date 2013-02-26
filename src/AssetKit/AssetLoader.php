@@ -10,8 +10,6 @@ use Exception;
  */
 class AssetLoader
 {
-    public $paths;
-
     public $assets = array();
 
 
@@ -20,14 +18,14 @@ class AssetLoader
      */
     public $config;
 
+
+
     /**
      * @param AssetKit\Config $config
-     * @param array $paths
      */
-    public function __construct( \AssetKit\Config $config,$paths = array())
+    public function __construct( \AssetKit\Config $config)
     {
         $this->config = $config;
-        $this->paths = $paths;
     }
 
 
@@ -38,27 +36,30 @@ class AssetLoader
      */
     public function load($name)
     {
+        // $paths = $this->config->getAssetDirectories();
+        $names = (array) $name;
+        foreach( $names as $n ) {
 
-        // for asset names in an array.
-        if( $this->config && is_array($name) )  {
-            $self = $this;
-            return array_map(function($n) use($self) {
-                        return $self->load($n);
-                    },$name);
-        } 
-        elseif( $this->config && $asset = $this->config->getAsset($name) ) {
-            return $this->assets[ $name ] = $asset;
+            /**
+             * 'manifest'
+             * 'source_dir'
+             * 'name'
+             */
+            $assetConfig = $this->config->getAssetConfig($n);
+
+            // load the asset manifest file
+            $a = new Asset( $assetConfig['manifest'] );
+
+            // register asset into the pool
+            $this->assets[$n] = $a;
         }
-        else {
-            foreach( $this->paths as $path ) {
-                $manifestFile = $path . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'manifest.yml';
-                if( file_exists($manifestFile) ) {
-                    $a = new Asset( $manifestFile );
-                    $a->config = $this->config;
-                    $this->assets[ $name ] = $a;
-                    return $a;
-                }
-            }
+    }
+
+
+    public function getAsset($name)
+    {
+        if(isset($this->assets[$name]) ) {
+            return $this->assets[$name];
         }
     }
 
