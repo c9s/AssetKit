@@ -57,9 +57,9 @@ Usage
 
 Once you got `assetkit`, you can initialize it with your public path (web root):
 
-    $ assetkit init --public public
+    $ assetkit init --baseDir public/assets --baseUrl "/assets"
 
-The config is stored at `.assetkit` file.
+The config is stored at `.assetkit.php` file.
 
 Then fetch anything you want:
 
