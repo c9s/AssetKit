@@ -4,13 +4,13 @@ File Collection
 The API
 -------
 
-Create file collections from asset object:
+To create file collections from asset object:
 
 ```php
 $collections = FileCollection::create_from_manifest($asset);
 ```
 
-
+To get file collections from existing asset object (which actually uses `FileCollection::create_from_manifest`:
 
 ```php
 // install into public asset root.
@@ -35,5 +35,4 @@ foreach( $asset->getFileCollections() as $collection ) {
     }
 }
 ```
-
 
