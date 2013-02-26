@@ -1,15 +1,21 @@
 <?php
 
+
 class ConfigTest extends PHPUnit_Framework_TestCase
 {
-    public function test()
+    public function testEmptyAssetConfig()
     {
-        $config = new AssetKit\Config("tests/assetkit.config");
+        $configFile = "tests/empty_config";
+        if( file_exists($configFile) ) {
+            unlink($configFile);
+        }
+
+        $config = new AssetKit\Config($configFile);
         ok($config);
 
-        $config->getRegisteredAssets();
 
-
+        $assets = $config->getRegisteredAssets();
+        ok( empty($asset) );
     }
 }
 
