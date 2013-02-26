@@ -32,6 +32,7 @@ class Config
     public $baseUrl;
 
     public $cacheEnable = true;
+
     public $cacheSupport = false;
 
     public function __construct($file,$options = array())
@@ -90,17 +91,13 @@ class Config
      *
      * @return AssetKit\Asset[]
      */
-    public function getAssets()
+    public function getRegisteredAssets()
     {
-        $assets = array();
         if( isset($this->config['assets'] ) ) {
-            foreach( $this->config['assets'] as $k => $v ) {
-                $assets[$k] = $this->getAsset($k);
-            }
+            return $this->config['assets'];
         }
-        return $assets;
+        return array();
     }
-
 
 
     /**
