@@ -10,17 +10,21 @@ use Exception;
 
 class AddCommand extends Command
 {
-    function brief() { return 'add and initialize asset.'; }
 
-    function options($opts)
+
+    public function brief() { return 'add and initialize asset.'; }
+
+    public function options($opts)
     {
         $opts->add('l|link','link asset files, instead of copy install.');
     }
 
-    function execute($manifestPath)
+    public function execute($manifestPath)
     {
         $options = $this->options;
-        $config = new Config('.assetkit');
+
+        $configFile = $this->options->config ?: ".assetkit.php";
+        $config = new \AssetKit\Config($configFile);
 
         if( is_dir($manifestPath) ) {
             $manifestPath = $manifestPath  . DIRECTORY_SEPARATOR . 'manifest.yml';
@@ -29,9 +33,9 @@ class AddCommand extends Command
         if( ! file_exists($manifestPath)) 
             throw new Exception( "$manifestPath does not exist." );
 
+        /*
         $asset = new Asset($manifestPath);
         $asset->config = $config;
-
 
         $this->logger->info("Initializing resource...");
         $asset->initResource(true); // update it
@@ -54,6 +58,7 @@ class AddCommand extends Command
         $config->save();
 
         $this->logger->info("Done");
+        */
     }
 }
 

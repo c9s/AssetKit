@@ -16,9 +16,12 @@ class InitCommand extends Command
         $opts->add('baseUrl:','base URL');
         $opts->add('baseDir:','base directory');
 
+        $opts->add('assetdir+','asset directory for looking up assets.');
+
         // optinoal option
         $opts->add('config?','config file');
     }
+
 
     public function execute()
     {
@@ -39,6 +42,14 @@ class InitCommand extends Command
 
         $config->setBaseUrl($this->options->baseUrl );
         $config->setBaseDir($this->options->baseDir );
+
+
+        if($this->options->assetdir) {
+            foreach($this->options->assetdir as $dir) {
+                $this->logger->info("Adding asset directory $dir");
+                $config->addAssetDirectory($dir);
+            }
+        }
 
         $this->logger->info("Writing config file $configFile");
         $config->save();
