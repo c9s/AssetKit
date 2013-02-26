@@ -2,13 +2,12 @@
 
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
-
-    function setup()
+    public function setup()
     {
         $config = $this->getConfig();
         $loader = $this->getLoader($config);
 
-        $jquery = $loader->load( 'jquery' );
+        $jquery = $loader->load('jquery');
         $jquery->initResource();
 
         $jqueryui = $loader->load( 'jquery-ui' );
@@ -22,7 +21,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
     }
 
 
-    function getLoader($config)
+    public function getLoader($config)
     {
         return new AssetKit\AssetLoader($config, array( 'assets','tests/assets' ) );
     }
