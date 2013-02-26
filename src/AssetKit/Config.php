@@ -66,12 +66,16 @@ class Config
                     );
                 }
             } else {
-                $this->config = array();
+                // default config
+                $this->config = array(
+                    'baseDir' => '',
+                    'baseUrl' => '',
+                    'dirs' => array(),
+                    'assets' => array(),
+                );
             }
         }
     }
-
-
 
     /**
      * Load or reload the config file.
