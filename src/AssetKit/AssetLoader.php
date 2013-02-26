@@ -29,27 +29,62 @@ class AssetLoader
 
 
     /**
+     * Load asset from assetkit config stash
+     *
      * @param string|array $name asset name or asset name array
      *
      * @return Asset|Asset[]
      */
-    public function load($name)
+    public function load($names)
     {
-        $names = (array) $name;
+        $names = (array) $names;
         foreach( $names as $n ) {
-
             /**
              * 'manifest'
              * 'source_dir'
              * 'name'
              */
-            $assetConfig = $this->config->getAssetConfig($n);
+            if( $assetConfig = $this->config->getAssetConfig($n) ) {
+                // load the asset manifest file
+                $a = new Asset( $assetConfig['manifest'] );
 
-            // load the asset manifest file
-            $a = new Asset( $assetConfig['manifest'] );
+                // register asset into the pool
+                $this->assets[$n] = $a;
+            }
+        }
+    }
 
-            // register asset into the pool
-            $this->assets[$n] = $a;
+
+    /**
+     * Load all registered assets from config.
+     */
+    public function loadAll()
+    {
+        $assets = $this->config->getRegisteredAssets();
+        $names = array_keys($assets);
+        $this->load($names);
+    }
+
+
+    /**
+     * Load asset from a manifest file.
+     *
+     * @param string $path
+     * @parma integer $format
+     */
+    public function loadFromManifestFile($path, $format = 0)
+    {
+        $config = null;
+        if( $format ) {
+            $config = Data::decode_file($path, $format);
+        } else {
+            $config = Data::detect_format_and_decode($path);
+        }
+
+        if( $config ) {
+            $asset = new Asset($config);
+            $asset->setManifestPath($path);
+            $this->config->addAsset($asset);
         }
     }
 
@@ -58,26 +93,31 @@ class AssetLoader
         $paths = $this->config->getAssetDirectories();
         foreach($paths as $path) {
             $target = $path . DIRECTORY_SEPARATOR . $name;
-            $manifestYaml = $target . DIRECTORY_SEPARATOR . 'manifest.yml';
-            $manifestPhp = $target . DIRECTORY_SEPARATOR . 'manifest.php';
-            $manifestJson = $target . DIRECTORY_SEPARATOR . 'manifest.json';
             if(! is_dir($target))
                 continue;
 
+            $manifestYaml = $target . DIRECTORY_SEPARATOR . 'manifest.yml';
+            $manifestPhp = $target . DIRECTORY_SEPARATOR . 'manifest.php';
+            $manifestJson = $target . DIRECTORY_SEPARATOR . 'manifest.json';
             $config = null;
             if( file_exists($manifestPhp) ) {
-                $config = require $manifestPhp;
+                $config = Data::decode($manifestPhp, Data::FORMAT_PHP);
             } elseif ( file_exists($manifestJson) ) {
-                $config = json_decode(file_get_contents($manifestJson),true);
+                $config = Data::decode($manifestJson, Data::FORMAT_JSON);
             } elseif ( file_exists($manifestYaml) ) {
-                $config = yaml_parse_file($manifestYaml);
+                $config = Data::decode($manifestYaml, Data::FORMAT_YAML);
             } 
             if($config) {
-                // loaded
+                return new Asset($config);
             }
         }
     }
 
+
+
+    /**
+     * Get asset object.
+     */
     public function get($name)
     {
         if(isset($this->assets[$name]) ) {
@@ -85,11 +125,19 @@ class AssetLoader
         }
     }
 
+
+    /**
+     * Remove all asset objects
+     */
     public function clear()
     {
         $this->assets = array();
     }
 
+
+    /**
+     * Returns all asset objects (keys and values)
+     */
     public function all()
     {
         return $this->assets;

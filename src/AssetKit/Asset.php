@@ -18,9 +18,6 @@ class Asset
 {
     public $stash;
 
-    /* manifest file (related path, relate to config file) */
-    public $manifest;
-
     /* asset dir (related path, relate to config file) */
     public $sourceDir;
 
@@ -32,15 +29,22 @@ class Asset
 
     public $collections = array();
 
+
     /**
      * @param array|string|null $arg manifest array, manifest file path, or asset name
      */
     public function __construct($arg = null)
     {
+        // load from file.
+        if( is_array($arg) ) {
+
+        } elseif( is_string($arg) && file_exists($arg) ) {
+
+        }
+
         // load from array
         if( $arg && is_array($arg) ) {
             $this->stash     = @$arg['stash'];
-            $this->manifest  = @$arg['manifest'];
             $this->sourceDir       = @$arg['source_dir'] ?: @$arg['dir'];  // "dir" is for backward-compatible
             $this->name      = isset($arg['name']) ? $arg['name'] : null;
         }
@@ -48,11 +52,8 @@ class Asset
         {
             // load from file
             $file = $arg;
-
             $this->sourceDir = dirname($file);
             $this->name = basename(dirname($file));
-            $this->manifest = $file;
-
             $ext = pathinfo($file, PATHINFO_EXTENSION);
 
             if( 'yml' === $ext ) {
@@ -131,10 +132,10 @@ class Asset
         // we should also save installed_dir
         // installed_dir = public dir + source dir
         return array(
-            'stash' => $this->stash,
-            'manifest' => $this->manifest,
-            'source_dir'  => $this->sourceDir,
-            'name' => $this->name,
+            'stash'      => $this->stash,
+            'manifest'   => $this->manifest,
+            'source_dir' => $this->sourceDir,
+            'name'       => $this->name,
         );
     }
 

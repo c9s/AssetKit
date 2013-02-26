@@ -23,6 +23,12 @@ class Config
      *    'baseDir': The base directory for public files.
      *    'baseUrl': The base url for front-end.
      *    'dirs': asset directories.
+     *    'assets': contains asset configs
+     *      
+     *       { 
+     *          manifest: manifest path
+     *          source_dir: asset directory
+     *       }
      */
     public $config;
 

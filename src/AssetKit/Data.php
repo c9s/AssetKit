@@ -12,7 +12,7 @@ class Data
     const FORMAT_JSON = 1;
     const FORMAT_PHP  = 2;
     const FORMAT_YAML = 3;
-    const FORMAT_UNKNOWN = -1;
+    const FORMAT_UNKNOWN = 0;
 
 
     static function detect_format($path) 
@@ -29,6 +29,13 @@ class Data
             return self::FORMAT_YAML;
         }
         return self::FORMAT_UNKNOWN;
+    }
+
+    static function detect_format_and_decode($path)
+    {
+        if($format = self::detect_format($path)) {
+            return self::decode_file($path,$format);
+        }
     }
 
     static function decode_file($file, $format = self::FORMAT_PHP)
