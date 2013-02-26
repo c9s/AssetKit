@@ -5,32 +5,29 @@ use AssetKit\Config;
 
 class InitCommand extends Command
 {
-
-
-    function brief()
+    public function brief()
     {
-        return 'initialize .assetkit file.';
+        return 'initialize assetkit config file.';
     }
 
-    function options($opts)
+    public function options($opts)
     {
-        $opts->add('p|public:','public static root');
+        $opts->add('baseUrl:','base URL');
+        $opts->add('baseDir:','base directory');
     }
 
-    function execute()
+    public function execute()
     {
         $publicRoot = $this->options->public ?: 'public' . DIRECTORY_SEPARATOR . 'assets';
-
         $this->logger->info( "Using public asset directory: $publicRoot" );
 
-        $config = new Config( '.assetkit' );
-        $config->config = array(
-            'public' => $publicRoot,
-            'assets' => array(
-            
-            ),
-        );
-        $this->logger->info('Writing config file .assetkit');
+        // create asset config
+        $config = new Config('.assetkit.php');
+
+        $config->setBaseUrl($this->options->baseUrl );
+        $config->setBaseDir($this->options->baseDir );
+
+        $this->logger->info('Writing config file .assetkit.php');
         $config->save();
     }
 
