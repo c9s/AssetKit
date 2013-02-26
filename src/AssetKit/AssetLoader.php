@@ -55,8 +55,7 @@ class AssetLoader
         }
     }
 
-
-    public function getAsset($name)
+    public function get($name)
     {
         if(isset($this->assets[$name]) ) {
             return $this->assets[$name];
@@ -68,7 +67,7 @@ class AssetLoader
         $this->assets = array();
     }
 
-    public function getAssets()
+    public function all()
     {
         return $this->assets;
     }
