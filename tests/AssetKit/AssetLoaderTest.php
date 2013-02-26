@@ -26,12 +26,12 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         return new AssetKit\AssetLoader($config, array( 'assets','tests/assets' ) );
     }
 
-    function getConfig()
+    public function getConfig()
     {
         return new AssetKit\Config('.testassetkit');
     }
 
-    function testLoader()
+    public function testLoader()
     {
         $config = $this->getConfig();
         $loader = $this->getLoader($config);
