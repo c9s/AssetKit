@@ -4,8 +4,8 @@ namespace AssetKit;
 class Config
 {
 
-    const JSON_FORMAT = 1;
-    const PHP_FORMAT = 1;
+    const FORMAT_JSON = 1;
+    const FORMAT_PHP = 1;
 
     /**
      * @var string $file the config file path
@@ -55,7 +55,13 @@ class Config
         if ( ! $this->config ) {
             // read the config file
             if( file_exists($file) ) {
-                $this->config = json_decode(file_get_contents($file),true);
+                // use php format config by default, this is faster than JSON.
+                $format = isset($options['format']) 
+                    ? $options['format']
+                    : self::FORMAT_PHP;
+                
+                $this->load($format);
+
                 if($useCache) {
                     apc_store($cacheId, 
                         $this->config, 
@@ -70,7 +76,19 @@ class Config
         }
     }
 
+    public function load($format = self::FORMAT_PHP )
+    {
+        return $this->config = $this->readFile( $this->file , $format );
+    }
 
+    public function readFile($file,$format = self::FORMAT_PHP ) 
+    {
+        if($format == self::FORMAT_PHP ) {
+            return require($file);
+        } elseif ($format == self::FORMAT_JSON ) {
+            return json_decode(file_get_contents($file),true);
+        }
+    }
 
     /**
      * Check if apc cache is supported and is cache enabled by user.
@@ -99,6 +117,11 @@ class Config
         return array();
     }
 
+    public function getAssetDirectories()
+    {
+        return $this->config['dirs'];
+    }
+
 
     /**
      * set config, if you need to replace it.
@@ -123,16 +146,16 @@ class Config
      * Write current config to file
      *
      * @param string $filename 
-     * @param integer $format Can be PHP_FORMAT, JSON_FORMAT.
+     * @param integer $format Can be FORMAT_PHP, FORMAT_JSON.
      */
-    public function write($path, $config, $format = self::PHP_FORMAT )
+    public function writeFile($path, $config, $format = self::FORMAT_PHP )
     {
-        if( $format == self::JSON_FORMAT ) {
+        if( $format == self::FORMAT_JSON ) {
             if( ! defined('JSON_PRETTY_PRINT') )
                 define('JSON_PRETTY_PRINT',0);
             return file_put_contents($path, json_encode($config,
                 JSON_PRETTY_PRINT));
-        } else if ($format == self::PHP_FORMAT ) {
+        } else if ($format == self::FORMAT_PHP ) {
             $php = '<?php return ' .  var_export($config,true) . ';';
             return file_put_contents($path, $php);
         }
@@ -142,11 +165,11 @@ class Config
     /**
      * Save current asset config with $format
      *
-     * @param integer $format PHP_FORMAT or JSON_FORMAT
+     * @param integer $format FORMAT_PHP or FORMAT_JSON
      */
-    public function save($format = self::PHP_FORMAT)
+    public function save($format = self::FORMAT_PHP)
     {
-        return $this->write($this->file, $this->config, $format);
+        return $this->writeFile($this->file, $this->config, $format);
     }
 
 
@@ -173,4 +196,5 @@ class Config
         return $this->config['baseUrl'];
     }
 }
+
 
