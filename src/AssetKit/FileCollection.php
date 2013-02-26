@@ -52,6 +52,13 @@ class FileCollection
         return $collections;
     }
 
+
+    /**
+     * Return source path (with relative or absolute path)
+     *
+     * @param bool $absolute Should return absolute or relative.
+     * @return string
+     */
     public function getSourcePaths($absolute = false)
     {
         if( ! $this->asset ) {

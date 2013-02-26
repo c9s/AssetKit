@@ -1,9 +1,16 @@
 File Collection
 ===============
 
-
 The API
 -------
+
+Create file collections from asset object:
+
+```php
+$collections = FileCollection::create_from_manifest($asset);
+```
+
+
 
 ```php
 // install into public asset root.
