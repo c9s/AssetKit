@@ -185,12 +185,6 @@ The manifest.yml file:
 Please check public/index.php file for example.
 
 
-### FileCollection API
-
-
-
-
-
 # Working in progress
 
 ### Can use create file collection directly
