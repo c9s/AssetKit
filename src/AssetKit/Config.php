@@ -190,8 +190,12 @@ class Config
      */
     public function getBaseDir($absolute = false) 
     {
-        if( isset($this->config['baseDir']) ) 
+        if( isset($this->config['baseDir']) ) {
+            if($absolute) {
+                return $this->fileDirectory . DIRECTORY_SEPARATOR . $this->config['baseDir'];
+            }
             return $this->config['baseDir'];
+        }
     }
 
 
