@@ -100,11 +100,19 @@ class Config
     }
 
 
+    /**
+     * set config, if you need to replace it.
+     */
     public function setConfig($config)
     {
         $this->config = $config;
     }
 
+
+
+    /**
+     * get config
+     */
     public function getConfig()
     {
         return $this->config;
