@@ -53,7 +53,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    function testWriter()
+    public function testWriter()
     {
         $config = $this->getConfig();
         $loader = $this->getLoader($config);
