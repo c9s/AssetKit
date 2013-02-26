@@ -57,7 +57,7 @@ class Config
 
         if ( ! $this->config ) {
             // read the config file
-            if( file_exists($file) ) {
+            if( file_exists($this->file) ) {
                 // use php format config by default, this is faster than JSON.
                 $format = isset($options['format']) 
                     ? $options['format']
@@ -120,6 +120,14 @@ class Config
     }
 
 
+
+    public function configExists()
+    {
+        return file_exists($this->file);
+    }
+
+
+
     /**
      * Read a config from a file.
      *
@@ -150,6 +158,11 @@ class Config
         return array();
     }
 
+
+    public function addAssetDirectory($dir)
+    {
+        $this->config['dirs'][] = $dir;
+    }
 
     public function getAssetDirectories()
     {

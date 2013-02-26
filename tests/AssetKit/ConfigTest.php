@@ -22,10 +22,9 @@ class ConfigTest extends PHPUnit_Framework_TestCase
         ok($config);
 
         // test force reload
-        $config->load();
-
         $config->setBaseUrl('/assets');
         $config->setBaseDir('tests/assets');
+        $config->addAssetDirectory('vendor/assets');
 
         $assets = $config->getRegisteredAssets();
         ok( empty($asset) );
