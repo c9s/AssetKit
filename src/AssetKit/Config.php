@@ -25,14 +25,22 @@ class Config
     public $config;
 
 
+
+    /**
+     * @var array
+     */
+    public $options = array();
+
+
     public $cacheEnable = true;
 
     public $cacheSupport = false;
 
-    public function __construct($file,$options = array())
+    public function __construct($file, $options = array())
     {
         $this->file = $file;
         $this->fileDirectory = dirname(realpath($file));
+        $this->options = $options;
 
         if(isset($options['cache']) ) {
             $this->cacheEnable = $options['cache'];
@@ -77,6 +85,30 @@ class Config
         }
     }
 
+
+    public function getCacheExpiry()
+    {
+        return isset($options['cache_expiry']) 
+            ? $options['cache_expiry'] 
+            : 0;
+    }
+
+    /**
+     * Check if apc cache is supported and is cache enabled by user.
+     *
+     * @return bool 
+     */
+    public function cacheEnabled() 
+    {
+        if($this->cacheEnable) {
+            return $this->cacheSupport = extension_loaded('apc') ;
+        }
+        return false;
+    }
+
+
+
+
     /**
      * Load or reload the config file.
      * 
@@ -102,19 +134,6 @@ class Config
         } elseif ($format == self::FORMAT_JSON ) {
             return json_decode(file_get_contents($file),true);
         }
-    }
-
-    /**
-     * Check if apc cache is supported and is cache enabled by user.
-     *
-     * @return bool 
-     */
-    public function cacheEnabled() 
-    {
-        if($this->cacheEnable) {
-            return $this->cacheSupport = extension_loaded('apc') ;
-        }
-        return false;
     }
 
 
