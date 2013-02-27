@@ -14,6 +14,26 @@ use AssetKit\FileUtil;
  *
  * Asset object can be created from a manifest file.
  * Or can just be created with no arguments.
+ *
+ *
+ *    assets/jquery          <-- source dir
+ *    public/assets/jquery   <-- install dir
+ *
+ * Manifest file
+ *
+ *    assets/jquery/manifest.yml  <-- manifest
+ *    public/assets/jquery/manifest.yml <-- public manifest
+ * 
+ * Compiled assets
+ *
+ *    assets/jquery/js/*.js       <-- js source
+ *    assets/jquery/js/*.cs       <-- cs source
+ *    assets/jquery/css/*.css     <-- css source
+ *    assets/jquery/css/*.sass    <-- sass source
+ *
+ *    public/assets/jquery/jquery.min.css
+ *    public/assets/jquery/jquery.min.js
+ *
  */
 class Asset
 {
@@ -171,12 +191,19 @@ class Asset
     }
 
 
-
+    /**
+     * Get installation dir (the target directory of public)
+     */
     public function getInstallDir($absolute = false)
     {
         return $this->config->getBaseDir($absolute) . DIRECTORY_SEPARATOR . $this->name;
     }
 
+    /**
+     * Get the asset source directory
+     *
+     * @param bool $absolute
+     */
     public function getSourceDir($absolute = false)
     {
         return $absolute

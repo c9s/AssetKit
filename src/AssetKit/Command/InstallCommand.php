@@ -10,7 +10,11 @@ use Exception;
 
 class InstallCommand extends Command
 {
-    function brief() { return 'install assets'; }
+
+    public function brief() 
+    {
+        return 'install assets';
+    }
 
     public function options($opts)
     {
