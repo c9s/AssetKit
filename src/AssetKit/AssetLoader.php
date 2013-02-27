@@ -44,7 +44,6 @@ class AssetLoader
          * 'name'
          */
         if( $assetConfig = $this->config->getAssetConfig($name) ) {
-
             if( ! isset($assetConfig['manifest']) ) {
                 throw new Exception("manifest file is not defined in $name");
             }
@@ -55,6 +54,16 @@ class AssetLoader
 
             // save the asset object into the pool
             return $this->assets[$name] = $asset;
+        } else {
+            // some code to find asset automatically.
+            // if there is not asset registered in config, we should look up from the asset paths
+            foreach( $this->config->getAssetDirectories() as $dir ) {
+                $asset = $this->loadFromManifestFileOrDir( $dir . DIRECTORY_SEPARATOR . $name );
+                if($asset) {
+                    $this->assets[$name] = $asset;
+                    break;
+                }
+            }
         }
     }
 
@@ -98,6 +107,18 @@ class AssetLoader
         $asset->loadFromManifestFile($path);
         $this->config->addAsset($asset);
     }
+
+
+    public function loadFromManifestFileOrDir($path, $format = 0) 
+    {
+        if( is_dir($path) ) {
+            $path = $path  . DIRECTORY_SEPARATOR . 'manifest.yml';
+        }
+        if( file_exists($path))  {
+            return $this->loadFromManifestFile($path);
+        }
+    }
+
 
 
 
