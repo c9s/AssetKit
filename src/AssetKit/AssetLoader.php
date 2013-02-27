@@ -105,7 +105,10 @@ class AssetLoader
     public function loadFromManifestFile($path, $format = 0)
     {
         $asset = new Asset;
-        $asset->loadFromManifestFile($path);
+        if($format === 0) {
+            $format = Data::detect_format_from_extension($path);
+        }
+        $asset->loadFromManifestFile($path, $format);
         $this->config->addAsset($asset);
         return $asset;
     }
@@ -114,10 +117,13 @@ class AssetLoader
     public function loadFromManifestFileOrDir($path, $format = 0) 
     {
         if( is_dir($path) ) {
-            $path = $path  . DIRECTORY_SEPARATOR . 'manifest.yml';
+            $path = FileUtil::find_manifest_file_from_directory( $path );
+            if( $format === 0 ) {
+                $format = Data::detect_format_from_extension($path);
+            }
         }
         if( file_exists($path))  {
-            return $this->loadFromManifestFile($path, $format = 0);
+            return $this->loadFromManifestFile($path, $format);
         }
     }
 

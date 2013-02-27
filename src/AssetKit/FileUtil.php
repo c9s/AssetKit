@@ -7,6 +7,16 @@ class FileUtil
 {
 
 
+    static function find_manifest_file_from_directory($dir) 
+    {
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.php') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.php';
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.json') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.json';
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.yml') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.yml';
+    }
+
     /**
      * Expand glob with the absolute path of asset source dir.
      * Returns relative path to the manifest.
