@@ -4,7 +4,7 @@ Asset
 Asset config contains registered assets, and asset directories.
 
 ```php
-$config = new AssetKit\Config( '../.assetkit');
+$config = new AssetKit\AssetConfig( '../.assetkit');
 $loader = new AssetKit\AssetLoader( $config );
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );

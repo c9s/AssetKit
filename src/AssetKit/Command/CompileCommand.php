@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit\Command;
 use Exception;
-use AssetKit\Config;
+use AssetKit\AssetConfig;
 use AssetKit\Asset;
 use CLIFramework\Command;
 

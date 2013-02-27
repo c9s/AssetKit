@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit;
 use Exception;
-use AssetKit\Config;
+use AssetKit\AssetConfig;
 
 /**
  * @class
@@ -14,7 +14,7 @@ class AssetLoader
 
 
     /**
-     * @var \AssetKit\Config
+     * @var \AssetKit\AssetConfig
      */
     public $config;
 
@@ -22,7 +22,7 @@ class AssetLoader
 
     /**
      *
-     * @param AssetKit\Config $config
+     * @param AssetKit\AssetConfig $config
      */
     public function __construct(Config $config)
     {

@@ -10,7 +10,7 @@ class AssetConfigTest extends PHPUnit_Framework_TestCase
         }
 
 
-        $config = new AssetKit\Config($configFile,array(  
+        $config = new AssetKit\AssetConfig($configFile,array(  
             'cache' => true,
             'cache_id' => 'custom_app_id',
             'cache_expiry' => 3600

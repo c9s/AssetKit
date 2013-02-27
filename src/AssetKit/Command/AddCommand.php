@@ -1,6 +1,6 @@
 <?php
 namespace AssetKit\Command;
-use AssetKit\Config;
+use AssetKit\AssetConfig;
 use AssetKit\Asset;
 use AssetKit\FileUtils;
 use AssetKit\Installer;
@@ -24,7 +24,7 @@ class AddCommand extends Command
         $options = $this->options;
 
         $configFile = $this->options->config ?: ".assetkit.php";
-        $config = new \AssetKit\Config($configFile);
+        $config = new \AssetKit\AssetConfig($configFile);
 
         if( is_dir($manifestPath) ) {
             $manifestPath = $manifestPath  . DIRECTORY_SEPARATOR . 'manifest.yml';

@@ -39,7 +39,7 @@ class Asset
 
 
     /**
-     * @var AssetKit\Config
+     * @var AssetKit\AssetConfig
      */
     public $config;
 

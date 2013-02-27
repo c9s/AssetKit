@@ -11,7 +11,7 @@ class Test
 {
     static function getConfig()
     {
-        return new AssetKit\Config('.assetkit');
+        return new AssetKit\AssetConfig('.assetkit');
     }
 
     static function getLoader($config)

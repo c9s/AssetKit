@@ -53,7 +53,7 @@ class AssetWriter
     /**
      * Create with writer with config.
      *
-     * @param AssetKit\Config $config
+     * @param AssetKit\AssetConfig $config
      */
     public function __construct($config)
     {

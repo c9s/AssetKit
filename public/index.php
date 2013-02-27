@@ -10,7 +10,7 @@ $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 $classLoader->useIncludePath(false);
 $classLoader->register();
 
-$config = new AssetKit\Config( ROOT . '/.assetkit');
+$config = new AssetKit\AssetConfig( ROOT . '/.assetkit');
 $loader = new AssetKit\AssetLoader( $config , array( ROOT . '/assets' ) );
 
 $assets = array();

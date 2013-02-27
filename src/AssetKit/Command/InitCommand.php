@@ -1,7 +1,7 @@
 <?php
 namespace AssetKit\Command;
 use CLIFramework\Command;
-use AssetKit\Config;
+use AssetKit\AssetConfig;
 
 class InitCommand extends Command
 {

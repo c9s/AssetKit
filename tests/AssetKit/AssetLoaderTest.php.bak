@@ -11,7 +11,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
             unlink($configFile);
         }
 
-        $config = new AssetKit\Config($configFile,array(  
+        $config = new AssetKit\AssetConfig($configFile,array(  
             'cache' => true,
             'cache_id' => 'asset-loader-test',
             'cache_expiry' => 3600
@@ -58,7 +58,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
     /*
     public function getConfig()
     {
-        return new AssetKit\Config('.testassetkit');
+        return new AssetKit\AssetConfig('.testassetkit');
     }
 
     public function testLoader()

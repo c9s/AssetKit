@@ -4,7 +4,7 @@ class AssetTest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
-        $config = new AssetKit\Config('.tests_assetkit');
+        $config = new AssetKit\AssetConfig('.tests_assetkit');
         $config->setBaseDir('public');
         $config->setBaseUrl('/assets');
 

@@ -1,6 +1,6 @@
 <?php
 namespace AssetKit\Command;
-use AssetKit\Config;
+use AssetKit\AssetConfig;
 use AssetKit\Asset;
 use CLIFramework\Command;
 

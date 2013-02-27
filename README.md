@@ -108,7 +108,7 @@ To use assetkit in your application, just few lines to write:
     require 'bootstrap.php';
 
     // load your asset config file, this contains asset manifest and types
-    $config = new AssetKit\Config( '../.assetkit');
+    $config = new AssetKit\AssetConfig( '../.assetkit');
 
     // initialize an asset loader
     $loader = new AssetKit\AssetLoader( $config );
