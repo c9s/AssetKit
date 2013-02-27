@@ -1,15 +1,12 @@
 <?php
 
-class AssetConfigTest extends PHPUnit_Framework_TestCase
+class AssetConfigTest extends AssetKit\TestCase
 {
+
+
     public function testEmptyAssetConfig()
     {
-        $configFile = "tests/empty_config";
-        if( file_exists($configFile) ) {
-            unlink($configFile);
-        }
-
-
+        $configFile = $this->getConfigFile();
         $config = new AssetKit\AssetConfig($configFile,array(  
             'cache' => true,
             'cache_id' => 'custom_app_id',
@@ -25,9 +22,7 @@ class AssetConfigTest extends PHPUnit_Framework_TestCase
         $assets = $config->getRegisteredAssets();
         ok( empty($asset) );
 
-
         $config->save();
-        unlink($configFile);
     }
 }
 

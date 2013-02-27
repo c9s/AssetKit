@@ -9,20 +9,21 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function getConfigFile()
     {
-        $filename = str_replace('\\', '_', get_class($this));
+        $filename = str_replace('\\', '_', get_class($this)) . '_' . md5(microtime());
         return "tests/$filename.php";
     }
 
     public function getConfig()
     {
-        $config = $this->config;
-        ok($config, 'asset config object');
-        return $config;
+        ok($this->config, 'asset config object');
+        return $this->config;
     }
 
     public function getLoader()
     {
-        return new \AssetKit\AssetLoader($this->getConfig());
+        $loader = new \AssetKit\AssetLoader($this->getConfig());
+        ok($loader);
+        return $loader;
     }
 
     public function setUp()
@@ -32,6 +33,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             unlink($configFile);
         }
         $this->config = new \AssetKit\AssetConfig($configFile);
+        $this->config->setBaseDir("tests/public");
+        $this->config->setBaseUrl("/assets");
     }
 
     public function tearDown()
