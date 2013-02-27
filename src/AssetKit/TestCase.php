@@ -6,11 +6,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 {
 
     public $config;
+    public $configFile;
 
     public function getConfigFile()
     {
+        if($this->configFile)
+            return $this->configFile;
         $filename = str_replace('\\', '_', get_class($this)) . '_' . md5(microtime());
-        return "tests/$filename.php";
+        return $this->configFile = "tests/$filename.php";
     }
 
     public function getConfig()
