@@ -14,6 +14,8 @@ class CssImportFilterTest extends AssetKit\TestCase
         $rewriteFilter = new \AssetKit\Filter\CssRewriteFilter;
         $filter        = new \AssetKit\Filter\CssImportFilter;
         foreach( $jqueryui->getCollections() as $c ) {
+
+            // for css stylesheet
             if( $c->isStylesheet ) {
                 $rewriteFilter->filter( $c );
 

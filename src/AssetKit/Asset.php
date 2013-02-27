@@ -221,6 +221,8 @@ class Asset
     }
 
 
+
+
     /**
      * Check source file existence.
      *

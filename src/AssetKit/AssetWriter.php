@@ -499,7 +499,6 @@ class AssetWriter
         // check mtime
         if( $this->name && $this->cache ) {
 
-
             // check if we have manifest hash already, if so, check the file 
             // modification time to decide filter & compress files.
             if( $manifest = $this->cache->get( 'asset-manifest:' . $this->name ) ) {
