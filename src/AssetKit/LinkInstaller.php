@@ -18,9 +18,7 @@ class LinkInstaller extends Installer
         if (file_exists($targetDir)) {
             if (is_link($targetDir)) {
                 unlink($targetDir);
-            }
-            else if(is_dir($targetDir)) {
-                # echo "Removing $targetDir\n";
+            } else if(is_dir($targetDir)) {
                 FileUtil::rmtree($targetDir);
             } 
         }

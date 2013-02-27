@@ -4,6 +4,13 @@ use AssetKit\Asset;
 use AssetKit\Data;
 use Exception;
 
+
+
+/**
+ * AssetConfig defines methods to get/set asset config value.
+ *
+ *
+ */
 class AssetConfig
 {
 
