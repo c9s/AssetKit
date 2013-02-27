@@ -44,10 +44,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new AssetLoader($config);
         ok($loader, "loader ok");
 
-        $asset = new Asset;
-        $asset->loadFromManifestFile($manifestPath);
+        $asset = $loader->loadFromManifestFileOrDir($manifestPath);
         ok($asset, "asset is loaded");
-
 
         $updater = new ResourceUpdater($this);
         ok($updater,'resource updater is loaded');

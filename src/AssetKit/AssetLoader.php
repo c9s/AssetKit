@@ -106,6 +106,7 @@ class AssetLoader
         $asset = new Asset;
         $asset->loadFromManifestFile($path);
         $this->config->addAsset($asset);
+        return $asset;
     }
 
 
@@ -115,7 +116,7 @@ class AssetLoader
             $path = $path  . DIRECTORY_SEPARATOR . 'manifest.yml';
         }
         if( file_exists($path))  {
-            return $this->loadFromManifestFile($path);
+            return $this->loadFromManifestFile($path, $format = 0);
         }
     }
 
