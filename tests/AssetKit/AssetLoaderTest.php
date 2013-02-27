@@ -1,5 +1,7 @@
 <?php
 
+use AssetKit\ResourceUpdater;
+
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
 
@@ -37,7 +39,10 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         ok($asset, "asset is loaded");
 
 
-#          $updater = new \AssetKit\ResourceUpdater($this);
+        $updater = new ResourceUpdater($this);
+        ok($updater,'resource updater is loaded');
+
+
 #          $updater->update(true);
 
         /*
