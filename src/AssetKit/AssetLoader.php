@@ -61,12 +61,12 @@ class AssetLoader
             foreach( $this->config->getAssetDirectories() as $dir ) {
                 $asset = $this->loadFromManifestFileOrDir( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name );
                 if($asset) {
-                    $this->assets[$name] = $asset;
-                    break;
+                    return $this->assets[$name] = $asset;
                 }
             }
         }
     }
+
 
 
     /**

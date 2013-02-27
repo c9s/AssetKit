@@ -239,8 +239,11 @@ class AssetConfig
      */
     public function addAsset(Asset $asset)
     {
-        // TODO:
-
+        $this->config['assets'][ $asset->name ] = array(
+            'manifest' => $asset->manifestFile,
+            'source_dir' => $asset->sourceDir,
+            'name' => $asset->name,
+        );
     }
 
 
