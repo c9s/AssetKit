@@ -34,7 +34,7 @@ class AssetLoader
      *
      * @param string|array $name asset name or asset name array
      *
-     * @return Asset|Asset[]
+     * @return Asset
      */
     public function load($name)
     {
@@ -50,12 +50,26 @@ class AssetLoader
             }
 
             // load the asset manifest file
-            $a = new Asset;
-            $a->loadFromManifestFile( $assetConfig['manifest'] );
+            $asset = new Asset;
+            $asset->loadFromManifestFile( $assetConfig['manifest'] );
 
             // register asset into the pool
-            return $this->assets[$n] = $a;
+            return $this->assets[$name] = $asset;
         }
+    }
+
+
+    /**
+     * Load mutiple assets
+     *
+     * @return Asset[]
+     */
+    public function loadAssets($names) 
+    {
+        $self = $this;
+        return array_map(function($name) use($self) {
+            return $self->load($name);
+        },$names);
     }
 
 
