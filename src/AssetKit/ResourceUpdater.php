@@ -5,20 +5,16 @@ use Exception;
 
 class ResourceUpdater
 {
-    public $asset;
-
-    function __construct($asset)
+    public function __construct()
     {
         // check zip extension and ZipArchive class (which might be pure php version)
         if( ! extension_loaded('zip') && ! class_exists('ZipArchive') ) {
             throw new Exception('zip extension or ZipArchive class is required.');
         }
-        $this->asset = $asset;
     }
 
-    function update($update = false)
+    public function update($asset, $update = false)
     {
-        $asset = $this->asset;
 
         if( ! isset($asset->stash['resource']) ) {
             return false;
