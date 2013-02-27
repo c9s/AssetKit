@@ -35,9 +35,6 @@ class Collection
      */
     public function getSourcePaths($absolute = false)
     {
-        if( ! $this->asset ) {
-            throw new Exception("file collection requires asset object, but it's undefined.");
-        }
         $dir = $this->asset->getSourceDir($absolute);
         return array_map(function($file) use ($dir) {
                 return $dir . DIRECTORY_SEPARATOR . $file;
@@ -45,14 +42,13 @@ class Collection
     }
 
 
+
+    /**
+     * @return array return the collection file list
+     */
     public function getFilePaths()
     {
         return $this->files;
-    }
-
-    public function setContent($content)
-    {
-        $this->content = $content;
     }
 
     public function addFile($path)
@@ -82,7 +78,6 @@ class Collection
         return $this->filters;
     }
 
-
     public function addFilter($filter)
     {
         $this->filters[] = $filter;
@@ -99,17 +94,26 @@ class Collection
         }
     }
 
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+
     public function getContent()
     {
         if( $this->content !== null ) {
             return $this->content;
         }
 
+        $sourceDir = $this->asset->getSourceDir(true);
         $content = '';
-        foreach( $this->getSourcePaths(true) as $file ) {
-            if( ! file_exists($file) )
-                throw new Exception("$file does not exist.");
-            $content .= file_get_contents( $file );
+        foreach( $this->getFilePaths() as $file ) {
+            $abspath = $sourceDir . DIRECTORY_SEPARATOR . $file;
+
+            if( ! file_exists($abspath) )
+                throw new Exception("$abspath does not exist.");
+            $content .= file_get_contents( $abspath );
         }
         return $this->content = $content;
     }

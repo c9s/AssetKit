@@ -23,11 +23,6 @@ class AssetConfig
     public $file;
 
 
-    /**
-     * @var string the dirname of the config file.
-     */
-    public $fileDirectory;
-
 
     /**
      * @var array $config the config hash.
@@ -42,7 +37,7 @@ class AssetConfig
      *          source_dir: asset directory
      *       }
      */
-    public $config;
+    public $config = array();
 
 
 
@@ -72,7 +67,7 @@ class AssetConfig
     public function loadFromFile($file)
     {
         $this->file = $file;
-        $this->fileDirectory = dirname(realpath($file));
+
 
         if(isset($this->options['cache']) ) {
             $this->cacheEnable = $this->options['cache'];
@@ -332,12 +327,14 @@ class AssetConfig
      * @param bool $absolute reutrn absolute path or not 
      * @return string the path
      */
-    public function getBaseDir($absolute = false) 
+    public function getBaseDir($absolute = false)
     {
-        if( isset($this->config['baseDir']) && $this->config['baseDir'] ) {
-            if ($absolute) {
-                return realpath($this->fileDirectory) . DIRECTORY_SEPARATOR . $this->config['baseDir'];
-            }
+        // Here the absolute base dir path should not be prefixed by fileDirectory
+        // We should simply get the realpath in their context.
+        if( isset($this->config['baseDir']) && $this->config['baseDir'] ) 
+        {
+            if( $absolute )
+                return realpath($this->config['baseDir']);
             return $this->config['baseDir'];
         }
         throw new Exception("baseDir is not defined in asset config.");
@@ -383,10 +380,14 @@ class AssetConfig
      */
     public function getRoot($absolute = false)
     {
+        // Please note that realpath only works for 
+        // existing files
+        $root = dirname(realpath($this->file));
+
         if($absolute) {
-            return realpath($this->fileDirectory);
+            return realpath($root);
         } else {
-            return $this->fileDirectory;
+            return $root;
         }
     }
 

@@ -204,7 +204,7 @@ class Asset
      */
     public function getInstallDir($absolute = false)
     {
-        return $this->config->getBaseDir($absolute) . DIRECTORY_SEPARATOR . $this->name;
+        return $this->config->getBaseDir(true) . DIRECTORY_SEPARATOR . $this->name;
     }
 
     /**
@@ -216,11 +216,14 @@ class Asset
     {
         return $absolute
             ? $this->config->getRoot(true) . DIRECTORY_SEPARATOR . $this->sourceDir
-            : $this->sourceDir
-            ;
+            : $this->sourceDir ;
     }
 
 
+    public function getBaseUrl() 
+    {
+        return $this->config->getBaseUrl() . '/' . $this->name;
+    }
 
 
     /**

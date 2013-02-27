@@ -63,8 +63,6 @@ class AssetWriter
 
     public function init()
     {
-
-
         $this->addCompressor('jsmin', function() {
             return new \AssetKit\Compressor\JsMinCompressor;
         });

@@ -12,6 +12,10 @@ class CssImportFilter
      * @return string CSS Content
      */
     public function importCss($file,$baseDir,$rootDir) {
+
+        echo "Importing from $file\n";
+
+
         $content = file_get_contents($file);
 
         // we should rewrite url( ) paths first, before we import css contents
@@ -58,6 +62,8 @@ class CssImportFilter
                 }
                 else {
                     /* Import recursively */
+                    echo "Calling importCss recursively\n";
+                    
                     $content .= $self->importCss(
                         $rootDir . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR . $path,
                         $baseDir,
@@ -79,11 +85,16 @@ class CssImportFilter
         // get css files and find @import statement to import related content
         // $assetDir = $collection->asset->getPublicDir();
         $rootDir  = $collection->asset->config->getRoot();
-
+        $sourceDir = $collection->asset->getSourceDir();
         $contents = '';
 
         // for rewriting paths
-        foreach( $collection->getSourcePaths() as $path ) {
+        foreach( $collection->getFilePaths() as $file ) {
+
+            $path = $sourceDir . DIRECTORY_SEPARATOR . $file;
+
+            echo "Processing $path\n";
+
             // css file dir path
             $baseDir = dirname($path);
             $content = $this->importCss( $rootDir . DIRECTORY_SEPARATOR . $path , $baseDir , $rootDir );

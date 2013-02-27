@@ -6,6 +6,9 @@ class AssetCompiler
     const PRODUCTION = 1;
     const DEVELOPMENT = 2;
 
+
+
+
     /**
      * Can be AssetCompiler::PRODUCTION or AssetCompiler::DEVELOPMENT
      *
@@ -14,10 +17,79 @@ class AssetCompiler
      */
     public $environment = self::DEVELOPMENT;
 
+
+    public $enableCompressor = true;
+
+    /**
+     * @var array cached filters
+     */
+    protected $filters = array();
+
+
+    /**
+     * @var array cached compressors
+     */
+    protected $compressors = array();
+
+    // filter builder
+    protected $_filters = array();
+
+    // compressor builder
+    protected $_compressors = array();
+
+
     public function setEnvironment($env)
     {
         $this->environment = $env;
     }
+
+
+    public function registerDefaultCompressors()
+    {
+        $this->addCompressor('jsmin', function() {
+            return new \AssetKit\Compressor\JsMinCompressor;
+        });
+
+        $this->addCompressor('cssmin', function() {
+            return new \AssetKit\Compressor\CssMinCompressor;
+        });
+
+        $this->addCompressor('yui_css', function() {
+            $bin = getenv('YUI_COMPRESSOR_BIN');
+            return new \AssetKit\Compressor\Yui\CssCompressor($bin);
+        });
+
+        $this->addCompressor('yui_js', function() {
+            $bin = getenv('YUI_COMPRESSOR_BIN');
+            return new \AssetKit\Compressor\Yui\JsCompressor($bin);
+        });
+    }
+
+    public function registerDefaultFilters()
+    {
+        $this->addFilter( 'coffeescript' ,function() {
+            return new \AssetKit\Filter\CoffeeScriptFilter;
+        });
+
+        $this->addFilter( 'css_import', function() {
+            return new \AssetKit\Filter\CssImportFilter;
+        });
+
+        $this->addFilter( 'sass' , function() {
+            return new \AssetKit\Filter\SassFilter;
+        });
+
+        $this->addFilter( 'scss' , function() {
+            return new \AssetKit\Filter\ScssFilter;
+        });
+
+        $this->addFilter( 'css_rewrite', function() {
+            return new \AssetKit\Filter\CssRewriteFilter;
+        });
+
+    }
+
+
 
     /**
      * Method for compiling one asset
@@ -45,10 +117,18 @@ class AssetCompiler
 
         // get the absolute path of install dir.
         $installDir = $asset->getInstallDir(true);
+        $baseUrl    = $asset->getBaseUrl();
         $name = $asset->name;
+
+        if( $this->environment === self::PRODUCTION ) {
+            $name = $name . '.min';
+        }
 
         $jsFile = $installDir . DIRECTORY_SEPARATOR . $name . '.js';
         $cssFile = $installDir . DIRECTORY_SEPARATOR . $name . '.css';
+
+        $jsUrl = $baseUrl . "/$name.js";
+        $cssUrl = $baseUrl . "/$name.css";
 
         if($data['js'])
             file_put_contents( $jsFile, $data['js'] );
@@ -56,8 +136,10 @@ class AssetCompiler
             file_put_contents( $cssFile, $data['css'] );
 
         return array(
-            'js' => $jsFile,
-            'css' => $cssFile,
+            'js'      => array($jsFile),
+            'css'     => array($cssFile),
+            'js_url'  => array($jsUrl),
+            'css_url' => array($cssUrl),
         );
     }
 
@@ -70,6 +152,95 @@ class AssetCompiler
     {
 
     }
+
+
+
+
+    /**
+     * Register filter builder
+     *
+     * @param string $name filter name
+     * @param function $cb builder closure
+     */
+    public function addFilter($name,$cb)
+    {
+        $this->_filters[ $name ] = $cb;
+    }
+
+
+    /**
+     * Register compressor
+     *
+     * @param string $name compressor name
+     * @param function $cb function builder
+     */
+    public function addCompressor($name,$cb)
+    {
+        $this->_compressors[ $name ] = $cb;
+    }
+
+
+    /**
+     * Get Filter object
+     *
+     * @param string $name filter name
+     */
+    public function getFilter($name)
+    {
+        if( isset($this->filters[$name]) )
+            return $this->filters[$name];
+
+        if( ! isset($this->_filters[$name]) )
+            return;
+
+        $cb = $this->_filters[ $name ];
+        if( is_callable($cb) ) {
+            return $this->filters[ $name ] = call_user_func($cb);
+        }
+        elseif( class_exists($cb,true) ) {
+            return $this->filters[ $name ] = new $cb;
+        }
+    }
+
+    public function getFilters()
+    {
+        $self = $this;
+        return array_map(function($n) use ($self) { 
+            return $self->getFilter($n);
+                }, $this->_filters);
+    }
+
+
+    /**
+     * Get compressor object
+     *
+     * @param string $name compressor name
+     */
+    public function getCompressor($name)
+    {
+        if( isset($this->compressors[$name]) )
+            return $this->compressors[$name];
+
+        if( ! isset($this->_compressors[$name]) )
+            return;
+
+        $cb = $this->_compressors[ $name ];
+        if( is_callable($cb) ) {
+            return $this->compressors[ $name ] = call_user_func($cb);
+        }
+        elseif( class_exists($cb,true) ) {
+            return $this->compressors[ $name ] = new $cb;
+        }
+    }
+
+    public function getCompressors()
+    {
+        $self = $this;
+        return array_map(function($n) use($self) { 
+            return $self->getCompressor($n);
+             }, $this->_compressors);
+    }
+
 
 
     /**
@@ -98,6 +269,7 @@ class AssetCompiler
             {
                 // for stylesheets, before compress it, we should import the css contents
                 if( $collection->isStylesheet ) {
+                    // we should cache these filter objects
                     $import = new Filter\CssImportFilter;
                     $import->filter( $collection );
                 }
@@ -179,6 +351,10 @@ class AssetCompiler
             }
         }
     }
+
+
+
+
 
 }
 
