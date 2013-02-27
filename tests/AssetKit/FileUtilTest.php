@@ -9,7 +9,6 @@ class FileUtilTest extends PHPUnit_Framework_TestCase
         ok($files);
         count_ok(31, $files);
 
-
         $files = FileUtil::expand_dir_recursively("tests/assets/jquery");
         foreach($files as $file) {
             path_ok( $file, $file );

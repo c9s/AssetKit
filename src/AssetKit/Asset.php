@@ -75,9 +75,9 @@ class Asset
     {
         $this->stash = $config;
         // load assets
-        if( isset($this->stash['assets']) ) {
-            $this->expandPaths();
-            $this->collections = FileCollection::create_from_asset($this->stash['assets']);
+        if( isset($this->stash['collections']) ) {
+            $this->expandCollections();
+            $this->collections = FileCollection::create_from_asset($this->stash['collections']);
         }
     }
 
@@ -85,7 +85,7 @@ class Asset
      * This expand glob patterns
      *
      */
-    public function expandPaths()
+    public function expandCollections()
     {
         foreach( $this->stash['collections'] as & $a )
         {
@@ -94,8 +94,8 @@ class Asset
             foreach( $a['files'] as $p ) {
 
                 // found glob pattern
-                if( strpos($p,'*') !== false ) {
-
+                if( strpos($p,'*') !== false ) 
+                {
                     $expanded = FileUtil::expand_glob_from_dir($dir, $p);
 
                     // should be unique
@@ -103,21 +103,11 @@ class Asset
 
                 } elseif( is_dir( $dir . DIRECTORY_SEPARATOR . $p ) ) {
 
-                    // expand files from dir
-                    $ite = new RecursiveDirectoryIterator( $dir . DIRECTORY_SEPARATOR . $p );
-
-                    $expanded = array();
-                    foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
-                        if( $info->getFilename() === '.' || $info->getFilename() === '..' )
-                            continue;
-                        $expanded[] = $path;
-                    }
-
-                    $expanded = array_map(function($path) use ($dir) { 
-                        return substr($path,strlen($dir) + 1);
-                    } , $expanded);
+                    $expanded = FileUtil::expand_dir_recursively( $dir . DIRECTORY_SEPARATOR . $p );
+                    $expanded = FileUtil::remove_basedir_from_paths($expanded , $dir);
 
                     $files = array_unique(array_merge( $files , $expanded ));
+
                 } else {
                     $files[] = $p;
                 }

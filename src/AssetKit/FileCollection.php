@@ -36,8 +36,9 @@ class FileCollection
             if( isset($config['filters']) )
                 $collection->filters = $config['filters'];
 
-            if( isset($config['compressors']) )
+            if( isset($config['compressors']) ) {
                 $collection->compressors = $config['compressors'];
+            }
 
             if( isset($config['files']) ) {
                 $collection->files = $config['files'];
