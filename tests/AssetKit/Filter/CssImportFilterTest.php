@@ -1,15 +1,50 @@
 <?php
 
-class CssImportFilterTest extends PHPUnit_Framework_TestCase
+class CssImportFilterTest extends AssetKit\TestCase
 {
+    public $config;
+
+    public function getConfigFile()
+    {
+        $filename = str_replace('\\', '_', get_class($this));
+        return "tests/$filename.php";
+    }
+
+    public function getConfig()
+    {
+        $config = $this->config;
+        ok($config, 'asset config object');
+        return $config;
+    }
+
+    public function getLoader()
+    {
+        return new \AssetKit\AssetLoader($this->getConfig());
+    }
+
+    public function setUp()
+    {
+        $configFile = $this->getConfigFile();
+        if(file_exists($configFile)) {
+            unlink($configFile);
+        }
+        $this->config = new AssetKit\AssetConfig($configFile);
+    }
+
+    public function tearDown()
+    {
+        $configFile = $this->getConfigFile();
+        if(file_exists($configFile)) {
+            unlink($configFile);
+        }
+    }
+
     public function test()
     {
-        $config = new AssetKit\AssetConfig('.assetkit.php');
-        ok($config, 'asset config object');
-        ok($config->fileLoaded,'config file is loaded.');
+        $config = $this->getConfig();
+        $loader = $this->getLoader();
 
-        $loader = new AssetKit\AssetLoader($config);
-        $jqueryui = $loader->load('jquery-ui');
+        $jqueryui = $loader->registerFromManifestFileOrDir('tests/assets/jquery-ui');
         ok($jqueryui, 'jqueryui asset is loaded');
 
         $rewriteFilter = new AssetKit\Filter\CssRewriteFilter;

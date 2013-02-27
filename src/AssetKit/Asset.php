@@ -105,7 +105,7 @@ class Asset
             // create collection objects
             $this->collections = $this->create_collections($this->stash['collections']);
         } else {
-            throw new Exception("'collections' is not defined in {$this->name}");
+            throw new Exception("the 'collections' is not defined in {$this->name}");
         }
     }
 
