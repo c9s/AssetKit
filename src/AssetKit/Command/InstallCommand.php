@@ -1,7 +1,8 @@
 <?php
 namespace AssetKit\Command;
-use AssetKit\AssetConfig;
 use AssetKit\Asset;
+use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
 use AssetKit\FileUtils;
 use AssetKit\Installer;
 use AssetKit\LinkInstaller;
@@ -19,12 +20,13 @@ class InstallCommand extends Command
     public function options($opts)
     {
         $opts->add('l|link','link asset files, instead of copy install.');
+        $opts->add('config?','config file');
     }
 
     public function execute()
     {
         $options = $this->options;
-        $config = new Config('.assetkit');
+        $configFile = $this->options->config ?: ".assetkit.php";
 
         $installer = $options->link
                 ? new LinkInstaller
@@ -32,22 +34,22 @@ class InstallCommand extends Command
 
         $installer->logger = $this->logger;
 
-        foreach( $config->getAssets() as $name => $asset ) {
+
+        $config = new AssetConfig($configFile);
+        $loader = new AssetLoader($config);
+        $loader->updateAssetManifests();
+
+        $updater = new \AssetKit\ResourceUpdater();
+        foreach( $config->getRegisteredAssets() as $name => $config ) {
+            $asset = $loader->load($name);
+
             $this->logger->info("Updating $name ...");
-
-
-            $updater = new \AssetKit\ResourceUpdater($this);
-            $updater->update(true);
-
-
+            $updater->update($asset);
 
             $this->logger->info( "Installing {$asset->name}" );
             $installer->install( $asset );
-
-            $export = $asset->export();
-            $config->addAsset( $asset->name , $export );
-            $config->save();
         }
+        $config->save();
         $this->logger->info("Done");
     }
 }

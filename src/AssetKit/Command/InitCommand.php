@@ -39,7 +39,6 @@ class InitCommand extends Command
 
         // create asset config
         $config = new Config($configFile);
-
         $config->setBaseUrl($this->options->baseUrl );
         $config->setBaseDir($this->options->baseDir );
 
