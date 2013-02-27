@@ -112,7 +112,7 @@ class Asset
     /**
      * simply copy class members to to the file collection
      */
-    static function create_collections( $collectionStash )
+    public function create_collections( $collectionStash )
     {
         $sourceDir = $this->sourceDir;
         $collections = array();

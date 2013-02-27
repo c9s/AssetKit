@@ -1,6 +1,9 @@
 <?php
 
 use AssetKit\ResourceUpdater;
+use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
+use AssetKit\Asset;
 
 class AssetLoaderTest extends PHPUnit_Framework_TestCase
 {
@@ -8,11 +11,17 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
     public function manifestProvider() 
     {
         return array(
-            array("tests/assets/jquery-ui")
-            array("tests/assets/jquery")
+            array("tests/assets/jquery-ui"),
+            array("tests/assets/jquery"),
         );
     }
 
+
+
+    /**
+     *
+     * @dataProvider manifestProvider
+     */
     public function testInit($manifestPath)
     {
         $configFile = "tests/assetkit_init.php";
@@ -22,8 +31,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         }
 
         $config = new AssetConfig($configFile);
-        ok( $config );
-        ok( $config->fileLoaded );
+        ok( $config , 'config object' );
+        ok( ! $config->fileLoaded , 'config file should not be loaded' );
 
         if( is_dir($manifestPath) ) {
             $manifestPath = $manifestPath  . DIRECTORY_SEPARATOR . 'manifest.yml';
@@ -35,7 +44,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new AssetLoader($config);
         ok($loader, "loader ok");
 
-        $asset = $loader->loadFromManifestFile($manifestPath);
+        $asset = new Asset;
+        $asset->loadFromManifestFile($manifestPath);
         ok($asset, "asset is loaded");
 
 
