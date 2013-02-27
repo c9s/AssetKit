@@ -13,7 +13,6 @@ class CssImportFilterTest extends PHPUnit_Framework_TestCase
         ok($jqueryui, 'jqueryui asset is loaded');
 
         $rewriteFilter = new AssetKit\Filter\CssRewriteFilter;
-
         $filter = new AssetKit\Filter\CssImportFilter;
 
         foreach( $jqueryui->getCollections() as $c ) {

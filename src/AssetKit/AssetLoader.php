@@ -6,7 +6,18 @@ use AssetKit\AssetConfig;
 /**
  * @class
  *
- * Load Asset from manifest File
+ * Load Asset from manifest File.
+ *
+ *
+ *
+ * Operations:
+ *
+ *
+ * 1. Register asset: compile and register asset manifest to the asset config.
+ * 2. Load asset: load the registered asset from the config hash, simply load the compiled php asset config.
+ * 3. Update asset: get registered assets and re-compile their manifest file from the config.
+ * 4. Remove asset: remove the registered assets by asset name.
+ *
  */
 class AssetLoader
 {
@@ -63,7 +74,7 @@ class AssetLoader
             // if there is not asset registered in config, we should look up from the asset paths
             $root = $this->config->getRoot();
             foreach( $this->config->getAssetDirectories() as $dir ) {
-                $asset = $this->loadFromManifestFileOrDir( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name );
+                $asset = $this->registerFromManifestFileOrDir( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name );
                 if($asset) {
                     return $this->assets[$name] = $asset;
                 }
@@ -107,14 +118,14 @@ class AssetLoader
      * @param string $path
      * @parma integer $format
      */
-    public function loadFromManifestFile($path, $format = 0)
+    public function registerFromManifestFile($path, $format = 0)
     {
         $asset = new Asset;
         if($format === 0) {
             $format = Data::detect_format_from_extension($path);
         }
         $asset->loadFromManifestFile($path, $format);
-        $this->config->addAsset($asset);
+        $this->registerAsset($asset);
         return $asset;
     }
 
@@ -125,7 +136,7 @@ class AssetLoader
     }
 
 
-    public function loadFromManifestFileOrDir($path, $format = 0) 
+    public function registerFromManifestFileOrDir($path, $format = 0) 
     {
         if( is_dir($path) ) {
             $path = FileUtil::find_manifest_file_from_directory( $path );
@@ -134,7 +145,7 @@ class AssetLoader
             }
         }
         if( file_exists($path))  {
-            return $this->loadFromManifestFile($path, $format);
+            return $this->registerFromManifestFile($path, $format);
         }
     }
 
