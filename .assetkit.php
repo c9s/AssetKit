@@ -8,5 +8,11 @@
   ),
   'assets' => 
   array (
+    'jquery' => 
+    array (
+      'manifest' => 'tests/assets/jquery/manifest.php',
+      'source_dir' => 'tests/assets/jquery',
+      'name' => 'jquery',
+    ),
   ),
 );

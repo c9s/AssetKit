@@ -50,9 +50,7 @@ class AddCommand extends Command
             $installer->install( $asset );
         }
 
-        $export = $asset->export();
-        $config->addAsset( $asset->name , $export );
-
+        $config->addAsset( $asset );
         $this->logger->info("Saving config...");
         $config->save();
 
