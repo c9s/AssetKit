@@ -9,29 +9,28 @@ class LinkInstaller extends Installer
     {
         // asset name
         $name       = $asset->name;
-        $targetFile = $asset->getInstallDir(true);
+        $targetDir = $asset->getInstallDir(true);
         $sourceDir  = $asset->getSourceDir(true);
 
-        # echo $sourceDir , " => " , $targetFile, "\n";
-
         // simply use symbol link
-        FileUtil::mkdir_for_file( $targetFile );
+        FileUtil::mkdir_for_file( $targetDir );
 
-        if (file_exists($targetFile)) {
-            if (is_link($targetFile)) {
-                unlink($targetFile);
+        if (file_exists($targetDir)) {
+            if (is_link($targetDir)) {
+                unlink($targetDir);
             }
-            else if(is_dir($targetFile)) {
-                echo "Removing $targetFile\n";
-                # FileUtil::rmtree($targetFile);
+            else if(is_dir($targetDir)) {
+                # echo "Removing $targetDir\n";
+                FileUtil::rmtree($targetDir);
             } 
         }
 
-        $sourceDir = realpath($sourceDir);
-        $targetFile = realpath($targetFile);
-
-        echo $sourceDir , " => " , $targetFile , "\n";
-        symlink($sourceDir,$targetFile) or die("$targetFile link failed.");
+        # echo $sourceDir , " => " , $targetDir , "\n";
+        symlink(realpath($sourceDir),$targetDir) or die("$targetDir link failed.");
+        return array(
+            'src' => $sourceDir,
+            'dst' => $targetDir,
+        );
     }
 
 }
