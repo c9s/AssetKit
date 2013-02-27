@@ -24,7 +24,7 @@ class AssetLoader
      *
      * @param AssetKit\AssetConfig $config
      */
-    public function __construct(Config $config)
+    public function __construct(AssetConfig $config)
     {
         $this->config = $config;
     }

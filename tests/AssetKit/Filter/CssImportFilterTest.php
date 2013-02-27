@@ -2,12 +2,14 @@
 
 class CssImportFilterTest extends PHPUnit_Framework_TestCase
 {
-    function test()
+    public function test()
     {
-        $config = new AssetKit\AssetConfig('.assetkit');
-        $loader = new AssetKit\AssetLoader( $config, array( 'assets' ));
+        $config = new AssetKit\AssetConfig('.assetkit.php');
+        ok($config, 'asset config object');
 
+        $loader = new AssetKit\AssetLoader($config);
         $jqueryui = $loader->load('jquery-ui');
+        ok($jqueryui, 'jqueryui asset is loaded');
 
         $rewriteFilter = new AssetKit\Filter\CssRewriteFilter;
 

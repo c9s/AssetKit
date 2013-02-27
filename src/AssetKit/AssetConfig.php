@@ -48,12 +48,12 @@ class AssetConfig
 
     public $cacheSupport = false;
 
-
+    public $fileLoaded = false;
 
     public function __construct($file, $options = array())
     {
         $this->options = $options;
-        $this->loadFromFile($file);
+        $this->fileLoaded = $this->loadFromFile($file);
     }
 
     public function setOptions($options)
@@ -105,11 +105,10 @@ class AssetConfig
                     'dirs' => array(),
                     'assets' => array(),
                 );
+                return false;
             }
         }
-
-
-
+        return true;
     }
 
 
