@@ -72,12 +72,8 @@ class AssetLoader
         } else {
             // some code to find asset automatically.
             // if there is not asset registered in config, we should look up from the asset paths
-            $root = $this->config->getRoot();
-            foreach( $this->config->getAssetDirectories() as $dir ) {
-                $asset = $this->registerFromManifestFileOrDir( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name );
-                if($asset) {
-                    return $this->assets[$name] = $asset;
-                }
+            if($asset = $this->lookup($name)) {
+                return $this->assets[$name] = $asset;
             }
         }
     }
@@ -138,6 +134,13 @@ class AssetLoader
     }
 
 
+    /**
+     * If the given path is a directory, then we should 
+     * find the manifest from the directory.
+     *
+     * @param string $path
+     * @param integer $format
+     */
     public function registerFromManifestFileOrDir($path, $format = 0) 
     {
         if( is_dir($path) ) {
@@ -153,28 +156,29 @@ class AssetLoader
 
 
 
+    /**
+     * This method is for updating all manifest files that
+     * is registed in asset config.
+     */
+    public function updateAssetManifests()
+    {
+        $assets = $this->config->getRegisteredAssets();
+        foreach( $assets as $name => $subconfig ) {
+            $asset = $this->load($name);
+            Data::compile_manifest_to_php($asset->manifestFile);
+        }
+    }
+
+
 
     public function lookup($name)
     {
-        $paths = $this->config->getAssetDirectories();
-        foreach($paths as $path) {
-            $target = $path . DIRECTORY_SEPARATOR . $name;
-            if(! is_dir($target))
-                continue;
-
-            $manifestYaml = $target . DIRECTORY_SEPARATOR . 'manifest.yml';
-            $manifestPhp = $target . DIRECTORY_SEPARATOR . 'manifest.php';
-            $manifestJson = $target . DIRECTORY_SEPARATOR . 'manifest.json';
-            $config = null;
-            if( file_exists($manifestPhp) ) {
-                $config = Data::decode($manifestPhp, Data::FORMAT_PHP);
-            } elseif ( file_exists($manifestJson) ) {
-                $config = Data::decode($manifestJson, Data::FORMAT_JSON);
-            } elseif ( file_exists($manifestYaml) ) {
-                $config = Data::decode($manifestYaml, Data::FORMAT_YAML);
-            } 
-            if($config) {
-                return new Asset($config);
+        // some code to find asset automatically.
+        // if there is not asset registered in config, we should look up from the asset paths
+        $root = $this->config->getRoot();
+        foreach( $this->config->getAssetDirectories() as $dir ) {
+            if($asset = $this->registerFromManifestFileOrDir( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name )) {
+                return $asset;
             }
         }
     }

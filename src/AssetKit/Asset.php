@@ -76,13 +76,6 @@ class Asset
     public $collections = array();
 
 
-    /**
-     * @param array|string|null $arg manifest array, manifest file path, or asset name
-     */
-    public function __construct()
-    {
-    }
-
     public function loadFromManifestFile($manifestFile, $format = 0)
     {
         $config = null;
