@@ -1,11 +1,7 @@
 <?php
 
-
-class ConfigTest extends PHPUnit_Framework_TestCase
+class AssetConfigTest extends PHPUnit_Framework_TestCase
 {
-
-
-
     public function testEmptyAssetConfig()
     {
         $configFile = "tests/empty_config";

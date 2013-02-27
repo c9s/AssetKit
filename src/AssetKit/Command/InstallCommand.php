@@ -12,12 +12,12 @@ class InstallCommand extends Command
 {
     function brief() { return 'install assets'; }
 
-    function options($opts)
+    public function options($opts)
     {
         $opts->add('l|link','link asset files, instead of copy install.');
     }
 
-    function execute()
+    public function execute()
     {
         $options = $this->options;
         $config = new Config('.assetkit');
