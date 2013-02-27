@@ -7,14 +7,16 @@ use CLIFramework\Command;
 
 class CompileCommand extends Command
 {
-    function options($opts)
+
+
+    public function options($opts)
     {
         $opts->add('a|as:', 'compile asset with an ID');
     }
 
-    function brief() { return 'precompile asset files.'; }
+    public function brief() { return 'precompile asset files.'; }
 
-    function execute()
+    public function execute()
     {
         $assets = func_get_args();
         $options = $this->options;

@@ -3,7 +3,7 @@ namespace AssetKit;
 use AssetKit\Asset;
 use AssetKit\Data;
 
-class Config
+class AssetConfig
 {
 
     const FORMAT_JSON = 1;
