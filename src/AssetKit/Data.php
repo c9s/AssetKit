@@ -14,8 +14,7 @@ class Data
     const FORMAT_YAML = 3;
     const FORMAT_UNKNOWN = 0;
 
-
-    static function detect_format($path) 
+    static function detect_format_from_extension($path)
     {
         $ext = pathinfo($path, PATHINFO_EXTENSION);
 
@@ -33,7 +32,7 @@ class Data
 
     static function detect_format_and_decode($path)
     {
-        if($format = self::detect_format($path)) {
+        if($format = self::detect_format_from_extension($path)) {
             return self::decode_file($path,$format);
         }
     }

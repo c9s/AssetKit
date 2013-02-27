@@ -57,8 +57,9 @@ class AssetLoader
         } else {
             // some code to find asset automatically.
             // if there is not asset registered in config, we should look up from the asset paths
+            $root = $this->config->getRoot();
             foreach( $this->config->getAssetDirectories() as $dir ) {
-                $asset = $this->loadFromManifestFileOrDir( $dir . DIRECTORY_SEPARATOR . $name );
+                $asset = $this->loadFromManifestFileOrDir( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name );
                 if($asset) {
                     $this->assets[$name] = $asset;
                     break;

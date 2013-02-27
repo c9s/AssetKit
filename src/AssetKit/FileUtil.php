@@ -68,6 +68,11 @@ class FileUtil
         return true;
     }
 
+    static function get_extension($path)
+    {
+        return pathinfo($path, PATHINFO_EXTENSION);
+    }
+
     static function replace_extension($path,$replacement)
     {
         if( is_array($replacement) ) {
