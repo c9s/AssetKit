@@ -272,7 +272,7 @@ class AssetConfig
      *
      * @param string $name asset name
      */
-    public function removeAssetConfig($name)
+    public function removeAsset($name)
     {
         unset($this->config['assets'][$name]);
     }
