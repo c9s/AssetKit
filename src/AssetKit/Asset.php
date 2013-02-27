@@ -92,8 +92,8 @@ class Asset
             $config = Data::detect_format_and_decode($manifestFile);
         }
         $this->manifestFile = $manifestFile;
-        $this->sourceDir = dirname($manifestFile);
-        $this->name = basename($this->sourceDir);
+        $this->sourceDir    = dirname($manifestFile);
+        $this->name         = basename($this->sourceDir);
         $this->loadFromArray($config);
     }
 
@@ -182,7 +182,7 @@ class Asset
         // installed_dir = public dir + source dir
         return array(
             'stash'      => $this->stash,
-            'manifest'   => $this->manifest,
+            'manifest'   => $this->manifestFile,
             'source_dir' => $this->sourceDir,
             'name'       => $this->name,
         );
