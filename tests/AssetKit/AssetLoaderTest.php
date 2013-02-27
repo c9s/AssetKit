@@ -31,6 +31,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         }
 
         $config = new AssetConfig($configFile);
+        $config->setBaseDir("tests/assets");
+        $config->setBaseUrl("/assets");
         ok( $config , 'config object' );
         ok( ! $config->fileLoaded , 'config file should not be loaded' );
 
@@ -45,10 +47,10 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         ok($updater,'resource updater is loaded');
         $updater->update($asset);
 
+        $installer = new AssetKit\LinkInstaller;
+        $installer->install( $asset );
+
         /*
-        if( $options->link ) {
-            $installer = new LinkInstaller;
-            $installer->install( $asset );
         } 
         else {
             $installer = new Installer;

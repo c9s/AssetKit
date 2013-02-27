@@ -1,5 +1,6 @@
 <?php
 namespace AssetKit;
+use AssetKit\FileUtil;
 
 class Installer
 {
@@ -29,7 +30,7 @@ class Installer
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
-                $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $asset->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
                 $this->log("x $targetFile");
                 unlink( $targetFile );
@@ -54,7 +55,8 @@ class Installer
                     continue;
                 }
 
-                $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $asset->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+
                 $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {
                     $contentOrig = file_get_contents($targetFile);
@@ -75,7 +77,7 @@ class Installer
                         continue;
                     }
                 }
-                FileUtils::mkdir_for_file( $targetFile );
+                FileUtil::mkdir_for_file( $targetFile );
                 $this->log("x $targetFile");
                 file_put_contents( $targetFile , $content ) or die("$targetFile write failed.");
             }

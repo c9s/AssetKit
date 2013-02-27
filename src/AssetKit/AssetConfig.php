@@ -2,6 +2,7 @@
 namespace AssetKit;
 use AssetKit\Asset;
 use AssetKit\Data;
+use Exception;
 
 class AssetConfig
 {
@@ -100,8 +101,8 @@ class AssetConfig
             } else {
                 // default config
                 $this->config = array(
-                    'baseDir' => '',
-                    'baseUrl' => '',
+                    'baseDir' => null,
+                    'baseUrl' => null,
                     'dirs' => array(),
                     'assets' => array(),
                 );
@@ -326,12 +327,13 @@ class AssetConfig
      */
     public function getBaseDir($absolute = false) 
     {
-        if( isset($this->config['baseDir']) ) {
-            if($absolute) {
-                return $this->fileDirectory . DIRECTORY_SEPARATOR . $this->config['baseDir'];
+        if( isset($this->config['baseDir']) && $this->config['baseDir'] ) {
+            if ($absolute) {
+                return realpath($this->fileDirectory) . DIRECTORY_SEPARATOR . $this->config['baseDir'];
             }
             return $this->config['baseDir'];
         }
+        throw new Exception("baseDir is not defined in asset config.");
     }
 
 
@@ -342,8 +344,9 @@ class AssetConfig
      */
     public function getBaseUrl()
     {
-        if( isset($this->config['baseUrl']) ) 
+        if( isset($this->config['baseUrl']) && $this->config['baseUrl'] ) 
             return $this->config['baseUrl'];
+        throw new Exception("baseUrl is not defined in asset config.");
     }
 
 
@@ -373,10 +376,11 @@ class AssetConfig
      */
     public function getRoot($absolute = false)
     {
-        if($absolute)
+        if($absolute) {
             return realpath($this->fileDirectory);
-        else
+        } else {
             return $this->fileDirectory;
+        }
     }
 
 }

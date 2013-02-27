@@ -73,7 +73,7 @@ class FileUtil
     {
         $dir = dirname($file);
         if( ! file_exists($dir) ) {
-            return mkdir( $dir, $mask , true );
+            return mkdir($dir, $mask , true);
         }
         return true;
     }
@@ -100,6 +100,40 @@ class FileUtil
         }
         return $path;
     }
+
+    static function rmtree( $paths )
+    {
+        $paths = (array) $paths;
+        foreach( $paths as $path ) {
+            if( ! file_exists( $path ) )
+                throw new Exception( "$path does not exist." );
+
+            if( is_dir( $path ) ) 
+            {
+                $iterator = new \DirectoryIterator($path);
+                foreach ($iterator as $fileinfo) 
+                {
+                    if( $fileinfo->isDir() ) {
+                        if(    $fileinfo->getFilename() === "." 
+                            || $fileinfo->getFilename() === ".." )
+                            continue;
+                        self::rmtree( $fileinfo->getPathname() );
+                    }
+                    elseif ($fileinfo->isFile()) {
+                        if( unlink( $fileinfo->getPathname() ) == false )
+                            throw new Exception( "File delete error: {$fileinto->getPathname()}" );
+                    }
+                }
+                rmdir( $path );
+            } 
+            elseif( is_file( $path ) ) {
+                unlink( $path );
+            }
+
+
+        }
+    }
+
 
 }
 
