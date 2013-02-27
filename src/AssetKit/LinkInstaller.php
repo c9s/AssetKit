@@ -22,12 +22,16 @@ class LinkInstaller extends Installer
                 unlink($targetFile);
             }
             else if(is_dir($targetFile)) {
-                FileUtil::rmtree($targetFile);
+                echo "Removing $targetFile\n";
+                # FileUtil::rmtree($targetFile);
             } 
         }
 
-        symlink(realpath($sourceDir),$targetFile) 
-                or die("$targetFile link failed.");
+        $sourceDir = realpath($sourceDir);
+        $targetFile = realpath($targetFile);
+
+        echo $sourceDir , " => " , $targetFile , "\n";
+        symlink($sourceDir,$targetFile) or die("$targetFile link failed.");
     }
 
 }

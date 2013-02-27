@@ -31,8 +31,9 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         }
 
         $config = new AssetConfig($configFile);
-        $config->setBaseDir("tests/assets");
+        $config->setBaseDir("tests/public");
         $config->setBaseUrl("/assets");
+
         ok( $config , 'config object' );
         ok( ! $config->fileLoaded , 'config file should not be loaded' );
 
