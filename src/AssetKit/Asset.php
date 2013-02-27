@@ -93,6 +93,7 @@ class Asset
         }
         $this->manifestFile = $manifestFile;
         $this->sourceDir = dirname($manifestFile);
+        $this->name = basename($this->sourceDir);
         $this->loadFromArray($config);
     }
 

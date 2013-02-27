@@ -1,6 +1,7 @@
 <?php
 namespace AssetKit\Command;
 use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
 use AssetKit\Asset;
 use AssetKit\FileUtils;
 use AssetKit\Installer;
@@ -19,29 +20,27 @@ class AddCommand extends Command
         $opts->add('l|link','link asset files, instead of copy install.');
     }
 
-    public function execute($manifestPath)
+    public function execute($manifestFile)
     {
         $options = $this->options;
 
         $configFile = $this->options->config ?: ".assetkit.php";
-        $config = new \AssetKit\AssetConfig($configFile);
+        $config = new AssetConfig($configFile);
 
-        if( is_dir($manifestPath) ) {
-            $manifestPath = $manifestPath  . DIRECTORY_SEPARATOR . 'manifest.yml';
+        if( is_dir($manifestFile) ) {
+            $manifestFile = $manifestFile  . DIRECTORY_SEPARATOR . 'manifest.yml';
         }
 
-        if( ! file_exists($manifestPath)) 
-            throw new Exception( "$manifestPath does not exist." );
+        if( ! file_exists($manifestFile)) 
+            throw new Exception( "$manifestFile does not exist." );
 
-        /*
-        $asset = new Asset($manifestPath);
-        $asset->config = $config;
+        $loader = new AssetLoader($config);
+        $asset = $loader->loadFromManifestFile($manifestFile);
 
         $this->logger->info("Initializing resource...");
 
         $updater = new \AssetKit\ResourceUpdater($this);
         $updater->update(true);
-
 
         $this->logger->info( "Installing {$asset->name}" );
 
@@ -61,7 +60,6 @@ class AddCommand extends Command
         $config->save();
 
         $this->logger->info("Done");
-        */
     }
 }
 

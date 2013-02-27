@@ -6,6 +6,7 @@ class CssImportFilterTest extends PHPUnit_Framework_TestCase
     {
         $config = new AssetKit\AssetConfig('.assetkit.php');
         ok($config, 'asset config object');
+        ok($config->fileLoaded,'config file is loaded.');
 
         $loader = new AssetKit\AssetLoader($config);
         $jqueryui = $loader->load('jquery-ui');

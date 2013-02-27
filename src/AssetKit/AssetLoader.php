@@ -53,7 +53,7 @@ class AssetLoader
             $asset = new Asset;
             $asset->loadFromManifestFile( $assetConfig['manifest'] );
 
-            // register asset into the pool
+            // save the asset object into the pool
             return $this->assets[$name] = $asset;
         }
     }
@@ -94,11 +94,12 @@ class AssetLoader
      */
     public function loadFromManifestFile($path, $format = 0)
     {
-        if( $config ) {
-            $asset = new Asset($config);
-            $this->config->addAsset($asset);
-        }
+        $asset = new Asset;
+        $asset->loadFromManifestFile($path);
+        $this->config->addAsset($asset);
     }
+
+
 
     public function lookup($name)
     {
