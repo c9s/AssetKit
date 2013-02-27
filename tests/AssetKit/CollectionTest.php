@@ -2,8 +2,6 @@
 
 class CollectionTest extends PHPUnit_Framework_TestCase
 {
-
-
     function testCollection()
     {
         $cln = new AssetKit\Collection;

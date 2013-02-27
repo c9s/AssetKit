@@ -38,7 +38,10 @@ class AddCommand extends Command
         $asset->config = $config;
 
         $this->logger->info("Initializing resource...");
-        $asset->initResource(true); // update it
+
+        $updater = new \AssetKit\ResourceUpdater($this);
+        $updater->update(true);
+
 
         $this->logger->info( "Installing {$asset->name}" );
 

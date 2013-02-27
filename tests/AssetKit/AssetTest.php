@@ -20,7 +20,7 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $installer->enableLog = false;
         $installer->install( $as );
 
-        is('public/assets/jquery-ui',$as->getInstalledDir());
+        is('public/assets/jquery-ui',$as->getInstallDir());
         is('assets/jquery-ui',$as->getSourceDir());
 
         foreach( $as->getCollections() as $c ) {

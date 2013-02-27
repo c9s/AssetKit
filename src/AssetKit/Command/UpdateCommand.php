@@ -30,7 +30,9 @@ class UpdateCommand extends Command
 
         foreach( $config->getAssets() as $name => $asset ) {
             $this->logger->info("Updating $name ...");
-            $asset->initResource(true); // update it
+
+            $updater = new \AssetKit\ResourceUpdater;
+            $updater->update($asset, true);
 
             $this->logger->info( "Installing {$asset->name}" );
             $installer->install( $asset );

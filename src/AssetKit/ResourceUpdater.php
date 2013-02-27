@@ -15,7 +15,6 @@ class ResourceUpdater
 
     public function update($asset, $update = false)
     {
-
         if( ! isset($asset->stash['resource']) ) {
             return false;
         }

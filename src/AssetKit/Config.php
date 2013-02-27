@@ -14,6 +14,10 @@ class Config
      */
     public $file;
 
+
+    /**
+     * @var string the dirname of the config file.
+     */
     public $fileDirectory;
 
 
@@ -325,14 +329,38 @@ class Config
             return $this->config['baseUrl'];
     }
 
+
+
+    /**
+     * Get the base url of the installed assets.
+     */
     public function setBaseUrl($url) 
     {
         $this->config['baseUrl'] = $url;
     }
 
+
+
+    /**
+     * Get the base dir of installed asset.
+     */
     public function setBaseDir($dir) 
     {
         $this->config['baseDir'] = $dir;
     }
+
+
+
+    /**
+     * Return the config file dir path.
+     */
+    public function getRoot($absolute = false)
+    {
+        if($absolute)
+            return realpath($this->fileDirectory);
+        else
+            return $this->fileDirectory;
+    }
+
 }
 

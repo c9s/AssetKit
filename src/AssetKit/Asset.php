@@ -161,19 +161,20 @@ class Asset
         );
     }
 
-    public function compile()
-    {
-        // compile assets
-    }
 
+    /**
+     * @return string Asset name
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function getInstalledDir($absolute = false)
+
+
+    public function getInstallDir($absolute = false)
     {
-        return $this->config->getPublicAssetRoot($absolute) . DIRECTORY_SEPARATOR . $this->name;
+        return $this->config->getBaseDir($absolute) . DIRECTORY_SEPARATOR . $this->name;
     }
 
     public function getSourceDir($absolute = false)
@@ -184,19 +185,6 @@ class Asset
             ;
     }
 
-    /**
-     * Return the public dir of this asset
-     *
-     *   Asset public dir = Public dir + Asset source path
-     *
-     * @param bool $absolute should return absolute path or relative path ?
-     */
-    public function getPublicDir($absolute = false)
-    {
-        $public = $this->config->getPublicRoot($absolute);
-        return $public . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $this->name;
-    }
-
 
     /**
      * Check source file existence.
@@ -205,7 +193,6 @@ class Asset
      */
     public function hasSourceFiles()
     {
-        $this->sourceDir;
         foreach( $this->collections as $collection ) {
             $paths = $collection->getSourcePaths(true);
             foreach( $paths as $path ) {
@@ -216,14 +203,7 @@ class Asset
         return true;
     }
 
-    /**
-     * Init Resource file and update to public asset dir ?
-     */
-    public function initResource($update = false)
-    {
-        $updater = new \AssetKit\ResourceUpdater($this);
-        return $updater->update($update);
-    }
+
 }
 
 

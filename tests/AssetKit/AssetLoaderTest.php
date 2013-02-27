@@ -25,13 +25,11 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
         $loader = new AssetKit\AssetLoader($config);
 
-
         $assets = $config->getRegisteredAssets();
         ok( empty($asset) );
         $config->save();
         unlink($configFile);
     }
-
 
 
     /*
@@ -41,11 +39,12 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $loader = $this->getLoader($config);
 
         $jquery = $loader->load('jquery');
-        $jquery->initResource();
-
         $jqueryui = $loader->load( 'jquery-ui' );
-        $jqueryui->initResource();
 
+        // install resource
+        $updater = new \AssetKit\ResourceUpdater;
+        $updater->update($jquery);
+        $updater->update($jqueryui);
 
         $installer = new AssetKit\Installer;
         $installer->enableLog = false;
