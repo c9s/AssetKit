@@ -7,12 +7,12 @@ use CLIFramework\Command;
 class RemoveCommand extends Command
 {
 
-    function brief()
+    public function brief()
     {
         return 'remove an asset.';
     }
 
-    function execute($assetName)
+    public function execute($assetName)
     {
         $config = new Config('.assetkit');
 
