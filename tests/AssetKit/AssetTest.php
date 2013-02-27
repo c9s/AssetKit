@@ -9,9 +9,11 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $config->setBaseUrl('/assets');
 
 
+    
         $loader = new AssetKit\AssetLoader($config,array());
         ok( $loader, "Got asset loader." );
 
+        /*
         $as = new AssetKit\Asset('assets/jquery-ui/manifest.yml');
         $as->config = $config;
         ok( $as );
@@ -36,7 +38,9 @@ class AssetTest extends PHPUnit_Framework_TestCase
 #          $installer->uninstall( $as );
 
         $jssha = $loader->load('jssha');
-        $jssha->initResource();
+
+        // $jssha->initResource();
+         */
     }
 }
 
