@@ -13,7 +13,7 @@ class CssImportFilterTest extends PHPUnit_Framework_TestCase
 
         $filter = new AssetKit\Filter\CssImportFilter;
 
-        foreach( $jqueryui->getFileCollections() as $c ) {
+        foreach( $jqueryui->getCollections() as $c ) {
             if( $c->isStylesheet ) {
                 $rewriteFilter->filter( $c );
 

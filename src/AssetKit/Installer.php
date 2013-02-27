@@ -25,7 +25,7 @@ class Installer
         $n       = $asset->name;
 
         // install into public asset root.
-        foreach( $asset->getFileCollections() as $collection ) {
+        foreach( $asset->getCollections() as $collection ) {
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
@@ -44,7 +44,7 @@ class Installer
         $n       = $asset->name;
 
         // install into public asset root.
-        foreach( $asset->getFileCollections() as $collection ) {
+        foreach( $asset->getCollections() as $collection ) {
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;

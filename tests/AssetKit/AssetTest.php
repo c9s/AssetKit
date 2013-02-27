@@ -23,7 +23,7 @@ class AssetTest extends PHPUnit_Framework_TestCase
         is('public/assets/jquery-ui',$as->getInstalledDir());
         is('assets/jquery-ui',$as->getSourceDir());
 
-        foreach( $as->getFileCollections() as $c ) {
+        foreach( $as->getCollections() as $c ) {
             $paths = $c->getSourcePaths();
             foreach( $paths as $p ) { 
                 file_ok( $p );
@@ -35,14 +35,6 @@ class AssetTest extends PHPUnit_Framework_TestCase
 
         $jssha = $loader->load('jssha');
         $jssha->initResource();
-
-#          $files = $as->createFileCollection();
-#          ok( $files );
-#          $files->addFile( 'assets/jssha/jsSHA/src/sha1.js' );
-#          $files->addFile( 'assets/jssha/jsSHA/src/sha256.js' );
-#          $files->addFilter( 'yui_js' );
-#          $mtime = $files->getLastModifiedTime();
-#          ok( $mtime );
     }
 }
 

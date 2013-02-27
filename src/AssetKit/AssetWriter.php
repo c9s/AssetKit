@@ -301,7 +301,7 @@ class AssetWriter
     {
         $js = '';
         $css = '';
-        $collections = $asset->getFileCollections();
+        $collections = $asset->getCollections();
 
         foreach( $collections as $collection ) {
 
@@ -410,7 +410,7 @@ class AssetWriter
             // $baseUrl = $this->in;
             // $baseUrl   = $asset->getBaseUrl(); // XXX: remove this getBaseUrl
 
-            foreach( $asset->getFileCollections() as $c ) {
+            foreach( $asset->getCollections() as $c ) {
                 $paths = $c->getFilePaths();
 
                 // for collections has filters, pipe content through these filters.
@@ -532,7 +532,7 @@ class AssetWriter
                 // We should check file stats to update squshed files.
                 $expired = false;
                 foreach( $assets as $asset ) {
-                    $collections = $asset->getFileCollections();
+                    $collections = $asset->getCollections();
                     foreach( $collections as $collection ) {
                         $mtime = $collection->getLastModifiedTime();
                         if( $collection->isJavascript 

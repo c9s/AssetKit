@@ -12,7 +12,7 @@ class LinkInstaller extends Installer
         $name       = $asset->name;
 
         // install into public asset root.
-        foreach( $asset->getFileCollections() as $collection ) {
+        foreach( $asset->getCollections() as $collection ) {
             $srcFile = $fromDir;
             $targetFile = $asset->config->getPublicAssetRoot() . DIRECTORY_SEPARATOR . $name;
             if( file_exists($targetFile) ) {

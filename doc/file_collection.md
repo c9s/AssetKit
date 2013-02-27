@@ -14,7 +14,7 @@ To get file collections from existing asset object (which actually uses `FileCol
 
 ```php
 // install into public asset root.
-foreach( $asset->getFileCollections() as $collection ) {
+foreach( $asset->getCollections() as $collection ) {
     foreach( $collection->getFilePaths() as $path ) {
         $subpath = $path;
         $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;

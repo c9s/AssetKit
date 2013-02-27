@@ -76,35 +76,39 @@ class Asset
         $this->stash = $config;
         // load assets
         if( isset($this->stash['collections']) ) {
-            $this->expandCollections();
-            $this->collections = FileCollection::create_from_asset($this->stash['collections']);
+            // create collection objects
+            $this->collections = $this->create_collections($this->stash['collections']);
         }
     }
 
+
     /**
-     * This expand glob patterns
-     *
+     * simply copy class members to to the file collection
      */
-    public function expandCollections()
+    static function create_collections( $collectionStash )
     {
-        foreach( $this->stash['collections'] as & $a )
-        {
-            $dir = $this->sourceDir;
+        $sourceDir = $this->sourceDir;
+        $collections = array();
+
+        foreach( $collectionStash as $stash ) {
+            $collection = new FileCollection;
+
             $files = array();
-            foreach( $a['files'] as $p ) {
+            foreach( $stash['files'] as $p ) {
+
 
                 // found glob pattern
                 if( strpos($p,'*') !== false ) 
                 {
-                    $expanded = FileUtil::expand_glob_from_dir($dir, $p);
+                    $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
 
                     // should be unique
                     $files = array_unique( array_merge( $files , $expanded ) );
 
-                } elseif( is_dir( $dir . DIRECTORY_SEPARATOR . $p ) ) {
+                } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
 
-                    $expanded = FileUtil::expand_dir_recursively( $dir . DIRECTORY_SEPARATOR . $p );
-                    $expanded = FileUtil::remove_basedir_from_paths($expanded , $dir);
+                    $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
+                    $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
 
                     $files = array_unique(array_merge( $files , $expanded ));
 
@@ -112,19 +116,35 @@ class Asset
                     $files[] = $p;
                 }
             }
-            $a['files'] = $files;
+            // update filelist.
+            $stash['files'] = $files;
+
+
+            if( isset($stash['filters']) )
+                $collection->filters = $stash['filters'];
+
+            if( isset($stash['compressors']) ) {
+                $collection->compressors = $stash['compressors'];
+            }
+
+            if( isset($stash['files']) ) {
+                $collection->files = $stash['files'];
+            }
+
+            if( isset($stash['javascript']) || isset($stash['js']) ) {
+                $collection->isJavascript = true;
+            } elseif( isset($stash['stylesheet']) || isset($stash['css']) ) {
+                $collection->isStylesheet = true;
+            } elseif( isset($stash['coffeescript']) ) {
+                $collection->isCoffeescript = true;
+            }
+            $collection->asset = $this;
+            $collections[] = $collection;
         }
+        return $collections;
     }
 
-    public function createFileCollection()
-    {
-        $collection = new FileCollection;
-        $collection->asset = $this;
-        $collections[] = $collection;
-        return $collection;
-    }
-
-    public function getFileCollections()
+    public function getCollections()
     {
         return $this->collections;
     }

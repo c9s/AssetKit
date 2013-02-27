@@ -25,38 +25,6 @@ class FileCollection
 
 
 
-    /**
-     * simply copy class members to to the file collection
-     */
-    static function create_from_asset($asset)
-    {
-        $collections = array();
-        foreach( $asset->stash['assets'] as $config ) {
-            $collection = new self;
-            if( isset($config['filters']) )
-                $collection->filters = $config['filters'];
-
-            if( isset($config['compressors']) ) {
-                $collection->compressors = $config['compressors'];
-            }
-
-            if( isset($config['files']) ) {
-                $collection->files = $config['files'];
-            }
-
-            if( isset($config['javascript']) || isset($config['js']) ) {
-                $collection->isJavascript = true;
-            } elseif( isset($config['stylesheet']) || isset($config['css']) ) {
-                $collection->isStylesheet = true;
-            } elseif( isset($config['coffeescript']) ) {
-                $collection->isCoffeescript = true;
-            }
-
-            $collection->asset = $asset;
-            $collections[] = $collection;
-        }
-        return $collections;
-    }
 
 
     /**

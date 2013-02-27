@@ -19,7 +19,7 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
 
         $test = $loader->load('test');
 
-        foreach( $test->getFileCollections() as $cln ) {
+        foreach( $test->getCollections() as $cln ) {
             $files = $cln->getFilePaths();
             ok( $files );
 
@@ -47,7 +47,7 @@ class FileCollectionTest extends PHPUnit_Framework_TestCase
         $loader = Test::getLoader($config);
         $jquery = $loader->load('jquery');
 
-        foreach( $jquery->getFileCollections() as $cln ) {
+        foreach( $jquery->getCollections() as $cln ) {
 
             $files = $cln->getSourcePaths();
             ok( $files );
