@@ -1,17 +1,11 @@
 <?php
 
-class AssetTest extends PHPUnit_Framework_TestCase
+class AssetTest extends AssetKit\TestCase
 {
     public function test()
     {
-        $config = new AssetKit\AssetConfig('.tests_assetkit');
-        $config->setBaseDir('public');
-        $config->setBaseUrl('/assets');
-
-
-    
-        $loader = new AssetKit\AssetLoader($config,array());
-        ok( $loader, "Got asset loader." );
+        $config = $this->getConfig();
+        $loader = $this->getLoader();
 
         /*
         $as = new AssetKit\Asset('assets/jquery-ui/manifest.yml');
