@@ -34,20 +34,14 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         ok( $config , 'config object' );
         ok( ! $config->fileLoaded , 'config file should not be loaded' );
 
-        if( is_dir($manifestPath) ) {
-            $manifestPath = $manifestPath  . DIRECTORY_SEPARATOR . 'manifest.yml';
-        }
-
-        if( ! file_exists($manifestPath)) 
-            throw new Exception( "$manifestPath does not exist." );
-
         $loader = new AssetLoader($config);
         ok($loader, "loader ok");
 
         $asset = $loader->loadFromManifestFileOrDir($manifestPath);
         ok($asset, "asset is loaded");
 
-        $updater = new ResourceUpdater($this);
+
+        $updater = new ResourceUpdater();
         ok($updater,'resource updater is loaded');
 
 

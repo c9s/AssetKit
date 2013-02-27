@@ -27,15 +27,12 @@ class AddCommand extends Command
         $configFile = $this->options->config ?: ".assetkit.php";
         $config = new AssetConfig($configFile);
 
-        if( is_dir($manifestFile) ) {
-            $manifestFile = $manifestFile  . DIRECTORY_SEPARATOR . 'manifest.yml';
-        }
-
-        if( ! file_exists($manifestFile)) 
-            throw new Exception( "$manifestFile does not exist." );
-
         $loader = new AssetLoader($config);
-        $asset = $loader->loadFromManifestFile($manifestFile);
+        $asset = $loader->loadFromManifestFileOrDir($manifestFile);
+
+        if(!$asset) {
+            throw new Exception("Can not load asset from $manifestFile.");
+        }
 
         $this->logger->info("Initializing resource...");
 
