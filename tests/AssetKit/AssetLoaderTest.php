@@ -51,6 +51,8 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $installer = new AssetKit\LinkInstaller;
         $installer->install( $asset );
 
+        $installer->uninstall( $asset );
+
         /*
         } 
         else {

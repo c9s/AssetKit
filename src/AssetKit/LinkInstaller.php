@@ -5,6 +5,13 @@ use AssetKit\FileUtil;
 class LinkInstaller extends Installer 
 {
 
+    public function uninstall($asset)
+    {
+        $name       = $asset->name;
+        $targetDir = $asset->getInstallDir(true);
+        FileUtil::rmtree($targetDir);
+    }
+
     public function install($asset)
     {
         // asset name
