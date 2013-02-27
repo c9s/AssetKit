@@ -48,9 +48,13 @@ class AssetLoader
                 throw new Exception("manifest file is not defined in $name");
             }
 
+            $format = isset($assetConfig['format']) 
+                          ? $assetConfig['format']
+                          : 0;
+            
             // load the asset manifest file
             $asset = new Asset;
-            $asset->loadFromManifestFile( $assetConfig['manifest'] );
+            $asset->loadFromManifestFile( $assetConfig['manifest'] , $format);
 
             // save the asset object into the pool
             return $this->assets[$name] = $asset;
@@ -66,6 +70,7 @@ class AssetLoader
             }
         }
     }
+
 
 
 
@@ -111,6 +116,12 @@ class AssetLoader
         $asset->loadFromManifestFile($path, $format);
         $this->config->addAsset($asset);
         return $asset;
+    }
+
+
+    public function registerAsset($asset)
+    {
+        $this->config->addAsset($asset);
     }
 
 

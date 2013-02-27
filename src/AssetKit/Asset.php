@@ -89,7 +89,7 @@ class Asset
         if( $format ) {
             $config = Data::decode_file($manifestFile, $format);
         } else {
-            $config = Data::detect_format_and_decode($manifestFile);
+            $config = Data::detect_format_and_decode( $manifestFile );
         }
         $this->manifestFile = $manifestFile;
         $this->sourceDir    = dirname($manifestFile);

@@ -1,6 +1,6 @@
 <?php
 namespace AssetKit;
-
+use AssetKit\FileUtil;
 
 // should only run this when requiring.
 // this is for 5.3 compatibility
@@ -28,6 +28,13 @@ class Data
             return self::FORMAT_YAML;
         }
         return self::FORMAT_UNKNOWN;
+    }
+
+    static function compile_manifest_to_php($path) 
+    {
+        if( $data = self::detect_format_and_decode($path)) {
+            return self::encode_file( FileUtil::replace_extension($path,"php"), $data , self::FORMAT_PHP );
+        }
     }
 
     static function detect_format_and_decode($path)

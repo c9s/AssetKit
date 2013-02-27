@@ -5,9 +5,14 @@ class DataTest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
-        is( Data::FORMAT_PHP, Data::detect_format("path/to/file.php") );
-        is( Data::FORMAT_JSON, Data::detect_format("path/to/file.json") );
-        is( Data::FORMAT_YAML, Data::detect_format("path/to/file.yml") );
+        is( Data::FORMAT_PHP, Data::detect_format_from_extension("path/to/file.php") );
+        is( Data::FORMAT_JSON, Data::detect_format_from_extension("path/to/file.json") );
+        is( Data::FORMAT_YAML, Data::detect_format_from_extension("path/to/file.yml") );
+    }
+
+    public function testPhpCompile()
+    {
+        ok(Data::compile_manifest_to_php("tests/assets/jquery/manifest.yml"));
     }
 
     public function testPhpEncode()
