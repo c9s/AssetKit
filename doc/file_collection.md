@@ -7,10 +7,10 @@ The API
 To create file collections from asset object:
 
 ```php
-$collections = FileCollection::create_from_manifest($asset);
+$collections = Collection::create_from_manifest($asset);
 ```
 
-To get file collections from existing asset object (which actually uses `FileCollection::create_from_manifest`:
+To get file collections from existing asset object (which actually uses `Collection::create_from_manifest`:
 
 ```php
 // install into public asset root.

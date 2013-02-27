@@ -27,7 +27,7 @@
       <file name="tests/AssetKit/AssetLoaderTest.php" role="test" md5sum="ed766dec0f405cd632dc6cf9d1b832d4"/>
       <file name="tests/AssetKit/AssetTest.php" role="test" md5sum="d41a05e64fa9e634e8e5ce724108ec8a"/>
       <file name="tests/AssetKit/CssMinTest.php" role="test" md5sum="96a1751235f1f6e673938eb681262f44"/>
-      <file name="tests/AssetKit/FileCollectionTest.php" role="test" md5sum="1c8b8ad54de68568c70f559d6b38e25e"/>
+      <file name="tests/AssetKit/CollectionTest.php" role="test" md5sum="1c8b8ad54de68568c70f559d6b38e25e"/>
       <file name="tests/AssetKit/FileUtilsTest.php" role="test" md5sum="4adb97c2d708df2621a53ff21f0a7847"/>
       <file name="tests/AssetKit/Filter/CssImportFilterTest.php" role="test" md5sum="249424a6e584f241206833fb279290f5"/>
       <file name="tests/AssetKit/ProcessTest.php" role="test" md5sum="9ce246602db20471288efe4995e90891"/>
@@ -52,7 +52,7 @@
       <file name="src/AssetKit/Console.php" role="php" md5sum="19c9851d2e2208044062f1b2b32d9429"/>
       <file name="src/AssetKit/CssImagePreprocess.php" role="php" md5sum="c577959fe31cd331e31995b0458d1ded"/>
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="32fff263d702f9034018cc32a064198f"/>
-      <file name="src/AssetKit/FileCollection.php" role="php" md5sum="b290997fa3fdd93f5d0c6cbbd31571d3"/>
+      <file name="src/AssetKit/Collection.php" role="php" md5sum="b290997fa3fdd93f5d0c6cbbd31571d3"/>
       <file name="src/AssetKit/FileUtils.php" role="php" md5sum="169d7901eb516b7b365416975472da94"/>
       <file name="src/AssetKit/Filter/CoffeeScriptFilter.php" role="php" md5sum="a8973ce4ea0fe0d95df032dade23aa46"/>
       <file name="src/AssetKit/Filter/CssImportFilter.php" role="php" md5sum="2d180e48597a00294ae74c9115d129bf"/>
@@ -99,7 +99,7 @@
       <install name="tests/AssetKit/AssetLoaderTest.php" as="AssetKit/AssetLoaderTest.php"/>
       <install name="tests/AssetKit/AssetTest.php" as="AssetKit/AssetTest.php"/>
       <install name="tests/AssetKit/CssMinTest.php" as="AssetKit/CssMinTest.php"/>
-      <install name="tests/AssetKit/FileCollectionTest.php" as="AssetKit/FileCollectionTest.php"/>
+      <install name="tests/AssetKit/CollectionTest.php" as="AssetKit/CollectionTest.php"/>
       <install name="tests/AssetKit/FileUtilsTest.php" as="AssetKit/FileUtilsTest.php"/>
       <install name="tests/AssetKit/Filter/CssImportFilterTest.php" as="AssetKit/Filter/CssImportFilterTest.php"/>
       <install name="tests/AssetKit/ProcessTest.php" as="AssetKit/ProcessTest.php"/>
@@ -124,7 +124,7 @@
       <install name="src/AssetKit/Console.php" as="AssetKit/Console.php"/>
       <install name="src/AssetKit/CssImagePreprocess.php" as="AssetKit/CssImagePreprocess.php"/>
       <install name="src/AssetKit/CssMin.php" as="AssetKit/CssMin.php"/>
-      <install name="src/AssetKit/FileCollection.php" as="AssetKit/FileCollection.php"/>
+      <install name="src/AssetKit/Collection.php" as="AssetKit/Collection.php"/>
       <install name="src/AssetKit/FileUtils.php" as="AssetKit/FileUtils.php"/>
       <install name="src/AssetKit/Filter/CoffeeScriptFilter.php" as="AssetKit/Filter/CoffeeScriptFilter.php"/>
       <install name="src/AssetKit/Filter/CssImportFilter.php" as="AssetKit/Filter/CssImportFilter.php"/>

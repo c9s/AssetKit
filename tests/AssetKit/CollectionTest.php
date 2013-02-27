@@ -1,12 +1,12 @@
 <?php
 
-class FileCollectionTest extends PHPUnit_Framework_TestCase
+class CollectionTest extends PHPUnit_Framework_TestCase
 {
 
 
     function testCollection()
     {
-        $cln = new AssetKit\FileCollection;
+        $cln = new AssetKit\Collection;
         $cln->addFile( 'public/assets/jquery/jquery/dist/jquery.js' );
         ok($cln);
     }

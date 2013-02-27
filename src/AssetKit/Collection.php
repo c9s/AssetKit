@@ -3,7 +3,7 @@ namespace AssetKit;
 use Exception;
 use IteratorAggregate;
 
-class FileCollection
+class Collection
     implements IteratorAggregate
 {
 

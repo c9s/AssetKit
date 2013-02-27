@@ -189,7 +189,7 @@ Please check public/index.php file for example.
 
 ### Can use create file collection directly
 
-    $cln = new FileCollection;
+    $cln = new Collection;
     $cln->fromDir('path/to/dir');
     $cln->fromGlob('path/to/dir/*');
     $cln->addFile('path/to/file');

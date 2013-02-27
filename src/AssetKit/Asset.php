@@ -45,7 +45,7 @@ class Asset
 
 
     /**
-     * @var AssetKit\FileCollection[]
+     * @var AssetKit\Collection[]
      */
     public $collections = array();
 
@@ -91,7 +91,7 @@ class Asset
         $collections = array();
 
         foreach( $collectionStash as $stash ) {
-            $collection = new FileCollection;
+            $collection = new Collection;
 
             $files = array();
             foreach( $stash['files'] as $p ) {
