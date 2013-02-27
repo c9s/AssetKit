@@ -9,7 +9,14 @@ class LinkInstaller extends Installer
     {
         $name       = $asset->name;
         $targetDir = $asset->getInstallDir(true);
-        FileUtil::rmtree($targetDir);
+        if ( file_exists($targetDir) ) {
+            echo "Removing $targetDir\n";
+            if( is_link($targetDir) ) {
+                unlink($targetDir);
+            } else {
+                return FileUtil::rmtree($targetDir);
+            }
+        }
     }
 
     public function install($asset)

@@ -41,7 +41,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         ok($loader, "loader ok");
 
         $asset = $loader->registerFromManifestFileOrDir($manifestPath);
-        ok($asset, "asset is loaded");
+        ok($asset, "asset is loaded from $manifestPath");
 
 
         $updater = new ResourceUpdater();
@@ -50,7 +50,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
         $installer = new AssetKit\LinkInstaller;
         $installer->install( $asset );
-
         $installer->uninstall( $asset );
 
         /*

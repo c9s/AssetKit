@@ -129,9 +129,8 @@ class FileUtil
             elseif( is_file( $path ) ) {
                 unlink( $path );
             }
-
-
         }
+        return true;
     }
 
 
