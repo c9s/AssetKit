@@ -49,24 +49,18 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $updater->update($asset);
 
         $installer = new AssetKit\LinkInstaller;
+        ob_start();
         $installer->install( $asset );
         $installer->uninstall( $asset );
+        ob_clean();
 
-        /*
-        } 
-        else {
-            $installer = new Installer;
-            $installer->install( $asset );
-        }
+        $installer = new AssetKit\Installer;
+        ob_start();
+        $installer->install( $asset );
+        $installer->uninstall( $asset );
+        ob_clean();
 
-        $export = $asset->export();
-        $config->addAsset( $asset->name , $export );
-
-        $this->logger->info("Saving config...");
         $config->save();
-
-        $this->logger->info("Done");
-        */
     }
 }
 
