@@ -18,6 +18,10 @@ use AssetKit\FileUtil;
  *
  *    assets/jquery          <-- source dir
  *    public/assets/jquery   <-- install dir
+ *    public                 <-- asset base dir
+ *    
+ *    /assets                <-- asset base url
+ *    /assets/jquery         <-- asset url
  *
  * Manifest file
  *
