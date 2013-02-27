@@ -43,9 +43,7 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
 
         $updater = new ResourceUpdater();
         ok($updater,'resource updater is loaded');
-
-
-#          $updater->update(true);
+        $updater->update($asset);
 
         /*
         if( $options->link ) {

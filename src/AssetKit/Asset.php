@@ -76,6 +76,12 @@ class Asset
     public $collections = array();
 
 
+    public function __construct($config) 
+    {
+        $this->config = $config;
+    }
+
+
     public function loadFromManifestFile($manifestFile, $format = 0)
     {
         $config = null;

@@ -64,7 +64,7 @@ class AssetLoader
                           : 0;
             
             // load the asset manifest file
-            $asset = new Asset;
+            $asset = new Asset($this->config);
             $asset->loadFromManifestFile( $assetConfig['manifest'] , $format);
 
             // save the asset object into the pool
@@ -121,7 +121,7 @@ class AssetLoader
             $path = Data::compile_manifest_to_php($path);
         }
 
-        $asset = new Asset;
+        $asset = new Asset($this->config);
         $asset->loadFromManifestFile($path, $format);
         $this->registerAsset($asset);
         return $asset;
