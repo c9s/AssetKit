@@ -48,21 +48,33 @@ class Config
 
     public $cacheSupport = false;
 
+
+
     public function __construct($file, $options = array())
+    {
+        $this->options = $options;
+        $this->loadFromFile($file);
+    }
+
+    public function setOptions($options)
+    {
+        $this->options = $options;
+    }
+
+    public function loadFromFile($file)
     {
         $this->file = $file;
         $this->fileDirectory = dirname(realpath($file));
-        $this->options = $options;
 
-        if(isset($options['cache']) ) {
-            $this->cacheEnable = $options['cache'];
+        if(isset($this->options['cache']) ) {
+            $this->cacheEnable = $this->options['cache'];
         }
 
         $useCache = $this->cacheEnabled();
         if($useCache) {
             // get apc cache
-            $cacheId = isset($options['cache_id'])
-                ? $options['cache_id']
+            $cacheId = isset($this->options['cache_id'])
+                ? $this->options['cache_id']
                 : __DIR__;
             $this->config = apc_fetch($cacheId);
         }
@@ -71,17 +83,17 @@ class Config
             // read the config file
             if( file_exists($this->file) ) {
                 // use php format config by default, this is faster than JSON.
-                $format = isset($options['format']) 
-                    ? $options['format']
+                $format = isset($this->options['format']) 
+                    ? $this->options['format']
                     : self::FORMAT_PHP;
-                
+
                 $this->load($format);
 
                 if($useCache) {
                     apc_store($cacheId, 
                         $this->config, 
-                        isset($options['cache_expiry']) 
-                        ? $options['cache_expiry'] 
+                        isset($this->options['cache_expiry']) 
+                        ? $this->options['cache_expiry'] 
                         : 0 
                     );
                 }
@@ -95,13 +107,16 @@ class Config
                 );
             }
         }
+
+
+
     }
 
 
     public function getCacheExpiry()
     {
-        return isset($options['cache_expiry']) 
-            ? $options['cache_expiry'] 
+        return isset($this->options['cache_expiry']) 
+            ? $this->options['cache_expiry'] 
             : 0;
     }
 

@@ -32,7 +32,6 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
     }
 
 
-    /*
     public function setup()
     {
         $config = $this->getConfig();
@@ -52,12 +51,11 @@ class AssetLoaderTest extends PHPUnit_Framework_TestCase
         $installer->install( $jqueryui );
     }
 
-
     public function getLoader($config)
     {
-        return new AssetKit\AssetLoader($config, array( 'assets','tests/assets' ) );
+        return new AssetKit\AssetLoader($config);
     }
-
+    /*
     public function getConfig()
     {
         return new AssetKit\Config('.testassetkit');

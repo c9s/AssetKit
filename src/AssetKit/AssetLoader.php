@@ -21,13 +21,13 @@ class AssetLoader
 
 
     /**
+     *
      * @param AssetKit\Config $config
      */
     public function __construct(Config $config)
     {
         $this->config = $config;
     }
-
 
     /**
      * Load asset from assetkit config stash

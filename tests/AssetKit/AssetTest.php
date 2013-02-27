@@ -2,13 +2,15 @@
 
 class AssetTest extends PHPUnit_Framework_TestCase
 {
-    function test()
+    public function test()
     {
         $config = new AssetKit\Config('.tests_assetkit');
-        $config->public = 'public';
+        $config->setBaseDir('public');
+        $config->setBaseUrl('/assets');
 
-        $loader = new AssetKit\AssetLoader($config,array('assets','tests/assets'));
-        ok( $loader );
+
+        $loader = new AssetKit\AssetLoader($config,array());
+        ok( $loader, "Got asset loader." );
 
         $as = new AssetKit\Asset('assets/jquery-ui/manifest.yml');
         $as->config = $config;
