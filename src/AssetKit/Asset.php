@@ -6,6 +6,7 @@ use SerializerKit;
 use AssetKit\FileUtils;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use AssetKit\FileUtil;
 
 
 /**
@@ -16,6 +17,15 @@ use RecursiveIteratorIterator;
  */
 class Asset
 {
+    /**
+     * @var string the asset name
+     */
+    public $name;
+
+
+    /**
+     * @var array config stash.
+     */
     public $stash;
 
     /* asset dir (related path, relate to config file) */
@@ -23,95 +33,97 @@ class Asset
 
 
     /**
+     * @var strign manifest file path
+     */
+    public $manifestFile;
+
+
+    /**
      * @var AssetKit\Config
      */
     public $config;
 
+
+    /**
+     * @var AssetKit\FileCollection[]
+     */
     public $collections = array();
 
 
     /**
      * @param array|string|null $arg manifest array, manifest file path, or asset name
      */
-    public function __construct($arg = null)
+    public function __construct()
     {
-        // load from file.
-        if( is_array($arg) ) {
+    }
 
-        } elseif( is_string($arg) && file_exists($arg) ) {
-
+    public function loadFromManifestFile($manifestFile, $format = 0)
+    {
+        $config = null;
+        if( $format ) {
+            $config = Data::decode_file($manifestFile, $format);
+        } else {
+            $config = Data::detect_format_and_decode($manifestFile);
         }
+        $this->manifestFile = $manifestFile;
+        $this->sourceDir = dirname($manifestFile);
+        $this->loadFromArray($config);
+    }
 
-        // load from array
-        if( $arg && is_array($arg) ) {
-            $this->stash     = @$arg['stash'];
-            $this->sourceDir       = @$arg['source_dir'] ?: @$arg['dir'];  // "dir" is for backward-compatible
-            $this->name      = isset($arg['name']) ? $arg['name'] : null;
-        }
-        elseif( $arg && file_exists($arg) ) 
-        {
-            // load from file
-            $file = $arg;
-            $this->sourceDir = dirname($file);
-            $this->name = basename(dirname($file));
-            $ext = pathinfo($file, PATHINFO_EXTENSION);
 
-            if( 'yml' === $ext ) {
-                $serializer = new SerializerKit\Serializer('yaml');
-                $this->stash = $serializer->decode(file_get_contents($file));
-            } else {
-                $this->stash = require $file;
-            }
-
-            // expand manifest glob pattern
-            if( ! isset($this->stash['assets']) ) {
-                throw new Exception('assets tag is not defined.');
-            }
-            else {
-                $this->expandManifest();
-            }
-
-        }
-        elseif( $arg && is_string($arg) ) {
-            $this->name = $arg;
-        }
-
+    public function loadFromArray($config)
+    {
+        $this->stash = $config;
+        // load assets
         if( isset($this->stash['assets']) ) {
-            $this->collections = FileCollection::create_from_manfiest($this);
+            $this->expandPaths();
+            $this->collections = FileCollection::create_from_asset($this->stash['assets']);
         }
     }
 
-    public function expandManifest()
+    /**
+     * This expand glob patterns
+     *
+     */
+    public function expandPaths()
     {
-            foreach( $this->stash['assets'] as & $a ) {
-                $dir = $this->sourceDir;
-                $files = array();
-                foreach( $a['files'] as $p ) {
-                    if( strpos($p,'*') !== false ) {
-                        $expanded = array_map(function($item) use ($dir) { 
-                            return substr($item,strlen($dir) + 1);
-                                 }, glob($this->sourceDir . DIRECTORY_SEPARATOR . $p));
-                        $files = array_unique( array_merge( $files , $expanded ) );
+        foreach( $this->stash['collections'] as & $a )
+        {
+            $dir = $this->sourceDir;
+            $files = array();
+            foreach( $a['files'] as $p ) {
+
+                // found glob pattern
+                if( strpos($p,'*') !== false ) {
+
+                    $expanded = FileUtil::expand_glob_from_dir($dir, $p);
+
+                    // should be unique
+                    $files = array_unique( array_merge( $files , $expanded ) );
+
+                } elseif( is_dir( $dir . DIRECTORY_SEPARATOR . $p ) ) {
+
+                    // expand files from dir
+                    $ite = new RecursiveDirectoryIterator( $dir . DIRECTORY_SEPARATOR . $p );
+
+                    $expanded = array();
+                    foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
+                        if( $info->getFilename() === '.' || $info->getFilename() === '..' )
+                            continue;
+                        $expanded[] = $path;
                     }
-                    elseif( is_dir( $dir . DIRECTORY_SEPARATOR . $p ) ) {
-                        // expand files from dir
-                        $ite = new RecursiveDirectoryIterator( $dir . DIRECTORY_SEPARATOR . $p );
-                        $expanded = array();
-                        foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
-                            if( $info->getFilename() === '.' || $info->getFilename() === '..' )
-                                continue;
-                            $expanded[] = $path;
-                        }
-                        $expanded = array_map(function($path) use ($dir) { 
-                            return substr($path,strlen($dir) + 1);
-                                } , $expanded);
-                        $files = array_unique(array_merge( $files , $expanded ));
-                    } else {
-                        $files[] = $p;
-                    }
+
+                    $expanded = array_map(function($path) use ($dir) { 
+                        return substr($path,strlen($dir) + 1);
+                    } , $expanded);
+
+                    $files = array_unique(array_merge( $files , $expanded ));
+                } else {
+                    $files[] = $p;
                 }
-                $a['files'] = $files;
             }
+            $a['files'] = $files;
+        }
     }
 
     public function createFileCollection()

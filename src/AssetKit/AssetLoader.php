@@ -1,6 +1,7 @@
 <?php
 namespace AssetKit;
 use Exception;
+use AssetKit\Config;
 
 /**
  * @class
@@ -22,7 +23,7 @@ class AssetLoader
     /**
      * @param AssetKit\Config $config
      */
-    public function __construct( \AssetKit\Config $config)
+    public function __construct(Config $config)
     {
         $this->config = $config;
     }
@@ -57,6 +58,8 @@ class AssetLoader
 
     /**
      * Load all registered assets from config.
+     *
+     * @return null
      */
     public function loadAll()
     {
@@ -74,16 +77,8 @@ class AssetLoader
      */
     public function loadFromManifestFile($path, $format = 0)
     {
-        $config = null;
-        if( $format ) {
-            $config = Data::decode_file($path, $format);
-        } else {
-            $config = Data::detect_format_and_decode($path);
-        }
-
         if( $config ) {
             $asset = new Asset($config);
-            $asset->setManifestPath($path);
             $this->config->addAsset($asset);
         }
     }
@@ -117,6 +112,8 @@ class AssetLoader
 
     /**
      * Get asset object.
+     *
+     * @param string $name asset name.
      */
     public function get($name)
     {

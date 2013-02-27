@@ -23,7 +23,12 @@ class FileCollection
 
     public $content;
 
-    static function create_from_manfiest($asset)
+
+
+    /**
+     * simply copy class members to to the file collection
+     */
+    static function create_from_asset($asset)
     {
         $collections = array();
         foreach( $asset->stash['assets'] as $config ) {

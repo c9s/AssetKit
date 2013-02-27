@@ -1,7 +1,7 @@
 ---
 resource:
   url: http://code.jquery.com/jquery-1.9.1.min.js
-assets:
+collections:
   - javascript: 1
     files:
       - jquery-1.9.1.min.js

@@ -2,7 +2,7 @@
 resource:
   url: https://github.com/jquery/jquery-ui/zipball/1.8.19
   zip: 1
-assets:
+collections:
   - stylesheet: 1
     compressors: ['cssmin']
     files:
