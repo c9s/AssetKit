@@ -28,7 +28,7 @@ class AddCommand extends Command
         $config = new AssetConfig($configFile);
 
         $loader = new AssetLoader($config);
-        $asset = $loader->loadFromManifestFileOrDir($manifestFile);
+        $asset = $loader->registerFromManifestFileOrDir($manifestFile);
 
         if(!$asset) {
             throw new Exception("Can not load asset from $manifestFile.");

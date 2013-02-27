@@ -30,11 +30,17 @@ class Data
         return self::FORMAT_UNKNOWN;
     }
 
-    static function compile_manifest_to_php($path) 
+    static function compile_manifest_to_php($path, $format = 0)
     {
-        if( $data = self::detect_format_and_decode($path)) {
-            return self::encode_file( FileUtil::replace_extension($path,"php"), $data , self::FORMAT_PHP );
+        if( $format ) {
+            $data = self::decode_file($path, $format);
+        } else {
+            $data = self::detect_format_and_decode($path);
         }
+        $newpath = FileUtil::replace_extension($path,"php");
+        $ret = self::encode_file( $newpath , $data , self::FORMAT_PHP );
+        if( $ret !== false )
+            return $newpath;
     }
 
     static function detect_format_and_decode($path)

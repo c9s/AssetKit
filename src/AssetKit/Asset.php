@@ -59,7 +59,7 @@ class Asset
 
 
     /**
-     * @var string manifest file path
+     * @var string manifest file path, we assume that the manifest file should be PHP format.
      */
     public $manifestFile;
 

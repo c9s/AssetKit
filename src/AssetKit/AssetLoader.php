@@ -120,10 +120,12 @@ class AssetLoader
      */
     public function registerFromManifestFile($path, $format = 0)
     {
-        $asset = new Asset;
-        if($format === 0) {
-            $format = Data::detect_format_from_extension($path);
+        if( $format !== Data::FORMAT_PHP ) {
+            $format = Data::FORMAT_PHP;
+            $path = Data::compile_manifest_to_php($path);
         }
+
+        $asset = new Asset;
         $asset->loadFromManifestFile($path, $format);
         $this->registerAsset($asset);
         return $asset;
