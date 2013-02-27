@@ -7,9 +7,6 @@ class FileUtil
 {
 
 
-
-
-
     /**
      * Expand glob with the absolute path of asset source dir.
      * Returns relative path to the manifest.
@@ -52,15 +49,15 @@ class FileUtil
     static function expand_dir_recursively($dir)
     {
         // expand files from dir
-        $ite = new RecursiveDirectoryIterator( $dir . DIRECTORY_SEPARATOR . $p );
-
+        $ite = new RecursiveDirectoryIterator($dir);
         $expanded = array();
         foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
             if( $info->getFilename() === '.' || $info->getFilename() === '..' )
                 continue;
             $expanded[] = $path;
         }
-        return self::remove_basedir_from_paths($expanded,$dir);
+        return $expanded;
     }
+
 }
 
