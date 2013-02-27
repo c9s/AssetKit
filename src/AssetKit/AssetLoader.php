@@ -38,20 +38,17 @@ class AssetLoader
      */
     public function load($names)
     {
-        $names = (array) $names;
-        foreach( $names as $n ) {
-            /**
-             * 'manifest'
-             * 'source_dir'
-             * 'name'
-             */
-            if( $assetConfig = $this->config->getAssetConfig($n) ) {
-                // load the asset manifest file
-                $a = new Asset( $assetConfig['manifest'] );
+        /**
+         * 'manifest'
+         * 'source_dir'
+         * 'name'
+         */
+        if( $assetConfig = $this->config->getAssetConfig($n) ) {
+            // load the asset manifest file
+            $a = new Asset( $assetConfig['manifest'] );
 
-                // register asset into the pool
-                $this->assets[$n] = $a;
-            }
+            // register asset into the pool
+            return $this->assets[$n] = $a;
         }
     }
 
