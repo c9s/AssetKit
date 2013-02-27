@@ -36,16 +36,22 @@ class AssetLoader
      *
      * @return Asset|Asset[]
      */
-    public function load($names)
+    public function load($name)
     {
         /**
          * 'manifest'
          * 'source_dir'
          * 'name'
          */
-        if( $assetConfig = $this->config->getAssetConfig($n) ) {
+        if( $assetConfig = $this->config->getAssetConfig($name) ) {
+
+            if( ! isset($assetConfig['manifest']) ) {
+                throw new Exception("manifest file is not defined in $name");
+            }
+
             // load the asset manifest file
-            $a = new Asset( $assetConfig['manifest'] );
+            $a = new Asset;
+            $a->loadFromManifestFile( $assetConfig['manifest'] );
 
             // register asset into the pool
             return $this->assets[$n] = $a;

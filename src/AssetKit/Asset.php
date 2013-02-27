@@ -52,12 +52,14 @@ class Asset
      */
     public $stash;
 
-    /* asset dir (related path, relate to config file) */
+    /**
+     * @var string asset dir (related path, relate to config file) 
+     */
     public $sourceDir;
 
 
     /**
-     * @var strign manifest file path
+     * @var string manifest file path
      */
     public $manifestFile;
 
