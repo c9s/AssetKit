@@ -124,9 +124,8 @@ class Asset
             $files = array();
             foreach( $stash['files'] as $p ) {
 
-
                 // found glob pattern
-                if( strpos($p,'*') !== false ) 
+                if( strpos($p,'*') !== false )
                 {
                     $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
 
@@ -146,7 +145,6 @@ class Asset
             }
             // update filelist.
             $stash['files'] = $files;
-
 
             if( isset($stash['filters']) )
                 $collection->filters = $stash['filters'];

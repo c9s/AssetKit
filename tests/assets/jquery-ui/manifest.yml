@@ -3,19 +3,17 @@ resource:
   url: https://github.com/jquery/jquery-ui/zipball/1.8.19
   zip: 1
 collections:
+  - compressors: ['cssmin']
   - stylesheet: 1
-    compressors: ['cssmin']
-    files:
-      - jquery-jquery-ui-27c4854/themes/base/jquery.ui.base.css
-      - jquery-jquery-ui-27c4854/themes/base/jquery.ui.core.css
-      - jquery-jquery-ui-27c4854/themes/base/jquery.ui.*.css
+    - jquery-jquery-ui-27c4854/themes/base/jquery.ui.base.css
+    - jquery-jquery-ui-27c4854/themes/base/jquery.ui.core.css
+    - jquery-jquery-ui-27c4854/themes/base/jquery.ui.*.css
   - files:
     - jquery-jquery-ui-27c4854/themes/base/images
-  - javascript: 1
-    compressors: ['jsmin']
-    files:
-      - jquery-jquery-ui-27c4854/ui/jquery.ui.core.js
-      - jquery-jquery-ui-27c4854/ui/jquery.ui.widget.js
-      - jquery-jquery-ui-27c4854/ui/jquery.ui.mouse.js
-      - jquery-jquery-ui-27c4854/ui/jquery.ui.position.js
-      - jquery-jquery-ui-27c4854/ui/jquery.ui.*.js
+  - compressors: ['jsmin']
+    javascript:
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.core.js
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.widget.js
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.mouse.js
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.position.js
+    - jquery-jquery-ui-27c4854/ui/jquery.ui.*.js

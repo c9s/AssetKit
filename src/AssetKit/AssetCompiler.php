@@ -337,12 +337,5 @@ class AssetCompiler
             }
         }
     }
-
-
-
-
-
 }
-
-
 
