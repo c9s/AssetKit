@@ -391,7 +391,7 @@ class AssetConfig
     {
         if($this->root)
             return $this->root;
-        return getcwd();
+        throw new Exception("root is not defined.");
     }
 
 }

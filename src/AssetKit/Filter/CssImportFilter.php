@@ -4,6 +4,7 @@ namespace AssetKit\Filter;
 
 class CssImportFilter
 {
+    const DEBUG = 0;
 
 
     /**
@@ -11,9 +12,10 @@ class CssImportFilter
      * @param string $baseDir css file baseDir (related css dir path)
      * @return string CSS Content
      */
-    public function importCss($file,$baseDir,$rootDir) {
-
-        echo "Importing from $file\n";
+    public function importCss($file, $baseDir,$rootDir) 
+    {
+        if(self::DEBUG)
+            echo "Importing from $file\n";
 
 
         $content = file_get_contents($file);
@@ -52,18 +54,25 @@ class CssImportFilter
              * @param string $rootDir The root directory path of current .assetkit file
              */
             function($matches) use ($file,$baseDir,$rootDir,$self) {
+                if(self::DEBUG)
+                    echo "--> Found {$matches[0]}\n";
+
                 // echo "CSS File $file <br/>";
                 // var_dump( $matches );
 
                 $path = $matches['url'] ?: $matches['url2'];
+
+
+                if(self::DEBUG)
+                    echo "--> Importing css from $path\n";
+
                 $content = "/* IMPORT FROM $path */" . PHP_EOL;
                 if( preg_match( '#^https?://#' , $path ) ) {
+                    // TODO: recursivly import from remote paths
                     $content .= file_get_contents( $path );
                 }
                 else {
                     /* Import recursively */
-                    echo "Calling importCss recursively\n";
-                    
                     $content .= $self->importCss(
                         $rootDir . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR . $path,
                         $baseDir,
@@ -73,7 +82,6 @@ class CssImportFilter
                 return $content;
         }, $content );
 
-        // echo '<pre>' . $content . '</pre>';
         return $content;
     }
 
@@ -93,7 +101,8 @@ class CssImportFilter
 
             $path = $sourceDir . DIRECTORY_SEPARATOR . $file;
 
-            echo "Processing $path\n";
+            if(self::DEBUG)
+                echo "Processing $path\n";
 
             // css file dir path
             $baseDir = dirname($path);

@@ -12,7 +12,7 @@ div.list {
 }
 
 CSS;
-        require 'src/AssetKit/CssMin.php';
+        require_once 'src/AssetKit/CssMin.php';
         $return = CssMin::minify( $css );
         is('div.list{color:blue;background:#ccc}',$return);
     }

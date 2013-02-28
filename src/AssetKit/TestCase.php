@@ -38,6 +38,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->config = new \AssetKit\AssetConfig($configFile);
         $this->config->setBaseDir("tests/public");
         $this->config->setBaseUrl("/assets");
+        $this->config->setRoot(getcwd());
     }
 
     public function tearDown()

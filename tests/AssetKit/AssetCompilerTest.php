@@ -55,6 +55,8 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $compiler = new AssetCompiler;
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
+        $compiler->registerDefaultCompressors();
+        $compiler->registerDefaultFilters();
         $files = $compiler->compile($asset);
         ok($files);
 
@@ -80,8 +82,8 @@ class AssetCompilerTest extends AssetKit\TestCase
                 string(31) "/assets/jquery-ui/jquery-ui.css"
         }
          */
-        is('/assets/jquery-ui/jquery-ui.js', $files['js_url'][0]);
-        is('/assets/jquery-ui/jquery-ui.css', $files['css_url'][0]);
+        is('/assets/jquery-ui/jquery-ui.min.js', $files['js_url'][0]);
+        is('/assets/jquery-ui/jquery-ui.min.css', $files['css_url'][0]);
     }
 
 

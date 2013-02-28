@@ -1,12 +1,11 @@
 <?php
 namespace AssetKit;
+use Exception;
 
 class AssetCompiler
 {
     const PRODUCTION = 1;
     const DEVELOPMENT = 2;
-
-
 
 
     /**
@@ -46,13 +45,8 @@ class AssetCompiler
 
     public function registerDefaultCompressors()
     {
-        $this->addCompressor('jsmin', function() {
-            return new \AssetKit\Compressor\JsMinCompressor;
-        });
-
-        $this->addCompressor('cssmin', function() {
-            return new \AssetKit\Compressor\CssMinCompressor;
-        });
+        $this->addCompressor('jsmin', '\AssetKit\Compressor\JsMinCompressor');
+        $this->addCompressor('cssmin', '\AssetKit\Compressor\CssMinCompressor');
 
         $this->addCompressor('yui_css', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
@@ -67,26 +61,11 @@ class AssetCompiler
 
     public function registerDefaultFilters()
     {
-        $this->addFilter( 'coffeescript' ,function() {
-            return new \AssetKit\Filter\CoffeeScriptFilter;
-        });
-
-        $this->addFilter( 'css_import', function() {
-            return new \AssetKit\Filter\CssImportFilter;
-        });
-
-        $this->addFilter( 'sass' , function() {
-            return new \AssetKit\Filter\SassFilter;
-        });
-
-        $this->addFilter( 'scss' , function() {
-            return new \AssetKit\Filter\ScssFilter;
-        });
-
-        $this->addFilter( 'css_rewrite', function() {
-            return new \AssetKit\Filter\CssRewriteFilter;
-        });
-
+        $this->addFilter( 'coffeescript','\AssetKit\Filter\CoffeeScriptFilter');
+        $this->addFilter( 'css_import', '\AssetKit\Filter\CssImportFilter');
+        $this->addFilter( 'sass', '\AssetKit\Filter\SassFilter');
+        $this->addFilter( 'scss', '\AssetKit\Filter\ScssFilter');
+        $this->addFilter( 'css_rewrite', '\AssetKit\Filter\CssRewriteFilter');
     }
 
 
@@ -221,15 +200,22 @@ class AssetCompiler
         if( isset($this->compressors[$name]) )
             return $this->compressors[$name];
 
+        // check compressor builder
         if( ! isset($this->_compressors[$name]) )
             return;
 
         $cb = $this->_compressors[ $name ];
-        if( is_callable($cb) ) {
+
+        if( is_string($cb) ) {
+            if( class_exists($cb,true) ) {
+                return $this->compressors[ $name ] = new $cb;
+            } else {
+                throw new Exception("$cb class not found.");
+            }
+        } else if( is_callable($cb) ) {
             return $this->compressors[ $name ] = call_user_func($cb);
-        }
-        elseif( class_exists($cb,true) ) {
-            return $this->compressors[ $name ] = new $cb;
+        } else {
+            throw new Exception("Unsupported compressor builder");
         }
     }
 
@@ -240,8 +226,6 @@ class AssetCompiler
             return $self->getCompressor($n);
              }, $this->_compressors);
     }
-
-
 
     /**
      * Squash asset contents,
