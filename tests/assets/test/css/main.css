@@ -1,0 +1,5 @@
+
+.image {
+    /* this should be convert to {baseUrl}/test/images/test.png */
+    background: url(../images/test.png);
+}

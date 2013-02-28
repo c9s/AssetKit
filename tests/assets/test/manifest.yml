@@ -1,5 +1,8 @@
 ---
 assets:
+  - stylesheet: 1
+    files:
+      - css/main.css
   - filters: [ 'sass' ]
     stylesheet: 1
     files:
