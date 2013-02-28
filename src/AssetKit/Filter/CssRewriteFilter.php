@@ -59,9 +59,7 @@ class CssRewriteFilter
                     array_pop($urlParts);
                     $url = substr($url, 3);
                 }
-
                 $dirnameUrl = join('/', $urlParts );
-
                 $url = $dirnameUrl . '/' . $url;
 
                 if(self::DEBUG)

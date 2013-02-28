@@ -6,23 +6,15 @@ class CssImportFilter
 {
     const DEBUG = 0;
 
-
-    /**
-     * @param string $file absolute css file path
-     * @param string $baseDir css file baseDir (related css dir path)
-     * @return string CSS Content
-     */
-    public function importCss($file, $baseDir,$rootDir) 
+    public function importCss($fullpath, $dirname,$rootDir) 
     {
         if(self::DEBUG)
-            echo "Importing from $file\n";
-
-
-        $content = file_get_contents($file);
+            echo "Importing from $fullpath\n";
+        $content = file_get_contents($fullpath);
 
         // we should rewrite url( ) paths first, before we import css contents
         // $rewrite = new CssRewriteFilter;
-        // $content = $rewrite->rewrite($content,$baseDir);
+        // $content = $rewrite->rewrite($content,$dirname);
 
         $self = $this;
 
@@ -49,35 +41,46 @@ class CssImportFilter
             #xs',
 
             /**
-             * @param string $file    Current CSS file to parse import statement.
-             * @param string $baseDir The directory path of current CSS file.
+             * @param string $fullpath Current CSS file to parse import statement.
+             * @param string $dirname The directory path of current CSS file.
              * @param string $rootDir The root directory path of current .assetkit file
              */
-            function($matches) use ($file,$baseDir,$rootDir,$self) {
+            function($matches) use ($fullpath, $dirname, $rootDir, $self) {
                 if(self::DEBUG)
                     echo "--> Found {$matches[0]}\n";
 
                 // echo "CSS File $file <br/>";
                 // var_dump( $matches );
 
-                $path = $matches['url'] ?: $matches['url2'];
+                $url = $matches['url'] ?: $matches['url2'];
 
 
                 if(self::DEBUG)
-                    echo "--> Importing css from $path\n";
+                    echo "--> Importing css from $url\n";
 
-                $content = "/* IMPORT FROM $path */" . PHP_EOL;
-                if( preg_match( '#^https?://#' , $path ) ) {
+                $content = "/* IMPORT FROM $url */" . PHP_EOL;
+                if( preg_match( '#^https?://#' , $url ) ) {
                     // TODO: recursivly import from remote paths
-                    $content .= file_get_contents( $path );
+                    $content .= file_get_contents( $url );
                 }
                 else {
+
+                    // resolve the relative url
+                    $pathParts = explode( DIRECTORY_SEPARATOR ,$dirname);
+                    $newUrl = $url;
+                    while ( 0 === strpos($newUrl, '../') ) {
+                        // 2 <= substr_count($dirname, '/')) {
+                        array_pop($pathParts);
+                        $newUrl = substr($newUrl, 3);
+                    }
+                    $newFullpath = join( DIRECTORY_SEPARATOR, $pathParts ) . '/' . $newUrl;
+                    $newDirname = dirname($newFullpath);
+
+                    if(self::DEBUG)
+                        echo $url , " => " , $newFullpath , "\n";
+
                     /* Import recursively */
-                    $content .= $self->importCss(
-                        $rootDir . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR . $path,
-                        $baseDir,
-                        $rootDir
-                    );
+                    $content .= $self->importCss( $newFullpath, $newDirname, $rootDir );
                 }
                 return $content;
         }, $content );
@@ -93,23 +96,19 @@ class CssImportFilter
         // get css files and find @import statement to import related content
         // $assetDir = $collection->asset->getPublicDir();
         $rootDir  = $collection->asset->config->getRoot();
-        $sourceDir = $collection->asset->getSourceDir();
+        $sourceDir = $collection->asset->getSourceDir(true);
         $contents = '';
 
         // for rewriting paths
         foreach( $collection->getFilePaths() as $file ) {
-
-            $path = $sourceDir . DIRECTORY_SEPARATOR . $file;
+            $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
 
             if(self::DEBUG)
-                echo "Processing $path\n";
+                echo "Processing $fullpath\n";
 
-            // css file dir path
-            $baseDir = dirname($path);
-            $content = $this->importCss( $rootDir . DIRECTORY_SEPARATOR . $path , $baseDir , $rootDir );
-
-            // echo "CSS FILE: " . $path . "<br/>\n\n";
-            // echo $content;
+            // the dirname of the file (absolute)
+            $dirname = dirname($fullpath);
+            $content = $this->importCss($fullpath, $dirname, $rootDir);
             $contents .= $content;
         }
         $collection->setContent( $contents );
