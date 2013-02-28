@@ -15,7 +15,7 @@ class FileUtil
             return $dir . DIRECTORY_SEPARATOR . 'manifest.yml';
     }
 
-    static function find_manifest_file_from_directory($dir) 
+    static function find_and_update_manifest_file_from_directory($dir)
     {
         // find cache
         if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.php') ) {
@@ -26,6 +26,18 @@ class FileUtil
             }
         }
 
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.json') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.json';
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.yml') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.yml';
+
+    }
+
+    static function find_manifest_file_from_directory($dir) 
+    {
+        // find cache
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.php') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.php';
         if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.json') )
             return $dir . DIRECTORY_SEPARATOR . 'manifest.json';
         if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.yml') )

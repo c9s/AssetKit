@@ -96,19 +96,6 @@ class AssetLoader
 
 
     /**
-     * Load all registered assets from config.
-     *
-     * @return null
-     */
-    public function loadAll()
-    {
-        $assets = $this->config->getRegisteredAssets();
-        $names = array_keys($assets);
-        $this->load($names);
-    }
-
-
-    /**
      * Load asset from a manifest file.
      *
      * @param string $path
@@ -158,7 +145,8 @@ class AssetLoader
 
     public function updateAsset($asset)
     {
-        return Data::compile_manifest_to_php($asset->manifestFile);
+        $manifestFile = FileUtil::find_non_manifest_file_from_directory( dirname($asset->manifestFile) );
+        return Data::compile_manifest_to_php($manifestFile);
     }
 
     public function updateAssetByName($name)
@@ -173,12 +161,25 @@ class AssetLoader
      */
     public function updateAssetManifests()
     {
-        $assets = $this->config->getRegisteredAssets();
-        foreach( $assets as $name => $subconfig ) {
-            $this->updateAssetByName( $name );
+        $assets = array();
+        $registered = $this->config->getRegisteredAssets();
+        foreach( $registered as $name => $subconfig ) {
+            $asset = $this->load($name);
+            $this->updateAsset($asset);
+            $assets[] = $asset;
         }
+        return $assets;
     }
 
+    public function loadAll() 
+    {
+        $assets = array();
+        $registered = $this->config->getRegisteredAssets();
+        foreach( $registered as $name => $subconfig ) {
+            $assets[] = $this->load($name);
+        }
+        return $assets;
+    }
 
 
     public function lookup($name)

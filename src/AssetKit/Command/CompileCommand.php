@@ -26,7 +26,7 @@ class CompileCommand extends Command
         }
 
         $as = $options->as;
-        $config = new Config('.assetkit');
+        $config = new AssetConfig('.assetkit');
 
         $this->logger->info('Compiling...');
 

@@ -25,7 +25,7 @@ class UpdateCommand extends Command
 
         $options = $this->options;
 
-        $config = new AssetConfig('.assetkit');
+        $config = new AssetConfig($configFile);
         $loader = new AssetLoader($config);
 
         $installer = $options->link
@@ -33,10 +33,10 @@ class UpdateCommand extends Command
                 : new Installer;
         $installer->logger = $this->logger;
 
-        $loader->updateAssetManifests();
+        $assets = $loader->updateAssetManifests();
 
-        foreach( $config->getRegisteredAssets() as $name => $config ) {
-            $this->logger->info("Updating $name ...");
+        foreach( $assets as $asset ) {
+            $this->logger->info("Updating {$asset->name} ...");
 
             $updater = new \AssetKit\ResourceUpdater;
             $updater->update($asset, true);

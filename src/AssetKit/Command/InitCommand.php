@@ -38,7 +38,7 @@ class InitCommand extends Command
         $this->logger->info( "Reading $configFile file" );
 
         // create asset config
-        $config = new Config($configFile);
+        $config = new AssetConfig($configFile);
         $config->setBaseUrl($this->options->baseUrl );
         $config->setBaseDir($this->options->baseDir );
 
