@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-02-28</date>
-  <time>19:32:38</time>
+  <time>19:46:49</time>
   <version>
     <release>2.0.0</release>
     <api>2.0.0</api>
@@ -44,7 +44,7 @@
       <file name="src/AssetKit/Compressor/JsMinCompressor.php" role="php" md5sum="2f55643e0c3d7264cc689136289b931e"/>
       <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="ab607c58c9d2afdec092ad6898baa509"/>
       <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="ea820e7899226d3848352ad9ec2afa97"/>
-      <file name="src/AssetKit/Console.php" role="php" md5sum="c62d1b3b0fd829706a703ed5a14a9df2"/>
+      <file name="src/AssetKit/Console.php" role="php" md5sum="7d7e6a9e5e365765ed81c6ac8172ab01"/>
       <file name="src/AssetKit/CssImagePreprocess.php" role="php" md5sum="dc8f9868fab94ea9788d70fb310113b1"/>
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="32fff263d702f9034018cc32a064198f"/>
       <file name="src/AssetKit/Data.php" role="php" md5sum="aeb2e2d316f188f65713d313fa6e3961"/>
@@ -62,7 +62,7 @@
       <file name="src/AssetKit/ResourceUpdater.php" role="php" md5sum="e6c92eb19fb7778ac431fe5e25c6d1c2"/>
       <file name="src/AssetKit/TestCase.php" role="php" md5sum="5e4c03a0a065f44e7ca77e5845bac359"/>
       <file name="src/AssetKit/Utils.php" role="php" md5sum="f7ba55477a119bd00f7d08066f8b9e1b"/>
-      <file name="assetkit" role="script" md5sum="bf4d1602190920db7f3e7914b5330500"/>
+      <file name="assetkit" role="script" md5sum="15e10b85641cdd8f36bdfb8b9d2a3e72"/>
     </dir>
   </contents>
   <dependencies>
