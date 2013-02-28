@@ -2,20 +2,45 @@
 namespace AssetKit;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
+use AssetKit\Data;
 
 class FileUtil
 {
 
-
-    static function find_manifest_file_from_directory($dir) 
+    static function find_non_manifest_file_from_directory($dir) 
     {
-        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.php') )
-            return $dir . DIRECTORY_SEPARATOR . 'manifest.php';
         if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.json') )
             return $dir . DIRECTORY_SEPARATOR . 'manifest.json';
         if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.yml') )
             return $dir . DIRECTORY_SEPARATOR . 'manifest.yml';
     }
+
+    static function find_manifest_file_from_directory($dir) 
+    {
+        // find cache
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.php') ) {
+            $cache = $dir . DIRECTORY_SEPARATOR . 'manifest.php';
+            $source = self::find_non_manifest_file_from_directory($dir);
+            if( filemtime($cache) >= filemtime($source) ) {
+                return $cache;
+            }
+        }
+
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.json') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.json';
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.yml') )
+            return $dir . DIRECTORY_SEPARATOR . 'manifest.yml';
+    }
+
+
+    static function compile_manifest_file_from_directory($dir)
+    {
+        if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.php') )
+            unlink( $dir . DIRECTORY_SEPARATOR . 'manifest.php' );
+        $path = self::find_manifest_file_from_directory($dir);
+        Data::compile_manifest_to_php($path);
+    }
+
 
     /**
      * Expand glob with the absolute path of asset source dir.
