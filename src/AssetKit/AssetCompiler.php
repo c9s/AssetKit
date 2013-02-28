@@ -111,8 +111,10 @@ class AssetCompiler
 
         if($data['js'])
             file_put_contents( $jsFile, $data['js'] );
+
         if($data['css'])
             file_put_contents( $cssFile, $data['css'] );
+
 
         return array(
             'js'      => array($jsFile),

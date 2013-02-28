@@ -1,5 +1,5 @@
 ---
-assets:
+collections:
   - stylesheet: 1
     files:
       - css/main.css

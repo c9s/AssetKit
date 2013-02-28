@@ -1,3 +1,4 @@
+@import url(subpath/sub.css);
 
 .image {
     /* this should be convert to {baseUrl}/test/images/test.png */
