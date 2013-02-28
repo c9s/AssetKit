@@ -3,8 +3,7 @@
   array (
     0 => 
     array (
-      'stylesheet' => 1,
-      'files' => 
+      'stylesheet' => 
       array (
         0 => 'css/main.css',
       ),
@@ -15,8 +14,7 @@
       array (
         0 => 'sass',
       ),
-      'stylesheet' => 1,
-      'files' => 
+      'stylesheet' => 
       array (
         0 => 'sass-test.sass',
       ),
@@ -27,8 +25,7 @@
       array (
         0 => 'coffeescript',
       ),
-      'javascript' => 1,
-      'files' => 
+      'javascript' => 
       array (
         0 => 'test.coffee',
       ),

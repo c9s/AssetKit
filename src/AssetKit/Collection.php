@@ -23,9 +23,14 @@ class Collection
 
     public $content;
 
+    public $filetype;
 
-
-
+    const FILETYPE_FILE   = 1;
+    const FILETYPE_JS     = 2;
+    const FILETYPE_CSS    = 3;
+    const FILETYPE_SASS   = 4;
+    const FILETYPE_SCSS   = 5;
+    const FILETYPE_COFFEE = 6;
 
     /**
      * Return source path (with relative or absolute path)

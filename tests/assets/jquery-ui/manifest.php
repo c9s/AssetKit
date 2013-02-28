@@ -8,12 +8,11 @@
   array (
     0 => 
     array (
-      'stylesheet' => 1,
       'compressors' => 
       array (
         0 => 'cssmin',
       ),
-      'files' => 
+      'stylesheet' => 
       array (
         0 => 'jquery-jquery-ui-27c4854/themes/base/jquery.ui.base.css',
         1 => 'jquery-jquery-ui-27c4854/themes/base/jquery.ui.core.css',
@@ -29,12 +28,11 @@
     ),
     2 => 
     array (
-      'javascript' => 1,
       'compressors' => 
       array (
         0 => 'jsmin',
       ),
-      'files' => 
+      'javascript' => 
       array (
         0 => 'jquery-jquery-ui-27c4854/ui/jquery.ui.core.js',
         1 => 'jquery-jquery-ui-27c4854/ui/jquery.ui.widget.js',

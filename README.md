@@ -167,17 +167,14 @@ The manifest.yml file:
     resource:
       git: git@github.com:blah/blah.git
     asset:
-      - css: 1
-        filters: [ "css_import" ]
-        files:
-          - css/*.sass
-      - coffeescript: 1
-        files:
-          - js/*.coffee
-      - js: 1
-        files:
-          - js/*
-          - js/javascript.js
+      - filters: [ "css_import" ]
+        css:
+        - css/*.sass
+      - coffeescript:
+        - js/*.coffee
+      - js:
+        - js/*
+        - js/javascript.js
 
 
 ### Include assetkit in your application

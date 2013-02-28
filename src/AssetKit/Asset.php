@@ -120,9 +120,41 @@ class Asset
 
         foreach( $collectionStash as $stash ) {
             $collection = new Collection;
-
             $files = array();
-            foreach( $stash['files'] as $p ) {
+
+            
+            // for normal static files
+            if( isset($stash['files']) ) {
+                $files            = $stash['files'];
+                $collection->type = Collection::FILETYPE_FILE;
+            } elseif (isset($stash['js'])) {
+                $files                    = $stash['js'];
+                $collection->filetype     = Collection::FILETYPE_JS;
+                $collection->isJavascript = true;
+            } elseif (isset($stash['javascript'])) {
+                $files                    = $stash['javascript'];
+                $collection->filetype     = Collection::FILETYPE_JS;
+                $collection->isJavascript = true;
+            } elseif (isset($stash['coffeescript'])) {
+                $files                      = $stash['coffeescript'];
+                $collection->filetype       = Collection::FILETYPE_COFFEE;
+                $collection->isCoffeescript = true;
+            } elseif (isset($stash['css'])) {
+                $files                    = $stash['css'];
+                $collection->filetype     = Collection::FILETYPE_CSS;
+                $collection->isStylesheet = true;
+            } elseif (isset($stash['stylesheet']) ) {
+                $files                    = $stash['stylesheet'];
+                $collection->filetype     = Collection::FILETYPE_CSS;
+                $collection->isStylesheet = true;
+            } else {
+                var_dump( $this ); 
+                var_dump( $stash );
+                throw new Exception('Unknown collection file type.');
+            }
+
+            $expandedFiles = array();
+            foreach( $files as $p ) {
 
                 // found glob pattern
                 if( strpos($p,'*') !== false )
@@ -130,40 +162,27 @@ class Asset
                     $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
 
                     // should be unique
-                    $files = array_unique( array_merge( $files , $expanded ) );
+                    $expandedFiles = array_unique( array_merge( $expandedFiles , $expanded ) );
 
                 } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
 
                     $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
                     $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
 
-                    $files = array_unique(array_merge( $files , $expanded ));
+                    $expandedFiles = array_unique(array_merge( $expandedFiles , $expanded ));
 
                 } else {
-                    $files[] = $p;
+                    $expandedFiles[] = $p;
                 }
             }
-            // update filelist.
-            $stash['files'] = $files;
 
-            if( isset($stash['filters']) )
+            if( isset($stash['filters']) ) {
                 $collection->filters = $stash['filters'];
-
+            }
             if( isset($stash['compressors']) ) {
                 $collection->compressors = $stash['compressors'];
             }
-
-            if( isset($stash['files']) ) {
-                $collection->files = $stash['files'];
-            }
-
-            if( isset($stash['javascript']) || isset($stash['js']) ) {
-                $collection->isJavascript = true;
-            } elseif( isset($stash['stylesheet']) || isset($stash['css']) ) {
-                $collection->isStylesheet = true;
-            } elseif( isset($stash['coffeescript']) ) {
-                $collection->isCoffeescript = true;
-            }
+            $collection->files = $expandedFiles;
             $collection->asset = $this;
             $collections[] = $collection;
         }

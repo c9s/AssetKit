@@ -7,8 +7,7 @@
   array (
     0 => 
     array (
-      'javascript' => 1,
-      'files' => 
+      'javascript' => 
       array (
         0 => 'jquery-1.9.1.min.js',
       ),

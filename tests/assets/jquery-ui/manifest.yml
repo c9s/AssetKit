@@ -4,12 +4,12 @@ resource:
   zip: 1
 collections:
   - compressors: ['cssmin']
-  - stylesheet: 1
+    stylesheet:
     - jquery-jquery-ui-27c4854/themes/base/jquery.ui.base.css
     - jquery-jquery-ui-27c4854/themes/base/jquery.ui.core.css
     - jquery-jquery-ui-27c4854/themes/base/jquery.ui.*.css
   - files:
-    - jquery-jquery-ui-27c4854/themes/base/images
+      - jquery-jquery-ui-27c4854/themes/base/images
   - compressors: ['jsmin']
     javascript:
     - jquery-jquery-ui-27c4854/ui/jquery.ui.core.js

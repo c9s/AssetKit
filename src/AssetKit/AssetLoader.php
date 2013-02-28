@@ -156,6 +156,17 @@ class AssetLoader
 
 
 
+    public function updateAsset($asset)
+    {
+        return Data::compile_manifest_to_php($asset->manifestFile);
+    }
+
+    public function updateAssetByName($name)
+    {
+        $asset = $this->load($name);
+        return $this->updateAsset($asset);
+    }
+
     /**
      * This method is for updating all manifest files that
      * is registed in asset config.
@@ -164,8 +175,7 @@ class AssetLoader
     {
         $assets = $this->config->getRegisteredAssets();
         foreach( $assets as $name => $subconfig ) {
-            $asset = $this->load($name);
-            Data::compile_manifest_to_php($asset->manifestFile);
+            $this->updateAssetByName( $name );
         }
     }
 
