@@ -23,6 +23,11 @@ class AssetConfig
     public $file;
 
 
+    /**
+     * @var string root path (absolute path)
+     */
+    public $root;
+
 
     /**
      * @var array $config the config hash.
@@ -373,22 +378,20 @@ class AssetConfig
         $this->config['baseDir'] = $dir;
     }
 
+    public function setRoot($root)
+    {
+        $this->root = $root;
+    }
 
 
     /**
      * Return the config file dir path.
      */
-    public function getRoot($absolute = false)
+    public function getRoot()
     {
-        // Please note that realpath only works for 
-        // existing files
-        $root = dirname(realpath($this->file));
-
-        if($absolute) {
-            return realpath($root);
-        } else {
-            return $root;
-        }
+        if($this->root)
+            return $this->root;
+        return getcwd();
     }
 
 }
