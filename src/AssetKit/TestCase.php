@@ -29,6 +29,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         return $loader;
     }
 
+    public function getInstaller()
+    {
+        $installer = new \AssetKit\Installer;
+        $installer->enableLog = false;
+        return $installer;
+    }
+
+    public function getLinkInstaller()
+    {
+        $installer = new \AssetKit\LinkInstaller;
+        $installer->enableLog = false;
+        return $installer;
+    }
+
     public function setUp()
     {
         $configFile = $this->getConfigFile();
