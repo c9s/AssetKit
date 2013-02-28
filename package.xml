@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-02-28</date>
-  <time>19:29:12</time>
+  <time>19:32:38</time>
   <version>
     <release>2.0.0</release>
     <api>2.0.0</api>
@@ -30,7 +30,7 @@
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetKit/Asset.php" role="php" md5sum="28ef95a1d1267beaf99022431d54f524"/>
       <file name="src/AssetKit/AssetCompiler.php" role="php" md5sum="aeb1dd45c0c18bb528419c29caffd7f2"/>
-      <file name="src/AssetKit/AssetConfig.php" role="php" md5sum="0090dc9c9fde87560ccb372fc61428e2"/>
+      <file name="src/AssetKit/AssetConfig.php" role="php" md5sum="f50d13826e8cd47fdf7ba81893edf1b0"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="741404dcee968a11fce327f1a25743aa"/>
       <file name="src/AssetKit/AssetWriter.php" role="php" md5sum="f37fa0e32fe603141692b833b2bd9fb8"/>
       <file name="src/AssetKit/Collection.php" role="php" md5sum="a8b30439bde88e5dbaffa919d5896a42"/>
@@ -62,7 +62,7 @@
       <file name="src/AssetKit/ResourceUpdater.php" role="php" md5sum="e6c92eb19fb7778ac431fe5e25c6d1c2"/>
       <file name="src/AssetKit/TestCase.php" role="php" md5sum="5e4c03a0a065f44e7ca77e5845bac359"/>
       <file name="src/AssetKit/Utils.php" role="php" md5sum="f7ba55477a119bd00f7d08066f8b9e1b"/>
-      <file name="assetkit" role="script" md5sum="dd114bb4c31d2ca85e71287b96f5738c"/>
+      <file name="assetkit" role="script" md5sum="bf4d1602190920db7f3e7914b5330500"/>
     </dir>
   </contents>
   <dependencies>
