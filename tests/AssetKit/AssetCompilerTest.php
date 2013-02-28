@@ -5,13 +5,12 @@ use AssetKit\AssetCompiler;
 class AssetCompilerTest extends AssetKit\TestCase
 {
 
-    public function testCssImportUrlFromTestAsset()
+    public function testCssImportUrlFromTestAssetInProductionMode()
     {
         $config = $this->getConfig();
         $loader = $this->getLoader();
         $asset = $loader->registerFromManifestFileOrDir("tests/assets/test");
         ok($asset);
-
 
         $compiler = new AssetCompiler;
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
@@ -24,8 +23,6 @@ class AssetCompilerTest extends AssetKit\TestCase
         $files = $compiler->compile($asset);
         ok($files);
 
-        var_dump( $files );
-
         foreach($files['js'] as $file ) {
             path_ok($file);
         }
@@ -35,7 +32,7 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $cssminContent = file_get_contents( $files['css'][0] );
         ok($cssminContent);
-
+        echo $cssminContent;
 
         // We should get:
         // .image{background:url(/assets/test/images/test.png)}

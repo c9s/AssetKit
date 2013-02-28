@@ -21,8 +21,8 @@ class CssImportFilter
         $content = file_get_contents($file);
 
         // we should rewrite url( ) paths first, before we import css contents
-        $rewrite = new CssRewriteFilter;
-        $content = $rewrite->rewrite($content,$baseDir);
+        // $rewrite = new CssRewriteFilter;
+        // $content = $rewrite->rewrite($content,$baseDir);
 
         $self = $this;
 

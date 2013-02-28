@@ -255,6 +255,9 @@ class AssetCompiler
             {
                 // for stylesheets, before compress it, we should import the css contents
                 if( $collection->isStylesheet ) {
+                    $rewrite = new Filter\CssRewriteFilter;
+                    $rewrite->filter( $collection );
+
                     // we should cache these filter objects
                     $import = new Filter\CssImportFilter;
                     $import->filter( $collection );
