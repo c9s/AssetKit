@@ -36,6 +36,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         $cssminContent = file_get_contents( $files['css'][0] );
         ok($cssminContent);
 
+
         // We should get:
         // .image{background:url(/assets/test/images/test.png)}
 
@@ -56,6 +57,7 @@ class AssetCompilerTest extends AssetKit\TestCase
          */
         // is('/assets/jquery-ui/jquery-ui.js', $files['js_url'][0]);
         // is('/assets/jquery-ui/jquery-ui.css', $files['css_url'][0]);
+        $installer->uninstall($asset);
     }
 
     public function testDevelopmentModeShouldOnlyRunFiltersForjQueryUI()
@@ -100,6 +102,8 @@ class AssetCompilerTest extends AssetKit\TestCase
          */
         is('/assets/jquery-ui/jquery-ui.js', $files['js_url'][0]);
         is('/assets/jquery-ui/jquery-ui.css', $files['css_url'][0]);
+
+        $installer->uninstall($asset);
     }
 
     public function testProductionModeForjQueryUI()
@@ -145,6 +149,7 @@ class AssetCompilerTest extends AssetKit\TestCase
          */
         is('/assets/jquery-ui/jquery-ui.min.js', $files['js_url'][0]);
         is('/assets/jquery-ui/jquery-ui.min.css', $files['css_url'][0]);
+        $installer->uninstall($asset);
     }
 
 
