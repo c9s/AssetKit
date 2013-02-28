@@ -3,7 +3,7 @@ onion -d compile \
     --lib src \
     --lib vendor/pear \
     --classloader \
-    --bootstrap bin/assetkit \
+    --bootstrap scripts/assetkit.embed.php \
     --executable \
     --output assetkit.phar
 mv assetkit.phar assetkit

@@ -391,7 +391,7 @@ class AssetConfig
     {
         if($this->root)
             return $this->root;
-        throw new Exception("root is not defined.");
+        return realpath(dirname($this->file));
     }
 
 }
