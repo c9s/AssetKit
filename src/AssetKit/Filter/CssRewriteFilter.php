@@ -20,7 +20,7 @@ class CssRewriteFilter
      * @param string $content  stylesheet content
      * @param string $dirname  the dirname of stylesheet file
      */
-    public function rewrite($content , $fullpath , $dirname, $dirnameUrl, $assetBaseUrl)
+    public function rewrite($content, $fullpath , $dirname, $dirnameUrl, $assetBaseUrl)
     {
 
         // For path like

@@ -32,15 +32,15 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $cssminContent = file_get_contents( $files['css'][0] );
         ok($cssminContent);
-        echo $cssminContent;
 
-        // We should get:
-        // .image{background:url(/assets/test/images/test.png)}
-
+        // examine these
+        $this->assertContains('background:url(/assets/test/images/test.png)', $cssminContent);
+        $this->assertContains('.subpath2{color:green}', $cssminContent);
+        $this->assertContains('.subpath{color:red}', $cssminContent);
+        $this->assertContains('.content-navigation{border-color:#3bbfce;color:#2ca2af}', $cssminContent);
 
         /**
         $files which is something like:
-
         .array(4) {
             ["js"]=>
                 string(68) "/Users/c9s/src/work/php/AssetKit/tests/public/jquery-ui/jquery-ui.js"

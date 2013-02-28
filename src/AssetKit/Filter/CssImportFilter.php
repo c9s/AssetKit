@@ -6,15 +6,18 @@ class CssImportFilter
 {
     const DEBUG = 0;
 
-    public function importCss($fullpath, $dirname,$rootDir) 
+    public function importCss($fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
     {
         if(self::DEBUG)
             echo "Importing from $fullpath\n";
         $content = file_get_contents($fullpath);
 
+
         // we should rewrite url( ) paths first, before we import css contents
-        // $rewrite = new CssRewriteFilter;
-        // $content = $rewrite->rewrite($content,$dirname);
+        $rewrite = new CssRewriteFilter;
+
+        // ->rewrite($content, $fullpath , $dirname, $dirnameUrl, $assetBaseUrl)
+        $content = $rewrite->rewrite($content, $fullpath, $dirname, $dirnameUrl, $assetBaseUrl);
 
         $self = $this;
 
@@ -43,9 +46,8 @@ class CssImportFilter
             /**
              * @param string $fullpath Current CSS file to parse import statement.
              * @param string $dirname The directory path of current CSS file.
-             * @param string $rootDir The root directory path of current .assetkit file
              */
-            function($matches) use ($fullpath, $dirname, $rootDir, $self) {
+            function($matches) use ($fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl, $self) {
                 if(self::DEBUG)
                     echo "--> Found {$matches[0]}\n";
 
@@ -62,25 +64,30 @@ class CssImportFilter
                 if( preg_match( '#^https?://#' , $url ) ) {
                     // TODO: recursivly import from remote paths
                     $content .= file_get_contents( $url );
-                }
-                else {
+                } else {
+                    // For css import filter, we need absolute absolute dirname path to import.
+                    // For css rewrite filter, we need a relative dirname path to rewrite.
+                    $fullDirname = $assetSourceDir . DIRECTORY_SEPARATOR . $dirname;
 
                     // resolve the relative url
-                    $pathParts = explode( DIRECTORY_SEPARATOR ,$dirname);
+                    $pathParts = explode( DIRECTORY_SEPARATOR, $dirname);
                     $newUrl = $url;
                     while ( 0 === strpos($newUrl, '../') ) {
-                        // 2 <= substr_count($dirname, '/')) {
+                        // 2 <= substr_count($dirname, '/'))
                         array_pop($pathParts);
                         $newUrl = substr($newUrl, 3);
                     }
-                    $newFullpath = join( DIRECTORY_SEPARATOR, $pathParts ) . '/' . $newUrl;
-                    $newDirname = dirname($newFullpath);
+                    $newPath = join( DIRECTORY_SEPARATOR, $pathParts ) . '/' . $newUrl;
+                    $newDirname = dirname($newPath);
+                    $newDirnameUrl = $assetBaseUrl . '/' . $newDirname;
+                    $newFullpath = $assetSourceDir . DIRECTORY_SEPARATOR . $newPath;
 
-                    if(self::DEBUG)
-                        echo $url , " => " , $newFullpath , "\n";
+                    if(self::DEBUG) {
+                        echo $url , " => " , $newPath , "\n";
+                    }
 
                     /* Import recursively */
-                    $content .= $self->importCss( $newFullpath, $newDirname, $rootDir );
+                    $content .= $self->importCss($newFullpath, $assetSourceDir, $newDirname , $newDirnameUrl, $assetBaseUrl);
                 }
                 return $content;
         }, $content );
@@ -95,20 +102,22 @@ class CssImportFilter
 
         // get css files and find @import statement to import related content
         // $assetDir = $collection->asset->getPublicDir();
-        $rootDir  = $collection->asset->config->getRoot();
-        $sourceDir = $collection->asset->getSourceDir(true);
+        $assetSourceDir = $collection->asset->getSourceDir(true);
+        $assetBaseUrl = $collection->asset->getBaseUrl();
+
         $contents = '';
 
         // for rewriting paths
-        foreach( $collection->getFilePaths() as $file ) {
-            $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
-
-            if(self::DEBUG)
-                echo "Processing $fullpath\n";
+        foreach( $collection->getFilePaths() as $path ) {
+            $fullpath = $assetSourceDir . DIRECTORY_SEPARATOR . $path;
 
             // the dirname of the file (absolute)
-            $dirname = dirname($fullpath);
-            $content = $this->importCss($fullpath, $dirname, $rootDir);
+            $dirname = dirname($path);
+
+            // url to the directory of the asset.
+            $dirnameUrl = $assetBaseUrl . '/' . $dirname;
+
+            $content = $this->importCss($fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl);
             $contents .= $content;
         }
         $collection->setContent( $contents );
