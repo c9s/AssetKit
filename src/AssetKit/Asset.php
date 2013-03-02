@@ -143,6 +143,14 @@ class Asset
                 $files                    = $stash['css'];
                 $collection->filetype     = Collection::FILETYPE_CSS;
                 $collection->isStylesheet = true;
+            } elseif (isset($stash['sass'])) {
+                $files                    = $stash['sass'];
+                $collection->filetype     = Collection::FILETYPE_SASS;
+                $collection->isStylesheet = true;
+            } elseif (isset($stash['scss'])) {
+                $files                    = $stash['scss'];
+                $collection->filetype     = Collection::FILETYPE_SCSS;
+                $collection->isStylesheet = true;
             } elseif (isset($stash['stylesheet']) ) {
                 $files                    = $stash['stylesheet'];
                 $collection->filetype     = Collection::FILETYPE_CSS;
