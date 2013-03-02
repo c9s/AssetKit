@@ -2,15 +2,17 @@ language: php
 php:
   - 5.3
   - 5.4
-
-before_install:
-    sudo apt-get install php5-apc
 before_script:
+  - curl -o APC-3.1.10.tgz http://pecl.php.net/get/APC-3.1.10.tgz
+  - tar -xzf APC-3.1.10.tgz
+  - sh -c "cd APC-3.1.10 && phpize && ./configure && make && sudo make install && cd .."
+  - rm -Rf APC-3.1.10
+  - rm APC-3.1.10.tgz
+  - echo "extension=apc.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - phpenv rehash
   - pear channel-discover pear.corneltek.com
   - pear install -f -a corneltek/PHPUnit_TestMore
   - pear install -f -a corneltek/Universal
   - curl -O https://raw.github.com/c9s/Onion/master/onion
   - php onion install
-
 script: phpunit
