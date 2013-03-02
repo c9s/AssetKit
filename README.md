@@ -21,21 +21,22 @@ The Concept of AssetToolkit
 - When one asset is required from a web page, the asset can be quickly loaded through the AssetLoader, 
   then the asset will be filtered, compiled to the front-end output.
 
-- In production mode, the asset compiler squash the loaded asset collection into minified files.
+- In production mode, the asset compiler squashes the loaded asset files to the minified files.
 
 - In development mode, the asset compiler simply render the include paths for you.
 
-- You define different required assets in each different page with a page id (target)
+- You can define different required assets in each different page with a page id (target)
   The page id (target) is also used for caching results.
 
-  So that in the product page, you may include `jquery`, `product` assets together with a page id "yourapp-products".
-  And in the main page, you may include `jquery`, `mainpage` assets with a page id "youapp-mainpage"
+  So that in the product page, you may include `jquery`, `product` assets
+  together with a page id "yourapp-products".  And in the main page, you may
+  include `jquery`, `mainpage` assets with a page id "youapp-mainpage"
 
-- One asset can have multiple file collection, the file collection can be css,
-  coffee-script, live-script, javascript collection.
+- One asset can have multiple file collection, the file collection can be css, scss, sass,
+  coffee-script, live-script or javascript collection.
 
-- Each file collection has its own filter and compressor. so that CSS file
-  collection can use "cssmin" and "yuicss" compressor, and SASS file collection 
+- Each file collection may have its own filter and compressor. so that CSS file
+  collection can use "cssmin" and "yuicss" compressor, and the SASS file collection 
   can use "sass" filter and "cssmin" compressor to generate the minified files.
 
 Features
@@ -47,8 +48,7 @@ Features
 - AssetRender: Render compiled assets to HTML fragments, stylesheet tag or script tag.
 - Command-line tool for installing, register, precompile assets.
 - CSSMin compressor, YUI compressor, JSMin compressor, CoffeeScript, SASS, SCSS filters.
-- APC cache support
-
+- APC cache support, which caches the compiled manifest, so you don't need to recompile them everytime.
 
 Synopsis
 ===========
