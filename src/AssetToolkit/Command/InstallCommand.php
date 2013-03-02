@@ -39,6 +39,14 @@ class InstallCommand extends Command
         $loader = new AssetLoader($config);
         $loader->updateAssetManifests();
 
+        $compiledDir = $config->getCompiledDir();
+        $this->logger->info("Creating compiled dir: $compiledDir");
+        $this->logger->info("Please chmod this directory as you need.");
+        if( ! file_exists($compiledDir) )
+            mkdir($compiledDir,0755,true);
+
+
+
         $updater = new \AssetToolkit\ResourceUpdater();
         foreach( $config->getRegisteredAssets() as $name => $stash ) {
             $asset = $loader->load($name);
