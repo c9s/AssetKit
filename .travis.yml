@@ -5,8 +5,8 @@ php:
 
 before_script:
   - phpenv rehash
-  - pear channel-discover pear.corneltek.com
-  - pear install -f -a package.xml
+  - curl -s http://install.onionphp.org/ | sh
+  - php onion install
   - bash scripts/compile
 
 script: phpunit
