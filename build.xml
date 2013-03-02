@@ -128,7 +128,7 @@
         <then>
             <exec executable="onion" failonerror="true">
                 <arg value="-q"/>
-                <arg value="bundle"/>
+                <arg value="install"/>
             </exec>
         </then>
      </if>
@@ -136,10 +136,10 @@
 
  <target name="package">
      <if>
-         <available file="scripts/compile.sh"/>
+         <available file="scripts/compile"/>
          <then>
             <exec executable="bash" failonerror="true">
-                <arg value="scripts/compile.sh"/>
+                <arg value="scripts/compile"/>
             </exec>
          </then>
      </if>
@@ -147,7 +147,6 @@
          <available file="package.ini"/>
         <then>
             <exec executable="onion" failonerror="true">
-                <arg value="-d"/>
                 <arg value="build"/>
             </exec>
         </then>
@@ -156,12 +155,6 @@
 
  <!-- may we have a simple condition for phpunit.xml and phpunit-ci.xml ? -->
  <target name="phpunit" description="Run unit tests with PHPUnit">
-
-     <exec executable="php" failonerror="true">
-         <arg value="scripts/assetkit.php"/>
-         <arg value="update"/>
-     </exec>
-
     <if>
         <available file="phpunit-ci.xml"/>
         <then>

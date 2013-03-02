@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-02</date>
-  <time>22:24:34</time>
+  <time>22:39:56</time>
   <version>
     <release>2.0.0</release>
     <api>2.0.0</api>
@@ -33,7 +33,6 @@
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="1ef998c14faa7eae03a331e85614c2bc"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="0949010dcfa79f1d782f8d1213ca01f9"/>
       <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="e431903a438373a9400d79776893f3b1"/>
-      <file name="src/AssetToolkit/AssetWriter.php" role="php" md5sum="ac06b9ebaf7dd35c00aa9cead76b132b"/>
       <file name="src/AssetToolkit/Collection.php" role="php" md5sum="c1c3b5c8725facd3cbbc8b2fa184ada1"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="8a6c7e62921ba4fc7366a64df5beab4f"/>
       <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="d565ac7571aa65172292968c2954e57f"/>
@@ -101,7 +100,6 @@
       <install name="src/AssetToolkit/AssetConfig.php" as="AssetToolkit/AssetConfig.php"/>
       <install name="src/AssetToolkit/AssetLoader.php" as="AssetToolkit/AssetLoader.php"/>
       <install name="src/AssetToolkit/AssetRender.php" as="AssetToolkit/AssetRender.php"/>
-      <install name="src/AssetToolkit/AssetWriter.php" as="AssetToolkit/AssetWriter.php"/>
       <install name="src/AssetToolkit/Collection.php" as="AssetToolkit/Collection.php"/>
       <install name="src/AssetToolkit/Command/AddCommand.php" as="AssetToolkit/Command/AddCommand.php"/>
       <install name="src/AssetToolkit/Command/CompileCommand.php" as="AssetToolkit/Command/CompileCommand.php"/>
