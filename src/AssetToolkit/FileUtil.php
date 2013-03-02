@@ -7,7 +7,7 @@ use AssetToolkit\Data;
 class FileUtil
 {
 
-    static function find_non_manifest_file_from_directory($dir) 
+    static function find_non_php_manifest_file_from_directory($dir) 
     {
         if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.json') )
             return $dir . DIRECTORY_SEPARATOR . 'manifest.json';
@@ -20,7 +20,7 @@ class FileUtil
         // find cache
         if( file_exists($dir . DIRECTORY_SEPARATOR . 'manifest.php') ) {
             $cache = $dir . DIRECTORY_SEPARATOR . 'manifest.php';
-            $source = self::find_non_manifest_file_from_directory($dir);
+            $source = self::find_non_php_manifest_file_from_directory($dir);
             if( filemtime($cache) >= filemtime($source) ) {
                 return $cache;
             }

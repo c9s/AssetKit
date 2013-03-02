@@ -150,8 +150,9 @@ class AssetLoader
 
     public function updateAsset($asset)
     {
-        $manifestFile = FileUtil::find_non_manifest_file_from_directory( dirname($asset->manifestFile) );
-        return Data::compile_manifest_to_php($manifestFile);
+        $manifestFile = FileUtil::find_non_php_manifest_file_from_directory( dirname($asset->manifestFile) );
+        $phpManifestFile = Data::compile_manifest_to_php($manifestFile);
+        $this->registerFromManifestFile($phpManifestFile);
     }
 
     public function updateAssetByName($name)
