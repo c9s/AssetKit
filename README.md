@@ -166,9 +166,10 @@ To use assetkit in your application, just few lines to write:
     // pick up a SPL classloader, we need this to load library files
     // you can check public/index.php for examples
     require 'bootstrap.php';
+    define( ROOT , dirname(__DIR__) );
 
     // load your asset config file, this contains asset manifest and types
-    $config = new AssetToolkit\AssetConfig( '../.assetkit');
+    $config = new AssetToolkit\AssetConfig( '../.assetkit', ROOT );
 
     // initialize an asset loader
     $loader = new AssetToolkit\AssetLoader( $config );
@@ -178,23 +179,6 @@ To use assetkit in your application, just few lines to write:
     $assets[]   = $loader->load( 'jquery' );
     $assets[]   = $loader->load( 'jquery-ui' );
     $assets[]   = $loader->load( 'extjs4-gpl' );
-
-    // initialize a cache (if you need one)
-    $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
-
-    $writer = new AssetToolkit\AssetWriter($config);
-    $manifest = $writer
-            ->cache($cache)
-            ->production()          // generate for production code, (the alternative is `development`)
-            ->name('app')
-            ->write( $assets );
-
-    // then use include renderer to render html for asset files
-    $includer = new AssetToolkit\IncludeRender;
-    $html = $includer->render( $manifest );
-
-    // show html !
-    echo $html;
 ```
 
 
@@ -209,15 +193,12 @@ Hack
 Install deps:
 
     $ git clone git://github.com/c9s/AssetToolkit.git
-    $ git submodule init
-    $ git submodule update
-    $ onion bundle
+    $ cd AssetToolkit
+    $ onion install
 
 ... Hack Hack Hack ...
 
-    $ bash scripts/compile.sh
-    $ ./assetkit
-
+    $ php bin/assetkit
 
 ## The asset port manifest
 
@@ -230,7 +211,7 @@ The manifest.yml file:
       - filters: [ "css_import" ]
         css:
         - css/*.sass
-      - coffeescript:
+      - coffee:
         - js/*.coffee
       - js:
         - js/*
@@ -244,15 +225,7 @@ Please check public/index.php file for example.
 
 # Working in progress
 
-### Can use create file collection directly
-
-    $cln = new Collection;
-    $cln->fromDir('path/to/dir');
-    $cln->fromGlob('path/to/dir/*');
-    $cln->addFile('path/to/file');
-
 ### Include stylesheets and javascripts in front-end page
-
 
 Include specified asset:
 
