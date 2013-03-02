@@ -25,5 +25,11 @@
       'source_dir' => 'tests/assets/test',
       'name' => 'test',
     ),
+    'underscore' => 
+    array (
+      'manifest' => 'tests/assets/underscore/manifest.php',
+      'source_dir' => 'tests/assets/underscore',
+      'name' => 'underscore',
+    ),
   ),
 );

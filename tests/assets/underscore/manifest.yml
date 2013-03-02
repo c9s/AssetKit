@@ -1,0 +1,6 @@
+---
+resource:
+  url: http://underscorejs.org/underscore.js
+collections:
+  - js:
+    - underscore.js
