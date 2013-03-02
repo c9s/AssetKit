@@ -7,7 +7,7 @@ What for!? Because we need a different strategy to compile/load asset for PHP we
 Rails is too slow, the same strategy might not be suitable in PHP applications.
 
 AssetToolkit is designed for PHP's performance, all configuration files are compiled into
-PHP source code, this makes AssetToolkit loads these asset configuration files very quick!
+PHP source code, this makes AssetToolkit loads these asset configuration files quickly.
 
 AssetToolkit is a powerful asset manager, provides a simple command-line interface
 and a simple PHP library, there are many built-in filters and compressors in it.
@@ -28,8 +28,8 @@ The Concept of AssetToolkit
 - You define different required assets in each different page with a page id (target)
   The page id (target) is also used for caching results.
 
-  So that in the product page, you may include `jquery`, `product` assets together.
-  And in the main page, you may include `jquery`, `mainpage` assets.
+  So that in the product page, you may include `jquery`, `product` assets together with a page id "yourapp-products".
+  And in the main page, you may include `jquery`, `mainpage` assets with a page id "youapp-mainpage"
 
 - One asset can have multiple file collection, the file collection can be css,
   coffee-script, live-script, javascript collection.
