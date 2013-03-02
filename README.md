@@ -94,19 +94,19 @@ The rendered result:
 
 Pre-compile targets:
 
-
-    $ assetkit compile --target demo jquery jquery-ui               
+    $ assetkit compile --target demo jquery jquery-ui
     Compiling assets to target 'demo'...
     Stylesheet:
-      MD5:  9399a997d354919cba9f84517eb7604a
-      URL:  assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
-      File: /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+      MD5:   9399a997d354919cba9f84517eb7604a
+      URL:   assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+      File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+      Size:  59 KBytes
     Javascript:
       MD5:   4a09100517e2d98c3f462376fd69d887
       URL:   assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
       File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
+      Size:  304 KBytes
     Done
-
 
 The Asset Manifest
 ==================
