@@ -3,8 +3,8 @@ AssetToolkit
 
 AssetToolkit is different from Rails' asset pipeline, AssetToolkit is designed for PHP.
 
-**What for!? Because we need a different strategy to compile/load asset for PHP web applications, you know 
-Rails is too slow, the same strategy might not be suitable in PHP applications.**
+**What for!? Because we need a different strategy to compile/load assets for PHP web applications. 
+you know, Rails is too slow, the same strategy might not be suitable in PHP applications.**
 
 AssetToolkit is designed for PHP's performance, all configuration files are compiled into
 PHP source code, this makes AssetToolkit loads these asset configuration files quickly.
