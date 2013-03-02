@@ -5,6 +5,8 @@ use AssetKit\AssetCompiler;
 class AssetCompilerTest extends AssetKit\TestCase
 {
 
+
+
     public function testCssImportUrlFromTestAssetInProductionMode()
     {
         $config = $this->getConfig();
@@ -12,12 +14,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         $asset = $loader->registerFromManifestFileOrDir("tests/assets/test");
         ok($asset);
 
-        $compiler = new AssetCompiler;
+        $compiler = $this->getCompiler();
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
-        $compiler->setConfig($config);
-        $compiler->setLoader($loader);
-        $compiler->registerDefaultCompressors();
-        $compiler->registerDefaultFilters();
 
         $installer = $this->getInstaller();
         $installer->install($asset);
@@ -62,12 +60,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         $asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
         ok($asset);
 
-        $compiler = new AssetCompiler;
+        $compiler = $this->getCompiler();
         $compiler->setEnvironment( AssetCompiler::DEVELOPMENT );
-        $compiler->setConfig($config);
-        $compiler->setLoader($loader);
-        $compiler->registerDefaultCompressors();
-        $compiler->registerDefaultFilters();
 
         $installer = $this->getInstaller();
         $installer->install($asset);
@@ -104,12 +98,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         $asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
         ok($asset);
 
-        $compiler = new AssetCompiler;
-        $compiler->setConfig($config);
-        $compiler->setLoader($loader);
+        $compiler = $this->getCompiler();
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
-        $compiler->registerDefaultCompressors();
-        $compiler->registerDefaultFilters();
 
         $installer = $this->getInstaller();
         $installer->install($asset);

@@ -18,6 +18,12 @@ class AssetCompiler
      */
     public $loader;
 
+
+    /**
+     * @var string Cache namespace
+     */
+    public $namespace;
+
     /**
      * Can be AssetCompiler::PRODUCTION or AssetCompiler::DEVELOPMENT
      *
@@ -53,6 +59,19 @@ class AssetCompiler
      */
     protected $_compressors = array();
 
+
+    public function __construct($config,$loader)
+    {
+        $this->config = $config;
+        $this->loader = $loader;
+        $this->namespace = $this->config->getRoot();
+    }
+
+
+    public function setNamespace($ns)
+    {
+        $this->namespace = $ns;
+    }
 
     public function setEnvironment($env)
     {
@@ -172,6 +191,9 @@ class AssetCompiler
      */
     public function compileAssets($target, $assets)
     {
+        // apc_fetch($target);
+
+
         $manifests = array();
         foreach( $assets as $asset ) {
             if(is_string($asset) ) {
@@ -208,7 +230,7 @@ class AssetCompiler
         $outfiles['js_url']  = "$baseUrl/$target/" . $outfiles['js_md5']  . '.min.js';
         $outfiles['mtime']   = time();
 
-        // write file
+        // write minified file
         file_put_contents( $outfiles['js'], $contents['js'] );
         file_put_contents( $outfiles['css'], $contents['css'] );
         return $outfiles;
