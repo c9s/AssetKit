@@ -5,6 +5,9 @@ php:
 
 before_script:
   - phpenv rehash
+  - pear channel-discover pear.corneltek.com
+  - pear install -f -a corneltek/PHPUnit_TestMore
+  - pear install -f -a corneltek/Universal
   - curl -O https://raw.github.com/c9s/Onion/master/onion
   - php onion install
 
