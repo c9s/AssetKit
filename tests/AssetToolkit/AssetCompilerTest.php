@@ -135,8 +135,8 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         ok($files);
         path_ok($files['js_file']);
         path_ok($files['css_file']);
-        is('/assets/jquery-ui/jquery-ui.min.js', $files['js_url']);
-        is('/assets/jquery-ui/jquery-ui.min.css', $files['css_url']);
+        is('/assets/compiled/jquery-ui.min.js', $files['js_url']);
+        is('/assets/compiled/jquery-ui.min.css', $files['css_url']);
         $installer->uninstall($asset);
     }
 

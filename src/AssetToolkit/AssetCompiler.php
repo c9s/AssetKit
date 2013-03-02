@@ -258,24 +258,26 @@ class AssetCompiler
         $out = $this->squash($asset);
 
         // get the absolute path of install dir.
-        $installDir = $asset->getInstallDir(true);
         $baseUrl    = $asset->getBaseUrl();
         $name = $asset->name . '.min';
 
-        $jsFile = $installDir . DIRECTORY_SEPARATOR . $name . '.js';
-        $cssFile = $installDir . DIRECTORY_SEPARATOR . $name . '.css';
-        $jsUrl = $baseUrl . "/$name.js";
-        $cssUrl = $baseUrl . "/$name.css";
+        $compiledDir = $this->prepareCompiledDir();
+        $compiledUrl = $this->config->getCompiledUrl();
+
+        $jsFile = $compiledDir . DIRECTORY_SEPARATOR . $name . '.js';
+        $cssFile = $compiledDir . DIRECTORY_SEPARATOR . $name . '.css';
+        $jsUrl = $compiledUrl . "/$name.js";
+        $cssUrl = $compiledUrl . "/$name.css";
 
         if($out['js']) {
             $out['js_file'] = $jsFile;
             $out['js_url'] = $jsUrl;
-            file_put_contents( $jsFile, $out['js'] );
+            $this->writeFile( $jsFile, $out['js'] );
         }
         if($out['css']) {
-            file_put_contents( $cssFile , $out['css'] );
             $out['css_file'] = $cssFile;
             $out['css_url'] = $cssUrl;
+            $this->writeFile( $cssFile , $out['css'] );
         }
         apc_store($cacheKey, $out);
         return $out;
@@ -344,28 +346,23 @@ class AssetCompiler
                 $contents['css'] .= file_get_contents($m['css_file']);
         }
 
-        $baseDir = $this->config->getBaseDir(true);
-        $baseUrl = $this->config->getBaseUrl();
-
+        $compiledDir = $this->prepareCompiledDir();
+        $compiledUrl = $this->config->getCompiledUrl();
         $outfiles = array();
 
         // write minified results to file
         $outfiles['css_md5'] = md5($contents['css']);
         $outfiles['js_md5'] = md5($contents['js']);
-        $outfiles['css_file'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['css_md5'] . '.min.css';
-        $outfiles['js_file'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['js_md5'] . '.min.js';
-        $outfiles['css_url'] = "$baseUrl/$target/" . $outfiles['css_md5'] . '.min.css';
-        $outfiles['js_url']  = "$baseUrl/$target/" . $outfiles['js_md5']  . '.min.js';
+        $outfiles['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['css_md5'] . '.min.css';
+        $outfiles['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['js_md5'] . '.min.js';
+        $outfiles['css_url'] = "$compiledUrl/$target-" . $outfiles['css_md5'] . '.min.css';
+        $outfiles['js_url']  = "$compiledUrl/$target-" . $outfiles['js_md5']  . '.min.js';
         $outfiles['mtime']   = time();
 
-        $targetDir = $baseDir . DIRECTORY_SEPARATOR . $target;
-        if( ! file_exists($targetDir) ) {
-            mkdir($targetDir, 0755, true);
-        }
 
         // write minified file
-        file_put_contents( $outfiles['js_file'], $contents['js'] );
-        file_put_contents( $outfiles['css_file'], $contents['css'] );
+        $this->writeFile( $outfiles['js_file'], $contents['js'] );
+        $this->writeFile( $outfiles['css_file'], $contents['css'] );
         apc_store($cacheKey, $outfiles);
         return $outfiles;
     }
@@ -380,9 +377,25 @@ class AssetCompiler
         }
     }
 
+    public function prepareCompiledDir()
+    {
+        $compiledDir = $this->config->getCompiledDir();
+        if( ! file_exists($compiledDir) ) {
+            mkdir($compiledDir, 0755, true);
+        }
+        if( ! is_writable($compiledDir) ) {
+            throw new Exception("AssetCompiler: The $compiledDir is not writable.");
+        }
+        return $compiledDir;
+    }
 
 
-
+    public function writeFile($path,$content) 
+    {
+        if( false === file_put_contents($path, $content) ) {
+            throw new Exception("AssetCompiler: can not write $path");
+        }
+    }
 
 
 

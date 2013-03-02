@@ -20,8 +20,7 @@ class AssetConfigTest extends AssetToolkit\TestCase
         $config->addAssetDirectory('vendor/assets');
 
         $assets = $config->getRegisteredAssets();
-        ok( empty($asset) );
-
+        ok( empty($assets) );
         $config->save();
     }
 }

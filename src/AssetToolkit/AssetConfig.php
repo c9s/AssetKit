@@ -369,8 +369,6 @@ class AssetConfig
         $this->config['baseUrl'] = $url;
     }
 
-
-
     /**
      * Get the base dir of installed asset.
      */
@@ -378,6 +376,18 @@ class AssetConfig
     {
         $this->config['baseDir'] = $dir;
     }
+
+
+    public function getCompiledDir()
+    {
+        return $this->getBaseDir(true) . DIRECTORY_SEPARATOR . 'compiled';
+    }
+
+    public function getCompiledUrl()
+    {
+        return $this->getBaseUrl() . '/compiled';
+    }
+
 
     public function setRoot($root)
     {
