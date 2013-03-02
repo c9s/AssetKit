@@ -10,32 +10,25 @@ $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 $classLoader->useIncludePath(false);
 $classLoader->register();
 
-$config = new AssetToolkit\AssetConfig( ROOT . '/.assetkit');
-$loader = new AssetToolkit\AssetLoader( $config , array( ROOT . '/assets' ) );
+$config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
+$loader = new AssetToolkit\AssetLoader( $config );
 
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'test' );
-
-$cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
-$writer = new AssetToolkit\AssetWriter($config);
-$manifest = $writer->name('app')
-        // ->cache($cache)
-        ->production()
-        ->write( $assets );
-
-$includer = new AssetToolkit\IncludeRender;
-$head = $includer->render( $manifest );
+$render = new AssetToolkit\AssetRender($config,$loader);
+$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
 ?>
 <html>
 <head>
-    <?=$head?>
+<?php
+$render->renderAssets('demo',$assets);
+?>
 </head>
 <body>
 <?php
 var_dump( $_SERVER['PATH'] ); 
-var_dump( $manifest );
 ?>
 </body>
 </html>

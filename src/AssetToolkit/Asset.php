@@ -240,11 +240,9 @@ class Asset
      *
      * @param bool $absolute
      */
-    public function getSourceDir($absolute = false)
+    public function getSourceDir()
     {
-        return $absolute
-            ? $this->config->getRoot() . DIRECTORY_SEPARATOR . $this->sourceDir
-            : $this->sourceDir ;
+        return $this->sourceDir;
     }
 
 

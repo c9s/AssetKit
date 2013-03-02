@@ -65,7 +65,9 @@ class AssetLoader
             
             // load the asset manifest file
             $asset = new Asset($this->config);
-            $asset->loadFromManifestFile( $assetConfig['manifest'] , $format);
+            $asset->loadFromManifestFile( 
+                $this->config->getRoot() . '/' . $assetConfig['manifest'], 
+                $format);
 
             // save the asset object into the pool
             return $this->assets[$name] = $asset;
