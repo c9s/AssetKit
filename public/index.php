@@ -16,6 +16,7 @@ $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'test' );
+$assets[] = $loader->load( 'underscore' );
 $render = new AssetToolkit\AssetRender($config,$loader);
 $render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
 ?>
