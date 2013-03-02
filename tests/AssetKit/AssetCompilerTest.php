@@ -51,6 +51,7 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         // ensure our sass is compiled.
         $this->assertContains('.content-navigation{border-color:#3bbfce;color:#2ca2af}', $cssminContent);
+        $this->assertContains('.extended', $cssminContent);
 
 
 

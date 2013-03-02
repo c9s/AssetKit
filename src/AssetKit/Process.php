@@ -24,7 +24,7 @@ class Process
     {
         $this->args = $args;
         $this->cwd = getcwd();
-        $this->env['PATH'] = getenv('PATH'); // inherit PATH env
+        $this->env['PATH'] = getenv('PATH'); // inherit from the PATH env
     }
 
     function arg($arg)

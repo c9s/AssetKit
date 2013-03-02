@@ -16,19 +16,15 @@ class SassFilter
     {
         if( ! $collection->isStylesheet )
             return;
-
-        $input = $collection->getContent();
         $proc = new Process(array( $this->sass ));
-
-        // compile and print to stdout
-        $proc->arg( '-s' )->input($input);  // --scss
+        $filepaths = $collection->getSourcePaths(true);
+        foreach( $filepaths as $filepath ) {
+            $proc->arg($filepath);
+        }
         $code = $proc->run();
-
         if( $code != 0 )
-            throw new RuntimeException("process error: $code");
-
-        $content = $proc->getOutput();
-        $collection->setContent($content);
+            throw new RuntimeException("process error: $code. ");
+        $collection->setContent($proc->getOutput());
     }
 
 }
