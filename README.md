@@ -58,6 +58,7 @@ Features
 - CSSMin compressor, YUI compressor, JSMin compressor, CoffeeScript, SASS, SCSS filters.
 - APC cache support, which caches the compiled manifest, so you don't need to recompile them everytime.
 
+
 Synopsis
 ---------------------------
 
@@ -119,6 +120,13 @@ Pre-compile targets:
       File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
       Size:  304 KBytes
     Done
+
+
+Requirement
+---------------------------
+
+- APC extension.
+- yaml extension.
 
 The Asset Manifest File
 ---------------------------
