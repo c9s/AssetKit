@@ -386,7 +386,7 @@ Please check public/index.php file for example.
 
 Include specified asset:
 
-    {% asset 'jquery' %}
+    {% assets 'jquery' %}
 
 Include all assets:
 

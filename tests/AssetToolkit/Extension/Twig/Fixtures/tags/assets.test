@@ -1,0 +1,8 @@
+--TEST--
+assets tag
+--TEMPLATE--
+{% assets "jquery" %}
+--DATA--
+return array();
+--EXPECT--
+jquery
