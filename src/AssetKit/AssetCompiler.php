@@ -204,7 +204,12 @@ class AssetCompiler
      */
     public function compileAssets($target, $assets)
     {
-        // apc_fetch($target);
+        $cacheKey = $this->namespace . ':' . $target;
+        $cache = apc_fetch($cacheKey);
+        if( $cache ) {
+            // cache validation
+            return $cache;
+        }
 
 
         $manifests = array();
@@ -246,6 +251,8 @@ class AssetCompiler
         // write minified file
         file_put_contents( $outfiles['js'], $contents['js'] );
         file_put_contents( $outfiles['css'], $contents['css'] );
+
+        apc_store($cacheKey, $outfiles);
         return $outfiles;
     }
 
