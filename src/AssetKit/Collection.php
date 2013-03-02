@@ -25,6 +25,9 @@ class Collection
 
     public $filetype;
 
+    // attributes for assets rendering
+    public $attributes = array();
+
     // cache
     private $_lastmtime = 0;
 

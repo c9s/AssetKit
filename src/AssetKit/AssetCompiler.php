@@ -5,8 +5,6 @@ use AssetKit\FileUtil;
 
 class AssetCompiler
 {
-    const PRODUCTION = 1;
-    const DEVELOPMENT = 2;
 
     /**
      * @var AssetKit\AssetConfig asset config object.
@@ -24,15 +22,6 @@ class AssetCompiler
      * @var string Cache namespace
      */
     public $namespace;
-
-    /**
-     * Can be AssetCompiler::PRODUCTION or AssetCompiler::DEVELOPMENT
-     *
-     * $compiler->setEnvironment( AssetCompiler::PRODUCTION );
-     * $compiler->setEnvironment( AssetCompiler::DEVELOPMENT );
-     */
-    public $environment = self::DEVELOPMENT;
-
 
     /**
      * @var boolean enable fstat check in production mode.
@@ -88,11 +77,6 @@ class AssetCompiler
         $this->namespace = $ns;
     }
 
-    public function setEnvironment($env)
-    {
-        $this->environment = $env;
-
-    }
 
     public function setProductionFstatCheck($b)
     {
@@ -210,8 +194,8 @@ class AssetCompiler
 
 
     /**
-     * Method for compiling one asset
-     *
+     * Compile single asset
+     * This is for production mode.
      *
      * For example:
      *
@@ -269,11 +253,7 @@ class AssetCompiler
         // get the absolute path of install dir.
         $installDir = $asset->getInstallDir(true);
         $baseUrl    = $asset->getBaseUrl();
-        $name = $asset->name;
-
-        if( $this->environment === self::PRODUCTION ) {
-            $name = $name . '.min';
-        }
+        $name = $asset->name . '.min';
 
         $jsFile = $installDir . DIRECTORY_SEPARATOR . $name . '.js';
         $cssFile = $installDir . DIRECTORY_SEPARATOR . $name . '.css';

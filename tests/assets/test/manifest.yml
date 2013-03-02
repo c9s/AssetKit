@@ -2,9 +2,13 @@
 collections:
   - stylesheet:
     - css/main.css
+    attrs:
+      media: screen
   - filters: [ 'sass' ]
     stylesheet:
     - sass-test.sass
+    attrs:
+      media: screen
   - filters: [ 'coffeescript' ]
     javascript:
     - test.coffee

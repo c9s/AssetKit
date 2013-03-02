@@ -122,11 +122,10 @@ class Asset
             $collection = new Collection;
             $files = array();
 
-            
             // for normal static files
             if( isset($stash['files']) ) {
                 $files            = $stash['files'];
-                $collection->type = Collection::FILETYPE_FILE;
+                $collection->filetype = Collection::FILETYPE_FILE;
             } elseif (isset($stash['js'])) {
                 $files                    = $stash['js'];
                 $collection->filetype     = Collection::FILETYPE_JS;
@@ -159,6 +158,10 @@ class Asset
                 var_dump( $this ); 
                 var_dump( $stash );
                 throw new Exception('Unknown collection file type.');
+            }
+
+            if (isset($stash['attrs']) ) {
+                $collection->attributes = $stash['attrs'];
             }
 
             $expandedFiles = array();

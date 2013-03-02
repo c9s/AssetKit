@@ -18,7 +18,6 @@ class AssetCompilerTest extends AssetKit\TestCase
         $this->installAssets($assets);
 
         $compiler = $this->getCompiler();
-        $compiler->setEnvironment( AssetCompiler::PRODUCTION );
         $compiler->enableProductionFstatCheck();
 
         $files = $compiler->compileAssetsForProduction('myapp',$assets);
@@ -84,7 +83,6 @@ class AssetCompilerTest extends AssetKit\TestCase
         $this->installAssets($assets);
 
         $compiler = $this->getCompiler();
-        $compiler->setEnvironment( AssetCompiler::DEVELOPMENT );
         $outs = $compiler->compileAssetsForDevelopment($assets);
         ok($outs);
         foreach($outs as $out) {
@@ -102,7 +100,6 @@ class AssetCompilerTest extends AssetKit\TestCase
         ok($asset);
 
         $compiler = $this->getCompiler();
-        $compiler->setEnvironment( AssetCompiler::PRODUCTION );
 
         $installer = $this->getInstaller();
         $installer->install($asset);
