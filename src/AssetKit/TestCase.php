@@ -32,7 +32,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     public function getCompiler()
     {
         $compiler = new AssetCompiler($this->getConfig(),$this->getLoader() );
-        $compiler->setEnvironment( AssetCompiler::PRODUCTION );
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
         return $compiler;

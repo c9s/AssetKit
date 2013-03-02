@@ -180,11 +180,19 @@ class AssetCompiler
                 // content in the pipe.
                 if( $filtered ) {
                     $content = $c->getContent();
-                    $out[] = array( 'type' => $type ,'content' => $content );
+                    $out[] = array(
+                        'type' => $type,
+                        'content' => $content,
+                        'attrs' => $c->attributes
+                    );
                 } else {
                     $paths = $c->getFilePaths();
                     foreach( $paths as $path ) {
-                        $out[] = array( 'type' => $type, 'url' => $assetBaseUrl . '/' . $path );
+                        $out[] = array( 
+                            'type' => $type, 
+                            'url' => $assetBaseUrl . '/' . $path,
+                            'attrs' => $c->attributes,
+                        );
                     }
                 }
             }
@@ -246,7 +254,6 @@ class AssetCompiler
                     return $cache;
             }
         }
-
 
         $out = $this->squash($asset);
 
@@ -359,7 +366,6 @@ class AssetCompiler
         // write minified file
         file_put_contents( $outfiles['js_file'], $contents['js'] );
         file_put_contents( $outfiles['css_file'], $contents['css'] );
-
         apc_store($cacheKey, $outfiles);
         return $outfiles;
     }

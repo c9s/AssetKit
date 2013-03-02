@@ -89,6 +89,9 @@ class AssetCompilerTest extends AssetKit\TestCase
             ok($out['type']);
             ok(isset($out['url']) || isset($out['content']));
         }
+
+        $render = new AssetKit\AssetRender($config,$loader);
+        $render->renderFragments($outs);
     }
 
     public function testProductionModeForjQueryUI()
