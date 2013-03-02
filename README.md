@@ -13,7 +13,7 @@ AssetToolkit is a powerful asset manager, provides a simple command-line interfa
 and a simple PHP library, there are many built-in filters and compressors in it.
 
 The Concept of AssetToolkit
-============================
+---------------------------
 
 - We register these wanted assets into the assetkit configuration file,
   which contains the asset source directory, manifest file information.
@@ -40,7 +40,7 @@ The Concept of AssetToolkit
   can use "sass" filter and "cssmin" compressor to generate the minified files.
 
 Features
-========
+---------------------------
 
 - Centralized asset configuration.
 - Automatically fetch & update your asset files.
@@ -51,7 +51,7 @@ Features
 - APC cache support, which caches the compiled manifest, so you don't need to recompile them everytime.
 
 Synopsis
-===========
+---------------------------
 
 This creates and initializes the `.assetkit.php` file:
 
@@ -74,7 +74,11 @@ To update asset resource from remote (eg: git, github, hg or svn):
 Then integrate the AssetToolkit API into your PHP web application:
 
 ```php
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
+$config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
+    // the application root, contains the .assetkit.php file.
+    'root' => APPLICATION_ROOT
+));
+
 $loader = new AssetToolkit\AssetLoader( $config );
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
@@ -108,8 +112,8 @@ Pre-compile targets:
       Size:  304 KBytes
     Done
 
-The Asset Manifest
-==================
+The Asset Manifest File
+---------------------------
 
 To define file collections, you need to create a manifest.yml file in your asset directory,
 for example, the backbonejs manifest.yml file:
@@ -132,7 +136,7 @@ svn, git, hg resource types.
 
 
 Usage
-=====
+-----
 
 Once you got `assetkit`, you can initialize it with your public path (web root):
 
@@ -212,6 +216,77 @@ To use assetkit in your application, just few lines to write:
 
         YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
             assetkit add assets/test/manifest.yml
+
+
+
+The AssetConfig API
+-------------------
+
+```php
+$config = new AssetToolkit\AssetConfig('.assetkit.php',array(  
+    'cache' => true,
+    'cache_id' => 'your_app_id',
+    'cache_expiry' => 3600
+));
+$config->setBaseUrl('/assets');
+$config->setBaseDir('tests/assets');
+
+$baseDir = $config->getBaseDir(true); // absolute path
+$baseUrl = $config->getBaseUrl();
+$root = $config->getRoot();
+$compiledDir = $config->getCompiledDir();
+$compiledUrl = $config->getCompiledUrl();
+
+$config->addAssetDirectory('vendor/assets');
+
+$assetStashes = $config->getRegisteredAssets();
+
+$config->save();
+```
+
+
+The AssetLoader API
+-------------------
+
+```php
+$loader = new AssetToolkit\AssetLoader($config);
+$asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery");
+$asset = $loader->registerFromManifestFile("tests/assets/jquery/manifest.yml");
+
+$jquery = $loader->load('jquery');
+$jqueryui = $loader->load('jquery-ui');
+
+$updater = new ResourceUpdater;
+$updater->update($asset);
+```
+
+The Asset Installer API
+-----------------------
+
+```php
+$installer = new AssetToolkit\Installer;
+$installer->install( $asset );
+$installer->uninstall( $asset );
+```
+
+```php
+$installer = new AssetToolkit\LinkInstaller;
+$installer->install( $asset );
+$installer->uninstall( $asset );
+```
+
+The AssetCompiler
+-----------------
+
+```php
+$asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
+$compiler = new AssetToolkit\AssetCompiler($config,$loader);
+$files = $compiler->compile($asset);
+
+echo $files['js_url'];  //  outputs /assets/compiled/jquery-ui.min.js
+echo $files['css_url']; //  outputs /assets/compiled/jquery-ui.min.css
+```
+
 
 Hack
 =======

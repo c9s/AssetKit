@@ -73,6 +73,9 @@ class AssetConfig
     {
         $this->file = $file;
 
+        if(isset($this->options['root']) ) {
+            $this->root = $this->options['root'];
+        }
 
         if(isset($this->options['cache']) ) {
             $this->cacheEnable = $this->options['cache'];
