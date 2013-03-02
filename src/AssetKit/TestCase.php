@@ -41,10 +41,31 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function getInstaller()
     {
+        static $installer;
+        if($installer)
+            return $installer;
         $installer = new \AssetKit\Installer;
         $installer->enableLog = false;
         return $installer;
     }
+
+    public function installAssets($assets)
+    {
+        $installer = $this->getInstaller();
+        foreach($assets as $asset) {
+            $installer->install($asset);
+        }
+    }
+
+
+    public function uninstallAssets($assets)
+    {
+        $installer = $this->getInstaller();
+        foreach($assets as $asset) {
+            $installer->uninstall($asset);
+        }
+    }
+
 
     public function getLinkInstaller()
     {

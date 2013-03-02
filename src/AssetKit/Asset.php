@@ -242,6 +242,17 @@ class Asset
         return $this->config->getBaseUrl() . '/' . $this->name;
     }
 
+    public function isOutOfDate($mtimeB)
+    {
+        $collections = $this->getCollections();
+        foreach( $collections as $c ) {
+            // if it's newer
+            if( $c->getLastModifiedTime() > $mtimeB ) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Check source file existence.

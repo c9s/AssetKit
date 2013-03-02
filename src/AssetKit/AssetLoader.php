@@ -83,15 +83,17 @@ class AssetLoader
 
     /**
      * Load mutiple assets
-     *
+     * @param string[] asset names
      * @return Asset[]
      */
     public function loadAssets($names) 
     {
         $self = $this;
-        return array_map(function($name) use($self) {
-            return $self->load($name);
-        },$names);
+        $assets = array();
+        foreach( $names as $name ) {
+            $assets[] = $this->load($name);
+        }
+        return $assets;
     }
 
 

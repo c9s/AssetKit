@@ -1,6 +1,7 @@
 <?php
 namespace AssetKit;
 use Exception;
+use AssetKit\FileUtil;
 
 class AssetCompiler
 {
@@ -31,6 +32,20 @@ class AssetCompiler
      * $compiler->setEnvironment( AssetCompiler::DEVELOPMENT );
      */
     public $environment = self::DEVELOPMENT;
+
+
+    /**
+     * @var boolean enable fstat check in production mode.
+     *
+     * You can simply restart your fpm or apache server to reset 
+     * the APC cache. or enable this option to check fstat in 
+     * every request.
+     *
+     * We prefer clean up manifest cache manually, because fstat checking
+     * might consume a lot of I/O.
+     */
+    public $productionFstatCheck = false;
+
 
 
     /**
@@ -206,17 +221,28 @@ class AssetCompiler
     {
         $cacheKey = $this->namespace . ':' . $target;
         $cache = apc_fetch($cacheKey);
-        if( $cache ) {
-            // cache validation
-            return $cache;
-        }
 
+        // cache validation
+        if( $cache ) {
+            if( ! $this->productionFstatCheck ) {
+                return $cache;
+            } else {
+                $upToDate = true;
+                if( $mtime = @$cache['mtime'] ) {
+                    foreach( $assets as $asset ) {
+                        if( $asset->isOutOfDate($mtime) ) {
+                            $upToDate = false;
+                            break;
+                        }
+                    }
+                }
+                if($outOfDate)
+                    return $cache;
+            }
+        }
 
         $manifests = array();
         foreach( $assets as $asset ) {
-            if(is_string($asset) ) {
-                $asset = $this->loader->load($asset);
-            }
             $manifests[] = $this->compile($asset);
         }
         $contents = array(
@@ -226,31 +252,34 @@ class AssetCompiler
 
         // concat results
         foreach( $manifests as $m ) {
-            foreach( $m['js'] as $file ) {
-                $contents['js'] .= file_get_contents($file);
-            }
-            foreach( $m['css'] as $file ) {
-                $contents['css'] .= file_get_contents($file);
-            }
+            if(isset($m['js_file']))
+                $contents['js'] .= file_get_contents($m['js_file']);
+            if(isset($m['css_file']))
+                $contents['css'] .= file_get_contents($m['css_file']);
         }
 
         $baseDir = $this->config->getBaseDir(true);
-        $baseUrl = $this->config->getUrlDir();
+        $baseUrl = $this->config->getBaseUrl();
 
         $outfiles = array();
 
         // write minified results to file
         $outfiles['css_md5'] = md5($contents['css']);
         $outfiles['js_md5'] = md5($contents['js']);
-        $outfiles['css'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['css_md5'] . '.min.css';
-        $outfiles['js'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['js_md5'] . '.min.js';
+        $outfiles['css_file'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['css_md5'] . '.min.css';
+        $outfiles['js_file'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['js_md5'] . '.min.js';
         $outfiles['css_url'] = "$baseUrl/$target/" . $outfiles['css_md5'] . '.min.css';
         $outfiles['js_url']  = "$baseUrl/$target/" . $outfiles['js_md5']  . '.min.js';
         $outfiles['mtime']   = time();
 
+        $targetDir = $baseDir . DIRECTORY_SEPARATOR . $target;
+        if( ! file_exists($targetDir) ) {
+            mkdir($targetDir, 0755, true);
+        }
+
         // write minified file
-        file_put_contents( $outfiles['js'], $contents['js'] );
-        file_put_contents( $outfiles['css'], $contents['css'] );
+        file_put_contents( $outfiles['js_file'], $contents['js'] );
+        file_put_contents( $outfiles['css_file'], $contents['css'] );
 
         apc_store($cacheKey, $outfiles);
         return $outfiles;
