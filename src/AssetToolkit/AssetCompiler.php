@@ -132,6 +132,7 @@ class AssetCompiler
     /**
      * Simply run filters through these assets.
      *
+     * @param AssetToolkit\Assets[] asset objects
      */
     public function compileAssetsForDevelopment($assets)
     {
