@@ -71,7 +71,7 @@ To update asset resource from remote (eg: git, github, hg or svn):
 
     assetkit update
 
-Integaret the AssetToolkit API into your PHP web application:
+Then integrate the AssetToolkit API into your PHP web application:
 
 ```php
 $config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
