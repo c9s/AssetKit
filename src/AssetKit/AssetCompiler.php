@@ -7,6 +7,16 @@ class AssetCompiler
     const PRODUCTION = 1;
     const DEVELOPMENT = 2;
 
+    /**
+     * @var AssetKit\AssetConfig asset config object.
+     */
+    public $config;
+
+
+    /**
+     * @var AssetKit\AssetLoader asset loader object.
+     */
+    public $loader;
 
     /**
      * Can be AssetCompiler::PRODUCTION or AssetCompiler::DEVELOPMENT
@@ -17,6 +27,9 @@ class AssetCompiler
     public $environment = self::DEVELOPMENT;
 
 
+    /**
+     * @var boolean enable compressor in production mode
+     */
     public $enableCompressor = true;
 
     /**
@@ -30,10 +43,14 @@ class AssetCompiler
      */
     protected $compressors = array();
 
-    // filter builder
+    /**
+     * @var array filter build
+     */
     protected $_filters = array();
 
-    // compressor builder
+    /**
+     * @var array compressor builder
+     */
     protected $_compressors = array();
 
 
@@ -42,6 +59,17 @@ class AssetCompiler
         $this->environment = $env;
     }
 
+
+    public function setConfig(AssetConfig $config)
+    {
+        $this->config = $config;
+    }
+
+
+    public function setLoader(AssetLoader $loader)
+    {
+        $this->loader = $loader;
+    }
 
     public function registerDefaultCompressors()
     {
@@ -88,7 +116,6 @@ class AssetCompiler
      * Will be compiled into:
      *
      * public/assets/jquery/jquery.min.js
-     *
      */
     public function compile($asset) 
     {
@@ -125,16 +152,70 @@ class AssetCompiler
     }
 
 
-
     /**
-     * Compile multiple assets.
+     * Compile multiple assets into the target path.
+     *
+     * For example, compiling:
+     *
+     *    - jquery
+     *    - jquery-ui
+     *    - blueprint
+     *
+     * Which generates
+     *
+     *   /assets/{target}/{md5}.min.css
+     *   /assets/{target}/{md5}.min.js
+     *
+     * The compiled manifest is stored in APC or in the file cache.
+     * So that if the touch time stamp is updated. AssetCompiler 
+     * will re-compile these stuff.
+     *
+     * @param string target name
+     * @param array Asset[]
      */
-    public function compileAssets($assets) 
+    public function compileAssets($target, $assets)
     {
+        $manifests = array();
+        foreach( $assets as $asset ) {
+            if(is_string($asset) ) {
+                $asset = $this->loader->load($asset);
+            }
+            $manifests[] = $this->compile($asset);
+        }
+        $contents = array(
+            'js' => '',
+            'css' => '',
+        );
 
+        // concat results
+        foreach( $manifests as $m ) {
+            foreach( $m['js'] as $file ) {
+                $contents['js'] .= file_get_contents($file);
+            }
+            foreach( $m['css'] as $file ) {
+                $contents['css'] .= file_get_contents($file);
+            }
+        }
+
+        $baseDir = $this->config->getBaseDir(true);
+        $baseUrl = $this->config->getUrlDir();
+
+        $outfiles = array();
+
+        // write minified results to file
+        $outfiles['css_md5'] = md5($contents['css']);
+        $outfiles['js_md5'] = md5($contents['js']);
+        $outfiles['css'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['css_md5'] . '.min.css';
+        $outfiles['js'] = $baseDir . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . $outfiles['js_md5'] . '.min.js';
+        $outfiles['css_url'] = "$baseUrl/$target/" . $outfiles['css_md5'] . '.min.css';
+        $outfiles['js_url']  = "$baseUrl/$target/" . $outfiles['js_md5']  . '.min.js';
+        $outfiles['mtime']   = time();
+
+        // write file
+        file_put_contents( $outfiles['js'], $contents['js'] );
+        file_put_contents( $outfiles['css'], $contents['css'] );
+        return $outfiles;
     }
-
-
 
 
     /**

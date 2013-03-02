@@ -338,8 +338,9 @@ class AssetConfig
         // We should simply get the realpath in their context.
         if( isset($this->config['baseDir']) && $this->config['baseDir'] ) 
         {
-            if( $absolute )
-                return realpath($this->config['baseDir']);
+            if( $absolute ) {
+                return $this->getRoot() . DIRECTORY_SEPARATOR .  $this->config['baseDir'];
+            }
             return $this->config['baseDir'];
         }
         throw new Exception("baseDir is not defined in asset config.");

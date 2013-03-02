@@ -14,6 +14,8 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $compiler = new AssetCompiler;
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
+        $compiler->setConfig($config);
+        $compiler->setLoader($loader);
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 
@@ -66,6 +68,8 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $compiler = new AssetCompiler;
         $compiler->setEnvironment( AssetCompiler::DEVELOPMENT );
+        $compiler->setConfig($config);
+        $compiler->setLoader($loader);
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 
@@ -112,6 +116,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         ok($asset);
 
         $compiler = new AssetCompiler;
+        $compiler->setConfig($config);
+        $compiler->setLoader($loader);
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
