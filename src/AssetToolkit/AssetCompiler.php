@@ -303,13 +303,13 @@ class AssetCompiler
      * @param string target name
      * @param array Asset[]
      */
-    public function compileAssetsForProduction($target, $assets)
+    public function compileAssetsForProduction($target, $assets, $force = false)
     {
         $cacheKey = $this->namespace . ':' . $target;
         $cache = apc_fetch($cacheKey);
 
         // cache validation
-        if( $cache ) {
+        if( $cache && ! $force ) {
             if( ! $this->productionFstatCheck ) {
                 return $cache;
             } else {

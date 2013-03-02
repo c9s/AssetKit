@@ -92,8 +92,8 @@ The rendered result:
 <link rel="stylesheet" type="text/css"  href="assets/demo/3fffd7e7bf5d2a459cad396bd3c375b4.min.css"/>
 ```
 
-Definitions
-============
+The Asset Manifest
+==================
 
 To define file collections, you need to create a manifest.yml file in your asset directory,
 for example, the backbonejs manifest.yml file:

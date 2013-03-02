@@ -2,72 +2,60 @@
 namespace AssetToolkit\Command;
 use Exception;
 use AssetToolkit\AssetConfig;
+use AssetToolkit\AssetLoader;
+use AssetToolkit\AssetCompiler;
 use AssetToolkit\Asset;
 use CLIFramework\Command;
 
 class CompileCommand extends Command
 {
-
-
     public function options($opts)
     {
-        $opts->add('a|as:', 'compile asset with an ID');
+        $opts->add('t|target:', 'the target ID');
     }
 
     public function brief() { return 'precompile asset files.'; }
 
     public function execute()
     {
-        $assets = func_get_args();
-        $options = $this->options;
+        $assetNames = func_get_args();
 
-        if( empty($assets) ) {
+        if( empty($assetNames) ) {
             throw new Exception("asset name is required.");
         }
 
-        $as = $options->as;
-        $config = new AssetConfig('.assetkit');
+        $target = $this->options->target;
+        $configFile = $this->options->config ?: ".assetkit.php";
+        $config = new AssetConfig($configFile);
+        $loader = new AssetLoader($config);
 
-        $this->logger->info('Compiling...');
+        if( ! ini_get('apc.enable_cli') ) {
+            $this->logger->info("Notice: You may enable apc.enable_cli option to precompile production files from command-line.");
+        }
+
+        $this->logger->info("Compiling assets to target '$target'...");
 
         // initialize loader and writer
-        $assets = $config->getAssets();
-        $writer = new \AssetToolkit\AssetWriter( $config );
+        $assets = $loader->loadAssets($assetNames);
 
-        if( $as )
-            $writer->name( $as );
+        $compiler = new AssetCompiler($config,$loader);
+        $compiler->registerDefaultCompressors();
+        $compiler->registerDefaultFilters();
+        
+        // force compile
+        $files = $compiler->compileAssetsForProduction($target,$assets, true);
 
-        $manifest = $writer
-            ->production()
-            ->write( $assets );
+        printf( "Stylesheet:\n" );
+        printf( "  MD5:  %s\n" , $files['css_md5'] );
+        printf( "  URL:  %s\n" , $files['css_url'] );
+        printf( "  File: %s\n" , $files['css_file'] );
 
-        foreach( $manifest['javascripts'] as $file ) {
-            $this->logger->info("x {$file["path"]}");
-        }
-
-        foreach( $manifest['stylesheets'] as $file ) {
-            $this->logger->info("x {$file["path"]}");
-        }
-
-        $php = '<?php return ' . var_export($manifest,1) . '; ?>';
-        $this->logger->info("Generating manfiest file...");
-        $manifestFile = 'manifest.php';
-        file_put_contents( $manifestFile ,$php);
-        $this->logger->info("x $manifestFile");
+        printf( "Javascript:\n" );
+        printf( "  MD5:   %s\n" , $files['js_md5'] );
+        printf( "  URL:   %s\n" , $files['js_url'] );
+        printf( "  File:  %s\n" , $files['js_file'] );
 
         $this->logger->info("Done");
-
-        $this->logger->info(<<<END
-
-Manifest file is generated, now you can simply require the manifest.php in your 
-PHP application:
-
-    \$manifest = require 'manifest.php';
-    \$includer = new AssetToolkit\\IncludeRender;
-    echo \$includer->render( \$manifest );
-
-END
-        );
     }
 }
 
