@@ -24,15 +24,11 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $files = $compiler->compile($asset);
         ok($files);
+        path_ok($files['js_file']);
+        path_ok($files['css_file']);
+        ok($files['mtime'], 'got mtime');
 
-        foreach($files['js'] as $file ) {
-            path_ok($file);
-        }
-        foreach($files['css'] as $file ) {
-            path_ok($file);
-        }
-
-        $cssminContent = file_get_contents( $files['css'][0] );
+        $cssminContent = file_get_contents( $files['css_file'] );
         ok($cssminContent);
 
         // examine these
@@ -78,14 +74,8 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $files = $compiler->compile($asset);
         ok($files);
-
-        foreach($files['js'] as $file ) {
-            path_ok($file);
-        }
-        foreach($files['css'] as $file ) {
-            path_ok($file);
-        }
-
+        path_ok($files['js_file']);
+        path_ok($files['css_file']);
 
         /**
         $files which is something like:
@@ -101,9 +91,8 @@ class AssetCompilerTest extends AssetKit\TestCase
                 string(31) "/assets/jquery-ui/jquery-ui.css"
         }
          */
-        is('/assets/jquery-ui/jquery-ui.js', $files['js_url'][0]);
-        is('/assets/jquery-ui/jquery-ui.css', $files['css_url'][0]);
-
+        is('/assets/jquery-ui/jquery-ui.js', $files['js_url']);
+        is('/assets/jquery-ui/jquery-ui.css', $files['css_url']);
         $installer->uninstall($asset);
     }
 
@@ -127,14 +116,8 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $files = $compiler->compile($asset);
         ok($files);
-
-
-        foreach($files['js'] as $file ) {
-            path_ok($file);
-        }
-        foreach($files['css'] as $file ) {
-            path_ok($file);
-        }
+        path_ok($files['js_file']);
+        path_ok($files['css_file']);
 
         /**
         $files which is something like:
@@ -150,8 +133,8 @@ class AssetCompilerTest extends AssetKit\TestCase
                 string(31) "/assets/jquery-ui/jquery-ui.css"
         }
          */
-        is('/assets/jquery-ui/jquery-ui.min.js', $files['js_url'][0]);
-        is('/assets/jquery-ui/jquery-ui.min.css', $files['css_url'][0]);
+        is('/assets/jquery-ui/jquery-ui.min.js', $files['js_url']);
+        is('/assets/jquery-ui/jquery-ui.min.css', $files['css_url']);
         $installer->uninstall($asset);
     }
 

@@ -119,7 +119,7 @@ class AssetCompiler
      */
     public function compile($asset) 
     {
-        $data = $this->squash($asset);
+        $out = $this->squash($asset);
 
         // get the absolute path of install dir.
         $installDir = $asset->getInstallDir(true);
@@ -132,23 +132,20 @@ class AssetCompiler
 
         $jsFile = $installDir . DIRECTORY_SEPARATOR . $name . '.js';
         $cssFile = $installDir . DIRECTORY_SEPARATOR . $name . '.css';
-
         $jsUrl = $baseUrl . "/$name.js";
         $cssUrl = $baseUrl . "/$name.css";
 
-        if($data['js'])
-            file_put_contents( $jsFile, $data['js'] );
-
-        if($data['css'])
-            file_put_contents( $cssFile, $data['css'] );
-
-
-        return array(
-            'js'      => array($jsFile),
-            'css'     => array($cssFile),
-            'js_url'  => array($jsUrl),
-            'css_url' => array($cssUrl),
-        );
+        if($out['js']) {
+            $out['js_file'] = $jsFile;
+            $out['js_url'] = $jsUrl;
+            file_put_contents( $jsFile, $out['js'] );
+        }
+        if($out['css']) {
+            file_put_contents( $cssFile , $out['css'] );
+            $out['css_file'] = $cssFile;
+            $out['css_url'] = $cssUrl;
+        }
+        return $out;
     }
 
 
@@ -319,15 +316,23 @@ class AssetCompiler
      */
     public function squash($asset)
     {
-        $js = '';
-        $css = '';
+        $out = array(
+            'js' => '',
+            'css' => '',
+            'mtime' => 0,
+        );
         $collections = $asset->getCollections();
-
         foreach( $collections as $collection ) {
 
             // skip unknown types
             if( ! $collection->isJavascript && ! $collection->isStylesheet )
                 continue;
+
+            if( $lastm = $collection->getLastModifiedTime() ) {
+                if( $lastm > $out['mtime'] ) {
+                    $out['mtime'] = $lastm;
+                }
+            }
 
             // if we are in development mode, we don't need to compress them all,
             // we just filter them
@@ -356,16 +361,13 @@ class AssetCompiler
             }
 
             if( $collection->isJavascript ) {
-                $js .= $collection->getContent();
+                $out['js'] .= $collection->getContent();
             } 
             elseif( $collection->isStylesheet ) {
-                $css .= $collection->getContent();
+                $out['css'] .= $collection->getContent();
             }
         }
-        return array(
-            'js' => $js,
-            'css' => $css,
-        );
+        return $out;
     }
 
     public function runCollectionFilters($collection)

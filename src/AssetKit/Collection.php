@@ -25,6 +25,9 @@ class Collection
 
     public $filetype;
 
+    // cache
+    private $_lastmtime = 0;
+
     const FILETYPE_FILE   = 1;
     const FILETYPE_JS     = 2;
     const FILETYPE_CSS    = 3;
@@ -91,9 +94,17 @@ class Collection
 
     public function getLastModifiedTime()
     {
+        if( $this->_lastmtime ) {
+            return $this->_lastmtime;
+        }
+
         if( ! empty($this->files) ) {
-            $mtimes = array_map( function($file) { 
-                return filemtime($file); }, $this->getSourcePaths() );
+            $dir = $this->asset->getSourceDir(true);
+            $mtimes = array();
+            foreach( $this->files as $file ) {
+                $filepath = $dir . DIRECTORY_SEPARATOR . $file;
+                $mtimes[] = filemtime($filepath);
+            }
             rsort($mtimes, SORT_NUMERIC);
             return $mtimes[0];
         }
