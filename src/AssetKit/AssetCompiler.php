@@ -178,6 +178,29 @@ class AssetCompiler
      */
     public function compile($asset) 
     {
+        $cacheKey = $this->namespace . ':' . $asset->name;
+        $cache = apc_fetch($cacheKey);
+
+        // cache validation
+        if( $cache ) {
+            if( ! $this->productionFstatCheck ) {
+                return $cache;
+            } else {
+                $upToDate = true;
+                if( $mtime = @$cache['mtime'] ) {
+                    if( $asset->isOutOfDate($mtime) ) {
+                        $upToDate = false;
+                        break;
+                    }
+                }
+                if($outOfDate)
+                    return $cache;
+            }
+        }
+
+
+
+
         $out = $this->squash($asset);
 
         // get the absolute path of install dir.
@@ -204,6 +227,8 @@ class AssetCompiler
             $out['css_file'] = $cssFile;
             $out['css_url'] = $cssUrl;
         }
+
+        apc_store($cacheKey, $out);
         return $out;
     }
 
@@ -296,6 +321,21 @@ class AssetCompiler
         apc_store($cacheKey, $outfiles);
         return $outfiles;
     }
+
+
+    public function clean($m)
+    {
+        foreach( array('css_file','js_file')  as $k ) {
+            if( $m[$k] ) {
+                file_exists($m[$k]) && unlink($m[$k]);
+            }   
+        }
+    }
+
+
+
+
+
 
 
     /**
