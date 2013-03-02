@@ -20,12 +20,20 @@ class AssetRender
      */
     public $environment = self::DEVELOPMENT;
 
+    public $force = false;
+
     public $compiler;
 
     public function __construct($config,$loader)
     {
         $this->config = $config;
         $this->loader = $loader;
+    }
+
+
+    public function force() 
+    {
+        $this->force = true;
     }
 
     public function setEnvironment($env)
@@ -53,7 +61,7 @@ class AssetRender
             $this->renderFragments($outs);
         }
         elseif ($this->environment === self::PRODUCTION ) {
-            $out = $compiler->compileAssetsForProduction($target, $assets);
+            $out = $compiler->compileAssetsForProduction($target, $assets, $this->force);
             $this->renderFragment($out);
         } else {
             throw new Exception("Unknown environment type.");

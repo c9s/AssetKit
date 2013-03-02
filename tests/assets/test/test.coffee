@@ -27,6 +27,7 @@ alert "I knew it!" if elvis?
 
 # Array comprehensions:
 cubes = (math.cube num for num in list)
-
 console.log "coffee-script loaded"
-alert('success')
+
+$ ->
+  $( "#accordion" ).accordion()

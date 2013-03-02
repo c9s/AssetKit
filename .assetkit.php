@@ -1,6 +1,6 @@
 <?php return array (
   'baseDir' => 'public/assets',
-  'baseUrl' => 'assets',
+  'baseUrl' => '/assets',
   'dirs' => 
   array (
     0 => 'assets',
