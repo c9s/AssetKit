@@ -177,10 +177,17 @@ class AssetCompiler
                 if( $filters = $c->getFilters() ) {
                     $this->runCollectionFilters($c);
                     $filtered = true;
-                
                 } elseif( $c->isCoffeescript ) { // default filters
                     $coffee = new Filter\CoffeeScriptFilter;
                     $coffee->filter( $c );
+                    $filtered = true;
+                } elseif( $c->filetype == Collection::FILETYPE_SASS ) {
+                    $sass = new Filter\SassFilter;
+                    $sass->filter( $c );
+                    $filtered = true;
+                } elseif( $c->filetype == Collection::FILETYPE_SCSS ) {
+                    $scss = new Filter\ScssFilter;
+                    $scss->filter( $c );
                     $filtered = true;
                 }
 
