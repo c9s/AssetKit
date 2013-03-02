@@ -12,7 +12,6 @@ $classLoader->register();
 
 $config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
 $loader = new AssetToolkit\AssetLoader( $config );
-
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );

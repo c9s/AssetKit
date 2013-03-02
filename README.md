@@ -24,6 +24,12 @@ The Concept of AssetToolkit
 
 - In development mode, the asset compiler simply render the include paths for you.
 
+- You define different required assets in each different page with a page id (target)
+  The page id (target) is also used for caching results.
+
+  So that in the product page, you may include `jquery`, `product` assets together.
+  And in the main page, you may include `jquery`, `mainpage` assets.
+
 - One asset can have multiple file collection, the file collection can be css,
   coffee-script, live-script, javascript collection.
 
@@ -64,7 +70,6 @@ To update asset resource from remote (eg: git, github, hg or svn):
 
     assetkit update
 
-
 Integaret the AssetToolkit API into your PHP web application:
 
 ```php
@@ -77,6 +82,15 @@ $assets[] = $loader->load( 'test' );
 $render = new AssetToolkit\AssetRender($config,$loader);
 $render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
 $render->renderAssets('page-id',$assets);
+```
+
+The rendered result:
+
+```html
+<head>
+<script type="text/javascript"  src="assets/demo/d95da0fbdccc220ccb5e4949a41ec796.min.js" ></script>
+<link rel="stylesheet" type="text/css"  href="assets/demo/3fffd7e7bf5d2a459cad396bd3c375b4.min.css"/>
+</head>
 ```
 
 Definitions
