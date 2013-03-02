@@ -103,9 +103,12 @@ for example, the backbonejs manifest.yml file:
 resource:
   url: http://backbonejs.org/backbone.js
 assets:
-  - js: 1
-    files:
+  - js:
     - backbone.js
+  - css:
+    - app.css
+  - sass:
+    - home.sass
 ```
 
 You can also define the resource, assetkit would fetch it for you. currently assetkit supports 
