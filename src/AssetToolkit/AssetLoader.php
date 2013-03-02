@@ -113,6 +113,7 @@ class AssetLoader
             $path = Data::compile_manifest_to_php($path);
         }
 
+
         $asset = new Asset($this->config);
         $asset->loadFromManifestFile($path, $format);
         $this->registerAsset($asset);
@@ -133,13 +134,11 @@ class AssetLoader
      * @param string $path
      * @param integer $format
      */
-    public function registerFromManifestFileOrDir($path, $format = 0) 
+    public function registerFromManifestFileOrDir($path) 
     {
         if( is_dir($path) ) {
-            $path = FileUtil::find_manifest_file_from_directory( $path );
-            if( $format === 0 ) {
-                $format = Data::detect_format_from_extension($path);
-            }
+            $path = FileUtil::find_non_php_manifest_file_from_directory( $path );
+            $format = Data::detect_format_from_extension($path);
         }
         if( file_exists($path))  {
             return $this->registerFromManifestFile($path, $format);
@@ -170,9 +169,7 @@ class AssetLoader
         $assets = array();
         $registered = $this->config->getRegisteredAssets();
         foreach( $registered as $name => $subconfig ) {
-            $asset = $this->load($name);
-            $this->updateAsset($asset);
-            $assets[] = $asset;
+            $assets[] = $this->registerFromManifestFileOrDir( dirname($subconfig['manifest']) );
         }
         return $assets;
     }

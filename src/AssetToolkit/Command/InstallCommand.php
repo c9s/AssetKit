@@ -45,8 +45,6 @@ class InstallCommand extends Command
         if( ! file_exists($compiledDir) )
             mkdir($compiledDir,0755,true);
 
-
-
         $updater = new \AssetToolkit\ResourceUpdater();
         foreach( $config->getRegisteredAssets() as $name => $stash ) {
             $asset = $loader->load($name);
