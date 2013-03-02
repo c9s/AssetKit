@@ -3,6 +3,8 @@ php:
   - 5.3
   - 5.4
 
+before_install:
+    sudo apt-get install php5-apc
 before_script:
   - phpenv rehash
   - pear channel-discover pear.corneltek.com
