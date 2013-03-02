@@ -28,8 +28,8 @@ The Concept of AssetToolkit
 - You can define different required assets in each different page with a page id (target)
   The page id (target) is also used for caching results.
 
-  So that in the product page, you may include `jquery`, `product` assets
-  together with a page id "yourapp-products".  And in the main page, you may
+  So that in your product page, you may include `jquery`, `product` assets
+  together with a page id "yourapp-products".  And in your main page, you may
   include `jquery`, `mainpage` assets with a page id "youapp-mainpage"
 
 - One asset can have multiple file collection, the file collection can be css, scss, sass,
