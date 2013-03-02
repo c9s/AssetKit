@@ -1,5 +1,5 @@
 <?php
-use AssetKit\Process;
+use AssetToolkit\Process;
 
 class ProcessTest extends PHPUnit_Framework_TestCase
 {

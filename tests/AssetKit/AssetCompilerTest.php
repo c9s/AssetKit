@@ -1,8 +1,8 @@
 <?php
 
-use AssetKit\AssetCompiler;
+use AssetToolkit\AssetCompiler;
 
-class AssetCompilerTest extends AssetKit\TestCase
+class AssetCompilerTest extends AssetToolkit\TestCase
 {
     public function testCssImportUrlFromTestAssetInProductionMode()
     {
@@ -32,8 +32,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         array(7) {
             ["css_md5"]=> string(32) "07fb97faf2a7056360fb048aac109800"
             ["js_md5"]=> string(32) "d95da0fbdccc220ccb5e4949a41ec796"
-            ["css_file"]=> string(88) "/Users/c9s/git/Work/AssetKit/tests/public/myapp/07fb97faf2a7056360fb048aac109800.min.css"
-            ["js_file"]=> string(87) "/Users/c9s/git/Work/AssetKit/tests/public/myapp/d95da0fbdccc220ccb5e4949a41ec796.min.js"
+            ["css_file"]=> string(88) "/Users/c9s/git/Work/AssetToolkit/tests/public/myapp/07fb97faf2a7056360fb048aac109800.min.css"
+            ["js_file"]=> string(87) "/Users/c9s/git/Work/AssetToolkit/tests/public/myapp/d95da0fbdccc220ccb5e4949a41ec796.min.js"
             ["css_url"]=> string(54) "/assets/myapp/07fb97faf2a7056360fb048aac109800.min.css"
             ["js_url"]=> string(53) "/assets/myapp/d95da0fbdccc220ccb5e4949a41ec796.min.js"
             ["mtime"]=> int(1362217186)
@@ -57,8 +57,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         /**
         $files which is something like:
         .array(4) {
-            ["js_file"]      => string(68) "/Users/c9s/src/work/php/AssetKit/tests/public/jquery-ui/jquery-ui.js"
-            ["css_file"]     => string(69) "/Users/c9s/src/work/php/AssetKit/tests/public/jquery-ui/jquery-ui.css"
+            ["js_file"]      => string(68) "/Users/c9s/src/work/php/AssetToolkit/tests/public/jquery-ui/jquery-ui.js"
+            ["css_file"]     => string(69) "/Users/c9s/src/work/php/AssetToolkit/tests/public/jquery-ui/jquery-ui.css"
             ["js_url"]  => string(30) "/assets/jquery-ui/jquery-ui.js"
             ["css_url"] => string(31) "/assets/jquery-ui/jquery-ui.css"
         }
@@ -90,7 +90,7 @@ class AssetCompilerTest extends AssetKit\TestCase
             ok(isset($out['url']) || isset($out['content']));
         }
 
-        $render = new AssetKit\AssetRender($config,$loader);
+        $render = new AssetToolkit\AssetRender($config,$loader);
         $render->renderFragments($outs);
     }
 

@@ -1,13 +1,13 @@
 <?php
 
-class AssetConfigTest extends AssetKit\TestCase
+class AssetConfigTest extends AssetToolkit\TestCase
 {
 
 
     public function testEmptyAssetConfig()
     {
         $configFile = $this->getConfigFile();
-        $config = new AssetKit\AssetConfig($configFile,array(  
+        $config = new AssetToolkit\AssetConfig($configFile,array(  
             'cache' => true,
             'cache_id' => 'custom_app_id',
             'cache_expiry' => 3600

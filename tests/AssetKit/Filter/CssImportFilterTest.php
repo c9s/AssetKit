@@ -1,6 +1,6 @@
 <?php
 
-class CssImportFilterTest extends AssetKit\TestCase
+class CssImportFilterTest extends AssetToolkit\TestCase
 {
 
     public function test()
@@ -11,8 +11,8 @@ class CssImportFilterTest extends AssetKit\TestCase
         $jqueryui = $loader->registerFromManifestFileOrDir('tests/assets/jquery-ui');
         ok($jqueryui, 'jqueryui asset is loaded');
 
-        $rewriteFilter = new \AssetKit\Filter\CssRewriteFilter;
-        $filter        = new \AssetKit\Filter\CssImportFilter;
+        $rewriteFilter = new \AssetToolkit\Filter\CssRewriteFilter;
+        $filter        = new \AssetToolkit\Filter\CssImportFilter;
         foreach( $jqueryui->getCollections() as $c ) {
 
             // for css stylesheet
@@ -33,15 +33,15 @@ class CssImportFilterTest extends AssetKit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
-        $collection = new AssetKit\Collection;
+        $collection = new AssetToolkit\Collection;
         $collection->setContent("background: url(../images/file.png)");
 
         $jqueryui = $loader->registerFromManifestFileOrDir('tests/assets/jquery-ui');
         ok($jqueryui, 'jqueryui asset is loaded');
 
 
-        $rewriteFilter = new \AssetKit\Filter\CssRewriteFilter;
-        $filter        = new \AssetKit\Filter\CssImportFilter;
+        $rewriteFilter = new \AssetToolkit\Filter\CssRewriteFilter;
+        $filter        = new \AssetToolkit\Filter\CssImportFilter;
         foreach( $jqueryui->getCollections() as $c ) {
 
             ok( $c->getContent() ,'get content ok' );

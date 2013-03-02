@@ -1,11 +1,11 @@
 <?php
 
-use AssetKit\ResourceUpdater;
-use AssetKit\AssetConfig;
-use AssetKit\AssetLoader;
-use AssetKit\Asset;
+use AssetToolkit\ResourceUpdater;
+use AssetToolkit\AssetConfig;
+use AssetToolkit\AssetLoader;
+use AssetToolkit\Asset;
 
-class AssetLoaderTest extends AssetKit\TestCase
+class AssetLoaderTest extends AssetToolkit\TestCase
 {
 
     public function manifestProvider() 
@@ -35,13 +35,13 @@ class AssetLoaderTest extends AssetKit\TestCase
         ok($updater,'resource updater is loaded');
         $updater->update($asset);
 
-        $installer = new AssetKit\LinkInstaller;
+        $installer = new AssetToolkit\LinkInstaller;
         ob_start();
         $installer->install( $asset );
         $installer->uninstall( $asset );
         ob_clean();
 
-        $installer = new AssetKit\Installer;
+        $installer = new AssetToolkit\Installer;
         ob_start();
         $installer->install( $asset );
         $installer->uninstall( $asset );

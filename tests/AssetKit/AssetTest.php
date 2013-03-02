@@ -1,6 +1,6 @@
 <?php
 
-class AssetTest extends AssetKit\TestCase
+class AssetTest extends AssetToolkit\TestCase
 {
     public function test()
     {
@@ -8,13 +8,13 @@ class AssetTest extends AssetKit\TestCase
         $loader = $this->getLoader();
 
         /*
-        $as = new AssetKit\Asset('assets/jquery-ui/manifest.yml');
+        $as = new AssetToolkit\Asset('assets/jquery-ui/manifest.yml');
         $as->config = $config;
         ok( $as );
 
         $config->addAsset( 'jquery-ui', $as );
 
-        $installer = new \AssetKit\Installer;
+        $installer = new \AssetToolkit\Installer;
         $installer->enableLog = false;
         $installer->install( $as );
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<project name="AssetKit" default="build">
+<project name="AssetToolkit" default="build">
 
  <taskdef resource="net/sf/antcontrib/antlib.xml"/>
 

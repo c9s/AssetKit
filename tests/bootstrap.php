@@ -11,12 +11,12 @@ class Test
 {
     static function getConfig()
     {
-        return new AssetKit\AssetConfig('.assetkit');
+        return new AssetToolkit\AssetConfig('.assetkit');
     }
 
     static function getLoader($config)
     {
-        return new AssetKit\AssetLoader($config,array(
+        return new AssetToolkit\AssetLoader($config,array(
             'assets', 'tests/assets'
         ));
     }

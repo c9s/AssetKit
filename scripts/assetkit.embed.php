@@ -1,4 +1,4 @@
 #!/usr/bin/env php
 <?php
-$app = AssetKit\Console::getInstance();
+$app = AssetToolkit\Console::getInstance();
 $app->run( $argv );

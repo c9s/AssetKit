@@ -1,5 +1,5 @@
 <?php
-use AssetKit\Data;
+use AssetToolkit\Data;
 
 class DataTest extends PHPUnit_Framework_TestCase
 {

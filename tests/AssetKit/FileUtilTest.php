@@ -1,5 +1,5 @@
 <?php
-use AssetKit\FileUtil;
+use AssetToolkit\FileUtil;
 
 class FileUtilTest extends PHPUnit_Framework_TestCase
 {

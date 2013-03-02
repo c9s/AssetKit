@@ -1,12 +1,12 @@
-AssetKit
+AssetToolkit
 ============
 
-AssetKit is powerful asset manager, provides a simple command-line interface
-and a simple PHP library, AssetKit has many built-in filters and compressors for asset files.
+AssetToolkit is a powerful asset manager, provides a simple command-line interface
+and a simple PHP library, AssetToolkit has many built-in filters and compressors for asset files.
 
-AssetKit can fetch asset ports and initialize them from a simple manifest YAML file.
+AssetToolkit can fetch asset ports and initialize them from a simple manifest YAML file.
 
-You can use AssetKit library to integrate assets for your web applications very easily.
+You can use AssetToolkit library to integrate assets for your web applications very easily.
 
 Features
 ========
@@ -21,12 +21,12 @@ Installation
 ============
 
     $ pear channel-discover pear.corneltek.com
-    $ pear install corneltek/AssetKit
+    $ pear install corneltek/AssetToolkit
 
 
 Definitions
 ============
-To use AssetKit, you have to know some basic component concepts in AssetKit.
+To use AssetToolkit, you have to know some basic component concepts in AssetToolkit.
 
 One asset can have multiple file collection, the file collection can be css,
 coffee-script, live-script, javascript collection.
@@ -88,8 +88,8 @@ Once you've done, you can precompile the asset files to a squashed javascript/st
 
     $ assetkit compile --as your-app jquery jquery-ui blueprint
     Compiling...
-    x /Users/c9s/git/Work/AssetKit/public/assets/your-app-f39c1144ad2911d574ec59d78329f2ba.js
-    x /Users/c9s/git/Work/AssetKit/public/assets/your-app-c9f4db7954ea479dea822e0b665c1501.css
+    x /Users/c9s/git/Work/AssetToolkit/public/assets/your-app-f39c1144ad2911d574ec59d78329f2ba.js
+    x /Users/c9s/git/Work/AssetToolkit/public/assets/your-app-c9f4db7954ea479dea822e0b665c1501.css
     Done
 
 If B wants to clone your project, please add `.assetkit` file to the repository, then B should 
@@ -108,10 +108,10 @@ To use assetkit in your application, just few lines to write:
     require 'bootstrap.php';
 
     // load your asset config file, this contains asset manifest and types
-    $config = new AssetKit\AssetConfig( '../.assetkit');
+    $config = new AssetToolkit\AssetConfig( '../.assetkit');
 
     // initialize an asset loader
-    $loader = new AssetKit\AssetLoader( $config );
+    $loader = new AssetToolkit\AssetLoader( $config );
 
     // load the required assets (of your page, application or controller)
     $assets = array();
@@ -122,7 +122,7 @@ To use assetkit in your application, just few lines to write:
     // initialize a cache (if you need one)
     $cache = new CacheKit\ApcCache( array('namespace' => 'demo') );
 
-    $writer = new AssetKit\AssetWriter($config);
+    $writer = new AssetToolkit\AssetWriter($config);
     $manifest = $writer
             ->cache($cache)
             ->production()          // generate for production code, (the alternative is `development`)
@@ -130,7 +130,7 @@ To use assetkit in your application, just few lines to write:
             ->write( $assets );
 
     // then use include renderer to render html for asset files
-    $includer = new AssetKit\IncludeRender;
+    $includer = new AssetToolkit\IncludeRender;
     $html = $includer->render( $manifest );
 
     // show html !
@@ -148,7 +148,7 @@ Hack
 
 Install deps:
 
-    $ git clone git://github.com/c9s/AssetKit.git
+    $ git clone git://github.com/c9s/AssetToolkit.git
     $ git submodule init
     $ git submodule update
     $ onion bundle

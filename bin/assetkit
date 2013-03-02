@@ -18,5 +18,5 @@ $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
 ));
 $classLoader->useIncludePath(true);
 $classLoader->register();
-$app = AssetKit\Console::getInstance();
+$app = AssetToolkit\Console::getInstance();
 $app->run( $argv );
