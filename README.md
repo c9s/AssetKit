@@ -4,9 +4,19 @@ AssetToolkit
 AssetToolkit is a powerful asset manager, provides a simple command-line interface
 and a simple PHP library, AssetToolkit has many built-in filters and compressors for asset files.
 
-AssetToolkit can fetch asset ports and initialize them from a simple manifest YAML file.
+AssetToolkit can fetch asset ports and initialize them from a simple manifest YAML/JSON file.
 
-You can use AssetToolkit library to integrate assets for your web applications very easily.
+You can use AssetToolkit library to integrate assets for your web applications with ease.
+
+
+Concept
+=======
+
+- Automatically fetch & update your asset files.
+- AssetCompiler: Compile multiple assets into one squashed file.
+- AssetRender: Render compiled assets to HTML fragments, stylesheet tag or script tag.
+- Centralized asset configuration.
+- Command-line tool for installing, register, precompile assets.
 
 Features
 ========
