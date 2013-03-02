@@ -12,6 +12,8 @@ PHP source code, this makes AssetToolkit loads these asset configuration files q
 AssetToolkit is a powerful asset manager, provides a simple command-line interface
 and a simple PHP library, there are many built-in filters and compressors in it.
 
+[![Build Status](https://travis-ci.org/c9s/php-AssetToolkit.png?branch=master)](https://travis-ci.org/c9s/php-AssetToolkit)
+
 The Concept of AssetToolkit
 ---------------------------
 
