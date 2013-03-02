@@ -247,10 +247,9 @@ class AssetCompiler
                 if( $mtime = @$cache['mtime'] ) {
                     if( $asset->isOutOfDate($mtime) ) {
                         $upToDate = false;
-                        break;
                     }
                 }
-                if($outOfDate)
+                if($upToDate)
                     return $cache;
             }
         }

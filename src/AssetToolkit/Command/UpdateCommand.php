@@ -34,7 +34,6 @@ class UpdateCommand extends Command
         $installer->logger = $this->logger;
 
         $assets = $loader->updateAssetManifests();
-
         foreach( $assets as $asset ) {
             $this->logger->info("Updating {$asset->name} ...");
 

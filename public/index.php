@@ -19,6 +19,9 @@ $assets[] = $loader->load( 'underscore' );
 $assets[] = $loader->load( 'test' );
 $render = new AssetToolkit\AssetRender($config,$loader);
 $render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+$compiler = $render->getCompiler();
+$compiler->enableProductionFstatCheck();
+
 $render->force();
 ?>
 <html>
@@ -76,6 +79,10 @@ $render->renderAssets('demo',$assets);
     inceptos himenaeos.
     </p>
   </div>
+</div>
+
+<div id="dialog-confirm" title="Empty the recycle bin?">
+  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
 </div>
 
 </body>

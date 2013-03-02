@@ -30,4 +30,11 @@ cubes = (math.cube num for num in list)
 console.log "coffee-script loaded"
 
 $ ->
-  $( "#accordion" ).accordion()
+  $("#accordion").accordion()
+  $("#dialog-confirm").dialog
+    resizable: false
+    height: 140
+    modal: true
+    buttons:
+      "Delete all items": -> $(this).dialog "close"
+      "Cancel": -> $(this).dialog "close"

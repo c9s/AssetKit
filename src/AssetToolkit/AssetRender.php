@@ -47,10 +47,10 @@ class AssetRender
             return $this->compiler;
 
         // default compiler
-        $compiler = new AssetCompiler($this->config,$this->loader);
-        $compiler->registerDefaultCompressors();
-        $compiler->registerDefaultFilters();
-        return $compiler;
+        $this->compiler = new AssetCompiler($this->config,$this->loader);
+        $this->compiler->registerDefaultCompressors();
+        $this->compiler->registerDefaultFilters();
+        return $this->compiler;
     }
 
     public function renderAssets($target, $assets)
