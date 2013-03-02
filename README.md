@@ -281,8 +281,8 @@ $installer->install( $asset );
 $installer->uninstall( $asset );
 ```
 
-The AssetCompiler
------------------
+The AssetCompiler API
+---------------------
 
 ```php
 $asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
@@ -291,6 +291,36 @@ $files = $compiler->compile($asset);
 
 echo $files['js_url'];  //  outputs /assets/compiled/jquery-ui.min.js
 echo $files['css_url']; //  outputs /assets/compiled/jquery-ui.min.css
+```
+
+When in production mode, the compiled manifest is cached in APC, to make 
+AssetCompiler recompile your assets, you need to restart your HTTP server 
+to clean up these cache.
+
+We don't scan file modification time by default, because too many IO 
+operations might slow down your application.
+
+To auto-recompile these assets when you modified them, you can setup an
+option to make your PHP application scan the modification time of asset files
+to recompile assets:
+
+```
+$render = new AssetToolkit\AssetRender($config,$loader);
+$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+$compiler = $render->getCompiler();
+$compiler->enableProductionFstatCheck();
+```
+
+The AssetRender API
+--------------------
+
+This is the top level API to compile/render asset HTML tags, which 
+operates AssetCompiler to compile loaded assets.
+
+```php
+$render = new AssetToolkit\AssetRender($config,$loader);
+$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+$render->renderAssets('demo',$assets);
 ```
 
 
