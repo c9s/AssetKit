@@ -19,6 +19,7 @@ before_script:
   - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - phpenv rehash
   - pear channel-discover pear.corneltek.com
+  - pear channel-update pear.corneltek.com
   - pear install -f -a corneltek/PHPUnit_TestMore
   - pear install -f -a corneltek/Universal
   - curl -O https://raw.github.com/c9s/Onion/master/onion
