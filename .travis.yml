@@ -5,7 +5,7 @@ php:
 
 before_script:
   - phpenv rehash
-  - curl -s http://install.onionphp.org/ | sh
+  - curl -O https://github.com/c9s/Onion/raw/master/onion
   - php onion install
   - bash scripts/compile
 
