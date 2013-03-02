@@ -21,7 +21,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
         $compiler->enableProductionFstatCheck();
 
-        $files = $compiler->compileAssets('myapp',$assets);
+        $files = $compiler->compileAssetsForProduction('myapp',$assets);
         ok($files);
         path_ok($files['js_file']);
         path_ok($files['css_file']);

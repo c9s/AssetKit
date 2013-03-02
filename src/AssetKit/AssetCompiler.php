@@ -290,7 +290,6 @@ class AssetCompiler
             $out['css_file'] = $cssFile;
             $out['css_url'] = $cssUrl;
         }
-
         apc_store($cacheKey, $out);
         return $out;
     }
@@ -317,7 +316,7 @@ class AssetCompiler
      * @param string target name
      * @param array Asset[]
      */
-    public function compileAssets($target, $assets)
+    public function compileAssetsForProduction($target, $assets)
     {
         $cacheKey = $this->namespace . ':' . $target;
         $cache = apc_fetch($cacheKey);
