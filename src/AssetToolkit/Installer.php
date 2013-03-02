@@ -7,6 +7,11 @@ class Installer
     public $enableLog = true;
     public $logger;
 
+    public function setLogger($logger) 
+    {
+        $this->logger = $logger;
+    }
+
     public function log($msg)
     {
         if( $this->enableLog ) {
@@ -33,7 +38,9 @@ class Installer
                 $targetFile = $asset->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
                 $this->log("x $targetFile");
-                unlink( $targetFile );
+                if( file_exists($targetFile) ) {
+                    unlink( $targetFile );
+                }
             }
         }
     }
