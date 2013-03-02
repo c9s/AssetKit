@@ -28,7 +28,7 @@ $render->renderAssets('demo',$assets);
 </head>
 <body>
 <?php
-var_dump( $_SERVER['PATH'] ); 
+echo "Success!!";
 ?>
 </body>
 </html>

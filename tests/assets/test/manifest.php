@@ -7,6 +7,10 @@
       array (
         0 => 'css/main.css',
       ),
+      'attrs' => 
+      array (
+        'media' => 'screen',
+      ),
     ),
     1 => 
     array (
@@ -17,6 +21,10 @@
       'stylesheet' => 
       array (
         0 => 'sass-test.sass',
+      ),
+      'attrs' => 
+      array (
+        'media' => 'screen',
       ),
     ),
     2 => 

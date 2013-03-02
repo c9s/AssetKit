@@ -1,43 +1,86 @@
 AssetToolkit
 ============
 
+AssetToolkit is different from Rails' asset pipeline, AssetToolkit is designed for PHP.
+
+Because we need a different strategy to compile/load asset for PHP web applications.
+
+AssetToolkit is designed for PHP's performance, all configuration files are compiled into
+PHP source code, this makes AssetToolkit loads these asset configuration files very quick!
+
 AssetToolkit is a powerful asset manager, provides a simple command-line interface
-and a simple PHP library, AssetToolkit has many built-in filters and compressors for asset files.
+and a simple PHP library, there are many built-in filters and compressors in it.
 
-AssetToolkit can fetch asset ports and initialize them from a simple manifest YAML/JSON file.
+The Concept of AssetToolkit
+============================
 
-You can use AssetToolkit library to integrate assets for your web applications with ease.
+- We register these wanted assets into the assetkit configuration file,
+  which contains the asset source directory, manifest file information.
 
+- When one asset is required from a web page, the asset can be quickly loaded through the AssetLoader, 
+  then the asset will be filtered, compiled to the front-end output.
 
-Concept
-=======
+- In production mode, the asset compiler squash the loaded asset collection into minified files.
 
-- Automatically fetch & update your asset files.
-- AssetCompiler: Compile multiple assets into one squashed file.
-- AssetRender: Render compiled assets to HTML fragments, stylesheet tag or script tag.
-- Centralized asset configuration.
-- Command-line tool for installing, register, precompile assets.
+- In development mode, the asset compiler simply render the include paths for you.
+
+- One asset can have multiple file collection, the file collection can be css,
+  coffee-script, live-script, javascript collection.
+
+- Each file collection has its own filter and compressor. so that CSS file
+  collection can use "cssmin" and "yuicss" compressor, and SASS file collection 
+  can use "sass" filter and "cssmin" compressor to generate the minified files.
 
 Features
 ========
 
-- CSSMin compressor
-- YUI compressor
-- JSMin compressor
-- CoffeeScript filter
+- Centralized asset configuration.
+- Automatically fetch & update your asset files.
+- AssetCompiler: Compile multiple assets into one squashed file.
+- AssetRender: Render compiled assets to HTML fragments, stylesheet tag or script tag.
+- Command-line tool for installing, register, precompile assets.
+- CSSMin compressor, YUI compressor, JSMin compressor, CoffeeScript, SASS, SCSS filters.
 - APC cache support
 
 
+Synopsis
+===========
+
+This creates and initializes the `.assetkit.php` file:
+
+    assetkit init --baseUrl=/assets --baseDir=public/assets
+
+Register the assets you need:
+
+    assetkit add app/assets/jquery
+    assetkit add app/assets/jquery-ui
+    assetkit add app/assets/bootstrap
+
+Then install asset resources into the `--baseDir` you've setup:
+
+    assetkit install
+
+To update asset resource from remote (eg: git, github, hg or svn):
+
+    assetkit update
+
+
+Integaret the AssetToolkit API into your PHP web application:
+
+```php
+$config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
+$loader = new AssetToolkit\AssetLoader( $config );
+$assets = array();
+$assets[] = $loader->load( 'jquery' );
+$assets[] = $loader->load( 'jquery-ui' );
+$assets[] = $loader->load( 'test' );
+$render = new AssetToolkit\AssetRender($config,$loader);
+$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+$render->renderAssets('page-id',$assets);
+```
+
 Definitions
 ============
-To use AssetToolkit, you have to know some basic component concepts in AssetToolkit.
-
-One asset can have multiple file collection, the file collection can be css,
-coffee-script, live-script, javascript collection.
-
-Each file collection has its own filter and compressor. so that CSS file
-collection can use "cssmin" and "yuicss" compressor, and SASS file collection 
-can use "sass" filter and "cssmin" compressor to generate the minified files.
 
 To define file collections, you need to create a manifest.yml file in your asset directory,
 for example, the backbonejs manifest.yml file:

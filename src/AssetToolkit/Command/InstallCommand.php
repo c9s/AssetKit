@@ -40,7 +40,7 @@ class InstallCommand extends Command
         $loader->updateAssetManifests();
 
         $updater = new \AssetToolkit\ResourceUpdater();
-        foreach( $config->getRegisteredAssets() as $name => $config ) {
+        foreach( $config->getRegisteredAssets() as $name => $stash ) {
             $asset = $loader->load($name);
 
             $this->logger->info("Updating $name ...");
