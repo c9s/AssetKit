@@ -15,9 +15,10 @@ and a simple PHP library, there are many built-in filters and compressors in it.
 The Concept of AssetToolkit
 ---------------------------
 
-- We register these wanted asset manifest files into the assetkit configuration
-  file, which contains the asset source directory and other manifest file
-  information in PHP source code format.
+- To improvement the asset loading performance, we register these wanted asset
+  manifest files into an assetkit configuration file, which contains the asset
+  source directory and other manifest file information. the config file is 
+  converted into PHP source.
 
 - When one asset is required from a web page, the asset can be quickly loaded
   through the AssetLoader, then the asset will be filtered, compiled to the
