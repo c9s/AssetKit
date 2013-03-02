@@ -46,14 +46,16 @@ class CompileCommand extends Command
         $files = $compiler->compileAssetsForProduction($target,$assets, true);
 
         printf( "Stylesheet:\n" );
-        printf( "  MD5:  %s\n" , $files['css_md5'] );
-        printf( "  URL:  %s\n" , $files['css_url'] );
-        printf( "  File: %s\n" , $files['css_file'] );
+        printf( "  MD5:   %s\n" , $files['css_md5'] );
+        printf( "  URL:   %s\n" , $files['css_url'] );
+        printf( "  File:  %s\n" , $files['css_file'] );
+        printf( "  Size:  %d KBytes\n" , filesize($files['css_file']) / 1024 );
 
         printf( "Javascript:\n" );
         printf( "  MD5:   %s\n" , $files['js_md5'] );
         printf( "  URL:   %s\n" , $files['js_url'] );
         printf( "  File:  %s\n" , $files['js_file'] );
+        printf( "  Size:  %d KBytes\n" , filesize($files['js_file']) / 1024 );
 
         $this->logger->info("Done");
     }

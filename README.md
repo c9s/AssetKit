@@ -92,6 +92,22 @@ The rendered result:
 <link rel="stylesheet" type="text/css"  href="assets/demo/3fffd7e7bf5d2a459cad396bd3c375b4.min.css"/>
 ```
 
+Pre-compile targets:
+
+
+    $ assetkit compile --target demo jquery jquery-ui               
+    Compiling assets to target 'demo'...
+    Stylesheet:
+      MD5:  9399a997d354919cba9f84517eb7604a
+      URL:  assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+      File: /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+    Javascript:
+      MD5:   4a09100517e2d98c3f462376fd69d887
+      URL:   assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
+      File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
+    Done
+
+
 The Asset Manifest
 ==================
 
