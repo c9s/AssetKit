@@ -135,6 +135,19 @@ class AssetCompiler
      * Will be compiled into:
      *
      * public/assets/jquery/jquery.min.js
+     *
+     * @return array
+     *
+     *    {
+     *      css: [string] minified css content.
+     *      js:  [string] minified js content.
+     *      css_file: [string] minified css file.
+     *      js_file:  [string] minified js file.
+     *      css_url: [string] minified css url.
+     *      js_url:  [string] minified js url.
+     *      mtime: [integer] the last modification time.
+     *    }
+     *
      */
     public function compile($asset) 
     {
