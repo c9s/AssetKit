@@ -128,6 +128,16 @@ Requirement
 - APC extension.
 - yaml extension.
 
+
+Installation
+---------------------------
+
+```sh
+curl -O https://github.com/c9s/php-AssetToolkit/raw/master/assetkit
+chmod +x assetkit
+```
+
+
 The Asset Manifest File
 ---------------------------
 
