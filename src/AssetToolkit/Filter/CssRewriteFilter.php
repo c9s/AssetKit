@@ -22,7 +22,6 @@ class CssRewriteFilter
      */
     public function rewrite($content, $fullpath , $dirname, $dirnameUrl, $assetBaseUrl)
     {
-
         // For path like
         //
         //          url(../images/background.png);
@@ -62,7 +61,7 @@ class CssRewriteFilter
                 $dirnameUrl = join('/', $urlParts );
                 $url = $dirnameUrl . '/' . $url;
 
-                if(self::DEBUG)
+                if(CssRewriteFilter::DEBUG)
                     echo "Rewriting " , $origUrl , " to " , $url , "\n";
 
                 return str_replace( $matches['url'], $url , $matches[0]);
