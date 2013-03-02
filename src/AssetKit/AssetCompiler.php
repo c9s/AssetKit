@@ -144,6 +144,64 @@ class AssetCompiler
 
 
 
+
+    /**
+     * Simply run filters through these assets.
+     *
+     */
+    public function compileAssetsForDevelopment($assets)
+    {
+        $assets = (array)$assets;
+        $out = array();
+
+        $root = $this->config->getRoot();
+        $baseDir = $this->config->getBaseDir(true);
+        $baseUrl = $this->config->getBaseUrl();
+        foreach( $assets as $asset ) {
+            $assetBaseUrl = $baseUrl . '/' . $asset->name;
+            foreach( $asset->getCollections() as $c ) {
+
+                $type = null;
+                if( $c->isCoffeescript || $c->isJavascript ) {
+                    $type = 'javascript';
+                } elseif( $c->isStylesheet ) {
+                    $type = 'stylesheet';
+                } else {
+                    // skip non-filetype collections
+                    continue;
+                }
+
+                // for collections has filters, 
+                // pipe content through these filters.
+                $filtered = false;
+                if( $filters = $c->getFilters() ) {
+                    $this->runCollectionFilters($c);
+                    $filtered = true;
+                
+                } elseif( $c->isCoffeescript ) { // default filters
+                    $coffee = new Filter\CoffeeScriptFilter;
+                    $coffee->filter( $c );
+                    $filtered = true;
+                }
+
+                // for coffee-script we need to pass the coffee-script to compiler
+                // and get the javascript from the output, we can simply render the 
+                // content in the pipe.
+                if( $filtered ) {
+                    $content = $c->getContent();
+                    $out[] = array( 'type' => $type ,'content' => $content );
+                } else {
+                    $paths = $c->getFilePaths();
+                    foreach( $paths as $path ) {
+                        $out[] = array( 'type' => $type, 'url' => $assetBaseUrl . '/' . $path );
+                    }
+                }
+            }
+        }
+        return $out;
+    }
+
+
     /**
      * Method for compiling one asset
      *
@@ -197,8 +255,6 @@ class AssetCompiler
                     return $cache;
             }
         }
-
-
 
 
         $out = $this->squash($asset);
@@ -378,8 +434,7 @@ class AssetCompiler
         $cb = $this->_filters[ $name ];
         if( is_callable($cb) ) {
             return $this->filters[ $name ] = call_user_func($cb);
-        }
-        elseif( class_exists($cb,true) ) {
+        } elseif( class_exists($cb,true) ) {
             return $this->filters[ $name ] = new $cb;
         }
     }
@@ -459,34 +514,29 @@ class AssetCompiler
 
             // if we are in development mode, we don't need to compress them all,
             // we just filter them
-            if( $this->environment === self::PRODUCTION 
-                    && $this->enableCompressor ) 
+            if( $this->enableCompressor ) 
             {
                 // for stylesheets, before compress it, we should import the css contents
                 if( $collection->isStylesheet ) {
                     // import filter implies css rewrite
                     $import = new Filter\CssImportFilter;
                     $import->filter( $collection );
-                }
-                elseif( $collection->isCoffeescript ) {
+                } elseif( $collection->isCoffeescript ) {
                     $coffee = new Filter\CoffeeScriptFilter;
                     $coffee->filter( $collection );
                 }
-
                 if( $collection->getFilters() ) {
                     $this->runCollectionFilters( $collection );
                 }
                 $this->runCollectionCompressors($collection);
             }
             else {
-                // for development mode, simply run filters
                 $this->runCollectionFilters( $collection );
             }
 
             if( $collection->isJavascript ) {
                 $out['js'] .= $collection->getContent();
-            } 
-            elseif( $collection->isStylesheet ) {
+            } elseif( $collection->isStylesheet ) {
                 $out['css'] .= $collection->getContent();
             }
         }
@@ -504,8 +554,7 @@ class AssetCompiler
         foreach( $collection->filters as $n ) {
             if( $filter = $this->getFilter( $n ) ) {
                 $filter->filter($collection);
-            }
-            else {
+            } else {
                 throw new Exception("filter $n not found.");
             }
         }
@@ -528,8 +577,7 @@ class AssetCompiler
                 $cssmin = new Compressor\CssMinCompressor;
                 $cssmin->compress($collection);
             }
-        }
-        else {
+        } else {
             if( $collection->hasCompressor('no') )
                 return;
 

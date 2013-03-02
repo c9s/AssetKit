@@ -4,7 +4,6 @@ use AssetKit\AssetCompiler;
 
 class AssetCompilerTest extends AssetKit\TestCase
 {
-
     public function testCssImportUrlFromTestAssetInProductionMode()
     {
         $config = $this->getConfig();
@@ -72,22 +71,22 @@ class AssetCompilerTest extends AssetKit\TestCase
     {
         $config = $this->getConfig();
         $loader = $this->getLoader();
-        $asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
-        ok($asset);
+        $assets = array();
+        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/test");
+        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/jquery");
+        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
+        ok($assets);
+
+        $this->installAssets($assets);
 
         $compiler = $this->getCompiler();
         $compiler->setEnvironment( AssetCompiler::DEVELOPMENT );
-
-        $installer = $this->getInstaller();
-        $installer->install($asset);
-
-        $files = $compiler->compile($asset);
-        ok($files);
-        path_ok($files['js_file']);
-        path_ok($files['css_file']);
-        is('/assets/jquery-ui/jquery-ui.js', $files['js_url']);
-        is('/assets/jquery-ui/jquery-ui.css', $files['css_url']);
-        $installer->uninstall($asset);
+        $outs = $compiler->compileAssetsForDevelopment($assets);
+        ok($outs);
+        foreach($outs as $out) {
+            ok($out['type']);
+            ok(isset($out['url']) || isset($out['content']));
+        }
     }
 
     public function testProductionModeForjQueryUI()

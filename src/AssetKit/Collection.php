@@ -50,7 +50,6 @@ class Collection
     }
 
 
-
     /**
      * @return array return the collection file list
      */
