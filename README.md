@@ -88,10 +88,8 @@ $render->renderAssets('page-id',$assets);
 The rendered result:
 
 ```html
-<head>
 <script type="text/javascript"  src="assets/demo/d95da0fbdccc220ccb5e4949a41ec796.min.js" ></script>
 <link rel="stylesheet" type="text/css"  href="assets/demo/3fffd7e7bf5d2a459cad396bd3c375b4.min.css"/>
-</head>
 ```
 
 Definitions
