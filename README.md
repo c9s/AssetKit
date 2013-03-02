@@ -15,29 +15,34 @@ and a simple PHP library, there are many built-in filters and compressors in it.
 The Concept of AssetToolkit
 ---------------------------
 
-- We register these wanted assets into the assetkit configuration file,
-  which contains the asset source directory, manifest file information.
+- We register these wanted asset manifest files into the assetkit configuration
+  file, which contains the asset source directory and other manifest file
+  information in PHP source code format.
 
-- When one asset is required from a web page, the asset can be quickly loaded through the AssetLoader, 
-  then the asset will be filtered, compiled to the front-end output.
+- When one asset is required from a web page, the asset can be quickly loaded
+  through the AssetLoader, then the asset will be filtered, compiled to the
+  front-end output. If the environment is production, the `AssetRenderer` would
+  cache the url manifest for you, so you don't have to compile these assets
+  everytime.
 
 - In production mode, the asset compiler squashes the loaded asset files to the minified files.
 
 - In development mode, the asset compiler simply render the include paths for you.
 
-- You can define different required assets in each different page with a page id (target)
+- You can define different required assets in each different page with a page id (target).
+
   The page id (target) is also used for caching results.
 
   So that in your product page, you may include `jquery`, `product` assets
   together with a page id "yourapp-products".  And in your main page, you may
   include `jquery`, `mainpage` assets with a page id "youapp-mainpage"
 
-- One asset can have multiple file collection, the file collection can be css, scss, sass,
+- One asset can have multiple file collections, the file collection can be css, scss, sass,
   coffee-script, live-script or javascript collection.
 
-- Each file collection may have its own filter and compressor. so that CSS file
-  collection can use "cssmin" and "yuicss" compressor, and the SASS file collection 
-  can use "sass" filter and "cssmin" compressor to generate the minified files.
+- Each file collection may have its own filters and compressors. so that a CSS file
+  collection can use "cssmin" and "yuicss" compressor, and a SASS file collection 
+  can use "sass" filter and "cssmin" compressor to generate the minified output.
 
 Features
 ---------------------------
