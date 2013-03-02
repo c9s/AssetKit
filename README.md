@@ -133,10 +133,10 @@ Installation
 ---------------------------
 
 ```sh
-curl -O https://github.com/c9s/php-AssetToolkit/raw/master/assetkit
-chmod +x assetkit
+git clone git@github.com:c9s/php-AssetToolkit.git
+pear install -f package.xml
+cp assetkit /usr/bin
 ```
-
 
 The Asset Manifest File
 ---------------------------
