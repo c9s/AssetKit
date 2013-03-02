@@ -1,6 +1,6 @@
 <?php return array (
   'baseDir' => 'public/assets',
-  'baseUrl' => '/assets',
+  'baseUrl' => 'assets',
   'dirs' => 
   array (
     0 => 'assets',
@@ -18,6 +18,12 @@
       'manifest' => 'tests/assets/jquery-ui/manifest.php',
       'source_dir' => 'tests/assets/jquery-ui',
       'name' => 'jquery-ui',
+    ),
+    'test' => 
+    array (
+      'manifest' => 'tests/assets/test/manifest.php',
+      'source_dir' => 'tests/assets/test',
+      'name' => 'test',
     ),
   ),
 );

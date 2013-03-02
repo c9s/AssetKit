@@ -77,6 +77,7 @@ class AssetLoader
             if($asset = $this->lookup($name)) {
                 return $this->assets[$name] = $asset;
             }
+            throw new Exception("asset $name not found.");
         }
     }
 
