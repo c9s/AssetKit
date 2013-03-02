@@ -51,6 +51,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function installAssets($assets)
     {
+        $assets = (array) $assets;
         $installer = $this->getInstaller();
         foreach($assets as $asset) {
             $installer->install($asset);
@@ -60,6 +61,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function uninstallAssets($assets)
     {
+        $assets = (array) $assets;
         $installer = $this->getInstaller();
         foreach($assets as $asset) {
             $installer->uninstall($asset);

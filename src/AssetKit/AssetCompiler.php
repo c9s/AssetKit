@@ -91,7 +91,19 @@ class AssetCompiler
     public function setEnvironment($env)
     {
         $this->environment = $env;
+
     }
+
+    public function setProductionFstatCheck($b)
+    {
+        $this->productionFstatCheck = $b;
+    }
+
+    public function enableProductionFstatCheck()
+    {
+        $this->productionFstatCheck = true;
+    }
+
 
 
     public function setConfig(AssetConfig $config)

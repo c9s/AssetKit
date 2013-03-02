@@ -5,8 +5,6 @@ use AssetKit\AssetCompiler;
 class AssetCompilerTest extends AssetKit\TestCase
 {
 
-
-
     public function testCssImportUrlFromTestAssetInProductionMode()
     {
         $config = $this->getConfig();
@@ -22,6 +20,7 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $compiler = $this->getCompiler();
         $compiler->setEnvironment( AssetCompiler::PRODUCTION );
+        $compiler->enableProductionFstatCheck();
 
         $files = $compiler->compileAssets('myapp',$assets);
         ok($files);
