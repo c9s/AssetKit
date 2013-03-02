@@ -3,12 +3,14 @@ namespace AssetKit;
 use Exception;
 
 /**
+ * AssetIncluder is the top-level API for including asset files.
  *
  * $render = new AssetInclude;
  * $render->render( $manifest );
  */
-class AssetInclude
+class AssetIncluder
 {
+
 
     /**
      * @param string $url
