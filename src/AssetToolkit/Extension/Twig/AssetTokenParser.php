@@ -10,13 +10,14 @@ class AssetTokenParser extends Twig_TokenParser
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
 
-        $assetNames = array();
-        $target = null;
-
+        $attributes = array(
+            'assetNames' => array(),
+            'target' => null,
+        );
         while (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
-
+            // take asset names
             while ($stream->test(Twig_Token::STRING_TYPE)) {
-                $assetNames[] = $stream->next()->getValue();
+                $attributes['assetNames'][] = $stream->next()->getValue();
 
                 if ( $stream->test(Twig_Token::PUNCTUATION_TYPE, ',') ) {
                     $stream->next();
@@ -24,9 +25,21 @@ class AssetTokenParser extends Twig_TokenParser
                     break;
                 }
             }
+
+            if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {
+                $stream->next();
+                $attributes['target'] = $stream->expect(Twig_Token::STRING_TYPE)->getValue();
+            } elseif ($stream->test(\Twig_Token::NAME_TYPE, 'config')) {
+                // debug=true
+                $stream->next();
+                $stream->expect(\Twig_Token::OPERATOR_TYPE, '=');
+                $attributes['debug'] =
+                    'true' == $stream->expect(Twig_Token::NAME_TYPE, array('true', 'false'))->getValue();
+            }
+
         }
         $stream->expect(Twig_Token::BLOCK_END_TYPE);
-        return new AssetNode($assetNames, $lineno, $this->getTag());
+        return new AssetNode($attributes, $lineno, $this->getTag());
 
         /*
         if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {

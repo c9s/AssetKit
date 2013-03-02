@@ -7,18 +7,48 @@ use Twig_Node_Expression;
 class AssetNode extends Twig_Node
 {
 
-    public function __construct($assetNames, $lineno, $tag = null)
+    public function __construct($attributes, $lineno, $tag = null)
     {
-        parent::__construct(array(), array('assetNames' => $assetNames), $lineno, $tag);
+        parent::__construct(array(), $attributes, $lineno, $tag);
     }
 
     public function compile(Twig_Compiler $compiler)
     {
-        $compiler->addDebugInfo($this)
-            ->write('echo ')
+        $compiler->addDebugInfo($this);
+        $assetNames = $this->getAttribute('assetNames');
+        $target     = $this->getAttribute('target');
+
+        $compiler->raw("\$extension = \$this->getEnvironment()->getExtension('AssetToolkit');\n");
+        $compiler->raw("\$assetloader = \$extension->getAssetLoader();\n");
+        $compiler->raw("\$assetrender = \$extension->getAssetRender();\n");
+        $compiler->raw("\$assets = array();\n");
+
+        if($target) {
+            $compiler->raw("\$target = '$target'; \n");
+        } else {
+            $compiler->raw("\$target = get_class(\$this); \n");
+        }
+
+        foreach($assetNames as $assetName) {
+            $compiler->raw("\$assets[] = \$assetloader->load('$assetName');");
+        }
+        $compiler->raw("\$assetrender->renderAssets(\$target,\$assets);");
+        /*
+        $config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
+        $loader = new AssetToolkit\AssetLoader( $config );
+        $assets = array();
+        $assets[] = $loader->load( 'jquery-ui' );
+        $assets[] = $loader->load( 'underscore' );
+        $assets[] = $loader->load( 'test' );
+        $render = new AssetToolkit\AssetRender($config,$loader);
+        $render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+        $compiler = $render->getCompiler();
+        $compiler->enableProductionFstatCheck();
+        $compiler->write('echo')
             ->string( $this->getAttribute('assetNames')[0] )
             ->raw(";\n")
         ;
+        */
     }
 
     /*
