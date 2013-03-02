@@ -1,6 +1,6 @@
 <?php
 namespace AssetToolkit\Compressor;
-require dirname(dirname(__FILE__)) . '/CssMin.php';
+require_once dirname(dirname(__FILE__)) . '/CssMin.php';
 use CssMin;
 
 class CssMinCompressor

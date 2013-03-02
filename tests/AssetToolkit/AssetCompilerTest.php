@@ -89,10 +89,34 @@ class AssetCompilerTest extends AssetToolkit\TestCase
             ok($out['type']);
             ok(isset($out['url']) || isset($out['content']));
         }
-
-        $render = new AssetToolkit\AssetRender($config,$loader);
-        $render->renderFragments($outs);
+        return $outs;
     }
+
+
+    /**
+     * @depends testDevelopmentModeShouldOnlyRunFiltersForjQueryUI
+     */
+    public function testAssetRenderForDevelopment($outs)
+    {
+        $render = new AssetToolkit\AssetRender($this->getConfig(),$this->getLoader());
+        ok($render);
+
+        $outputFile = 'tests/asset_render.out';
+        if(file_exists($outputFile)) {
+            $expected = file_get_contents($outputFile);
+            $render->renderFragments($outs);
+            $this->expectOutputString($expected);
+        } else {
+            ob_start();
+            $render->renderFragments($outs);
+            $content = ob_get_contents();
+            ob_clean();
+            file_put_contents($outputFile, $content);
+            echo "Rendered: \n";
+            echo $content;
+        }
+    }
+
 
     public function testProductionModeForjQueryUI()
     {
