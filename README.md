@@ -27,12 +27,6 @@ Features
 - CoffeeScript filter
 - APC cache support
 
-Installation
-============
-
-    $ pear channel-discover pear.corneltek.com
-    $ pear install corneltek/AssetToolkit
-
 
 Definitions
 ============
