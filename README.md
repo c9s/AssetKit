@@ -85,6 +85,11 @@ This creates and initializes the `.assetkit.php` file:
 $ assetkit init --baseUrl=/assets --baseDir=public/assets
 ```
 
+The `--baseDir` is where the assets will be installed to.
+
+THe `--baseUrl` is where the assets can be loaded from front-end browser.
+
+
 Register the assets you need:
 
 ```sh
@@ -93,19 +98,23 @@ $ assetkit add plugins/foo/assets/jquery-ui
 $ assetkit add plugins/bar/assets/bootstrap
 ```
 
-Then install asset resources into the `--baseDir` you've setup:
+
+
+Then install asset resources into the `--baseDir` that you've setup:
 
 ```sh
 $ assetkit install
 ```
 
-To update asset resource from remote (eg: git, github, hg or svn):
+There are two modes for installation, link and copy, to simply copy assets files
+into the `baseDir`, we use default asset installer.
 
-```sh
-$ assetkit update
-```
+To symbol link assets to the `baseDir`, you may pass the `--link` flag.
 
-Then integrate the AssetToolkit API into your PHP web application:
+
+
+Then integrate the AssetToolkit API into your PHP web application,
+there are just few lines to write (you may check the `public/index.php` sample):
 
 ```php
 $config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
@@ -118,7 +127,6 @@ $loader = new AssetToolkit\AssetLoader( $config );
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
-$assets[] = $loader->load( 'test' );
 $render = new AssetToolkit\AssetRender($config,$loader);
 $render->renderAssets($assets,'page-id');
 ```
@@ -128,6 +136,12 @@ The rendered result:
 ```html
 <script type="text/javascript"  src="assets/demo/d95da0fbdccc220ccb5e4949a41ec796.min.js" ></script>
 <link rel="stylesheet" type="text/css"  href="assets/demo/3fffd7e7bf5d2a459cad396bd3c375b4.min.css"/>
+```
+
+To update asset resource from remote (eg: git, github, hg or svn) if needed.
+
+```sh
+$ assetkit update
 ```
 
 Pre-compile targets:
