@@ -460,8 +460,16 @@ $ onion install
 
 ... Hack Hack Hack ...
 
+Run tests:
+
 ```sh
-$ php bin/assetkit
+$ phpunit
+```
+
+Make sure command runs fine:
+
+```sh
+$ php bin/assetkit compile --target mainpage jquery jquery-ui 
 ```
 
 ## The asset port manifest
