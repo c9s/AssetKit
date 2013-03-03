@@ -396,7 +396,8 @@ The manifest.yml file:
 Please check public/index.php file for example.
 
 
-# Working in progress
+Asset Twig Extension
+--------------------
 
 ### Include stylesheets and javascripts in front-end page
 
@@ -404,15 +405,11 @@ Include specified asset:
 
     {% assets 'jquery' %}
 
-Include all assets:
+Include multiple assets:
 
-    {% asset '@all' %}
+    {% assets "jquery", "jquery-ui" %}
 
-Include javascripts only:
+Include multiple assets to the target:
 
-    {% javascript 'jquery' %}
-    {% javascript 'jquery-ui' %}
+    {% assets "jquery", "jquery-ui" as "jquery-all" %}
 
-Include css only:
-
-    {% stylesheet 'jquery-ui' %}
