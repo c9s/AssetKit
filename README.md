@@ -400,15 +400,21 @@ Asset Twig Extension
 
 Include specified asset:
 
-    {% assets 'jquery' %}
+```html+jinja
+{% assets 'jquery' %}
+```
 
 Include multiple assets:
 
-    {% assets "jquery", "jquery-ui" %}
+```html+jinja
+{% assets "jquery", "jquery-ui" %}
+```
 
 Include multiple assets to the target:
 
-    {% assets "jquery", "jquery-ui" as "jquery-all" %}
+```html+jinja
+{% assets "jquery", "jquery-ui" as "jquery-all" %}
+```
 
 Hack
 ----------------
