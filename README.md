@@ -7,10 +7,11 @@ AssetToolkit is different from Rails' asset pipeline, AssetToolkit is designed f
 you know, Rails is too slow, the same strategy might not be suitable in PHP applications.**
 
 AssetToolkit is designed for PHP's performance, all configuration files are compiled into
-PHP source code, this makes AssetToolkit loads these asset configuration files quickly.
+PHP source code, this makes AssetToolkit loads these asset configuration files very quickly.
 
-AssetToolkit is a powerful asset manager, provides a simple command-line interface
-and a simple PHP library, there are many built-in filters and compressors in it.
+AssetToolkit is a powerful asset manager, provides a simple command-line
+interface and a simple PHP library with simple API, there are many built-in
+filters and compressors in it.
 
 [![Build Status](https://travis-ci.org/c9s/php-AssetToolkit.png?branch=master)](https://travis-ci.org/c9s/php-AssetToolkit)
 
