@@ -86,8 +86,8 @@ This creates and initializes the `.assetkit.php` file:
 Register the assets you need:
 
     assetkit add app/assets/jquery
-    assetkit add app/assets/jquery-ui
-    assetkit add app/assets/bootstrap
+    assetkit add plugins/foo/assets/jquery-ui
+    assetkit add plugins/bar/assets/bootstrap
 
 Then install asset resources into the `--baseDir` you've setup:
 
