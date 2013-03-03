@@ -80,7 +80,6 @@ class AssetConfig
         $this->options = $options;
     }
 
-
     public function setEnvironment($env)
     {
         $this->environment = $env;

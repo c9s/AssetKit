@@ -44,11 +44,11 @@ class AssetRender
     public function renderAssets($target, $assets)
     {
         $compiler = $this->getCompiler();
-        if($this->environment === self::DEVELOPMENT ) {
+        if($this->config->environment === AssetConfig::DEVELOPMENT ) {
             $outs = $compiler->compileAssetsForDevelopment($assets);
             $this->renderFragments($outs);
         }
-        elseif ($this->environment === self::PRODUCTION ) {
+        elseif ($this->config->environment === AssetConfig::PRODUCTION ) {
             $out = $compiler->compileAssetsForProduction($target, $assets, $this->force);
             $this->renderFragment($out);
         } else {
