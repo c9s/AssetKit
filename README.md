@@ -14,7 +14,7 @@ and a simple PHP library, there are many built-in filters and compressors in it.
 
 [![Build Status](https://travis-ci.org/c9s/php-AssetToolkit.png?branch=master)](https://travis-ci.org/c9s/php-AssetToolkit)
 
-The Concept of AssetToolkit
+Concepts of AssetToolkit
 ---------------------------
 
 - To improvement the asset loading performance, we register these wanted asset
@@ -261,8 +261,29 @@ To use assetkit in your application, just few lines to write:
 
 
 
-The AssetConfig API
+Filters
 -------------------
+
+### CoffeeScriptFilter
+
+```php
+$filter = new AssetToolkit\Filter\CoffeeScriptFilter;
+```
+
+### SassFilter
+
+### ScssFilter
+
+### CssImportFilter
+
+### CssRewriteFilter
+
+
+API
+-------------------
+
+
+### AssetConfig API
 
 ```php
 $config = new AssetToolkit\AssetConfig('.assetkit.php',array(  
@@ -287,8 +308,7 @@ $config->save();
 ```
 
 
-The AssetLoader API
--------------------
+### AssetLoader API
 
 ```php
 $loader = new AssetToolkit\AssetLoader($config);
@@ -302,8 +322,7 @@ $updater = new ResourceUpdater;
 $updater->update($asset);
 ```
 
-The Asset Installer API
------------------------
+### AssetInstaller API
 
 ```php
 $installer = new AssetToolkit\Installer;
@@ -317,8 +336,7 @@ $installer->install( $asset );
 $installer->uninstall( $asset );
 ```
 
-The AssetCompiler API
----------------------
+### AssetCompiler API
 
 ```php
 $asset = $loader->registerAssetFromPath("tests/assets/jquery-ui");
@@ -340,15 +358,32 @@ To auto-recompile these assets when you modified them, you can setup an
 option to make your PHP application scan the modification time of asset files
 to recompile assets:
 
-```
+```php
 $render = new AssetToolkit\AssetRender($config,$loader);
 $render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $compiler = $render->getCompiler();
 $compiler->enableProductionFstatCheck();
 ```
 
-The AssetRender API
---------------------
+To enable builtin filters, compressors:
+
+```php
+$compiler->registerDefaultCompressors();
+$compiler->registerDefaultFilters();
+```
+
+To register filters, compressors:
+
+```php
+$compiler->addCompressor('jsmin', '\AssetToolkit\Compressor\JsMinCompressor');
+$compiler->addCompressor('cssmin', '\AssetToolkit\Compressor\CssMinCompressor');
+$compiler->addFilter( 'coffeescript','\AssetToolkit\Filter\CoffeeScriptFilter');
+$compiler->addFilter( 'css_import', '\AssetToolkit\Filter\CssImportFilter');
+$compiler->addFilter( 'sass', '\AssetToolkit\Filter\SassFilter');
+$compiler->addFilter( 'scss', '\AssetToolkit\Filter\ScssFilter');
+```
+
+### AssetRender API
 
 This is the top level API to compile/render asset HTML tags, which 
 operates AssetCompiler to compile loaded assets.
@@ -358,10 +393,6 @@ $render = new AssetToolkit\AssetRender($config,$loader);
 $render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $render->renderAssets($assets,'demo');
 ```
-
-### Include assetkit in your application
-
-Please check public/index.php file for example.
 
 Asset Twig Extension
 --------------------
