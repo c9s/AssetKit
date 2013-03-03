@@ -358,18 +358,21 @@ class AssetCompiler
         $outfiles = array();
 
         // write minified results to file
-        $outfiles['css_md5'] = md5($contents['css']);
-        $outfiles['js_md5'] = md5($contents['js']);
-        $outfiles['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['css_md5'] . '.min.css';
-        $outfiles['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['js_md5'] . '.min.js';
-        $outfiles['css_url'] = "$compiledUrl/$target-" . $outfiles['css_md5'] . '.min.css';
-        $outfiles['js_url']  = "$compiledUrl/$target-" . $outfiles['js_md5']  . '.min.js';
+        if($contents['js']) {
+            $outfiles['js_md5'] = md5($contents['js']);
+            $outfiles['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['js_md5'] . '.min.js';
+            $outfiles['js_url']  = "$compiledUrl/$target-" . $outfiles['js_md5']  . '.min.js';
+            $this->writeFile( $outfiles['js_file'], $contents['js'] );
+        }
+
+        if($contents['css']) {
+            $outfiles['css_md5'] = md5($contents['css']);
+            $outfiles['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['css_md5'] . '.min.css';
+            $outfiles['css_url'] = "$compiledUrl/$target-" . $outfiles['css_md5'] . '.min.css';
+            $this->writeFile( $outfiles['css_file'], $contents['css'] );
+        }
+
         $outfiles['mtime']   = time();
-
-
-        // write minified file
-        $this->writeFile( $outfiles['js_file'], $contents['js'] );
-        $this->writeFile( $outfiles['css_file'], $contents['css'] );
         apc_store($cacheKey, $outfiles);
         return $outfiles;
     }
@@ -380,7 +383,7 @@ class AssetCompiler
         foreach( array('css_file','js_file')  as $k ) {
             if( $m[$k] ) {
                 file_exists($m[$k]) && unlink($m[$k]);
-            }   
+            }
         }
     }
 
@@ -494,6 +497,7 @@ class AssetCompiler
     public function getCompressors()
     {
         $self = $this;
+        $c = array();
         return array_map(function($n) use($self) { 
             return $self->getCompressor($n);
              }, $this->_compressors);

@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-03</date>
-  <time>12:19:12</time>
+  <time>12:26:57</time>
   <version>
     <release>2.0.0</release>
     <api>2.0.0</api>
@@ -29,10 +29,10 @@
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="5d0eec727f3712045e45bf1c4424a0e5"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="e6a76832639b0d9853173ae2d4b6d79f"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="4ff928ded18fdff98ba28ee23af44182"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="63ed153b7a6e2286e4fc82277bec366c"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="66fe0c0244ff67ecc6c5d9db505d35d6"/>
-      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="6861cb4ea6706b5b6afe9223c806807b"/>
+      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="aea7e22a7d05faa6bf7f1bd9c3653235"/>
       <file name="src/AssetToolkit/Collection.php" role="php" md5sum="c1c3b5c8725facd3cbbc8b2fa184ada1"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="8a6c7e62921ba4fc7366a64df5beab4f"/>
       <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="ab7a9ca6d49b9ea31b0689a899ab12de"/>
@@ -87,6 +87,11 @@
       <package>
         <name>CacheKit</name>
         <channel>pear.corneltek.com</channel>
+        <min>0.0.0</min>
+      </package>
+      <package>
+        <name>Twig</name>
+        <channel>pear.twig-project.org</channel>
         <min>0.0.0</min>
       </package>
     </required>
