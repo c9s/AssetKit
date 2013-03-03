@@ -41,7 +41,7 @@ class AssetRender
         return $this->compiler;
     }
 
-    public function renderAssets($target, $assets)
+    public function renderAssets($assets, $target = '')
     {
         $compiler = $this->getCompiler();
         if($this->config->environment === AssetConfig::DEVELOPMENT ) {
@@ -49,7 +49,7 @@ class AssetRender
             $this->renderFragments($outs);
         }
         elseif ($this->config->environment === AssetConfig::PRODUCTION ) {
-            $out = $compiler->compileAssetsForProduction($target, $assets, $this->force);
+            $out = $compiler->compileAssetsForProduction($assets, $target, $this->force);
             $this->renderFragment($out);
         } else {
             throw new Exception("Unknown environment type.");

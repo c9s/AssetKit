@@ -20,7 +20,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         $compiler = $this->getCompiler();
         $compiler->enableProductionFstatCheck();
 
-        $files = $compiler->compileAssetsForProduction('myapp',$assets);
+        $files = $compiler->compileAssetsForProduction($assets,'myapp');
         ok($files);
         path_ok($files['js_file']);
         path_ok($files['css_file']);
@@ -101,8 +101,9 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         $render = new AssetToolkit\AssetRender($this->getConfig(),$this->getLoader());
         ok($render);
 
-        return;
         // the below tests are only for local.
+        if( getenv('TRAVIS_BUILD_ID') )
+            return;
 
         $outputFile = 'tests/asset_render.out';
         if( file_exists($outputFile)) {

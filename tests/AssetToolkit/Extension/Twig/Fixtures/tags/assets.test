@@ -1,7 +1,7 @@
 --TEST--
 assets tag
 --TEMPLATE(index.twig)--
-{% assets "jquery" %}
+{% assets "jquery" as "test" %}
 --DATA--
 return array();
 --EXPECT--

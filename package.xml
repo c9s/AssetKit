@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-03</date>
-  <time>12:04:31</time>
+  <time>12:14:22</time>
   <version>
     <release>2.0.0</release>
     <api>2.0.0</api>
@@ -29,13 +29,13 @@
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="5d0eec727f3712045e45bf1c4424a0e5"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="030050484a10606c9acd0d38b8328a74"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="e6a76832639b0d9853173ae2d4b6d79f"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="63ed153b7a6e2286e4fc82277bec366c"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="66fe0c0244ff67ecc6c5d9db505d35d6"/>
-      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="7057c3931e23b5e65caf32bbc9cd4d6f"/>
+      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="6861cb4ea6706b5b6afe9223c806807b"/>
       <file name="src/AssetToolkit/Collection.php" role="php" md5sum="c1c3b5c8725facd3cbbc8b2fa184ada1"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="8a6c7e62921ba4fc7366a64df5beab4f"/>
-      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="4583ab7868470d6d66f4b58ffcfae125"/>
+      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="ab7a9ca6d49b9ea31b0689a899ab12de"/>
       <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="b3b84ee791d25430d396ed777638e769"/>
       <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="7d3dab80052dcbed126155816114e3fd"/>
       <file name="src/AssetToolkit/Command/RemoveCommand.php" role="php" md5sum="9faf540a380bca6186cc4c4b43321e73"/>

@@ -22,17 +22,10 @@ class AssetNode extends Twig_Node
         $compiler->raw("\$assetloader = \$extension->getAssetLoader();\n");
         $compiler->raw("\$assetrender = \$extension->getAssetRender();\n");
         $compiler->raw("\$assets = array();\n");
-
-        if($target) {
-            $compiler->raw("\$target = '$target'; \n");
-        } else {
-            $compiler->raw("\$target = get_class(\$this); \n");
-        }
-
         foreach($assetNames as $assetName) {
             $compiler->raw("\$assets[] = \$assetloader->load('$assetName');");
         }
-        $compiler->raw("\$assetrender->renderAssets(\$target,\$assets);");
+        $compiler->raw("\$assetrender->renderAssets(\$assets,'$target');");
         /*
         $config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
         $loader = new AssetToolkit\AssetLoader( $config );

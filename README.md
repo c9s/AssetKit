@@ -101,7 +101,8 @@ Then integrate the AssetToolkit API into your PHP web application:
 ```php
 $config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
     // the application root, contains the .assetkit.php file.
-    'root' => APPLICATION_ROOT
+    'root' => APPLICATION_ROOT,
+    'environment' =>  AssetToolkit\AssetConfig::PRODUCTION,
 ));
 
 $loader = new AssetToolkit\AssetLoader( $config );
@@ -110,8 +111,7 @@ $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'test' );
 $render = new AssetToolkit\AssetRender($config,$loader);
-$render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
-$render->renderAssets('page-id',$assets);
+$render->renderAssets($assets,'page-id');
 ```
 
 The rendered result:
@@ -356,7 +356,7 @@ operates AssetCompiler to compile loaded assets.
 ```php
 $render = new AssetToolkit\AssetRender($config,$loader);
 $render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
-$render->renderAssets('demo',$assets);
+$render->renderAssets($assets,'demo');
 ```
 
 

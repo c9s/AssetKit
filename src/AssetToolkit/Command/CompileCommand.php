@@ -43,7 +43,7 @@ class CompileCommand extends Command
         $compiler->registerDefaultFilters();
         
         // force compile
-        $files = $compiler->compileAssetsForProduction($target,$assets, true);
+        $files = $compiler->compileAssetsForProduction($assets,$target, true);
 
         printf( "Stylesheet:\n" );
         printf( "  MD5:   %s\n" , $files['css_md5'] );
