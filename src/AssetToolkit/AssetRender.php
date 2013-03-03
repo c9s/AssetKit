@@ -104,7 +104,7 @@ class AssetRender
     public function getJavascriptTag($url, $innerContent = '' ,$attributes = array())
     {
         $html = '<script type="text/javascript"';
-        $html .= ' src="' . $url . '" ';
+        $html .= ' src="' . $url . '"';
         foreach( $attributes as $name => $value ) {
             $html .= ' ' . $name . '="' . $value . '"'; 
         }

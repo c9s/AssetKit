@@ -81,7 +81,17 @@ class AssetLoader
         }
     }
 
+    public function loadFromManifestFile($file)
+    {
+        $asset = $this->config->registerAssetFromManifestFile($file);
+        return $this->assets[$name] = $asset;
+    }
 
+    public function loadFromPath($path)
+    {
+        $asset = $this->config->registerAssetFromPath($path);
+        return $this->assets[$asset->name] = $asset;
+    }
 
 
     /**
@@ -100,58 +110,13 @@ class AssetLoader
     }
 
 
-    /**
-     * Load asset from a manifest file.
-     *
-     * @param string $path
-     * @parma integer $format
-     */
-    public function registerFromManifestFile($path, $format = 0)
-    {
-        if( $format !== Data::FORMAT_PHP ) {
-            $format = Data::FORMAT_PHP;
-            $path = Data::compile_manifest_to_php($path);
-        }
-
-
-        $asset = new Asset($this->config);
-        $asset->loadFromManifestFile($path, $format);
-        $this->registerAsset($asset);
-        return $asset;
-    }
-
-
-    public function registerAsset($asset)
-    {
-        $this->config->addAsset($asset);
-    }
-
-
-    /**
-     * If the given path is a directory, then we should 
-     * find the manifest from the directory.
-     *
-     * @param string $path
-     * @param integer $format
-     */
-    public function registerFromManifestFileOrDir($path) 
-    {
-        if( is_dir($path) ) {
-            $path = FileUtil::find_non_php_manifest_file_from_directory( $path );
-            $format = Data::detect_format_from_extension($path);
-        }
-        if( file_exists($path))  {
-            return $this->registerFromManifestFile($path, $format);
-        }
-    }
-
 
 
     public function updateAsset($asset)
     {
         $manifestFile = FileUtil::find_non_php_manifest_file_from_directory( dirname($asset->manifestFile) );
         $phpManifestFile = Data::compile_manifest_to_php($manifestFile);
-        $this->registerFromManifestFile($phpManifestFile);
+        $this->config->registerFromManifestFile($phpManifestFile);
     }
 
     public function updateAssetByName($name)
@@ -169,7 +134,7 @@ class AssetLoader
         $assets = array();
         $registered = $this->config->getRegisteredAssets();
         foreach( $registered as $name => $subconfig ) {
-            $assets[] = $this->registerFromManifestFileOrDir( dirname($subconfig['manifest']) );
+            $assets[] = $this->config->registerAssetFromPath( dirname($subconfig['manifest']) );
         }
         return $assets;
     }
@@ -191,7 +156,7 @@ class AssetLoader
         // if there is not asset registered in config, we should look up from the asset paths
         $root = $this->config->getRoot();
         foreach( $this->config->getAssetDirectories() as $dir ) {
-            if($asset = $this->registerFromManifestFileOrDir( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name )) {
+            if($asset = $this->config->registerAssetFromPath( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name )) {
                 return $asset;
             }
         }

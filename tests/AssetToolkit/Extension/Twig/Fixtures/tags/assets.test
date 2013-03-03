@@ -1,8 +1,8 @@
 --TEST--
 assets tag
 --TEMPLATE(index.twig)--
-{% assets "jquery" as "test" %}
+{% assets "jquery" as "mainpage" %}
 --DATA--
 return array();
 --EXPECT--
-<script type="text/javascript" src="/assets/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/assets/compiled/mainpage-b85a127e78bdf8178d84a3da8d60e7af.min.js"></script>

@@ -257,6 +257,47 @@ class AssetConfig
     }
 
 
+    /**
+     * Load asset from a manifest file.
+     *
+     * @param string $path
+     * @parma integer $format
+     */
+    public function registerAssetFromManifestFile($path, $format = 0)
+    {
+        if( $format !== Data::FORMAT_PHP ) {
+            $format = Data::FORMAT_PHP;
+            $path = Data::compile_manifest_to_php($path);
+        }
+
+        if( ! file_exists($path) ) {
+            throw new Exception("Can not register asset from $path.");
+        }
+
+        $asset = new Asset($this);
+        $asset->loadFromManifestFile($path, $format);
+        $this->addAsset($asset);
+        return $asset;
+    }
+
+    /**
+     * If the given path is a directory, then we should 
+     * find the manifest from the directory.
+     *
+     * @param string $path
+     * @param integer $format
+     */
+    public function registerAssetFromPath($path) 
+    {
+        if( is_dir($path) ) {
+            $path = FileUtil::find_non_php_manifest_file_from_directory( $path );
+            $format = Data::detect_format_from_extension($path);
+        }
+        if( file_exists($path))  {
+            return $this->registerAssetFromManifestFile($path, $format);
+        }
+        throw new Exception("Can not register asset from $path");
+    }
 
 
     /**

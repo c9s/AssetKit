@@ -15,9 +15,9 @@ class AssetExtensionTest extends Twig_Test_IntegrationTestCase
         $extension->setAssetLoader($loader);
         $config->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 
-        ok($loader->registerFromManifestFile('tests/assets/jquery/manifest.yml'));
-        ok($loader->registerFromManifestFile('tests/assets/jquery-ui/manifest.yml'));
-        ok($loader->registerFromManifestFile('tests/assets/test/manifest.yml'));
+        ok($config->registerAssetFromManifestFile('tests/assets/jquery/manifest.yml'));
+        ok($config->registerAssetFromManifestFile('tests/assets/jquery-ui/manifest.yml'));
+        ok($config->registerAssetFromManifestFile('tests/assets/test/manifest.yml'));
         ok($loader);
         return array( $extension );
     }

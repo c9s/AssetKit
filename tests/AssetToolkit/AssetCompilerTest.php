@@ -10,10 +10,11 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         $loader = $this->getLoader();
 
         $assets = array();
-        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/jquery");
-        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
-        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/test");
+        $assets[] = $loader->loadFromPath("tests/assets/jquery");
+        $assets[] = $loader->loadFromPath("tests/assets/jquery-ui");
+        $assets[] = $loader->loadFromPath("tests/assets/test");
         ok($assets);
+        count_ok(3,$assets);
 
         $this->installAssets($assets);
 
@@ -75,9 +76,9 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
         $assets = array();
-        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/test");
-        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/jquery");
-        $assets[] = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
+        $assets[] = $loader->loadFromPath("tests/assets/test");
+        $assets[] = $loader->loadFromPath("tests/assets/jquery");
+        $assets[] = $loader->loadFromPath("tests/assets/jquery-ui");
         ok($assets);
 
         $this->installAssets($assets);
@@ -127,7 +128,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
-        $asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
+        $asset = $loader->loadFromPath("tests/assets/jquery-ui");
         ok($asset);
 
         $compiler = $this->getCompiler();

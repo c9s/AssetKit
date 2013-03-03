@@ -27,7 +27,7 @@ class AssetLoaderTest extends AssetToolkit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
-        $asset = $loader->registerFromManifestFileOrDir($manifestPath);
+        $asset = $loader->loadFromPath($manifestPath);
         ok($asset, "asset is loaded from $manifestPath");
 
 

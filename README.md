@@ -292,7 +292,7 @@ The AssetLoader API
 
 ```php
 $loader = new AssetToolkit\AssetLoader($config);
-$asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery");
+$asset = $loader->registerAssetFromPath("tests/assets/jquery");
 $asset = $loader->registerFromManifestFile("tests/assets/jquery/manifest.yml");
 
 $jquery = $loader->load('jquery');
@@ -321,7 +321,7 @@ The AssetCompiler API
 ---------------------
 
 ```php
-$asset = $loader->registerFromManifestFileOrDir("tests/assets/jquery-ui");
+$asset = $loader->registerAssetFromPath("tests/assets/jquery-ui");
 $compiler = new AssetToolkit\AssetCompiler($config,$loader);
 $files = $compiler->compile($asset);
 

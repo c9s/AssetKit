@@ -77,6 +77,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        apc_clear_cache();
         $configFile = $this->getConfigFile();
         if(file_exists($configFile)) {
             unlink($configFile);
@@ -93,6 +94,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         if(file_exists($configFile)) {
             unlink($configFile);
         }
+        apc_clear_cache();
     }
 
 }
