@@ -88,21 +88,21 @@ $ assetkit init --baseUrl=/assets --baseDir=public/assets
 Register the assets you need:
 
 ```sh
-assetkit add app/assets/jquery
-assetkit add plugins/foo/assets/jquery-ui
-assetkit add plugins/bar/assets/bootstrap
+$ assetkit add app/assets/jquery
+$ assetkit add plugins/foo/assets/jquery-ui
+$ assetkit add plugins/bar/assets/bootstrap
 ```
 
 Then install asset resources into the `--baseDir` you've setup:
 
 ```sh
-assetkit install
+$ assetkit install
 ```
 
 To update asset resource from remote (eg: git, github, hg or svn):
 
 ```sh
-assetkit update
+$ assetkit update
 ```
 
 Then integrate the AssetToolkit API into your PHP web application:
@@ -132,19 +132,21 @@ The rendered result:
 
 Pre-compile targets:
 
-    $ assetkit compile --target demo jquery jquery-ui
-    Compiling assets to target 'demo'...
-    Stylesheet:
-      MD5:   9399a997d354919cba9f84517eb7604a
-      URL:   assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
-      File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
-      Size:  59 KBytes
-    Javascript:
-      MD5:   4a09100517e2d98c3f462376fd69d887
-      URL:   assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
-      File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
-      Size:  304 KBytes
-    Done
+```sh
+$ assetkit compile --target demo jquery jquery-ui
+Compiling assets to target 'demo'...
+Stylesheet:
+  MD5:   9399a997d354919cba9f84517eb7604a
+  URL:   assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+  Size:  59 KBytes
+Javascript:
+  MD5:   4a09100517e2d98c3f462376fd69d887
+  URL:   assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
+  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
+  Size:  304 KBytes
+Done
+```
 
 
 Requirement
