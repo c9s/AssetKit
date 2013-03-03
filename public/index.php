@@ -31,7 +31,7 @@ $render->force();
 <html>
 <head>
 <?php
-$render->renderAssets('demo',$assets);
+$render->renderAssets($assets,'demo');
 ?>
 </head>
 <body>

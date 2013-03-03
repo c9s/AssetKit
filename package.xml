@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-03</date>
-  <time>12:14:22</time>
+  <time>12:19:12</time>
   <version>
     <release>2.0.0</release>
     <api>2.0.0</api>
@@ -48,7 +48,7 @@
       <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="32fff263d702f9034018cc32a064198f"/>
       <file name="src/AssetToolkit/Data.php" role="php" md5sum="3a35215c77768847ffdb5930c52b0085"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="db39618b4f3b2cb19b94d2ff3556162b"/>
-      <file name="src/AssetToolkit/Extension/Twig/AssetNode.php" role="php" md5sum="6c948d06c517d537b10ffc661b883aa3"/>
+      <file name="src/AssetToolkit/Extension/Twig/AssetNode.php" role="php" md5sum="d35f7e37a4d14a7d59e4011e3a015af1"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetTokenParser.php" role="php" md5sum="21917caefd22792fb9ee6a9258a44651"/>
       <file name="src/AssetToolkit/FileUtil.php" role="php" md5sum="cfe2ca44b98e3e726b807b524f823241"/>
       <file name="src/AssetToolkit/Filter/CoffeeScriptFilter.php" role="php" md5sum="cef8707717e5826db446653aa0f31f20"/>

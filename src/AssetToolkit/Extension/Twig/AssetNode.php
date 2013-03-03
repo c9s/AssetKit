@@ -18,6 +18,8 @@ class AssetNode extends Twig_Node
         $assetNames = $this->getAttribute('assetNames');
         $target     = $this->getAttribute('target');
 
+        var_dump( $target );
+
         $compiler->raw("\$extension = \$this->getEnvironment()->getExtension('AssetToolkit');\n");
         $compiler->raw("\$assetloader = \$extension->getAssetLoader();\n");
         $compiler->raw("\$assetrender = \$extension->getAssetRender();\n");
