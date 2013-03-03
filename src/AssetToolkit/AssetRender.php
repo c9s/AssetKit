@@ -103,7 +103,7 @@ class AssetRender
      */
     public function getJavascriptTag($url, $innerContent = '' ,$attributes = array())
     {
-        $html = '<script type="text/javascript" ';
+        $html = '<script type="text/javascript"';
         $html .= ' src="' . $url . '" ';
         foreach( $attributes as $name => $value ) {
             $html .= ' ' . $name . '="' . $value . '"'; 
@@ -122,7 +122,7 @@ class AssetRender
      */
     public function getStylesheetTag($url,$attributes = array())
     {
-        $html = '<link rel="stylesheet" type="text/css" ';
+        $html = '<link rel="stylesheet" type="text/css"';
         $html .= ' href="' . $url . '"' ;
         foreach( $attributes as $name => $value ) {
             $html .= ' ' . $name . '="' . $value . '"'; 
