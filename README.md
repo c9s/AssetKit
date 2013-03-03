@@ -73,7 +73,7 @@ Features
 - Command-line tool for installing, register, precompile assets.
 - CSSMin compressor, YUI compressor, JSMin compressor, CoffeeScript, SASS, SCSS filters.
 - APC cache support, which caches the compiled manifest, so you don't need to recompile them everytime.
-
+- Twig Extension support. (see below)
 
 Synopsis
 ---------------------------
@@ -359,9 +359,29 @@ $render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $render->renderAssets($assets,'demo');
 ```
 
+### Include assetkit in your application
+
+Please check public/index.php file for example.
+
+Asset Twig Extension
+--------------------
+
+### Include stylesheets and javascripts in front-end page
+
+Include specified asset:
+
+    {% assets 'jquery' %}
+
+Include multiple assets:
+
+    {% assets "jquery", "jquery-ui" %}
+
+Include multiple assets to the target:
+
+    {% assets "jquery", "jquery-ui" as "jquery-all" %}
 
 Hack
-=======
+----------------
 
 Install deps:
 
@@ -390,26 +410,4 @@ The manifest.yml file:
         - js/*
         - js/javascript.js
 
-
-### Include assetkit in your application
-
-Please check public/index.php file for example.
-
-
-Asset Twig Extension
---------------------
-
-### Include stylesheets and javascripts in front-end page
-
-Include specified asset:
-
-    {% assets 'jquery' %}
-
-Include multiple assets:
-
-    {% assets "jquery", "jquery-ui" %}
-
-Include multiple assets to the target:
-
-    {% assets "jquery", "jquery-ui" as "jquery-all" %}
 
