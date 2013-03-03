@@ -8,7 +8,7 @@ class CssImportFilter
 
     public function importCss($fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
     {
-        if(self::DEBUG)
+        if(CssImportFilter::DEBUG)
             echo "Importing from $fullpath\n";
         $content = file_get_contents($fullpath);
 
@@ -48,7 +48,7 @@ class CssImportFilter
              * @param string $dirname The directory path of current CSS file.
              */
             function($matches) use ($fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl, $self) {
-                if(self::DEBUG)
+                if(CssImportFilter::DEBUG)
                     echo "--> Found {$matches[0]}\n";
 
                 // echo "CSS File $file <br/>";
@@ -57,7 +57,7 @@ class CssImportFilter
                 $url = $matches['url'] ?: $matches['url2'];
 
 
-                if(self::DEBUG)
+                if(CssImportFilter::DEBUG)
                     echo "--> Importing css from $url\n";
 
                 $content = "/* IMPORT FROM $url */" . PHP_EOL;
@@ -82,7 +82,7 @@ class CssImportFilter
                     $newDirnameUrl = $assetBaseUrl . '/' . $newDirname;
                     $newFullpath = $assetSourceDir . DIRECTORY_SEPARATOR . $newPath;
 
-                    if(self::DEBUG) {
+                    if(CssImportFilter::DEBUG) {
                         echo $url , " => " , $newPath , "\n";
                     }
 

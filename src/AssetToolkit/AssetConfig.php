@@ -13,9 +13,17 @@ use Exception;
  */
 class AssetConfig
 {
-
     const FORMAT_JSON = 1;
     const FORMAT_PHP = 2;
+
+    const PRODUCTION = 1;
+    const DEVELOPMENT = 2;
+
+    /**
+     * ->setEnvironment( AssetIncluder::PRODUCTION );
+     * ->setEnvironment( AssetIncluder::DEVELOPMENT );
+     */
+    public $environment = self::DEVELOPMENT;
 
     /**
      * @var string $file the config file path
@@ -61,12 +69,21 @@ class AssetConfig
     public function __construct($file, $options = array())
     {
         $this->options = $options;
+        if(isset($this->options['environment']) ) {
+            $this->environment = $this->options['environment'];
+        }
         $this->fileLoaded = $this->loadFromFile($file);
     }
 
     public function setOptions($options)
     {
         $this->options = $options;
+    }
+
+
+    public function setEnvironment($env)
+    {
+        $this->environment = $env;
     }
 
     public function loadFromFile($file)

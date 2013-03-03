@@ -10,15 +10,19 @@ $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 $classLoader->useIncludePath(false);
 $classLoader->register();
 
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
+$config = new AssetToolkit\AssetConfig( '../.assetkit.php', array( 
+    'root' => ROOT,
+    'environment' => AssetToolkit\AssetConfig::PRODUCTION,
+));
+
 $loader = new AssetToolkit\AssetLoader( $config );
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'underscore' );
 $assets[] = $loader->load( 'test' );
+
 $render = new AssetToolkit\AssetRender($config,$loader);
-$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
 $compiler = $render->getCompiler();
 $compiler->enableProductionFstatCheck();
 

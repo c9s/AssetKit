@@ -110,7 +110,7 @@ $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'test' );
 $render = new AssetToolkit\AssetRender($config,$loader);
-$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+$render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $render->renderAssets('page-id',$assets);
 ```
 
@@ -342,7 +342,7 @@ to recompile assets:
 
 ```
 $render = new AssetToolkit\AssetRender($config,$loader);
-$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+$render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $compiler = $render->getCompiler();
 $compiler->enableProductionFstatCheck();
 ```
@@ -355,7 +355,7 @@ operates AssetCompiler to compile loaded assets.
 
 ```php
 $render = new AssetToolkit\AssetRender($config,$loader);
-$render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+$render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $render->renderAssets('demo',$assets);
 ```
 

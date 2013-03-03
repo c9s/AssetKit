@@ -41,7 +41,7 @@ class AssetNode extends Twig_Node
         $assets[] = $loader->load( 'underscore' );
         $assets[] = $loader->load( 'test' );
         $render = new AssetToolkit\AssetRender($config,$loader);
-        $render->setEnvironment( AssetToolkit\AssetRender::PRODUCTION );
+        $render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
         $compiler = $render->getCompiler();
         $compiler->enableProductionFstatCheck();
         $compiler->write('echo')

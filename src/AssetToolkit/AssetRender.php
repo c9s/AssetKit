@@ -11,14 +11,6 @@ use Exception;
  */
 class AssetRender
 {
-    const PRODUCTION = 1;
-    const DEVELOPMENT = 2;
-
-    /**
-     * ->setEnvironment( AssetIncluder::PRODUCTION );
-     * ->setEnvironment( AssetIncluder::DEVELOPMENT );
-     */
-    public $environment = self::DEVELOPMENT;
 
     public $force = false;
 
@@ -36,10 +28,6 @@ class AssetRender
         $this->force = true;
     }
 
-    public function setEnvironment($env)
-    {
-        $this->environment = $env;
-    }
 
     public function getCompiler()
     {
