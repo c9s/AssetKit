@@ -23,16 +23,16 @@ The Concept of AssetToolkit
   converted into PHP source.
 
 - When one asset is required from a web page, the asset can be quickly loaded
-  through the AssetLoader, then the asset will be filtered, compiled to the
-  front-end output. If the environment is production, the `AssetRenderer` would
-  cache the url manifest for you, so you don't have to compile these assets
-  everytime.
+  through the AssetLoader, then the asset will be filtered through the filters
+  and compiled/squashed to the front-end output. If the environment is
+  production, the `AssetRenderer` will cache the url manifest for you, so you
+  don't have to compile these assets everytime.
 
 - In production mode, the asset compiler squashes the loaded asset files to the minified files.
 
-- In development mode, the asset compiler simply render the include paths for you.
+- In development mode, the asset compiler simply render the include paths.
 
-- You can define different required assets in each different page with a page id (target).
+- You may define different required assets in each different page with a page id (target).
 
   The page id (target) is also used for caching results.
 
@@ -46,6 +46,22 @@ The Concept of AssetToolkit
 - Each file collection may have its own filters and compressors. so that a CSS file
   collection can use "cssmin" and "yuicss" compressor, and a SASS file collection 
   can use "sass" filter and "cssmin" compressor to generate the minified output.
+
+Why do we separately loading the different assets and define the asset manifest ?
+Because in the modern web application, most compononents are modularized, so 
+in one application, there are many different plugins, modules, libraries, some
+plugins might provide its own assets, but some don't. some assets need to be
+compiled with some specific filters, but some don't. some assets need to be 
+compressed through compressors like 'CSSMin' or 'JSMin', but some don't.
+
+When developing front-end files, we usaually need to re-compile these asset
+files again and again, and at the end, we still need to re-compile them into one
+single squashed file to improve the front-end performance. And to re-compile these
+files, some people use Makefile, some people use Grunt.js, but it's still hard
+to configure, manage and distribute.
+
+To give PHP applications a better flexibility, we designed a better
+archtecture to organize these asset files. that is, AssetToolkit.
 
 Features
 ---------------------------
