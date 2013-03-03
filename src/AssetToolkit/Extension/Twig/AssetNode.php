@@ -25,22 +25,6 @@ class AssetNode extends Twig_Node
             $compiler->raw("\$assets[] = \$assetloader->load('$assetName');");
         }
         $compiler->raw("\$assetrender->renderAssets(\$assets,'$target');");
-        /*
-        $config = new AssetToolkit\AssetConfig( '../.assetkit.php', ROOT);
-        $loader = new AssetToolkit\AssetLoader( $config );
-        $assets = array();
-        $assets[] = $loader->load( 'jquery-ui' );
-        $assets[] = $loader->load( 'underscore' );
-        $assets[] = $loader->load( 'test' );
-        $render = new AssetToolkit\AssetRender($config,$loader);
-        $render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
-        $compiler = $render->getCompiler();
-        $compiler->enableProductionFstatCheck();
-        $compiler->write('echo')
-            ->string( $this->getAttribute('assetNames')[0] )
-            ->raw(";\n")
-        ;
-        */
     }
 
     /*
