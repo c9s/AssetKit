@@ -4,7 +4,7 @@ use AssetToolkit\FileUtil;
 
 class Installer
 {
-    public $enableLog = true;
+    public $enableLog = false;
     public $logger;
 
     public function setLogger($logger) 
@@ -12,7 +12,12 @@ class Installer
         $this->logger = $logger;
     }
 
-    public function log($msg)
+    public function enableLogger()
+    {
+        $this->enableLog = true;
+    }
+
+    public function info($msg)
     {
         if( $this->enableLog ) {
             if( $this->logger ) {
@@ -37,7 +42,7 @@ class Installer
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
                 $targetFile = $asset->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
-                $this->log("x $targetFile");
+                $this->info("x $targetFile");
                 if( file_exists($targetFile) ) {
                     unlink( $targetFile );
                 }
@@ -58,7 +63,7 @@ class Installer
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
 
                 if( ! file_exists($srcFile) ) {
-                    $this->log("$srcFile not found.");
+                    $this->info("$srcFile not found.");
                     continue;
                 }
 
@@ -80,12 +85,12 @@ class Installer
                     }
                     else {
                         // skip existing files
-                        $this->log("- $targetFile");
+                        $this->info("- $targetFile");
                         continue;
                     }
                 }
                 FileUtil::mkdir_for_file( $targetFile );
-                $this->log("x $targetFile");
+                $this->info("x $targetFile");
                 file_put_contents( $targetFile , $content ) or die("$targetFile write failed.");
             }
         }

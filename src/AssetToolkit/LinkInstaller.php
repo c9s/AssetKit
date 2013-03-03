@@ -10,7 +10,7 @@ class LinkInstaller extends Installer
         $name       = $asset->name;
         $targetDir = $asset->getInstallDir(true);
         if ( file_exists($targetDir) ) {
-            echo "Removing $targetDir\n";
+            $this->info("Removing $targetDir");
             if( is_link($targetDir) ) {
                 unlink($targetDir);
             } else {

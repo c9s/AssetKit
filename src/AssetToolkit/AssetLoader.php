@@ -2,6 +2,7 @@
 namespace AssetToolkit;
 use Exception;
 use AssetToolkit\AssetConfig;
+use AssetToolkit\Asset;
 
 /**
  * @class
@@ -95,7 +96,8 @@ class AssetLoader
 
 
     /**
-     * Load mutiple assets
+     * Load mutiple assets.
+     *
      * @param string[] asset names
      * @return Asset[]
      */

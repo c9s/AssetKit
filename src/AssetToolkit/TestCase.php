@@ -7,31 +7,47 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public $config;
     public $configFile;
+    public $loader;
 
     public function getConfigFile()
     {
         if($this->configFile)
             return $this->configFile;
+        return $this->configFile = $this->createConfigFile();
+    }
+
+    public function createConfigFile()
+    {
         $filename = str_replace('\\', '_', get_class($this)) . '_' . md5(microtime());
-        return $this->configFile = "tests/$filename.php";
+        return "tests/$filename.php";
     }
 
     public function getConfig()
     {
-        ok($this->config, 'asset config object');
+        if($this->config)
+            return $this->config;
+
+        $configFile = $this->getConfigFile();
+        if(file_exists($configFile)) {
+            unlink($configFile);
+        }
+        $this->config = new \AssetToolkit\AssetConfig($configFile);
+        $this->config->setBaseDir("tests/public");
+        $this->config->setBaseUrl("/assets");
+        $this->config->setRoot(getcwd());
         return $this->config;
     }
 
     public function getLoader()
     {
-        $loader = new \AssetToolkit\AssetLoader($this->getConfig());
-        ok($loader);
-        return $loader;
+        if($this->loader)
+            return $this->loader;
+        return $this->loader =  new \AssetToolkit\AssetLoader($this->getConfig());
     }
 
     public function getCompiler()
     {
-        $compiler = new AssetCompiler($this->getConfig(),$this->getLoader() );
+        $compiler = new AssetCompiler($this->getConfig(),$this->getLoader());
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
         return $compiler;
@@ -78,14 +94,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         apc_clear_cache();
-        $configFile = $this->getConfigFile();
-        if(file_exists($configFile)) {
-            unlink($configFile);
-        }
-        $this->config = new \AssetToolkit\AssetConfig($configFile);
-        $this->config->setBaseDir("tests/public");
-        $this->config->setBaseUrl("/assets");
-        $this->config->setRoot(getcwd());
     }
 
     public function tearDown()
