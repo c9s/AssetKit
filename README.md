@@ -293,6 +293,7 @@ $config = new AssetToolkit\AssetConfig('.assetkit.php',array(
 ));
 $config->setBaseUrl('/assets');
 $config->setBaseDir('tests/assets');
+$config->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 
 $baseDir = $config->getBaseDir(true); // absolute path
 $baseUrl = $config->getBaseUrl();
@@ -360,7 +361,6 @@ to recompile assets:
 
 ```php
 $render = new AssetToolkit\AssetRender($config,$loader);
-$render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $compiler = $render->getCompiler();
 $compiler->enableProductionFstatCheck();
 ```
@@ -390,7 +390,6 @@ operates AssetCompiler to compile loaded assets.
 
 ```php
 $render = new AssetToolkit\AssetRender($config,$loader);
-$render->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 $render->renderAssets($assets,'demo');
 ```
 
