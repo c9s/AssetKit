@@ -101,8 +101,11 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         $render = new AssetToolkit\AssetRender($this->getConfig(),$this->getLoader());
         ok($render);
 
+        return;
+        // the below tests are only for local.
+
         $outputFile = 'tests/asset_render.out';
-        if( 0 && file_exists($outputFile)) {
+        if( file_exists($outputFile)) {
             $expected = file_get_contents($outputFile);
             $render->renderFragments($outs);
             $this->expectOutputString($expected);
