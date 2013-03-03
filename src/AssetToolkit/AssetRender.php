@@ -41,6 +41,14 @@ class AssetRender
         return $this->compiler;
     }
 
+
+    public function renderLoadedAssets($target = '') 
+    {
+        $assetMap = $this->loader->all();
+        $assets = array_values($assetMap);
+        $this->renderAssets($assets, $target);
+    }
+
     public function renderAssets($assets, $target = '')
     {
         $compiler = $this->getCompiler();
