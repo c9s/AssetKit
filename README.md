@@ -375,12 +375,12 @@ $compiler->registerDefaultFilters();
 To register filters, compressors:
 
 ```php
-$compiler->addCompressor('jsmin', '\AssetToolkit\Compressor\JsMinCompressor');
-$compiler->addCompressor('cssmin', '\AssetToolkit\Compressor\CssMinCompressor');
-$compiler->addFilter( 'coffeescript','\AssetToolkit\Filter\CoffeeScriptFilter');
-$compiler->addFilter( 'css_import', '\AssetToolkit\Filter\CssImportFilter');
-$compiler->addFilter( 'sass', '\AssetToolkit\Filter\SassFilter');
-$compiler->addFilter( 'scss', '\AssetToolkit\Filter\ScssFilter');
+$compiler->registerCompressor('jsmin', '\AssetToolkit\Compressor\JsMinCompressor');
+$compiler->registerCompressor('cssmin', '\AssetToolkit\Compressor\CssMinCompressor');
+$compiler->registerFilter( 'coffeescript','\AssetToolkit\Filter\CoffeeScriptFilter');
+$compiler->registerFilter( 'css_import', '\AssetToolkit\Filter\CssImportFilter');
+$compiler->registerFilter( 'sass', '\AssetToolkit\Filter\SassFilter');
+$compiler->registerFilter( 'scss', '\AssetToolkit\Filter\ScssFilter');
 ```
 
 ### AssetRender API

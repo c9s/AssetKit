@@ -103,15 +103,15 @@ class AssetCompiler
 
     public function registerDefaultCompressors()
     {
-        $this->addCompressor('jsmin', '\AssetToolkit\Compressor\JsMinCompressor');
-        $this->addCompressor('cssmin', '\AssetToolkit\Compressor\CssMinCompressor');
+        $this->registerCompressor('jsmin', '\AssetToolkit\Compressor\JsMinCompressor');
+        $this->registerCompressor('cssmin', '\AssetToolkit\Compressor\CssMinCompressor');
 
-        $this->addCompressor('yui_css', function() {
+        $this->registerCompressor('yui_css', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
             return new \AssetToolkit\Compressor\Yui\CssCompressor($bin);
         });
 
-        $this->addCompressor('yui_js', function() {
+        $this->registerCompressor('yui_js', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
             return new \AssetToolkit\Compressor\Yui\JsCompressor($bin);
         });
@@ -119,11 +119,11 @@ class AssetCompiler
 
     public function registerDefaultFilters()
     {
-        $this->addFilter( 'coffeescript','\AssetToolkit\Filter\CoffeeScriptFilter');
-        $this->addFilter( 'css_import', '\AssetToolkit\Filter\CssImportFilter');
-        $this->addFilter( 'sass', '\AssetToolkit\Filter\SassFilter');
-        $this->addFilter( 'scss', '\AssetToolkit\Filter\ScssFilter');
-        $this->addFilter( 'css_rewrite', '\AssetToolkit\Filter\CssRewriteFilter');
+        $this->registerFilter( 'coffeescript','\AssetToolkit\Filter\CoffeeScriptFilter');
+        $this->registerFilter( 'css_import', '\AssetToolkit\Filter\CssImportFilter');
+        $this->registerFilter( 'sass', '\AssetToolkit\Filter\SassFilter');
+        $this->registerFilter( 'scss', '\AssetToolkit\Filter\ScssFilter');
+        $this->registerFilter( 'css_rewrite', '\AssetToolkit\Filter\CssRewriteFilter');
     }
 
 
@@ -419,7 +419,7 @@ class AssetCompiler
      * @param string $name filter name
      * @param function $cb builder closure
      */
-    public function addFilter($name,$cb)
+    public function registerFilter($name,$cb)
     {
         $this->_filters[ $name ] = $cb;
     }
@@ -431,7 +431,7 @@ class AssetCompiler
      * @param string $name compressor name
      * @param function $cb function builder
      */
-    public function addCompressor($name,$cb)
+    public function registerCompressor($name,$cb)
     {
         $this->_compressors[ $name ] = $cb;
     }
