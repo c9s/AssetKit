@@ -344,11 +344,33 @@ $config->save();
 
 ```php
 $loader = new AssetToolkit\AssetLoader($config);
-$asset = $loader->registerAssetFromPath("tests/assets/jquery");
-$asset = $loader->registerFromManifestFile("tests/assets/jquery/manifest.yml");
+
+// load asset from a directory that might contains a manifest file,
+// Note: Since you're going to put the .assetkit.php file 
+//       In your VCS, you should use relative path instead of 
+//       absolute path.
+$asset = $loader->loadFromPath("tests/assets/jquery");
+
+// load asset from a manifest file directly, 
+$asset = $loader->loadFromManifestFile("tests/assets/jquery/manifest.yml");
+
+// load multiple asset at one time
+$assets = $loader->loadAssets(array('jquery','jquery-ui'));
 
 $jquery = $loader->load('jquery');
 $jqueryui = $loader->load('jquery-ui');
+
+// get all loaded asset objects
+$assets = $loader->all();
+
+// get all loaded asset objects by pairs.
+//   array( 'name' => [asset object], ... )
+$assetMap = $loader->pairs();
+
+// check if we've loaded the asset by asset name
+if( $loader->has('jquery') ) {
+    // do something here.
+}
 
 $updater = new ResourceUpdater;
 $updater->update($asset);
