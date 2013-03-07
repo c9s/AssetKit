@@ -155,6 +155,12 @@ class AssetLoader
         return $assets;
     }
 
+
+    /**
+     * Load all registered assets.
+     *
+     * @return Asset[]
+     */
     public function loadAll() 
     {
         $assets = array();
