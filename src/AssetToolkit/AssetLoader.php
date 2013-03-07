@@ -117,10 +117,9 @@ class AssetLoader
      * @param string[] asset names
      * @return Asset[]
      */
-    public function loadAssets() 
+    public function loadAssets($names) 
     {
         $self = $this;
-        $names = func_get_args();
         $assets = array();
         foreach( $names as $name ) {
             $assets[] = $this->load($name);
