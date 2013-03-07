@@ -234,7 +234,7 @@ class AssetLoader
 
     public function all()
     {
-        return array_values($this->assets);
+        return $this->assetObjects;
     }
 
 }

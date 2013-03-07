@@ -47,6 +47,18 @@ class AssetLoaderTest extends AssetToolkit\TestCase
         $installer->uninstall( $asset );
         ob_clean();
 
+        foreach( $loader->pairs() as $name => $a ) {
+            ok( is_string($name) );
+            ok( $a );
+            ok($loader->has($name));
+        }
+
+        foreach( $loader->all() as $a ) {
+            ok($loader->has($a->name));
+        }
+        ok($loader->get('jquery'));
+        ok($loader->get('jquery-ui'));
+
         $config->save();
     }
 }
