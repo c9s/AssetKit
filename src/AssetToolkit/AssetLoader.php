@@ -22,7 +22,18 @@ use AssetToolkit\Asset;
  */
 class AssetLoader
 {
+
+
+    /**
+     * @var array asset object map, asset name => asset object
+     */
     public $assets = array();
+
+
+    /**
+     * @var array asset object queue.
+     */
+    public $assetObjects = array();
 
 
     /**
@@ -50,6 +61,11 @@ class AssetLoader
      */
     public function load($name)
     {
+        if( $this->has($name) ) {
+            return $this->get($name);
+        }
+
+
         /**
          * 'manifest'
          * 'source_dir'
@@ -71,12 +87,12 @@ class AssetLoader
                 $format);
 
             // save the asset object into the pool
-            return $this->assets[$name] = $asset;
+            return $this->add($asset);
         } else {
             // some code to find asset automatically.
             // if there is not asset registered in config, we should look up from the asset paths
             if($asset = $this->lookup($name)) {
-                return $this->assets[$name] = $asset;
+                return $this->add($asset);
             }
             throw new Exception("asset $name not found.");
         }
@@ -186,13 +202,40 @@ class AssetLoader
         $this->assets = array();
     }
 
+    /**
+     * @var string check if we've loaded this asset.
+     * @return bool
+     */
+    public function has($name)
+    {
+        return isset($this->assets[$name]);
+    }
+
+
+    /**
+     * @var Asset Add an asset to the asset queue and map.
+     */
+    public function add($asset)
+    {
+        // Add asset object safely.
+        if( ! isset($this->assets[$asset->name]) ) {
+            $this->assetObjects[] = $asset;
+            return $this->assets[$asset->name] = $asset;
+        }
+    }
 
     /**
      * Returns all asset objects (keys and values)
      */
-    public function all()
+    public function pairs()
     {
         return $this->assets;
     }
+
+    public function all()
+    {
+        return array_values($this->assets);
+    }
+
 }
 
