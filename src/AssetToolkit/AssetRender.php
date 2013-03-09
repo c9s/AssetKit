@@ -75,30 +75,28 @@ class AssetRender
     public function renderFragment($out)
     {
         // check for css_url and js_url
-        if( isset($out['js_url']) ) {
-            echo $this->getJavascriptTag($out['js_url']);
-        }
-        if( isset($out['css_url']) ) {
-            echo $this->getStylesheetTag($out['css_url']);
-        }
+        if ( isset($out['js_url']) ) {
+            $this->renderJavascriptTag($out['js_url']);
+        } if ( isset($out['css_url']) ) {
+            $this->renderStylesheetTag($out['css_url']);
+        } elseif ( isset($out['type']) ) {
 
-        if( isset($out['type']) ) {
-            if($out['type'] === "stylesheet") {
-                echo '<style type="text/stylesheet"';
-                if(isset($out['content'])) {
-                    echo '>' . $out['content'];
-                } elseif(isset($out['url']) ) {
-                    echo ' src="'. $out['url'] . '">';
+            if ( isset($out['url']) ) {
+                if ($out['type'] === "stylesheet") {
+                    $this->renderStylesheetTag( $out['url'] );
+                } elseif ( $out['type'] === "javascript" ) {
+                    $this->renderJavascriptTag( $out['url'] );
+                } else {
+                    throw new Exception("Unknown fragment.");
                 }
-                echo '</style>' . PHP_EOL;
-            } elseif( $out['type'] === "javascript" ) {
-                echo '<script type="text/javascript"';
-                if(isset($out['content'])) {
-                    echo '>' . $out['content'];
-                } elseif(isset($out['url']) ) {
-                    echo ' src="'. $out['url'] . '">';
+            } else if ( isset($out['content']) ) {
+                if($out['type'] === "stylesheet") {
+                    echo '<style type="text/stylesheet">',  $out['content'] , '</style>' , PHP_EOL;
+                } elseif( $out['type'] === "javascript" ) {
+                    echo '<script type="text/javascript">', $out['content'] , '</script>' , PHP_EOL;
+                } else {
+                    throw new Exception("Unknown fragment.");
                 }
-                echo '</script>' . PHP_EOL;
             }
         }
     }
@@ -109,34 +107,33 @@ class AssetRender
      * @param string $url
      * @param array $attributes
      */
-    public function getJavascriptTag($url, $innerContent = '' ,$attributes = array())
+    public function renderJavascriptTag($url, $innerContent = '' ,$attributes = array())
     {
-        $html = '<script type="text/javascript"';
-        $html .= ' src="' . $url . '"';
+        echo '<script type="text/javascript" src="' . $url . '"';
         foreach( $attributes as $name => $value ) {
-            $html .= ' ' . $name . '="' . $value . '"'; 
+            echo ' ' , $name , '="' , $value , '"';
         }
-        $html .= '>';
+        echo '>';
+
         if($innerContent) {
-            $html .= $innerContent;
+            echo $innerContent;
         }
-        $html .= '</script>' . PHP_EOL;
-        return $html;
+        echo '</script>' , PHP_EOL;
     }
 
     /**
      * @param string $url
      * @param array $attributes
      */
-    public function getStylesheetTag($url,$attributes = array())
+    public function renderStylesheetTag($url,$attributes = array())
     {
-        $html = '<link rel="stylesheet" type="text/css"';
-        $html .= ' href="' . $url . '"' ;
+        // <link rel="stylesheet" href="http://static.ak.fbcdn.net/rsrc.php/v2/yJ/r/S-EheTP3T8X.css"/>
+        echo '<link rel="stylesheet" type="text/css"';
+        echo ' href="' . $url . '"';
         foreach( $attributes as $name => $value ) {
-            $html .= ' ' . $name . '="' . $value . '"'; 
+            echo ' ' . $name . '="' . $value . '"';
         }
-        $html .= '/>' . PHP_EOL;
-        return $html;
+        echo '/>' , PHP_EOL;
     }
 }
 

@@ -82,12 +82,18 @@ class Asset
     }
 
 
+
+    /**
+     * @var string $manifestFile related manifest file path.
+     * @var integer $format file format: PHP, JSON or YAML.
+     */
     public function loadFromManifestFile($manifestFile, $format = 0)
     {
-        if( ! file_exists( $manifestFile ) ) {
-            $manifestFile = FileUtil::find_non_php_manifest_file_from_directory(dirname($manifestFile));
-        }
-
+        # NOTE: this file checking should be in outside of this function
+        # to add another file checking might increase file IO and more system calls.
+        # if( ! file_exists( $manifestFile ) ) {
+        #     $manifestFile = FileUtil::find_non_php_manifest_file_from_directory(dirname($manifestFile));
+        # }
         $config = null;
         if( $format ) {
             $config = Data::decode_file($manifestFile, $format);

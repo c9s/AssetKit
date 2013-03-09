@@ -12,7 +12,7 @@ use Exception;
 class InstallCommand extends Command
 {
 
-    public function brief() 
+    public function brief()
     {
         return 'install assets';
     }
