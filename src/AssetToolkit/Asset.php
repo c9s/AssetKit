@@ -84,6 +84,10 @@ class Asset
 
     public function loadFromManifestFile($manifestFile, $format = 0)
     {
+        if( ! file_exists( $manifestFile ) ) {
+            $manifestFile = FileUtil::find_non_php_manifest_file_from_directory(dirname($manifestFile));
+        }
+
         $config = null;
         if( $format ) {
             $config = Data::decode_file($manifestFile, $format);
