@@ -69,8 +69,11 @@ class AssetConfig
     public function __construct($file, $options = array())
     {
         $this->options = $options;
-        if(isset($this->options['environment']) ) {
+        if ( isset($options['environment']) ) {
             $this->environment = $this->options['environment'];
+        }
+        if ( isset($options['cache']) ) {
+            $this->cacheEnable = $options['cache'];
         }
         $this->fileLoaded = $this->loadFromFile($file);
     }
@@ -93,9 +96,6 @@ class AssetConfig
             $this->root = $this->options['root'];
         }
 
-        if(isset($this->options['cache']) ) {
-            $this->cacheEnable = $this->options['cache'];
-        }
 
         $useCache = $this->cacheEnabled();
         if($useCache) {
