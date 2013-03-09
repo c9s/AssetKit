@@ -90,7 +90,7 @@ class AssetRender
                 } elseif(isset($out['url']) ) {
                     echo ' src="'. $out['url'] . '">';
                 }
-                echo '</style>';
+                echo '</style>' . PHP_EOL;
             } elseif( $out['type'] === "javascript" ) {
                 echo '<script type="text/javascript"';
                 if(isset($out['content'])) {
@@ -98,7 +98,7 @@ class AssetRender
                 } elseif(isset($out['url']) ) {
                     echo ' src="'. $out['url'] . '">';
                 }
-                echo '</script>';
+                echo '</script>' . PHP_EOL;
             }
         }
     }
@@ -120,7 +120,7 @@ class AssetRender
         if($innerContent) {
             $html .= $innerContent;
         }
-        $html .= '</script>' . "\n";
+        $html .= '</script>' . PHP_EOL;
         return $html;
     }
 
@@ -135,7 +135,7 @@ class AssetRender
         foreach( $attributes as $name => $value ) {
             $html .= ' ' . $name . '="' . $value . '"'; 
         }
-        $html .= '/>' . "\n";
+        $html .= '/>' . PHP_EOL;
         return $html;
     }
 }
