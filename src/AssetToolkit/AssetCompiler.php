@@ -297,10 +297,8 @@ class AssetCompiler
 
 
         // cache validation
-        if( $cache && ! $force ) {
-            if( ! $this->productionFstatCheck ) {
-                return $cache;
-            } else {
+        if ( $cache && ! $force ) {
+            if ( $this->productionFstatCheck ) {
                 $upToDate = true;
                 if( $mtime = @$cache['mtime'] ) {
                     foreach( $assets as $asset ) {
@@ -310,8 +308,10 @@ class AssetCompiler
                         }
                     }
                 }
-                if($outOfDate)
+                if ( $upToDate )
                     return $cache;
+            } else {
+                return $cache;
             }
         }
 
