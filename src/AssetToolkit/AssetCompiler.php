@@ -63,6 +63,8 @@ class AssetCompiler
      */
     protected $_compressors = array();
 
+    public $defaultJsCompressor = 'uglifyjs';
+    public $defaultCssCompressor = 'cssmin';
 
     public function __construct($config,$loader)
     {
@@ -105,6 +107,7 @@ class AssetCompiler
     {
         $this->registerCompressor('jsmin', '\AssetToolkit\Compressor\JsMinCompressor');
         $this->registerCompressor('cssmin', '\AssetToolkit\Compressor\CssMinCompressor');
+        $this->registerCompressor('uglifyjs', '\AssetToolkit\Compressor\UglifyCompressor');
 
         $this->registerCompressor('yui_css', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
@@ -592,14 +595,12 @@ class AssetCompiler
     public function runDefaultCompressors($collection)
     {
         if( $collection->isJavascript || $collection->isCoffeescript ) {
-            $uglify = new Compressor\UglifyCompressor;
-            $uglify->compress($collection);
-#              $jsmin = new Compressor\JsMinCompressor;
-#              $jsmin->compress($collection);
+            $com = $this->getCompressor($this->defaultJsCompressor);
+            $com->compress($collection);
         }
         elseif( $collection->isStylesheet ) {
-            $cssmin = new Compressor\CssMinCompressor;
-            $cssmin->compress($collection);
+            $com = $this->getCompressor('cssmin');
+            $com->compress($collection);
         }
     }
 
