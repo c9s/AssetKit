@@ -87,6 +87,17 @@ class AssetConfig
         $this->fileLoaded = $this->loadFromFile($file);
     }
 
+
+    /**
+     * Return namespace
+     */
+    public function getNamespace()
+    {
+        if ( $this->namespace )
+            return $this->namespace;
+        return __DIR__;
+    }
+
     public function setOptions($options)
     {
         $this->options = $options;

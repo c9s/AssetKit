@@ -17,12 +17,6 @@ class AssetCompiler
      */
     public $loader;
 
-
-    /**
-     * @var string Cache namespace
-     */
-    public $namespace;
-
     /**
      * @var boolean enable fstat check in production mode.
      *
@@ -70,15 +64,7 @@ class AssetCompiler
     {
         $this->config = $config;
         $this->loader = $loader;
-        $this->namespace = $this->config->getRoot();
     }
-
-
-    public function setNamespace($ns)
-    {
-        $this->namespace = $ns;
-    }
-
 
     public function setProductionFstatCheck($b)
     {
@@ -230,7 +216,7 @@ class AssetCompiler
      */
     public function compile($asset) 
     {
-        $cacheKey = $this->namespace . ':' . $asset->name;
+        $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
         $cache = apc_fetch($cacheKey);
 
         // cache validation
@@ -302,9 +288,9 @@ class AssetCompiler
     public function compileAssetsForProduction($assets, $target = '', $force = false)
     {
         if (  $target ) {
-            $cacheKey = $this->namespace . ':' . $target;
+            $cacheKey = $this->config->getNamespace() . ':' . $target;
         } else {
-            $cacheKey = $this->namespace . ':' . $this->_getCacheKeyFromAssets($assets);
+            $cacheKey = $this->config->getNamespace() . ':' . $this->_getCacheKeyFromAssets($assets);
             $target = 'minified';
         }
         $cache = apc_fetch($cacheKey);
