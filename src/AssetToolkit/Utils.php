@@ -10,7 +10,7 @@ class Utils
         $path = getenv('PATH') . ':/usr/local/bin:/opt/local/bin';
         $paths = explode(':',$path);
         foreach( $paths as $path ) {
-            if ( file_exists($path . DIRECTORY_SEPARATOR . $bin ) {
+            if ( file_exists($path . DIRECTORY_SEPARATOR . $bin ) ) {
                 return $path . DIRECTORY_SEPARATOR . $bin;
             }
         }
