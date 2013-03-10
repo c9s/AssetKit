@@ -14,11 +14,7 @@
     ),
     1 => 
     array (
-      'filters' => 
-      array (
-        0 => 'sass',
-      ),
-      'stylesheet' => 
+      'sass' => 
       array (
         0 => 'sass-test.sass',
       ),
@@ -29,11 +25,7 @@
     ),
     2 => 
     array (
-      'filters' => 
-      array (
-        0 => 'coffeescript',
-      ),
-      'javascript' => 
+      'coffee' => 
       array (
         0 => 'test.coffee',
       ),

@@ -22,6 +22,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
 
         $files = $compiler->compileAssetsForProduction($assets,'myapp');
         ok($files);
+
         path_ok($files['js_file']);
         path_ok($files['css_file']);
         ok($files['mtime'], 'got mtime');

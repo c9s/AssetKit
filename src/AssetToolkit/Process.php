@@ -20,7 +20,7 @@ class Process
 
     public $env = array();
 
-    function __construct($args) 
+    public function __construct($args) 
     {
         $this->args = $args;
         $this->cwd = getcwd();
@@ -30,36 +30,36 @@ class Process
         $this->env['PATH'] .= ':/usr/local/bin:/opt/local/bin'; // inherit from the PATH env
     }
 
-    function arg($arg)
+    public function arg($arg)
     {
         $this->args[] = $arg;
         return $this;
     }
 
-    function input($input)
+    public function input($input)
     {
         $this->input = $input;
         return $this;
     }
 
-    function env($name,$value)
+    public function env($name,$value)
     {
         $this->env[ $name ] = $value;
         return $this;
     }
 
-    function cwd($cwd)
+    public function cwd($cwd)
     {
         $this->cwd = $cwd;
         return $this;
     }
 
-    function getOutput()
+    public function getOutput()
     {
         return $this->output;
     }
 
-    function run()
+    public function run()
     {
         $descriptorspec = array(
             0 => array("pipe", "r"),  // stdin is a pipe that the child will read from

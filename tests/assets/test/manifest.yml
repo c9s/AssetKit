@@ -4,11 +4,9 @@ collections:
     - css/main.css
     attrs:
       media: screen
-  - filters: [ 'sass' ]
-    stylesheet:
+  - sass:
     - sass-test.sass
     attrs:
       media: screen
-  - filters: [ 'coffeescript' ]
-    javascript:
+  - coffee:
     - test.coffee

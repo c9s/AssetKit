@@ -1,5 +1,6 @@
 <?php
 namespace AssetToolkit\Filter;
+use AssetToolkit\Collection;
 use AssetToolkit\Process;
 use RuntimeException;
 
@@ -13,10 +14,11 @@ class SassFilter
         $this->sass = $sass;
     }
 
-    public function filter($collection)
+    public function filter(Collection $collection)
     {
-        if( ! $collection->isStylesheet )
+        if( $collection->filetype !== Collection::FILETYPE_SASS )
             return;
+
         $proc = new Process(array( $this->sass ));
         // $proc->arg('--compass');
 
@@ -29,6 +31,8 @@ class SassFilter
             $proc->arg('-s');
             $proc->input($collection->getContent());
         }
+
+
         $code = $proc->run();
         if( $code != 0 )
             throw new RuntimeException("process error: $code. ");

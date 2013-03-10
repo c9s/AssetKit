@@ -542,7 +542,7 @@ class AssetCompiler
         foreach( $collections as $collection ) {
 
             // skip unknown types
-            if( ! $collection->isJavascript && ! $collection->isStylesheet )
+            if( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
                 continue;
 
             if( $lastm = $collection->getLastModifiedTime() ) {
@@ -560,16 +560,16 @@ class AssetCompiler
                 // NOTE: users must define css_import filter for production mode.
                 if( $collection->getFilters() ) {
                     $this->runUserDefinedFilters($collection);
-                } else {
-                    // for stylesheets, before compress it, we should import the css contents
-                    if ( $collection->isStylesheet ) {
-                        // css import filter implies css rewrite
-                        $import = new Filter\CssImportFilter;
-                        $import->filter( $collection );
-                    } else {
-                        $collection->runDefaultFilters();
-                    }
                 }
+                // for stylesheets, before compress it, we should import the css contents
+                elseif ( $collection->isStylesheet && $collection->filetype === Collection::FILETYPE_CSS ) {
+                    // css import filter implies css rewrite
+                    $import = new Filter\CssImportFilter;
+                    $import->filter( $collection );
+                } else {
+                    $collection->runDefaultFilters();
+                }
+
                 $this->runCollectionCompressors($collection);
             }
             else {
@@ -580,7 +580,7 @@ class AssetCompiler
                 }
             }
 
-            if( $collection->isJavascript ) {
+            if( $collection->isJavascript || $collection->isCoffeescript ) {
                 $out['js'] .= $collection->getContent();
             } elseif( $collection->isStylesheet ) {
                 $out['css'] .= $collection->getContent();

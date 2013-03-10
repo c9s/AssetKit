@@ -151,7 +151,7 @@ class Collection
      */
     public function runDefaultFilters()
     {
-        if ( $this->isCoffeescript ) {
+        if ( $this->isCoffeescript || $this->filetype === self::FILETYPE_COFFEE ) {
             $coffee = new Filter\CoffeeScriptFilter;
             $coffee->filter( $this );
         } elseif ( $this->filetype === self::FILETYPE_SASS ) {

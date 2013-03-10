@@ -148,6 +148,10 @@ class Asset
                 $files                      = $stash['coffeescript'];
                 $collection->filetype       = Collection::FILETYPE_COFFEE;
                 $collection->isCoffeescript = true;
+            } elseif (isset($stash['coffee'])) {
+                $files                      = $stash['coffee'];
+                $collection->filetype       = Collection::FILETYPE_COFFEE;
+                $collection->isCoffeescript = true;
             } elseif (isset($stash['css'])) {
                 $files                    = $stash['css'];
                 $collection->filetype     = Collection::FILETYPE_CSS;
