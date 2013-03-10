@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2013-03-10</date>
-  <time>19:07:11</time>
+  <time>19:53:01</time>
   <version>
-    <release>2.0.5</release>
-    <api>2.0.5</api>
+    <release>2.0.6</release>
+    <api>2.0.6</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -29,7 +29,7 @@
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="02781f36e2dd82fd73ccf07bb9b32156"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="0c322d789802aaef3cd4c32e9fea5d67"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="e3e185c221ad7bb6c7ad9bfe32ec0d68"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="5ff9f23b9982315a4a8c7c6bac80136e"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="4caf0fe9b3d357115b7fcf0b6cfc6ac4"/>
       <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="d0a81ce0b2b181fc02f78cdaa40f2dea"/>
@@ -64,7 +64,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="98a2aa7272f0aeb9ed86bbab8c79c554"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="fee46dc4217c369cabe3becef553c9b7"/>
-      <file name="assetkit" role="script" md5sum="c0ff12215335bb7475b563db0d949e92"/>
+      <file name="assetkit" role="script" md5sum="8037c2fcc109f0ba30797d1053ba68ca"/>
     </dir>
   </contents>
   <dependencies>
