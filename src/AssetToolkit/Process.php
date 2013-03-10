@@ -16,6 +16,8 @@ class Process
 
     public $output;
 
+    public $error;
+
     public $cwd;
 
     public $env = array();
@@ -84,6 +86,7 @@ class Process
             fclose($pipes[0]); // close input
 
             $this->output = stream_get_contents($pipes[1]);
+            $this->error = stream_get_contents($pipes[2]);
             fclose($pipes[1]);
             fclose($pipes[2]); // close stderr
 

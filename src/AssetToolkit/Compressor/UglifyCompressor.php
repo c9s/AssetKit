@@ -9,12 +9,19 @@ class UglifyCompressor
 {
     public $bin;
 
-    public function __construct($bin = null)
+    public $node;
+
+    public function __construct($bin = null, $node = null)
     {
         if ( $bin ) {
             $this->bin = $bin;
         } else {
             $this->bin = Utils::findbin('uglifyjs');
+        }
+        if ( $node ) {
+            $this->node = $node;
+        } else {
+            $this->node = Utils::findbin('node');
         }
     }
     
@@ -22,9 +29,11 @@ class UglifyCompressor
     {
         // C version jsmin is faster,
         $content = $collection->getContent();
-        $proc = new Process(array($this->bin));
-        $code = $proc->input($content)->run();
+        $proc = new Process(array($this->node, $this->bin));
+        $proc->arg('-');
+        $proc->input($content);
 
+        $code = $proc->run();
         if ( $code != 0 ) {
             throw new RuntimeException("UglifyCompressor failure: $code");
         }
