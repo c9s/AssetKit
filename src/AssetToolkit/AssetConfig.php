@@ -25,6 +25,12 @@ class AssetConfig
      */
     public $environment = self::DEVELOPMENT;
 
+
+    /**
+     * @var string namespace for caching
+     */
+    public $namespace;
+
     /**
      * @var string $file the config file path
      */
@@ -74,6 +80,9 @@ class AssetConfig
         }
         if ( isset($options['cache']) ) {
             $this->cacheEnable = $options['cache'];
+        }
+        if ( isset($options['namespace']) ) {
+            $this->namespace = $options['namespace'];
         }
         $this->fileLoaded = $this->loadFromFile($file);
     }
