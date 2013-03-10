@@ -37,7 +37,7 @@ class CoffeeScriptFilter
         $code = $proc->run();
 
         if ( $code != 0 ) {
-            throw new RuntimeException("Process error: $code");
+            throw new RuntimeException("CoffeeScriptFilter failure: $code");
         }
 
         $content = $proc->getOutput();

@@ -22,7 +22,7 @@ class UglifyCompressor
         $code = $proc->input($content)->run();
 
         if ( $code != 0 ) {
-            throw new RuntimeException("Process error: $code");
+            throw new RuntimeException("UglifyCompressor failure: $code");
         }
 
         $content = $proc->getOutput();

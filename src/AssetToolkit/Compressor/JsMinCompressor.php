@@ -24,7 +24,7 @@ class JsMinCompressor
             $code = $proc->input($content)->run();
 
             if ( $code != 0 ) {
-                throw new RuntimeException("Process error: $code");
+                throw new RuntimeException("JsminCompressor failure: $code");
             }
 
             $content = $proc->getOutput();
