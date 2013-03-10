@@ -569,7 +569,6 @@ class AssetCompiler
                 } else {
                     $collection->runDefaultFilters();
                 }
-
                 $this->runCollectionCompressors($collection);
             }
             else {
@@ -589,6 +588,21 @@ class AssetCompiler
         return $out;
     }
 
+
+    public function runDefaultCompressors($collection)
+    {
+        if( $collection->isJavascript || $collection->isCoffeescript ) {
+            $uglify = new Compressor\UglifyCompressor;
+            $uglify->compress($collection);
+#              $jsmin = new Compressor\JsMinCompressor;
+#              $jsmin->compress($collection);
+        }
+        elseif( $collection->isStylesheet ) {
+            $cssmin = new Compressor\CssMinCompressor;
+            $cssmin->compress($collection);
+        }
+    }
+
     /**
      * Run compressors at the end
      *
@@ -597,14 +611,7 @@ class AssetCompiler
     {
         // if custom compresor is not define, use default compressors
         if( empty($collection->compressors) ) {
-            if( $collection->isJavascript || $collection->isCoffeescript ) {
-                $jsmin = new Compressor\JsMinCompressor;
-                $jsmin->compress($collection);
-            }
-            elseif( $collection->isStylesheet ) {
-                $cssmin = new Compressor\CssMinCompressor;
-                $cssmin->compress($collection);
-            }
+            $this->runDefaultCompressors($collection);
         } else {
             if( $collection->hasCompressor('no') )
                 return;
