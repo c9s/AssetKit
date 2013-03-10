@@ -19,7 +19,7 @@ class ScssFilter
             return;
 
         $proc = new Process(array( $this->scss ));
-        $proc->arg('--compass');
+        // $proc->arg('--compass');
 
         if($this->fromFile) {
             $filepaths = $collection->getSourcePaths(true);

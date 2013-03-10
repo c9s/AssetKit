@@ -304,7 +304,7 @@ class AssetCompiler
             $cacheKey = $this->namespace . ':' . $target;
         } else {
             $cacheKey = $this->namespace . ':' . $this->_getCacheKeyFromAssets($assets);
-            $target = 'minified-' . time();
+            $target = 'minified';
         }
         $cache = apc_fetch($cacheKey);
 

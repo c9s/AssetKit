@@ -18,7 +18,7 @@ class SassFilter
         if( ! $collection->isStylesheet )
             return;
         $proc = new Process(array( $this->sass ));
-        $proc->arg('--compass');
+        // $proc->arg('--compass');
 
         if($this->fromFile) {
             $filepaths = $collection->getSourcePaths(true);

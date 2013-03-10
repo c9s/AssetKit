@@ -10,11 +10,10 @@ class AssetCompilerTest extends AssetToolkit\TestCase
         $loader = $this->getLoader();
 
         $assets = array();
-        $assets[] = $loader->loadFromPath("tests/assets/jquery");
-        $assets[] = $loader->loadFromPath("tests/assets/jquery-ui");
+        // $assets[] = $loader->loadFromPath("tests/assets/jquery");
+        // $assets[] = $loader->loadFromPath("tests/assets/jquery-ui");
         $assets[] = $loader->loadFromPath("tests/assets/test");
         ok($assets);
-        count_ok(3,$assets);
 
         $this->installAssets($assets);
 
