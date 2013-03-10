@@ -271,7 +271,7 @@ class AssetConfig
         }
 
         if( ! file_exists($path) ) {
-            throw new Exception("Can not register asset from $path.");
+            throw new Exception("Manifest file not found: $path.");
         }
 
         $asset = new Asset($this);
