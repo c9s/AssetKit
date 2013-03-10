@@ -159,20 +159,13 @@ class AssetCompiler
                 // for collections has filters, 
                 // pipe content through these filters.
                 $filtered = false;
-                if( $filters = $c->getFilters() ) {
-                    $this->runCollectionFilters($c);
+
+                // if user defined filters, run it.
+                if ( $filters = $c->getFilters() ) {
+                    $this->runUserDefinedFilters($c);
                     $filtered = true;
-                } elseif( $c->isCoffeescript ) { // default filters
-                    $coffee = new Filter\CoffeeScriptFilter;
-                    $coffee->filter( $c );
-                    $filtered = true;
-                } elseif( $c->filetype == Collection::FILETYPE_SASS ) {
-                    $sass = new Filter\SassFilter;
-                    $sass->filter( $c );
-                    $filtered = true;
-                } elseif( $c->filetype == Collection::FILETYPE_SCSS ) {
-                    $scss = new Filter\ScssFilter;
-                    $scss->filter( $c );
+                } else {
+                    $c->runDefaultFilters();
                     $filtered = true;
                 }
 
@@ -511,6 +504,26 @@ class AssetCompiler
              }, $this->_compressors);
     }
 
+
+    /**
+     * Run user-defined filters
+     */
+    public function runUserDefinedFilters($collection)
+    {
+        if( empty($this->filters) )
+            return;
+        if( $this->hasFilter('no') )
+            return;
+
+        foreach( $this->filters as $n ) {
+            if( $filter = $this->getFilter( $n ) ) {
+                $filter->filter($collection);
+            } else {
+                throw new Exception("filter $n not found.");
+            }
+        }
+    }
+
     /**
      * Squash asset contents,
      * run through filters, compressors ...
@@ -542,22 +555,29 @@ class AssetCompiler
             // we just filter them
             if( $this->enableCompressor ) 
             {
-                // for stylesheets, before compress it, we should import the css contents
-                if( $collection->isStylesheet ) {
-                    // import filter implies css rewrite
-                    $import = new Filter\CssImportFilter;
-                    $import->filter( $collection );
-                } elseif( $collection->isCoffeescript ) {
-                    $coffee = new Filter\CoffeeScriptFilter;
-                    $coffee->filter( $collection );
-                }
+                // run user-defined filters, user-defined filters can override 
+                // default filters.
+                // NOTE: users must define css_import filter for production mode.
                 if( $collection->getFilters() ) {
-                    $this->runCollectionFilters( $collection );
+                    $this->runUserDefinedFilters($collection);
+                } else {
+                    // for stylesheets, before compress it, we should import the css contents
+                    if ( $collection->isStylesheet ) {
+                        // css import filter implies css rewrite
+                        $import = new Filter\CssImportFilter;
+                        $import->filter( $collection );
+                    } else {
+                        $collection->runDefaultFilters();
+                    }
                 }
                 $this->runCollectionCompressors($collection);
             }
             else {
-                $this->runCollectionFilters( $collection );
+                if( $collection->getFilters() ) {
+                    $this->runUserDefinedFilters($collection);
+                } else {
+                    $collection->runDefaultFilters();
+                }
             }
 
             if( $collection->isJavascript ) {
@@ -569,26 +589,8 @@ class AssetCompiler
         return $out;
     }
 
-    public function runCollectionFilters($collection)
-    {
-        if( empty($collection->filters) )
-            return;
-
-        if( $collection->hasFilter('no') )
-            return;
-
-        foreach( $collection->filters as $n ) {
-            if( $filter = $this->getFilter( $n ) ) {
-                $filter->filter($collection);
-            } else {
-                throw new Exception("filter $n not found.");
-            }
-        }
-    }
-
     /**
      * Run compressors at the end
-     *
      *
      */
     public function runCollectionCompressors($collection)

@@ -141,5 +141,27 @@ class Collection
         return new ArrayIterator($this->getSourcePaths(true));
     }
 
+
+
+
+
+    /**
+     * Run default filters, for coffee-script, sass, scss filetype,
+     * these content must be filtered.
+     */
+    public function runDefaultFilters()
+    {
+        if ( $this->isCoffeescript ) {
+            $coffee = new Filter\CoffeeScriptFilter;
+            $coffee->filter( $this );
+        } elseif ( $this->filetype === self::FILETYPE_SASS ) {
+            $sass = new Filter\SassFilter;
+            $sass->filter( $this );
+        } elseif ( $this->filetype === self::FILETYPE_SCSS ) {
+            $scss = new Filter\ScssFilter;
+            $scss->filter( $this );
+        }
+    }
+
 }
 
