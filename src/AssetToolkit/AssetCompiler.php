@@ -63,7 +63,7 @@ class AssetCompiler
      */
     protected $_compressors = array();
 
-    public $defaultJsCompressor = 'uglifyjs';
+    public $defaultJsCompressor = 'jsmin';
     public $defaultCssCompressor = 'cssmin';
 
     public function __construct($config,$loader)
