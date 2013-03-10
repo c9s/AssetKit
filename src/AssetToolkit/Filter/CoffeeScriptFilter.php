@@ -2,17 +2,24 @@
 namespace AssetToolkit\Filter;
 use RuntimeException;
 use AssetToolkit\Process;
+use AssetToolkit\Utils;
 
 class CoffeeScriptFilter
 {
     public $coffeescript;
     public $nodejs;
 
-    public function __construct($coffeescript = 'coffee', $nodejs = null )
+    public function __construct($bin = null, $nodejs = null )
     {
-        $this->coffeescript = $coffeescript;
-        if( $nodejs ) {
+        if ( $bin ) {
+            $this->coffeescript = $bin;
+        } else {
+            $this->coffeescript = Utils::findbin('coffee');
+        }
+        if ( $nodejs ) {
             $this->nodejs = $nodejs;
+        } else {
+            $this->nodejs = Utils::findbin('node');
         }
     }
 

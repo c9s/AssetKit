@@ -1,6 +1,7 @@
 <?php
 namespace AssetToolkit\Filter;
 use AssetToolkit\Process;
+use AssetToolkit\Utils;
 use RuntimeException;
 
 class ScssFilter 
@@ -8,9 +9,13 @@ class ScssFilter
     public $scss;
     public $fromFile = true;
 
-    public function __construct($sass = 'scss')
+    public function __construct($scss = null)
     {
-        $this->scss = $scss;
+        if ( $scss ) {
+            $this->scss = $scss;
+        } else {
+            $this->scss = Utils::findbin('scss');
+        }
     }
 
     public function filter($collection)

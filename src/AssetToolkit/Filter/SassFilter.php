@@ -3,15 +3,20 @@ namespace AssetToolkit\Filter;
 use AssetToolkit\Collection;
 use AssetToolkit\Process;
 use RuntimeException;
+use AssetToolkit\Utils;
 
 class SassFilter 
 {
     public $sass;
     public $fromFile = true;
 
-    public function __construct($sass = 'sass')
+    public function __construct($sass = null)
     {
-        $this->sass = $sass;
+        if ( $sass ) {
+            $this->sass = $sass;
+        } else {
+            $this->sass = Utils::findbin('sass');
+        }
     }
 
     public function filter(Collection $collection)

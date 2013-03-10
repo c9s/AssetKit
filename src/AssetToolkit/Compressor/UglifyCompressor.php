@@ -9,9 +9,13 @@ class UglifyCompressor
 {
     public $bin;
 
-    public function __construct($bin = 'uglifyjs')
+    public function __construct($bin = null)
     {
-        $this->bin = $bin;
+        if ( $bin ) {
+            $this->bin = $bin;
+        } else {
+            $this->bin = Utils::findbin('uglifyjs');
+        }
     }
     
     public function compress($collection)
