@@ -120,7 +120,7 @@ class Collection
 
     public function getContent()
     {
-        if( $this->content !== null ) {
+        if( $this->content ) {
             return $this->content;
         }
 
@@ -128,10 +128,13 @@ class Collection
         $content = '';
         foreach( $this->getFilePaths() as $file ) {
             $abspath = $sourceDir . DIRECTORY_SEPARATOR . $file;
-
-            if( ! file_exists($abspath) )
-                throw new Exception("$abspath does not exist.");
-            $content .= file_get_contents( $abspath );
+            if ( ! file_exists($abspath) )
+                throw new Exception("Asset collection: $abspath does not exist.");
+            if ( ($out = file_get_contents( $abspath )) !== false ) {
+                $content .= $out;
+            } else {
+                throw new Exception("Asset collection: Can not read file $abspath");
+            }
         }
         return $this->content = $content;
     }

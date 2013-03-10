@@ -287,7 +287,7 @@ class AssetCompiler
      */
     public function compileAssetsForProduction($assets, $target = '', $force = false)
     {
-        if (  $target ) {
+        if ( $target ) {
             $cacheKey = $this->config->getNamespace() . ':' . $target;
         } else {
             $cacheKey = $this->config->getNamespace() . ':' . $this->_getCacheKeyFromAssets($assets);
@@ -326,9 +326,9 @@ class AssetCompiler
 
         // concat results
         foreach( $manifests as $m ) {
-            if(isset($m['js_file']))
+            if (isset($m['js_file']) )
                 $contents['js'] .= file_get_contents($m['js_file']);
-            if(isset($m['css_file']))
+            if (isset($m['css_file']) )
                 $contents['css'] .= file_get_contents($m['css_file']);
         }
 
