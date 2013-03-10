@@ -10,5 +10,5 @@ $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
     ROOT . '/src', 
     ROOT . '/vendor/pear',
 ));
-$classLoader->useIncludePath(true);
+$classLoader->useIncludePath(false);
 $classLoader->register();
