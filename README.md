@@ -292,6 +292,20 @@ To use YUI Compressor:
         assetkit add assets/test/manifest.yml
 
 
+Setting Up Your Preferred Default Compressor
+--------------------------------------------
+
+Note that we've built-in uglifyjs compressor.
+
+```php
+$compiler->defaultJsCompressor = 'uglifyjs';
+$compiler->defaultCssCompressor = 'cssmin';
+$compiler->registerCompressor('uglifyjs', function() {
+    return YourCompressor;
+});
+```
+
+
 Filters
 -------------------
 
