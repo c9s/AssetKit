@@ -585,7 +585,7 @@ class AssetCompiler
             $com->compress($collection);
         }
         elseif( $collection->isStylesheet ) {
-            $com = $this->getCompressor('cssmin');
+            $com = $this->getCompressor($this->defaultCssCompressor);
             $com->compress($collection);
         }
     }
