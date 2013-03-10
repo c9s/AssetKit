@@ -1,0 +1,25 @@
+#!/bin/bash
+rm -rf .onion/
+
+VERSION=$(grep '^version' package.ini | sed -e 's/version *= *//')
+NEWVERSION=$(echo $VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g' )
+perl -i -pe "s/$VERSION/$NEWVERSION/g" package.ini
+
+# compile to phar file
+scripts/compile
+
+# build new package.xml
+onion build
+
+# use pear to install 
+pear install -a -f package.xml || exit
+
+git commit -am "Releasing $NEWVERSION"
+
+if [[ $1 == "--tag" ]] ; then
+    echo "Tagging $NEWVERSION..."
+    git tag -f $NEWVERSION -m "Releasing $NEWVERSION"
+    git remote | while read remote ; do
+        git push $remote master --tags
+    done
+fi
