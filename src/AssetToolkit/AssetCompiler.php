@@ -162,11 +162,9 @@ class AssetCompiler
 
                 // if user defined filters, run it.
                 if ( $filters = $c->getFilters() ) {
-                    $this->runUserDefinedFilters($c);
-                    $filtered = true;
+                    $filtered = $this->runUserDefinedFilters($c);
                 } else {
-                    $c->runDefaultFilters();
-                    $filtered = true;
+                    $filtered = $c->runDefaultFilters();
                 }
 
                 // for coffee-script we need to pass the coffee-script to compiler
@@ -511,17 +509,19 @@ class AssetCompiler
     public function runUserDefinedFilters($collection)
     {
         if( empty($this->filters) )
-            return;
+            return false;
         if( $this->hasFilter('no') )
-            return;
+            return false;
 
         foreach( $this->filters as $n ) {
             if( $filter = $this->getFilter( $n ) ) {
                 $filter->filter($collection);
+                return true;
             } else {
                 throw new Exception("filter $n not found.");
             }
         }
+        return false;
     }
 
     /**

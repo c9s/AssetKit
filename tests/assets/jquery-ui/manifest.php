@@ -3,16 +3,16 @@
   array (
     0 => 
     array (
-      'stylesheet' => 
+      'files' => 
       array (
-        0 => 'jquery-ui-1.10.1.custom/css/ui-darkness/jquery-ui-1.10.1.custom.css',
+        0 => 'jquery-ui-1.10.1.custom/css',
       ),
     ),
     1 => 
     array (
-      'files' => 
+      'stylesheet' => 
       array (
-        0 => 'jquery-ui-1.10.1.custom/css',
+        0 => 'jquery-ui-1.10.1.custom/css/ui-darkness/jquery-ui-1.10.1.custom.css',
       ),
     ),
     2 => 
