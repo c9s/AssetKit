@@ -2,6 +2,7 @@
 namespace AssetToolkit\Compressor;
 use AssetToolkit\Process;
 use AssetToolkit\JSMin;
+use RuntimeException;
 
 class JsMinCompressor
 {
@@ -21,6 +22,11 @@ class JsMinCompressor
         if ( $this->bin ) {
             $proc = new Process(array($this->bin));
             $code = $proc->input($content)->run();
+
+            if ( $code != 0 ) {
+                throw new RuntimeException("Process error: $code");
+            }
+
             $content = $proc->getOutput();
         } elseif ( extension_loaded('jsmin') ) {
             $content = jsmin( $content );

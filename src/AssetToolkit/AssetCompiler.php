@@ -580,13 +580,16 @@ class AssetCompiler
 
     public function runDefaultCompressors($collection)
     {
-        if( $collection->isJavascript || $collection->isCoffeescript ) {
-            $com = $this->getCompressor($this->defaultJsCompressor);
-            $com->compress($collection);
-        }
-        elseif( $collection->isStylesheet ) {
-            $com = $this->getCompressor($this->defaultCssCompressor);
-            $com->compress($collection);
+        if ( $this->defaultJsCompressor 
+            && ($collection->isJavascript || $collection->isCoffeescript) ) 
+        {
+            if ( $com = $this->getCompressor($this->defaultJsCompressor) ) {
+                $com->compress($collection);
+            }
+        } elseif ( $collection->isStylesheet && $this->defaultCssCompressor ) {
+            if ( $com = $this->getCompressor($this->defaultCssCompressor) ) {
+                $com->compress($collection);
+            }
         }
     }
 

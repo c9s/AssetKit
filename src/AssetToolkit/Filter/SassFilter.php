@@ -34,8 +34,9 @@ class SassFilter
 
 
         $code = $proc->run();
-        if( $code != 0 )
-            throw new RuntimeException("process error: $code. ");
+        if ( $code != 0 ) {
+            throw new RuntimeException("SassFilter failure: $code. ");
+        }
         $collection->setContent($proc->getOutput());
     }
 

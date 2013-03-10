@@ -32,8 +32,9 @@ class ScssFilter
         }
         // compile and print to stdout
         $code = $proc->run();
-        if( $code != 0 )
-            throw new RuntimeException("process error: $code");
+        if ( $code != 0 ) {
+            throw new RuntimeException("ScssFilter failure: $code");
+        }
         $collection->setContent($proc->getOutput());
     }
 
