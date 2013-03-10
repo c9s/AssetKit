@@ -296,7 +296,7 @@ class AssetConfig
         if( file_exists($path))  {
             return $this->registerAssetFromManifestFile($path, $format);
         }
-        throw new Exception("Can not register asset from $path");
+        return false;
     }
 
 
