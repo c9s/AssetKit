@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2013-03-10</date>
-  <time>19:53:01</time>
+  <time>21:53:00</time>
   <version>
-    <release>2.0.6</release>
-    <api>2.0.6</api>
+    <release>2.0.7</release>
+    <api>2.0.7</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -29,20 +29,20 @@
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="02781f36e2dd82fd73ccf07bb9b32156"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="e3e185c221ad7bb6c7ad9bfe32ec0d68"/>
-      <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="5ff9f23b9982315a4a8c7c6bac80136e"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="8a3edd131bd9fb2ccc4454609bedb315"/>
+      <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="606f0f84055a06f59159d5fe11d913f4"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="4caf0fe9b3d357115b7fcf0b6cfc6ac4"/>
       <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="d0a81ce0b2b181fc02f78cdaa40f2dea"/>
-      <file name="src/AssetToolkit/Collection.php" role="php" md5sum="95873f73023d7940d7c2f73dec6e2d3d"/>
+      <file name="src/AssetToolkit/Collection.php" role="php" md5sum="a93d62e55880f9f2a474ed946ec3ba7c"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="9db1f7af411fad2823dd39a7c9800c1c"/>
       <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="ab7a9ca6d49b9ea31b0689a899ab12de"/>
       <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="b3b84ee791d25430d396ed777638e769"/>
       <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="067b1f24c8e180057b364ac0062b676a"/>
       <file name="src/AssetToolkit/Command/RemoveCommand.php" role="php" md5sum="9faf540a380bca6186cc4c4b43321e73"/>
       <file name="src/AssetToolkit/Command/UpdateCommand.php" role="php" md5sum="b205f21221db35a8dfac8feed0e7ae76"/>
-      <file name="src/AssetToolkit/Compressor/CssMinCompressor.php" role="php" md5sum="6be8ad17015aa7968261e8dc369e986a"/>
-      <file name="src/AssetToolkit/Compressor/JsMinCompressor.php" role="php" md5sum="b76ca6bd179ce2edbda4ac66cee10369"/>
-      <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="5a00d4d63e32a079ef5ff7a42e2ffe0e"/>
+      <file name="src/AssetToolkit/Compressor/CssMinCompressor.php" role="php" md5sum="ed96aa9af9a058c5f2abf9f3ae28255a"/>
+      <file name="src/AssetToolkit/Compressor/JsMinCompressor.php" role="php" md5sum="209d7af8eb7dca9a7088a0dcd5a60aaf"/>
+      <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="97478b15d66f396474a6939ab77c9ad8"/>
       <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
       <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
       <file name="src/AssetToolkit/Console.php" role="php" md5sum="fa5695c43924c4b200660e2e5085db50"/>
@@ -52,19 +52,19 @@
       <file name="src/AssetToolkit/Extension/Twig/AssetNode.php" role="php" md5sum="3916962122b5d6ba67ba0b595ed6d064"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetTokenParser.php" role="php" md5sum="21917caefd22792fb9ee6a9258a44651"/>
       <file name="src/AssetToolkit/FileUtil.php" role="php" md5sum="cfe2ca44b98e3e726b807b524f823241"/>
-      <file name="src/AssetToolkit/Filter/CoffeeScriptFilter.php" role="php" md5sum="cef8707717e5826db446653aa0f31f20"/>
+      <file name="src/AssetToolkit/Filter/CoffeeScriptFilter.php" role="php" md5sum="bc85f2ec24fe99b986c8e82a1b0985c9"/>
       <file name="src/AssetToolkit/Filter/CssImportFilter.php" role="php" md5sum="8c0b2b2477214c7bcd4428b54dfc299d"/>
       <file name="src/AssetToolkit/Filter/CssRewriteFilter.php" role="php" md5sum="36d44ce6be99d741b83067c62c997c4b"/>
-      <file name="src/AssetToolkit/Filter/SassFilter.php" role="php" md5sum="1a9062a8e39cea1b588d9e81cd43ca8b"/>
-      <file name="src/AssetToolkit/Filter/ScssFilter.php" role="php" md5sum="f5cb45225ab2eb69013ea76c30f10d22"/>
+      <file name="src/AssetToolkit/Filter/SassFilter.php" role="php" md5sum="b900efeff7ce146258eeb76a1a2501e8"/>
+      <file name="src/AssetToolkit/Filter/ScssFilter.php" role="php" md5sum="5428b8667adc31d385828bc6cc0605db"/>
       <file name="src/AssetToolkit/Installer.php" role="php" md5sum="98a4f2fa9e450a761b740726f0a720e0"/>
       <file name="src/AssetToolkit/JSMin.php" role="php" md5sum="cc7ec597e591a29ee477910c5617e53e"/>
       <file name="src/AssetToolkit/LinkInstaller.php" role="php" md5sum="cbb0b327e0b47f60f51fa20422e6d1ae"/>
-      <file name="src/AssetToolkit/Process.php" role="php" md5sum="1a11a6062c4bbda40985d7068fefb84c"/>
+      <file name="src/AssetToolkit/Process.php" role="php" md5sum="c21c0e03c67ae7afbacc457f3d429e50"/>
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="98a2aa7272f0aeb9ed86bbab8c79c554"/>
-      <file name="src/AssetToolkit/Utils.php" role="php" md5sum="fee46dc4217c369cabe3becef553c9b7"/>
-      <file name="assetkit" role="script" md5sum="8037c2fcc109f0ba30797d1053ba68ca"/>
+      <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
+      <file name="assetkit" role="script" md5sum="959b88f761be96776014ae411c86da82"/>
     </dir>
   </contents>
   <dependencies>
