@@ -264,12 +264,17 @@ class Asset
         return $this->config->getBaseUrl() . '/' . $this->name;
     }
 
-    public function isOutOfDate($mtimeB)
+
+
+    /**
+     * Check if collection files are out of date.
+     */
+    public function isOutOfDate($fromTime)
     {
         $collections = $this->getCollections();
         foreach( $collections as $c ) {
-            // if it's newer
-            if( $c->getLastModifiedTime() > $mtimeB ) {
+            // if the collectino is newer than from time.
+            if ( $c->getLastModifiedTime() > $fromTime ) {
                 return true;
             }
         }
