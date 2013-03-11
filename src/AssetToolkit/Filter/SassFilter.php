@@ -12,6 +12,7 @@ class SassFilter
 
     public $loadPaths = array();
     public $enableCompass = true;
+    public $style;
 
     public function __construct($bin = null)
     {
@@ -32,6 +33,17 @@ class SassFilter
         $this->loadPaths[] = $path;
     }
 
+
+    /**
+     * Set SASS output style
+     *
+     * @param string $style compact, compressed, or expanded.
+     */
+    public function setStyle($style)
+    {
+        $this->style = $style;
+    }
+
     public function filter(Collection $collection)
     {
         if( $collection->filetype !== Collection::FILETYPE_SASS )
@@ -47,6 +59,10 @@ class SassFilter
             $proc->arg($path);
         }
 
+        if ( $this->style ) {
+            $proc->arg('--style')->arg($this->style);
+        }
+
         if($this->fromFile) {
             $filepaths = $collection->getSourcePaths(true);
             foreach( $filepaths as $filepath ) {
@@ -56,7 +72,6 @@ class SassFilter
             $proc->arg('-s');
             $proc->input($collection->getContent());
         }
-
 
         $code = $proc->run();
         if ( $code != 0 ) {
