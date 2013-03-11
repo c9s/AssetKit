@@ -21,6 +21,22 @@ class CssRewriteFilter
      * Resolve the relative URL to the absolute URL based on the dirnameUrl 
      * we've provided, e.g.,
      *
+     * In the css file assets/product/css/product.css.
+     *
+     * We found:
+     *
+     *     background: url(../images/bg.png);
+     *
+     * Then we resolve the "../images/bg.png" path to got the parent directory 
+     * path and the parent url path:
+     *
+     *    assets/product (Directory)
+     *    /product
+     *
+     * Then we concat the url path with the base url that we just found:
+     *
+     *    assets/product + "/images/bg.png"
+     *    /product       + "/images/bg.png"
      *
      * @param string $content  stylesheet content.
      * @param string $dirname  the dirname of stylesheet file
@@ -28,13 +44,6 @@ class CssRewriteFilter
      */
     public function rewrite($content , $dirname, $dirnameUrl)
     {
-        // For path like
-        //
-        //          url(../images/background.png);
-        //
-        // In public/assets/test/css/subpath2.css {baseDir} + {assetName} + {path}
-        //
-        //
         return preg_replace_callback('#
             url\(
                 (\'|"|)
@@ -45,14 +54,16 @@ class CssRewriteFilter
             function($matches) use($dirname, $dirnameUrl )
             {
                 $url = $matches['url'];
-                // XXX: dirty, do not rewrite @import css syntax
-                if( preg_match('/\.css$/',$url) ) {
+
+                // do not rewrite @import css syntax
+                if ( preg_match('/\.css$/',$url) ) {
                     return $matches[0];
                 }
 
                 // if it's already an absolute path, do not rewrite it.
-                if( '/' === $url[0] )
+                if ( '/' === $url[0] ) {
                     return $matches[0];
+                }
 
 
                 $origUrl = $url;
@@ -67,8 +78,9 @@ class CssRewriteFilter
                 $dirnameUrl = join('/', $urlParts );
                 $url = $dirnameUrl . '/' . $url;
 
-                if(CssRewriteFilter::DEBUG)
+                if (CssRewriteFilter::DEBUG) {
                     echo "Rewriting " , $origUrl , " to " , $url , "\n";
+                }
 
                 return str_replace( $matches['url'], $url , $matches[0]);
             }, $content );
