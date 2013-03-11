@@ -10,6 +10,9 @@ class SassFilter
     public $sass;
     public $fromFile = true;
 
+    public $loadPaths = array();
+    public $enableCompass = true;
+
     public function __construct($sass = null)
     {
         if ( $sass ) {
@@ -19,13 +22,29 @@ class SassFilter
         }
     }
 
+    public function enableCompass()
+    {
+    }
+
+    public function addLoadPath($path)
+    {
+        $this->loadPaths[] = $path;
+    }
+
     public function filter(Collection $collection)
     {
         if( $collection->filetype !== Collection::FILETYPE_SASS )
             return;
 
         $proc = new Process(array( $this->sass ));
-        $proc->arg('--compass');
+        if ($this->enableCompass) {
+            $proc->arg('--compass');
+        }
+
+        foreach( $this->loadPaths as $path ) {
+            $proc->arg('--load-path');
+            $proc->arg($path);
+        }
 
         if($this->fromFile) {
             $filepaths = $collection->getSourcePaths(true);

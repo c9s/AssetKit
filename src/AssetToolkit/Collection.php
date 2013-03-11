@@ -21,7 +21,17 @@ class Collection
 
     public $isCoffeescript;
 
+
+    /**
+     * file content cache (content is from the getContent method)
+     */
     public $content;
+
+
+    /**
+     * file contents with metadata
+     */
+    public $contents = array();
 
     public $filetype;
 
@@ -127,11 +137,22 @@ class Collection
         }
     }
 
+
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+
+    /**
+     * Set content chunks with metadata.
+     *
+     * @param array $contents
+     */
+    public function setContents($contents)
+    {
+        $this->contents = $contents;
+    }
 
     /**
      * Returns content chunks with metadata.
@@ -140,13 +161,16 @@ class Collection
      */
     public function getContents()
     {
+        if ( ! empty($this->contents) ) {
+            return $this->contents;
+        }
+
         $sourceDir = $this->asset->getSourceDir(true);
-        $contents = array();
         foreach( $this->files as $file ) {
             $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
 
             if ( ($out = file_get_contents( $fullpath )) !== false ) {
-                $contents[] = array(
+                $this->contents[] = array(
                     'content' => $out,
                     'path'    => $file,
                     'fullpath' => $fullpath,
@@ -155,7 +179,7 @@ class Collection
                 throw new Exception("Asset collection: Can not read file $fullpath");
             }
         }
-        return $contents;
+        return $this->contents;
     }
 
 
@@ -178,13 +202,6 @@ class Collection
         }
         return $this->content = $content;
     }
-
-    public function getIterator()
-    {
-        return new ArrayIterator($this->getSourcePaths(true));
-    }
-
-
 
 
 
@@ -211,6 +228,15 @@ class Collection
         }
         return false;
     }
+
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->getSourcePaths(true));
+    }
+
+
+
 
 }
 
