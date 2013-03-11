@@ -115,12 +115,10 @@ class CssRewriteFilter
             // url to the directory of the asset.
             $dirnameUrl = $assetBaseUrl . '/' . $dirname;
 
-            $content = file_get_contents($fullpath);
-            $content = $this->rewrite( 
-                $content, 
+            $contents .= $this->rewrite( 
+                file_get_contents($fullpath), 
                 $dirnameUrl
             );
-            $contents .= $content;
         }
         $collection->setContent($contents);
     }
