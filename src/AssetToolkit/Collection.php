@@ -118,6 +118,32 @@ class Collection
     }
 
 
+    /**
+     * Returns content chunks with metadata.
+     *
+     * @return [content=>,path=>,fullpath=>][]
+     */
+    public function getContents()
+    {
+        $sourceDir = $this->asset->getSourceDir(true);
+        $contents = array();
+        foreach( $this->getFilePaths() as $file ) {
+            $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
+
+            if ( ($out = file_get_contents( $fullpath )) !== false ) {
+                $contents[] = array(
+                    'content' => $out,
+                    'path'    => $file,
+                    'fullpath' => $fullpath,
+                );
+            } else {
+                throw new Exception("Asset collection: Can not read file $fullpath");
+            }
+        }
+        return $contents;
+    }
+
+
     public function getContent()
     {
         if( $this->content ) {
@@ -127,13 +153,12 @@ class Collection
         $sourceDir = $this->asset->getSourceDir(true);
         $content = '';
         foreach( $this->getFilePaths() as $file ) {
-            $abspath = $sourceDir . DIRECTORY_SEPARATOR . $file;
-            if ( ! file_exists($abspath) )
-                throw new Exception("Asset collection: $abspath does not exist.");
-            if ( ($out = file_get_contents( $abspath )) !== false ) {
+            $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
+
+            if ( ($out = file_get_contents( $fullpath )) !== false ) {
                 $content .= $out;
             } else {
-                throw new Exception("Asset collection: Can not read file $abspath");
+                throw new Exception("Asset collection: Can not read file $fullpath");
             }
         }
         return $this->content = $content;
