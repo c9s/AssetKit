@@ -127,7 +127,7 @@ class Collection
     {
         $sourceDir = $this->asset->getSourceDir(true);
         $contents = array();
-        foreach( $this->getFilePaths() as $file ) {
+        foreach( $this->files as $file ) {
             $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
 
             if ( ($out = file_get_contents( $fullpath )) !== false ) {
@@ -152,7 +152,7 @@ class Collection
 
         $sourceDir = $this->asset->getSourceDir(true);
         $content = '';
-        foreach( $this->getFilePaths() as $file ) {
+        foreach( $this->files as $file ) {
             $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
 
             if ( ($out = file_get_contents( $fullpath )) !== false ) {
