@@ -7,8 +7,9 @@ class CssMinCompressor
 {
     public function compress($collection)
     {
-        $content = $collection->getContent();
-        $collection->setContent( CssMin::minify( $content ) );
+        $collection->setContent( CssMin::minify( 
+            $collection->getContent()
+        ));
     }
 }
 

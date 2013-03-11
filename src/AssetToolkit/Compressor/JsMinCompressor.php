@@ -22,16 +22,13 @@ class JsMinCompressor
         if ( $this->bin ) {
             $proc = new Process(array($this->bin));
             $code = $proc->input($content)->run();
-
             if ( $code != 0 ) {
                 throw new RuntimeException("JsminCompressor failure: $code");
             }
-
             $content = $proc->getOutput();
         } elseif ( extension_loaded('jsmin') ) {
             $content = jsmin( $content );
-        }
-        else {
+        } else {
             // pure php jsmin
             $content = JSMin::minify( $content );
         }
