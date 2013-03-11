@@ -112,16 +112,15 @@ class Collection
 
     public function getLastModifiedTime()
     {
-        if( $this->_lastmtime ) {
+        if ( $this->_lastmtime ) {
             return $this->_lastmtime;
         }
 
-        if( ! empty($this->files) ) {
-            $dir = $this->asset->getSourceDir(true);
+        if ( ! empty($this->files) ) {
+            $fullpaths = $this->getFullpaths();
             $mtimes = array();
-            foreach( $this->files as $file ) {
-                $filepath = $dir . DIRECTORY_SEPARATOR . $file;
-                $mtimes[] = filemtime($filepath);
+            foreach( $fullpaths as $fullpath ) {
+                $mtimes[] = filemtime($fullpath);
             }
             rsort($mtimes, SORT_NUMERIC);
             return $mtimes[0];
