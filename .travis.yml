@@ -18,6 +18,7 @@ before_script:
   - rm yaml-1.1.0.tgz
   - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - phpenv rehash
+  - npm install -g coffee-script
   - gem install sass compass
   - pear channel-discover pear.corneltek.com
   - pear channel-discover pear.twig-project.org

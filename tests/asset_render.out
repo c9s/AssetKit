@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/assets/test/css/main.css"/>
-<style type="text/stylesheet">.extended-block {
+<style type="text/css">.extended-block {
   border: 1px solid black;
   border-radius: 10px; }
 
