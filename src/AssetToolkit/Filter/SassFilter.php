@@ -7,23 +7,24 @@ use AssetToolkit\Utils;
 
 class SassFilter 
 {
-    public $sass;
+    public $bin;
     public $fromFile = true;
 
     public $loadPaths = array();
     public $enableCompass = true;
 
-    public function __construct($sass = null)
+    public function __construct($bin = null)
     {
-        if ( $sass ) {
-            $this->sass = $sass;
+        if ( $bin ) {
+            $this->bin = $bin;
         } else {
-            $this->sass = Utils::findbin('sass');
+            $this->bin = Utils::findbin('sass');
         }
     }
 
-    public function enableCompass()
+    public function setCompass($bool)
     {
+        $this->enableCompass = $bool;
     }
 
     public function addLoadPath($path)
@@ -36,7 +37,7 @@ class SassFilter
         if( $collection->filetype !== Collection::FILETYPE_SASS )
             return;
 
-        $proc = new Process(array( $this->sass ));
+        $proc = new Process(array( $this->bin ));
         if ($this->enableCompass) {
             $proc->arg('--compass');
         }
