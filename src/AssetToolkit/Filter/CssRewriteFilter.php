@@ -4,9 +4,10 @@ namespace AssetToolkit\Filter;
 /**
  * Rewrite css url to absolute url (from root path)
  *
- * 1. read css files from asset source dir
- * 2. parse url(s) 
- * 3. rewrite assets
+ * 1. read css files from asset source dir.
+ * 2. parse url(s).
+ * 3. rewrite assets.
+ * 4. set content.
  *
  */
 class CssRewriteFilter
@@ -23,19 +24,17 @@ class CssRewriteFilter
      *
      * In the css file assets/product/css/product.css.
      *
-     * We found:
+     * If the below css rule is found:
      *
      *     background: url(../images/bg.png);
      *
-     * Then we resolve the "../images/bg.png" path to got the parent directory 
-     * path and the parent url path:
+     * Then we resolve the "../images/bg.png" path to got the parent 
+     * url path:
      *
-     *    assets/product (Directory)
-     *    /product
+     *    /product/css => /product
      *
      * Then we concat the url path with the base url that we just found:
      *
-     *    assets/product + "/images/bg.png"
      *    /product       + "/images/bg.png"
      *
      * @param string $content  stylesheet content.
@@ -86,6 +85,15 @@ class CssRewriteFilter
             }, $content );
     }
 
+
+
+    /**
+     * Note that in this method, we didn't use the `getContent` method 
+     * to retrieve file contents, because we need the base dir path 
+     * to resolve paths.
+     *
+     * @param Collection $collection
+     */
     public function filter($collection)
     {
         if ( ! $collection->isStylesheet )
