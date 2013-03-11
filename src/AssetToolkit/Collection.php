@@ -29,9 +29,9 @@ class Collection
 
 
     /**
-     * file contents with metadata
+     * file chunks with metadata
      */
-    public $contents = array();
+    public $chunks;
 
     public $filetype;
 
@@ -147,11 +147,16 @@ class Collection
     /**
      * Set content chunks with metadata.
      *
-     * @param array $contents
+     * @param array $chunks
      */
-    public function setContents($contents)
+    public function setChunks($chunks)
     {
-        $this->contents = $contents;
+        $this->chunks = $chunks;
+
+        // also update ->content
+        foreach( $chunks as $chunk ) {
+
+        }
     }
 
     /**
@@ -159,10 +164,10 @@ class Collection
      *
      * @return [content=>,path=>,fullpath=>][]
      */
-    public function getContents()
+    public function getChunks()
     {
-        if ( ! empty($this->contents) ) {
-            return $this->contents;
+        if ( $this->chunks ) {
+            return $this->chunks;
         }
 
         $sourceDir = $this->asset->getSourceDir(true);
@@ -170,7 +175,7 @@ class Collection
             $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
 
             if ( ($out = file_get_contents( $fullpath )) !== false ) {
-                $this->contents[] = array(
+                $this->chunks[] = array(
                     'content' => $out,
                     'path'    => $file,
                     'fullpath' => $fullpath,
@@ -179,8 +184,9 @@ class Collection
                 throw new Exception("Asset collection: Can not read file $fullpath");
             }
         }
-        return $this->contents;
+        return $this->chunks;
     }
+
 
 
     public function getContent()
