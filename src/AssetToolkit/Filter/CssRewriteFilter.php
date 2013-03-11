@@ -9,6 +9,17 @@ namespace AssetToolkit\Filter;
  * 3. rewrite assets.
  * 4. set content.
  *
+ * To use CssRewriteFilter with your own content:
+ *
+ *    $rewrite = new CssRewriteFilter;
+ *    $rewrite->rewrite( $yourContent, '/url/to/your/asset/file' );
+ *
+ * To use CssRewriteFilter with collection object:
+ *
+ *    $rewrite = new CssRewriteFilter;
+ *    $rewrite->filter( $collection );
+ *    $css = $collection->getContent();
+ *
  */
 class CssRewriteFilter
 {
