@@ -1,7 +1,6 @@
 <?php
 namespace AssetToolkit\Compressor;
 use AssetToolkit\Process;
-use AssetToolkit\JSMin;
 use AssetToolkit\Utils;
 use RuntimeException;
 
