@@ -39,10 +39,9 @@ class CssRewriteFilter
      *    /product       + "/images/bg.png"
      *
      * @param string $content  stylesheet content.
-     * @param string $dirname  the dirname of stylesheet file
      * @param string $dirnameUrl the url of the diretory
      */
-    public function rewrite($content , $dirname, $dirnameUrl)
+    public function rewrite($content, $dirnameUrl)
     {
         return preg_replace_callback('#
             url\(
@@ -51,7 +50,7 @@ class CssRewriteFilter
                 \1
             \)
             #xs',
-            function($matches) use($dirname, $dirnameUrl )
+            function($matches) use($dirnameUrl)
             {
                 $url = $matches['url'];
 
@@ -60,7 +59,8 @@ class CssRewriteFilter
                     return $matches[0];
                 }
 
-                // if it's already an absolute path, do not rewrite it.
+                // do not rewrite
+                // if it's already an absolute path.
                 if ( '/' === $url[0] ) {
                     return $matches[0];
                 }
@@ -71,7 +71,6 @@ class CssRewriteFilter
                 // rewrite with public asset baseurl
                 $urlParts = explode('/',$dirnameUrl);
                 while (0 === strpos($url, '../') ) {
-                    // 2 <= substr_count($dirname, '/')) {
                     array_pop($urlParts);
                     $url = substr($url, 3);
                 }
@@ -82,13 +81,14 @@ class CssRewriteFilter
                     echo "Rewriting " , $origUrl , " to " , $url , "\n";
                 }
 
+                // replace the found string with the new absolute url.
                 return str_replace( $matches['url'], $url , $matches[0]);
             }, $content );
     }
 
     public function filter($collection)
     {
-        if( ! $collection->isStylesheet )
+        if ( ! $collection->isStylesheet )
             return;
 
         //  path:  /assets/{asset name}
@@ -110,7 +110,6 @@ class CssRewriteFilter
             $content = file_get_contents($fullpath);
             $content = $this->rewrite( 
                 $content, 
-                $dirname, 
                 $dirnameUrl
             );
             $contents .= $content;
