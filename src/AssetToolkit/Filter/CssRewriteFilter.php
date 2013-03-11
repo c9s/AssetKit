@@ -109,15 +109,11 @@ class CssRewriteFilter
             // absolute path to the file.
             $fullpath = $assetSourceDir . DIRECTORY_SEPARATOR . $path;
 
-            // relative dirname path from asset directory.
-            $dirname = dirname($path);
-
-            // url to the directory of the asset.
-            $dirnameUrl = $assetBaseUrl . '/' . $dirname;
-
             $contents .= $this->rewrite( 
                 file_get_contents($fullpath), 
-                $dirnameUrl
+
+                // url to the directory of the asset.
+                $assetBaseUrl . '/' . dirname($path);
             );
         }
         $collection->setContent($contents);
