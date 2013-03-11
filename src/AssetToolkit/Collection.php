@@ -54,6 +54,22 @@ class Collection
 
 
     /**
+     * Return fullpath of files
+     *
+     * @return string[] fullpaths.
+     */
+    public function getFullpaths()
+    {
+        $paths = array();
+        $dir = $this->asset->getSourceDir(true);
+        foreach( $this->files as $file ) {
+            $paths[] = $dir . DIRECTORY_SEPARATOR . $file;
+        }
+        return $paths;
+    }
+
+
+    /**
      * @return array return the collection file list
      */
     public function getFilePaths()
