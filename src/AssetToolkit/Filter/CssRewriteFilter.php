@@ -99,8 +99,7 @@ class CssRewriteFilter
 
 
     /**
-     * Note that in this method, we didn't use the `getContent` method 
-     * to retrieve file contents, because we need the base dir path 
+     * To retrieve file contents, because we need the base dir path 
      * to resolve paths.
      *
      * @param Collection $collection
@@ -111,23 +110,18 @@ class CssRewriteFilter
             return;
 
         //  path:  /assets/{asset name}
-        $paths = $collection->getFilePaths(); // relative file paths to the asset manifest file.
         $assetBaseUrl = $collection->asset->getBaseUrl();
         $assetSourceDir = $collection->asset->getSourceDir(true);
 
-        $contents = '';
-        foreach( $paths as $path ) {
-            // absolute path to the file.
-            $fullpath = $assetSourceDir . DIRECTORY_SEPARATOR . $path;
-
-            $contents .= $this->rewrite( 
-                file_get_contents($fullpath), 
-
+        $chunks = $collection->getChunks();
+        foreach( $chunks as &$chunk ) {
+            $chunk['content'] = $this->rewrite( 
+                $chunk['content'],
                 // url to the directory of the asset.
-                $assetBaseUrl . '/' . dirname($path);
+                $assetBaseUrl . '/' . dirname($chunk['path']);
             );
         }
-        $collection->setContent($contents);
+        $collection->setChunks($chunks);
     }
 
 }

@@ -138,11 +138,6 @@ class Collection
     }
 
 
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
 
     /**
      * Set content chunks with metadata.
@@ -152,11 +147,6 @@ class Collection
     public function setChunks($chunks)
     {
         $this->chunks = $chunks;
-
-        // also update ->content
-        foreach( $chunks as $chunk ) {
-
-        }
     }
 
     /**
@@ -189,26 +179,36 @@ class Collection
 
 
 
-    public function getContent()
+    /**
+     * Squash chunks into a string.
+     *
+     * @return string
+     */
+    public function squashChunks($chunks)
     {
-        if( $this->content ) {
-            return $this->content;
-        }
-
-        $sourceDir = $this->asset->getSourceDir(true);
         $content = '';
-        foreach( $this->files as $file ) {
-            $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
-
-            if ( ($out = file_get_contents( $fullpath )) !== false ) {
-                $content .= $out;
-            } else {
-                throw new Exception("Asset collection: Can not read file $fullpath");
-            }
+        foreach( $chunks as $c ) {
+            $content .= $c['content'];
         }
-        return $this->content = $content;
+        return $content;
     }
 
+
+    public function setContent($content)
+    {
+        // Warning: calling setContent to chunks might lose metadata.
+        $this->chunks = array(array(
+            'content' => $content, 
+            'fullpath' => '',
+            'path' => '',
+        )); 
+    }
+
+    public function getContent()
+    {
+        $chunks = $this->getChunks();
+        return $this->squashChunks($chunks);
+    }
 
 
     /**

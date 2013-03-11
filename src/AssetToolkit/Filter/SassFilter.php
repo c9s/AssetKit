@@ -44,11 +44,8 @@ class SassFilter
         $this->style = $style;
     }
 
-    public function filter(Collection $collection)
+    public function createProcess()
     {
-        if( $collection->filetype !== Collection::FILETYPE_SASS )
-            return;
-
         $proc = new Process(array( $this->bin ));
         if ($this->enableCompass) {
             $proc->arg('--compass');
@@ -62,22 +59,29 @@ class SassFilter
         if ( $this->style ) {
             $proc->arg('--style')->arg($this->style);
         }
+        return $proc;
+    }
 
-        if($this->fromFile) {
-            $filepaths = $collection->getSourcePaths(true);
-            foreach( $filepaths as $filepath ) {
-                $proc->arg($filepath);
+    public function filter(Collection $collection)
+    {
+        if( $collection->filetype !== Collection::FILETYPE_SASS )
+            return;
+
+        $chunks = $this->getChunks();
+        foreach( $chunks as &$chunk ) {
+            // $chunk['fullpath'];
+            // $chunk['content'];
+            $proc = $this->createProcess();
+            $proc->arg('--load-path', dirname($chunk['fullpath']) );
+            $proc->arg('-s'); // use stdin
+            $proc->input($chunk['content']);
+            $code = $proc->run();
+            if ( $code != 0 ) {
+                throw new RuntimeException("SassFilter failure: $code. ");
             }
-        } else {
-            $proc->arg('-s');
-            $proc->input($collection->getContent());
+            $chunk['content'] = $proc->getOutput();
         }
-
-        $code = $proc->run();
-        if ( $code != 0 ) {
-            throw new RuntimeException("SassFilter failure: $code. ");
-        }
-        $collection->setContent($proc->getOutput());
+        $collection->setChunks($chunks);
     }
 
 }

@@ -6,11 +6,10 @@ class CssImportFilter
 {
     const DEBUG = 0;
 
-    public function importCss($fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
+    public function importCss($content, $fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
     {
         if(CssImportFilter::DEBUG)
             echo "Importing from $fullpath\n";
-        $content = file_get_contents($fullpath);
 
 
         // we should rewrite url( ) paths first, before we import css contents
@@ -84,8 +83,10 @@ class CssImportFilter
                         echo $url , " => " , $newPath , "\n";
                     }
 
+                    $newContent = file_get_contents($newFullpath);
+
                     /* Import recursively */
-                    $content .= $self->importCss($newFullpath, $assetSourceDir, $newDirname , $newDirnameUrl, $assetBaseUrl);
+                    $content .= $self->importCss($newContent, $newFullpath, $assetSourceDir, $newDirname , $newDirnameUrl, $assetBaseUrl);
                 }
                 return $content;
         }, $content );
@@ -103,22 +104,25 @@ class CssImportFilter
         $assetSourceDir = $collection->asset->getSourceDir(true);
         $assetBaseUrl = $collection->asset->getBaseUrl();
 
-        $contents = '';
-
-        // for rewriting paths
-        foreach( $collection->getFilePaths() as $path ) {
-            $fullpath = $assetSourceDir . DIRECTORY_SEPARATOR . $path;
+        $chunks = $collection->getChunks();
+        foreach( $chunks as &$chunk ) {
+            $fullpath = $chunk['fullpath'];
 
             // the dirname of the file (absolute)
-            $dirname = dirname($path);
+            $dirname = dirname($chunk['path']);
 
             // url to the directory of the asset.
             $dirnameUrl = $assetBaseUrl . '/' . $dirname;
 
-            $content = $this->importCss($fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl);
-            $contents .= $content;
+            $chunk['content'] = $this->importCss(
+                $chunk['content'],
+                $fullpath, 
+                $assetSourceDir, 
+                $dirname, 
+                $dirnameUrl, 
+                $assetBaseUrl);
         }
-        $collection->setContent( $contents );
+        $collection->setChunks($chunks);
     }
 
 }
