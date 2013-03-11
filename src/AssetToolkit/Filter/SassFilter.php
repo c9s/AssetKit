@@ -8,11 +8,16 @@ use AssetToolkit\Utils;
 class SassFilter 
 {
     public $bin;
+
     public $fromFile = true;
 
     public $loadPaths = array();
+
     public $enableCompass = true;
+
     public $style;
+
+    public $rewrite = true;
 
     public function __construct($bin = null)
     {
@@ -67,12 +72,12 @@ class SassFilter
         if( $collection->filetype !== Collection::FILETYPE_SASS )
             return;
 
+        $assetBaseUrl = $collection->asset->getBaseUrl();
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
-            // $chunk['fullpath'];
-            // $chunk['content'];
             $proc = $this->createProcess();
-            $proc->arg('--load-path')->arg(dirname($chunk['fullpath']) );
+            $proc->arg('--load-path');
+            $proc->arg( dirname($chunk['fullpath']) );
             $proc->arg('-s'); // use stdin
             $proc->input($chunk['content']);
 
@@ -81,7 +86,14 @@ class SassFilter
             if ( $code != 0 ) {
                 throw new RuntimeException("SassFilter failure: $code. ");
             }
-            $chunk['content'] = $proc->getOutput();
+            $output = $proc->getOutput();
+
+            if ( $this->rewrite ) {
+                $rewrite = new CssRewriteFilter;
+                $output = $rewrite->rewrite( $output, $assetBaseUrl . '/' . dirname($chunk['path']) );
+            }
+
+            $chunk['content'] = $output;
         }
         $collection->setChunks($chunks);
     }

@@ -111,14 +111,12 @@ class CssRewriteFilter
 
         //  path:  /assets/{asset name}
         $assetBaseUrl = $collection->asset->getBaseUrl();
-        $assetSourceDir = $collection->asset->getSourceDir(true);
-
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $chunk['content'] = $this->rewrite( 
                 $chunk['content'],
                 // url to the directory of the asset.
-                $assetBaseUrl . '/' . dirname($chunk['path']);
+                $assetBaseUrl . '/' . dirname($chunk['path'])
             );
         }
         $collection->setChunks($chunks);
