@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2013-03-11</date>
-  <time>20:17:28</time>
+  <time>20:24:31</time>
   <version>
-    <release>2.0.9</release>
-    <api>2.0.9</api>
+    <release>2.0.10</release>
+    <api>2.0.10</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -64,7 +64,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="98a2aa7272f0aeb9ed86bbab8c79c554"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="2275fcf9ec92c089d6e7cc26e6512f3b"/>
+      <file name="assetkit" role="script" md5sum="3a7b2c24082889c1d350edf2efc608c8"/>
     </dir>
   </contents>
   <dependencies>
