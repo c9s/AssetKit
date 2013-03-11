@@ -5,4 +5,4 @@ assets tag
 --DATA--
 return array();
 --EXPECT--
-<script type="text/javascript" src="/assets/compiled/minified-b85a127e78bdf8178d84a3da8d60e7af.min.js"></script>
+<script type="text/javascript" src="/assets/compiled/minified-fec5bc8dd0efaf4efda96af6915fdec3.min.js"></script>

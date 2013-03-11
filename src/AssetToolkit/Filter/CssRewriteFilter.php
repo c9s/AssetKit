@@ -17,10 +17,12 @@ class CssRewriteFilter
     /**
      * Rewrite css path
      *
-     * @param string $content  stylesheet content
+     * @param string $content  stylesheet content.
      * @param string $dirname  the dirname of stylesheet file
+     * @param string $dirnameUrl the url of the diretory
+     * @param string $assetBaseUrl the asset base url
      */
-    public function rewrite($content, $fullpath , $dirname, $dirnameUrl, $assetBaseUrl)
+    public function rewrite($content , $dirname, $dirnameUrl, $assetBaseUrl)
     {
         // For path like
         //
@@ -36,7 +38,7 @@ class CssRewriteFilter
                 \1
             \)
             #xs',
-            function($matches) use($fullpath, $dirname, $dirnameUrl , $assetBaseUrl )
+            function($matches) use($dirname, $dirnameUrl , $assetBaseUrl )
             {
                 $url = $matches['url'];
                 // XXX: dirty, do not rewrite @import css syntax
@@ -90,7 +92,12 @@ class CssRewriteFilter
             $dirnameUrl = $assetBaseUrl . '/' . $dirname;
 
             $content = file_get_contents($fullpath);
-            $content = $this->rewrite( $content, $fullpath, $dirname, $dirnameUrl , $assetBaseUrl);
+            $content = $this->rewrite( 
+                $content, 
+                $dirname, 
+                $dirnameUrl, 
+                $assetBaseUrl
+            );
             $contents .= $content;
         }
         $collection->setContent($contents);
