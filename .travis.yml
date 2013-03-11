@@ -7,13 +7,13 @@ before_install:
 before_script:
   - curl -o APC-3.1.13.tgz http://pecl.php.net/get/APC-3.1.13.tgz
   - tar -xzf APC-3.1.13.tgz
-  - sh -c "cd APC-3.1.13 && phpize && ./configure && make && sudo make install && cd .."
+  - sh -c "cd APC-3.1.13 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
   - rm -Rf APC-3.1.13
   - rm APC-3.1.13.tgz
   - echo "extension=apc.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - curl -o yaml-1.1.0.tgz http://pecl.php.net/get/yaml-1.1.0.tgz
   - tar -xzf yaml-1.1.0.tgz
-  - sh -c "cd yaml-1.1.0 && phpize && ./configure && make && sudo make install && cd .."
+  - sh -c "cd yaml-1.1.0 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
   - rm -Rf yaml-1.1.0
   - rm yaml-1.1.0.tgz
   - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
