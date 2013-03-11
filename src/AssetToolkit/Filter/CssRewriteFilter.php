@@ -15,14 +15,18 @@ class CssRewriteFilter
 
 
     /**
-     * Rewrite css path
+     * Rewrite css url paths from css content.
+     *
+     * This method parses css content ($content), finds url(..) by patterns,
+     * Resolve the relative URL to the absolute URL based on the dirnameUrl 
+     * we've provided, e.g.,
+     *
      *
      * @param string $content  stylesheet content.
      * @param string $dirname  the dirname of stylesheet file
      * @param string $dirnameUrl the url of the diretory
-     * @param string $assetBaseUrl the asset base url
      */
-    public function rewrite($content , $dirname, $dirnameUrl, $assetBaseUrl)
+    public function rewrite($content , $dirname, $dirnameUrl)
     {
         // For path like
         //
@@ -38,7 +42,7 @@ class CssRewriteFilter
                 \1
             \)
             #xs',
-            function($matches) use($dirname, $dirnameUrl , $assetBaseUrl )
+            function($matches) use($dirname, $dirnameUrl )
             {
                 $url = $matches['url'];
                 // XXX: dirty, do not rewrite @import css syntax
@@ -95,8 +99,7 @@ class CssRewriteFilter
             $content = $this->rewrite( 
                 $content, 
                 $dirname, 
-                $dirnameUrl, 
-                $assetBaseUrl
+                $dirnameUrl
             );
             $contents .= $content;
         }
