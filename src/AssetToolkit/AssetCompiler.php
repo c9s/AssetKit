@@ -295,7 +295,6 @@ class AssetCompiler
         }
         $cache = apc_fetch($cacheKey);
 
-
         // cache validation
         if ( $cache && ! $force ) {
             if ( $this->productionFstatCheck ) {

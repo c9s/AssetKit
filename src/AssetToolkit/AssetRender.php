@@ -91,7 +91,7 @@ class AssetRender
                 }
             } else if ( isset($out['content']) ) {
                 if($out['type'] === "stylesheet") {
-                    echo '<style type="text/stylesheet">',  $out['content'] , '</style>' , PHP_EOL;
+                    echo '<style type="text/css">',  $out['content'] , '</style>' , PHP_EOL;
                 } elseif( $out['type'] === "javascript" ) {
                     echo '<script type="text/javascript">', $out['content'] , '</script>' , PHP_EOL;
                 } else {
