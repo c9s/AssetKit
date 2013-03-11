@@ -61,6 +61,13 @@ class Process
         return $this->output;
     }
 
+    public function getCommand()
+    {
+        return join(' ', array_map(function($arg) { 
+                return escapeshellarg($arg);
+                    } ,$this->args));
+    }
+
     public function run()
     {
         $descriptorspec = array(
@@ -70,10 +77,7 @@ class Process
             2 => array('pipe', 'w')
         );
 
-        $command = join(' ', array_map(function($arg) { 
-                return escapeshellarg($arg);
-                    } ,$this->args));
-
+        $command = $this->getCommand();
         $pipes = array();
         $process = proc_open($command, $descriptorspec, $pipes, $this->cwd, $this->env);
 

@@ -67,14 +67,16 @@ class SassFilter
         if( $collection->filetype !== Collection::FILETYPE_SASS )
             return;
 
-        $chunks = $this->getChunks();
+        $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             // $chunk['fullpath'];
             // $chunk['content'];
             $proc = $this->createProcess();
-            $proc->arg('--load-path', dirname($chunk['fullpath']) );
+            $proc->arg('--load-path')->arg(dirname($chunk['fullpath']) );
             $proc->arg('-s'); // use stdin
             $proc->input($chunk['content']);
+
+            // echo $proc->getCommand();
             $code = $proc->run();
             if ( $code != 0 ) {
                 throw new RuntimeException("SassFilter failure: $code. ");
