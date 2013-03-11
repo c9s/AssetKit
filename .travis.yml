@@ -3,7 +3,7 @@ php:
   - 5.3
   - 5.4
 before_install:
-  - sudo apt-get install php-apc coffeescript ruby-sass
+  - sudo apt-get -qq install php-apc coffeescript ruby-sass
 before_script:
   - curl -o APC-3.1.13.tgz http://pecl.php.net/get/APC-3.1.13.tgz
   - tar -xzf APC-3.1.13.tgz
