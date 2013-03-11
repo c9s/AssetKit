@@ -19,6 +19,8 @@ class SassFilter
 
     public $rewrite = true;
 
+    public $debug = false;
+
     public function __construct($bin = null)
     {
         if ( $bin ) {
@@ -26,6 +28,11 @@ class SassFilter
         } else {
             $this->bin = Utils::findbin('sass');
         }
+    }
+
+    public function setDebug($bool)
+    {
+        $this->debug = $bool;
     }
 
     public function setCompass($bool)
@@ -52,6 +59,7 @@ class SassFilter
     public function createProcess()
     {
         $proc = new Process(array( $this->bin ));
+
         if ($this->enableCompass) {
             $proc->arg('--compass');
         }
@@ -59,6 +67,10 @@ class SassFilter
         foreach( $this->loadPaths as $path ) {
             $proc->arg('--load-path');
             $proc->arg($path);
+        }
+
+        if ( $this->debug ) {
+            $proc->arg('--debug-info');
         }
 
         if ( $this->style ) {
