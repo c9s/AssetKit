@@ -10,11 +10,11 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2013-03-10</date>
-  <time>21:53:00</time>
+  <date>2013-03-11</date>
+  <time>20:17:28</time>
   <version>
-    <release>2.0.7</release>
-    <api>2.0.7</api>
+    <release>2.0.9</release>
+    <api>2.0.9</api>
   </version>
   <stability>
     <release>alpha</release>
@@ -28,12 +28,12 @@
       <file name="doc/asset_manifest.md" role="doc" md5sum="e7f80ecb48a13a712f8d64d49e7dabad"/>
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
-      <file name="src/AssetToolkit/Asset.php" role="php" md5sum="02781f36e2dd82fd73ccf07bb9b32156"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="8a3edd131bd9fb2ccc4454609bedb315"/>
+      <file name="src/AssetToolkit/Asset.php" role="php" md5sum="ecf996d7688722fe71f03c85d0f6f5a2"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="d3b0d1ca9969289e3f94c66881762545"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="606f0f84055a06f59159d5fe11d913f4"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="4caf0fe9b3d357115b7fcf0b6cfc6ac4"/>
-      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="d0a81ce0b2b181fc02f78cdaa40f2dea"/>
-      <file name="src/AssetToolkit/Collection.php" role="php" md5sum="a93d62e55880f9f2a474ed946ec3ba7c"/>
+      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="ad851233ccb967862fb0a07e3a089906"/>
+      <file name="src/AssetToolkit/Collection.php" role="php" md5sum="0291b1d73b5bc991c7fbf7daddd5d3b1"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="9db1f7af411fad2823dd39a7c9800c1c"/>
       <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="ab7a9ca6d49b9ea31b0689a899ab12de"/>
       <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="b3b84ee791d25430d396ed777638e769"/>
@@ -53,18 +53,18 @@
       <file name="src/AssetToolkit/Extension/Twig/AssetTokenParser.php" role="php" md5sum="21917caefd22792fb9ee6a9258a44651"/>
       <file name="src/AssetToolkit/FileUtil.php" role="php" md5sum="cfe2ca44b98e3e726b807b524f823241"/>
       <file name="src/AssetToolkit/Filter/CoffeeScriptFilter.php" role="php" md5sum="bc85f2ec24fe99b986c8e82a1b0985c9"/>
-      <file name="src/AssetToolkit/Filter/CssImportFilter.php" role="php" md5sum="8c0b2b2477214c7bcd4428b54dfc299d"/>
-      <file name="src/AssetToolkit/Filter/CssRewriteFilter.php" role="php" md5sum="36d44ce6be99d741b83067c62c997c4b"/>
-      <file name="src/AssetToolkit/Filter/SassFilter.php" role="php" md5sum="b900efeff7ce146258eeb76a1a2501e8"/>
-      <file name="src/AssetToolkit/Filter/ScssFilter.php" role="php" md5sum="5428b8667adc31d385828bc6cc0605db"/>
+      <file name="src/AssetToolkit/Filter/CssImportFilter.php" role="php" md5sum="5cf643e96c964c1b523af25e94b21d78"/>
+      <file name="src/AssetToolkit/Filter/CssRewriteFilter.php" role="php" md5sum="ad710e9f5e4345a7128f6aac35fde039"/>
+      <file name="src/AssetToolkit/Filter/SassFilter.php" role="php" md5sum="e1a8dd1d38ad50d92bb02ba723740f79"/>
+      <file name="src/AssetToolkit/Filter/ScssFilter.php" role="php" md5sum="6bec3401c7dfbd522a829a4c65ce47e1"/>
       <file name="src/AssetToolkit/Installer.php" role="php" md5sum="98a4f2fa9e450a761b740726f0a720e0"/>
       <file name="src/AssetToolkit/JSMin.php" role="php" md5sum="cc7ec597e591a29ee477910c5617e53e"/>
       <file name="src/AssetToolkit/LinkInstaller.php" role="php" md5sum="cbb0b327e0b47f60f51fa20422e6d1ae"/>
-      <file name="src/AssetToolkit/Process.php" role="php" md5sum="c21c0e03c67ae7afbacc457f3d429e50"/>
+      <file name="src/AssetToolkit/Process.php" role="php" md5sum="01eb0b32249f9a601a90a629b15a7f4d"/>
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="98a2aa7272f0aeb9ed86bbab8c79c554"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="959b88f761be96776014ae411c86da82"/>
+      <file name="assetkit" role="script" md5sum="2275fcf9ec92c089d6e7cc26e6512f3b"/>
     </dir>
   </contents>
   <dependencies>
