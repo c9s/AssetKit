@@ -99,7 +99,7 @@ class FileUtil
         $ite = new RecursiveDirectoryIterator($dir);
         $expanded = array();
         foreach (new RecursiveIteratorIterator($ite) as $path => $info) {
-            if( $info->getFilename() === '.' || $info->getFilename() === '..' )
+            if ( $info->getFilename() === '.' || $info->getFilename() === '..' )
                 continue;
             $expanded[] = $path;
         }
