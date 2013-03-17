@@ -5,6 +5,9 @@ use AssetToolkit\Data;
 use Exception;
 
 
+// from c9s/php-fileutil
+require "FileUtil.php";
+
 
 /**
  * AssetConfig defines methods to get/set asset config value.
