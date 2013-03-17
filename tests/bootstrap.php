@@ -12,11 +12,9 @@ if ( ! extension_loaded('fileutil') ) {
     require "FileUtil.php";
 }
 
-
-
 $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
     ROOT . '/src', 
     ROOT . '/vendor/pear',
 ));
 $classLoader->useIncludePath(false);
-$classLoader->register();
+$classLoader->register(true);
