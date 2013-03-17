@@ -125,15 +125,9 @@ class Collection
         if ( $this->_lastmtime ) {
             return $this->_lastmtime;
         }
-
         if ( ! empty($this->files) ) {
             $fullpaths = $this->getFullpaths();
-            $mtimes = array();
-            foreach( $fullpaths as $fullpath ) {
-                $mtimes[] = filemtime($fullpath);
-            }
-            rsort($mtimes, SORT_NUMERIC);
-            return $mtimes[0];
+            return $this->_lastmtime = futil_lastmtime($fullpaths);
         }
     }
 
