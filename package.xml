@@ -10,8 +10,8 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2013-03-11</date>
-  <time>20:24:31</time>
+  <date>2013-03-17</date>
+  <time>19:27:41</time>
   <version>
     <release>2.0.10</release>
     <api>2.0.10</api>
@@ -29,7 +29,7 @@
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="ecf996d7688722fe71f03c85d0f6f5a2"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="d3b0d1ca9969289e3f94c66881762545"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="b166fb5cf8b879671d42d47ab8f5fda4"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="606f0f84055a06f59159d5fe11d913f4"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="4caf0fe9b3d357115b7fcf0b6cfc6ac4"/>
       <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="ad851233ccb967862fb0a07e3a089906"/>
@@ -40,22 +40,22 @@
       <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="067b1f24c8e180057b364ac0062b676a"/>
       <file name="src/AssetToolkit/Command/RemoveCommand.php" role="php" md5sum="9faf540a380bca6186cc4c4b43321e73"/>
       <file name="src/AssetToolkit/Command/UpdateCommand.php" role="php" md5sum="b205f21221db35a8dfac8feed0e7ae76"/>
-      <file name="src/AssetToolkit/Compressor/CssMinCompressor.php" role="php" md5sum="ed96aa9af9a058c5f2abf9f3ae28255a"/>
-      <file name="src/AssetToolkit/Compressor/JsMinCompressor.php" role="php" md5sum="209d7af8eb7dca9a7088a0dcd5a60aaf"/>
-      <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="97478b15d66f396474a6939ab77c9ad8"/>
+      <file name="src/AssetToolkit/Compressor/CssMinCompressor.php" role="php" md5sum="6c67e3c75f79f0d3dc44b64b7fcfa90a"/>
+      <file name="src/AssetToolkit/Compressor/JsMinCompressor.php" role="php" md5sum="d7ee85a62e59f3ed9fa15d471202bda5"/>
+      <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
       <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
       <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
       <file name="src/AssetToolkit/Console.php" role="php" md5sum="fa5695c43924c4b200660e2e5085db50"/>
       <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="32fff263d702f9034018cc32a064198f"/>
-      <file name="src/AssetToolkit/Data.php" role="php" md5sum="3a35215c77768847ffdb5930c52b0085"/>
+      <file name="src/AssetToolkit/Data.php" role="php" md5sum="1014709c52ffd38b06f55e2136a760eb"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="db39618b4f3b2cb19b94d2ff3556162b"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetNode.php" role="php" md5sum="3916962122b5d6ba67ba0b595ed6d064"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetTokenParser.php" role="php" md5sum="21917caefd22792fb9ee6a9258a44651"/>
-      <file name="src/AssetToolkit/FileUtil.php" role="php" md5sum="cfe2ca44b98e3e726b807b524f823241"/>
+      <file name="src/AssetToolkit/FileUtil.php" role="php" md5sum="a6a426dfdfa4b32161561365f589032d"/>
       <file name="src/AssetToolkit/Filter/CoffeeScriptFilter.php" role="php" md5sum="bc85f2ec24fe99b986c8e82a1b0985c9"/>
       <file name="src/AssetToolkit/Filter/CssImportFilter.php" role="php" md5sum="5cf643e96c964c1b523af25e94b21d78"/>
       <file name="src/AssetToolkit/Filter/CssRewriteFilter.php" role="php" md5sum="ad710e9f5e4345a7128f6aac35fde039"/>
-      <file name="src/AssetToolkit/Filter/SassFilter.php" role="php" md5sum="e1a8dd1d38ad50d92bb02ba723740f79"/>
+      <file name="src/AssetToolkit/Filter/SassFilter.php" role="php" md5sum="0424c6a73a299ea2fa8fb647b825ceb2"/>
       <file name="src/AssetToolkit/Filter/ScssFilter.php" role="php" md5sum="6bec3401c7dfbd522a829a4c65ce47e1"/>
       <file name="src/AssetToolkit/Installer.php" role="php" md5sum="98a4f2fa9e450a761b740726f0a720e0"/>
       <file name="src/AssetToolkit/JSMin.php" role="php" md5sum="cc7ec597e591a29ee477910c5617e53e"/>
@@ -64,7 +64,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="98a2aa7272f0aeb9ed86bbab8c79c554"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="3a7b2c24082889c1d350edf2efc608c8"/>
+      <file name="assetkit" role="script" md5sum="7f915cfe7b52873fe86fe2a9331e4c24"/>
     </dir>
   </contents>
   <dependencies>
@@ -87,6 +87,11 @@
       </package>
       <package>
         <name>CacheKit</name>
+        <channel>pear.corneltek.com</channel>
+        <min>0.0.0</min>
+      </package>
+      <package>
+        <name>FileUtil</name>
         <channel>pear.corneltek.com</channel>
         <min>0.0.0</min>
       </package>
