@@ -125,29 +125,13 @@ class FileUtil
     {
         $paths = (array) $paths;
         foreach( $paths as $path ) {
-            if( ! file_exists( $path ) )
-                throw new Exception( "$path does not exist." );
-
-            if( is_dir( $path ) ) 
-            {
-                $iterator = new \DirectoryIterator($path);
-                foreach ($iterator as $fileinfo) 
-                {
-                    if( $fileinfo->isDir() ) {
-                        if(    $fileinfo->getFilename() === "." 
-                            || $fileinfo->getFilename() === ".." )
-                            continue;
-                        self::rmtree( $fileinfo->getPathname() );
-                    }
-                    elseif ($fileinfo->isFile()) {
-                        if( unlink( $fileinfo->getPathname() ) == false )
-                            throw new Exception( "File delete error: {$fileinto->getPathname()}" );
-                    }
-                }
-                rmdir( $path );
-            } 
-            elseif( is_file( $path ) ) {
-                unlink( $path );
+            if ( file_exists( $path ) ) {
+                futil_rmtree($path);
+            }
+            if ( is_dir($path) ) {
+                rmdir($path);
+            } elseif ( is_file($path) ) {
+                unlink($path);
             }
         }
         return true;
