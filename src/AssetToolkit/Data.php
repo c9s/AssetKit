@@ -37,7 +37,7 @@ class Data
         } else {
             $data = self::detect_format_and_decode($path);
         }
-        $newpath = FileUtil::replace_extension($path,"php");
+        $newpath = futil_replace_extension($path,"php");
         $ret = self::encode_file( $newpath , $data , self::FORMAT_PHP );
         if( $ret !== false )
             return $newpath;

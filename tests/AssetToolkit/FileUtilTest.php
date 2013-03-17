@@ -14,19 +14,5 @@ class FileUtilTest extends PHPUnit_Framework_TestCase
             path_ok( $file, $file );
         }
     }
-
-
-    /**
-     * Test replace_extension function
-     */
-    public function testReplaceExtension()
-    {
-        $new = FileUtil::replace_extension( 'path/to/file.min.coffee', array(
-                'coffee' => 'js' ));
-
-        is( 'path/to/file.min.js', $new );
-        $new = FileUtil::replace_extension( 'path/to/file.min.coffee', 'js' );
-        is( 'path/to/file.min.js', $new );
-    }
 }
 
