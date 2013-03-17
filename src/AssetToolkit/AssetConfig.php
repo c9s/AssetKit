@@ -1,12 +1,11 @@
 <?php
+
 namespace AssetToolkit;
 use AssetToolkit\Asset;
 use AssetToolkit\Data;
 use Exception;
 
 
-// from c9s/php-fileutil
-require "FileUtil.php";
 
 
 /**
