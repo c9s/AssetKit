@@ -173,11 +173,22 @@ Requirement
 Installation
 ---------------------------
 
+Install from repository (suggested):
+
 ```sh
 git clone git@github.com:c9s/php-AssetToolkit.git
 pear install -f package.xml
 cp assetkit /usr/bin
 ```
+
+Install from PEAR:
+
+```sh
+$ pear channel-discover pear.corneltek.com
+$ pear install corneltek/AssetToolkit
+```
+
+
 
 The Asset Manifest File
 ---------------------------
