@@ -188,6 +188,16 @@ $ pear channel-discover pear.corneltek.com
 $ pear install corneltek/AssetToolkit
 ```
 
+Use with Composer:
+
+
+```json
+{
+    require: {
+        "c9s/assettoolkit": 0
+    }
+}
+```
 
 
 The Asset Manifest File
