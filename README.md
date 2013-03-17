@@ -117,6 +117,13 @@ Then integrate the AssetToolkit API into your PHP web application,
 there are just few lines to write (you may check the `public/index.php` sample):
 
 ```php
+// Please install php-fileutil extension for beter performance, 
+// If you cann't install extension, you should install the pear.corneltek.com/FileUtil package.
+if ( ! extension_loaded('fileutil') ) {
+    require "FileUtil.php";
+}
+
+// To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
 $config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
     // the application root, contains the .assetkit.php file.
     'root' => APPLICATION_ROOT,
