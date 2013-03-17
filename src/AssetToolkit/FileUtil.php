@@ -115,12 +115,6 @@ class FileUtil
         return true;
     }
 
-    static function get_extension($path)
-    {
-        return pathinfo($path, PATHINFO_EXTENSION);
-    }
-
-
     static function rmtree( $paths )
     {
         $paths = (array) $paths;
