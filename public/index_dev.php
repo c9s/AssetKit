@@ -1,10 +1,13 @@
 <?php
 require '../vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
-require 'FileUtil.php';
 define( 'ROOT', dirname(dirname(__FILE__) ));
 $classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
     ROOT . '/src', ROOT . '/vendor/pear',
 ));
+
+if ( ! extension_loaded('fileutil') ) {
+    require 'FileUtil.php';
+}
 
 $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 
