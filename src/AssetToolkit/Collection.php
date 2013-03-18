@@ -119,8 +119,7 @@ class Collection
             return $this->_lastmtime;
         }
         if ( ! empty($this->files) ) {
-            $fullpaths = $this->getFullpaths();
-            return $this->_lastmtime = \futil_lastmtime($fullpaths);
+            return $this->_lastmtime = \futil_lastmtime($this->getFullpaths());
         }
     }
 
@@ -227,8 +226,6 @@ class Collection
     {
         return new ArrayIterator($this->getSourcePaths(true));
     }
-
-
 
 
 }

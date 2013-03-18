@@ -66,7 +66,7 @@ class FileUtil
     static function expand_glob_from_dir($dir, $glob)
     {
         $files = glob($dir . DIRECTORY_SEPARATOR . $glob);
-        return self::remove_basedir_from_paths($files,$dir);
+        return \futil_paths_remove_basepath($files, $dir . DIRECTORY_SEPARATOR );
     }
 
 
@@ -80,9 +80,7 @@ class FileUtil
      */
     static function remove_basedir_from_paths($paths,$basedir)
     {
-        return array_map(function($item) use ($basedir) {
-            return substr($item,strlen($basedir) + 1);
-        }, $paths );
+        return \futil_paths_remove_basepath($paths, $basedir . DIRECTORY_SEPARATOR );
     }
 
 
