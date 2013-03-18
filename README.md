@@ -539,8 +539,14 @@ $ php bin/assetkit compile --target mainpage jquery jquery-ui
 
 ### Setup XHProf
 
-    pear install -f phpunit/PHPUnit_TestListener_XHProf
+You should install the xhprof extension from http://github.com/facebook/xhprof
 
+Then setup hostname xhprof.dev to your xhprof_html directory.
+
+Then run:
+
+    pear install -f phpunit/PHPUnit_TestListener_XHProf
+    phpunit -c phpunit-xhprof.xml
 
 ## The asset port manifest
 
