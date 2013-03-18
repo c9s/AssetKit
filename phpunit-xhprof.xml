@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php"
+    backupGlobals="false"
+    verbose="true"
+    syntaxCheck="true"
+    colors="true"
+    stopOnFailure="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    >
+    <testsuites>
+        <testsuite name="PHPUnit">
+            <directory suffix="Test.php">tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <listeners>
+        <listener class="PHPUnit_Util_Log_XHProf" file="PHPUnit/Util/Log/XHProf.php">
+            <arguments>
+                <array>
+                    <!--
+                    <element key="xhprofLibFile">
+                        <string>/Users/c9s/src/php/xhprof/xhprof_lib/utils/xhprof_lib.php</string>
+                    </element>
+                    <element key="xhprofRunsFile">
+                        <string>/Users/c9s/src/php/xhprof/xhprof_lib/utils/xhprof_runs.php</string>
+                    </element>
+                    -->
+
+                    <element key="xhprofLibFile">
+                        <string>xhprof_lib/utils/xhprof_lib.php</string>
+                    </element>
+                    <element key="xhprofRunsFile">
+                        <string>xhprof_lib/utils/xhprof_runs.php</string>
+                    </element>
+
+
+                    <element key="xhprofWeb">
+                        <string>http://xhprof.dev/index.php</string>
+                    </element>
+                    <element key="appNamespace">
+                        <string>AssetToolkit</string>
+                    </element>
+                    <element key="xhprofFlags">
+                        <string>XHPROF_FLAGS_CPU,XHPROF_FLAGS_MEMORY</string>
+                    </element>
+                </array>
+            </arguments>
+        </listener>
+    </listeners>
+
+</phpunit>

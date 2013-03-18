@@ -511,7 +511,7 @@ Include multiple assets to the target:
 {% assets "jquery", "jquery-ui" as "jquery-all" %}
 ```
 
-Hack
+Hacking
 ----------------
 
 Install deps:
@@ -535,6 +535,12 @@ Make sure command runs fine:
 ```sh
 $ php bin/assetkit compile --target mainpage jquery jquery-ui 
 ```
+
+
+### Setup XHProf
+
+    pear install -f phpunit/PHPUnit_TestListener_XHProf
+
 
 ## The asset port manifest
 
