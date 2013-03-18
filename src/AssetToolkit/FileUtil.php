@@ -119,14 +119,7 @@ class FileUtil
     {
         $paths = (array) $paths;
         foreach( $paths as $path ) {
-            if ( file_exists( $path ) ) {
-                futil_rmtree($path);
-            }
-            if ( is_dir($path) ) {
-                rmdir($path);
-            } elseif ( is_file($path) ) {
-                unlink($path);
-            }
+            futil_rmtree($path);
         }
         return true;
     }
