@@ -29,6 +29,7 @@ class AssetCompiler
      */
     public $productionFstatCheck = false;
 
+    public $enableCache = true;
 
 
     /**
@@ -62,7 +63,10 @@ class AssetCompiler
 
 
     public $defaultJsCompressor = 'jsmin';
+
+
     public $defaultCssCompressor = 'cssmin';
+
 
     public function __construct($config,$loader)
     {
@@ -228,22 +232,25 @@ class AssetCompiler
      */
     public function compile($asset) 
     {
-        $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
-        $cache = apc_fetch($cacheKey);
+        if ( $this->enableCache ) {
+            $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
+            $cache = apc_fetch($cacheKey);
 
-        // cache validation
-        if( $cache ) {
-            if( ! $this->productionFstatCheck ) {
-                return $cache;
-            } else {
-                $upToDate = true;
-                if( $mtime = @$cache['mtime'] ) {
-                    if( $asset->isOutOfDate($mtime) ) {
-                        $upToDate = false;
+            // cache validation
+            if( $cache ) {
+                if( ! $this->productionFstatCheck ) {
+                    return $cache;
+                } else {
+                    $upToDate = true;
+                    if ( $mtime = @$cache['mtime'] ) {
+                        if( $asset->isOutOfDate($mtime) ) {
+                            $upToDate = false;
+                        }
+                    }
+                    if ( $upToDate ) {
+                        return $cache;
                     }
                 }
-                if($upToDate)
-                    return $cache;
             }
         }
 
@@ -271,7 +278,10 @@ class AssetCompiler
             $out['css_url'] = $cssUrl;
             $this->writeFile( $cssFile , $out['css'] );
         }
-        apc_store($cacheKey, $out);
+
+        if ( $this->enableCache ) {
+            apc_store($cacheKey, $out);
+        }
         return $out;
     }
 
@@ -305,24 +315,28 @@ class AssetCompiler
             $cacheKey = $this->config->getNamespace() . ':' . $this->_getCacheKeyFromAssets($assets);
             $target = 'minified';
         }
-        $cache = apc_fetch($cacheKey);
 
-        // cache validation
-        if ( $cache && ! $force ) {
-            if ( $this->productionFstatCheck ) {
-                $upToDate = true;
-                if( $mtime = @$cache['mtime'] ) {
-                    foreach( $assets as $asset ) {
-                        if( $asset->isOutOfDate($mtime) ) {
-                            $upToDate = false;
-                            break;
+
+        if ( $this->enableCache ) {
+            $cache = apc_fetch($cacheKey);
+
+            // cache validation
+            if ( $cache && ! $force ) {
+                if ( $this->productionFstatCheck ) {
+                    $upToDate = true;
+                    if( $mtime = @$cache['mtime'] ) {
+                        foreach( $assets as $asset ) {
+                            if( $asset->isOutOfDate($mtime) ) {
+                                $upToDate = false;
+                                break;
+                            }
                         }
                     }
-                }
-                if ( $upToDate )
+                    if ( $upToDate )
+                        return $cache;
+                } else {
                     return $cache;
-            } else {
-                return $cache;
+                }
             }
         }
 
@@ -363,7 +377,10 @@ class AssetCompiler
         }
 
         $outfiles['mtime']   = time();
-        apc_store($cacheKey, $outfiles);
+
+        if ( $this->enableCache ) {
+            apc_store($cacheKey, $outfiles);
+        }
         return $outfiles;
     }
 
