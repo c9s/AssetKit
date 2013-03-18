@@ -14,7 +14,7 @@ class LinkInstaller extends Installer
             if( is_link($targetDir) ) {
                 unlink($targetDir);
             } else {
-                return FileUtil::rmtree($targetDir);
+                return \futil_rmtree($targetDir);
             }
         }
     }
@@ -33,7 +33,7 @@ class LinkInstaller extends Installer
             if (is_link($targetDir)) {
                 unlink($targetDir);
             } else if(is_dir($targetDir)) {
-                FileUtil::rmtree($targetDir);
+                \futil_rmtree($targetDir);
             } 
         }
 
