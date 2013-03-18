@@ -57,9 +57,7 @@ class Collection
     public function getSourcePaths($absolute = false)
     {
         $dir = $this->asset->getSourceDir($absolute);
-        return array_map(function($file) use ($dir) {
-                return $dir . DIRECTORY_SEPARATOR . $file;
-            }, $this->files);
+        return futil_paths_prepend($this->files,$dir);
     }
 
 
@@ -70,14 +68,9 @@ class Collection
      */
     public function getFullpaths()
     {
-        $paths = array();
         $dir = $this->asset->getSourceDir(true);
-        foreach( $this->files as $file ) {
-            $paths[] = $dir . DIRECTORY_SEPARATOR . $file;
-        }
-        return $paths;
+        return futil_paths_prepend($this->files, $dir);
     }
-
 
     /**
      * @return array return the collection file list
