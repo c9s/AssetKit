@@ -119,7 +119,7 @@ class FileUtil
     {
         $paths = (array) $paths;
         foreach( $paths as $path ) {
-            futil_rmtree($path);
+            \futil_rmtree($path);
         }
         return true;
     }

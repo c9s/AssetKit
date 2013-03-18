@@ -57,7 +57,7 @@ class Collection
     public function getSourcePaths($absolute = false)
     {
         $dir = $this->asset->getSourceDir($absolute);
-        return futil_paths_prepend($this->files,$dir);
+        return \futil_paths_prepend($this->files,$dir);
     }
 
 
@@ -69,7 +69,7 @@ class Collection
     public function getFullpaths()
     {
         $dir = $this->asset->getSourceDir(true);
-        return futil_paths_prepend($this->files, $dir);
+        return \futil_paths_prepend($this->files, $dir);
     }
 
     /**
@@ -120,7 +120,7 @@ class Collection
         }
         if ( ! empty($this->files) ) {
             $fullpaths = $this->getFullpaths();
-            return $this->_lastmtime = futil_lastmtime($fullpaths);
+            return $this->_lastmtime = \futil_lastmtime($fullpaths);
         }
     }
 
