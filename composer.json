@@ -1,6 +1,7 @@
 {
-    "name": "c9s/assettoolkit",
+    "name": "corneltek/assettoolkit",
     "require": {
         "php": ">=5.3.0"
-    }
+    },
+    "autoload": { "AssetToolkit": "src" }
 }

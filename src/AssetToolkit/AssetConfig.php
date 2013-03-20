@@ -68,9 +68,10 @@ class AssetConfig
     public $options = array();
 
 
-    public $cacheEnable = true;
-
-    public $cacheSupport = false;
+    /**
+     * Cache Interface object
+     */
+    public $cache;
 
     public $fileLoaded = false;
 
@@ -81,7 +82,7 @@ class AssetConfig
             $this->environment = $this->options['environment'];
         }
         if ( isset($options['cache']) ) {
-            $this->cacheEnable = $options['cache'];
+            $this->cache = $options['cache'];
         }
         if ( isset($options['namespace']) ) {
             $this->namespace = $options['namespace'];
@@ -119,8 +120,7 @@ class AssetConfig
         }
 
 
-        $useCache = $this->cacheEnabled();
-        if($useCache) {
+        if($this->cache) {
             // get apc cache
             $cacheId = isset($this->options['cache_id'])
                 ? $this->options['cache_id']
@@ -138,12 +138,12 @@ class AssetConfig
 
                 $this->load($format);
 
-                if($useCache) {
+                if($this->cache) {
                     apc_store($cacheId, 
                         $this->config, 
                         isset($this->options['cache_expiry']) 
-                        ? $this->options['cache_expiry'] 
-                        : 0 
+                            ? $this->options['cache_expiry'] 
+                            : 0 
                     );
                 }
             } else {
@@ -175,10 +175,7 @@ class AssetConfig
      */
     public function cacheEnabled() 
     {
-        if($this->cacheEnable) {
-            return $this->cacheSupport = extension_loaded('apc') ;
-        }
-        return false;
+        return $this->cache;
     }
 
 

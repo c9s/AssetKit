@@ -28,7 +28,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             return $this->config;
 
         $configFile = $this->getConfigFile();
-        if(file_exists($configFile)) {
+        if (file_exists($configFile)) {
             unlink($configFile);
         }
         $this->config = new \AssetToolkit\AssetConfig($configFile);
@@ -93,16 +93,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        apc_clear_cache();
+        if (extension_loaded('apc') ) {
+            apc_clear_cache();
+        }
     }
 
     public function tearDown()
     {
         $configFile = $this->getConfigFile();
-        if(file_exists($configFile)) {
+        if (file_exists($configFile)) {
             unlink($configFile);
         }
-        apc_clear_cache();
+        if (extension_loaded('apc') ) {
+            apc_clear_cache();
+        }
     }
 
 }
