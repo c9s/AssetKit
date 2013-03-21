@@ -1,6 +1,24 @@
 {
-    "hash": "a480baa248f77ecd1d86ead2e4de41de",
+    "hash": "9fcddd6dc6a5227cdbff9fa49f19b3e8",
     "packages": [
+        {
+            "name": "corneltek/fileutil",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "git@git.corneltek.com:php/fileutil.git",
+                "reference": "1.6.0"
+            },
+            "type": "library",
+            "authors": [
+                {
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com"
+                }
+            ],
+            "description": "Fast File Utility Extension",
+            "time": "2013-03-18 13:56:11"
+        },
         {
             "name": "corneltek/universal-cache",
             "version": "1.0.0",

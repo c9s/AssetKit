@@ -412,12 +412,9 @@ class AssetCompiler
     public function prepareCompiledDir()
     {
         $compiledDir = $this->config->getCompiledDir();
-        if( ! file_exists($compiledDir) ) {
-            if ( false === mkdir($compiledDir, 0755, true) ) {
-                throw new Exception("AssetCompiler: Can not create $compiledDir directory.");
-            }
-        }
-        if( ! is_writable($compiledDir) ) {
+        futil_mkdir_if_not_exists($compiledDir,0755, true);
+
+        if ( ! is_writable($compiledDir) ) {
             throw new Exception("AssetCompiler: The $compiledDir is not writable.");
         }
         return $compiledDir;
