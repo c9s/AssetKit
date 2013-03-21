@@ -214,28 +214,23 @@ To use assetkit in your application, just few lines to write:
 
 ```php
 <?php
-// pick up a SPL classloader, we need this to load library files
-// you can check public/index.php for examples
-require 'bootstrap.php';
-define( ROOT , dirname(__DIR__) );
+// load the autoload.php from composer
+require 'vendor/autoload.php';
 
 // load your asset config file, this contains asset manifest and types
-$config = new AssetToolkit\AssetConfig( '../.assetkit', ROOT );
+$config = new AssetToolkit\AssetConfig( '../.assetkit.php', APP_ROOT );
 
 // initialize an asset loader
 $loader = new AssetToolkit\AssetLoader( $config );
 
 // load the required assets (of your page, application or controller)
-$assets = array();
-$assets[]   = $loader->load( 'jquery' );
-$assets[]   = $loader->load( 'jquery-ui' );
-$assets[]   = $loader->load( 'extjs4-gpl' );
+$assets = $loader->loadAssets(array( 'jquery', 'jquery-ui' ));
+
+// Use AssetRender to compile and render the HTML tag
+
+
+
 ```
-
-To use YUI Compressor:
-
-    YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
-        assetkit add assets/test/manifest.yml
 
 Advanced Usage
 ---------------------------
@@ -365,6 +360,12 @@ $compiler->registerCompressor('uglifyjs', function() {
     return YourCompressor;
 });
 ```
+
+To use YUI Compressor
+---------------------
+
+    YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
+        assetkit add assets/test/manifest.yml
 
 
 Filters
