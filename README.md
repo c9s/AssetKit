@@ -346,7 +346,7 @@ You can also use the Twig Extension in your template:
 ```html+jinja
 <html>
     <head>
-    {% assets "jquery", "jquery-ui" as "jquery-all" %}
+    {% assets "jquery", "jquery-ui" as "my-home-page" %}
     </head>
 </html>
 ```
