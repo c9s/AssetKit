@@ -19,12 +19,11 @@ before_script:
   - phpenv rehash
   - npm install -g coffee-script
   - gem install sass compass
+  - composer install
   - pear channel-discover pear.corneltek.com
   - pear channel-discover pear.twig-project.org
   - pear channel-update pear.corneltek.com
   - pear -q install -f -a corneltek/PHPUnit_TestMore
-  - pear -q install -f -a corneltek/Universal
-  - pear -q install -f -a corneltek/FileUtil
   - pear -q install -f -a twig/Twig
   - curl -O https://raw.github.com/c9s/Onion/master/onion
   - php onion -q install
