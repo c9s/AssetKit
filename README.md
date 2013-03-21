@@ -243,14 +243,13 @@ Done
 
 You can also do:
 
-    assetkit compile --target main --html-output head.php jquery
+    $ assetkit compile --target main --html-output head.php jquery
 
 So that in your application, you can simple drop a line:
 
-    <?php require "head.php"; ?>
-
-
-
+```php
+<?php require "head.php"; ?>
+```
 
 
 Usage
