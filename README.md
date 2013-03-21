@@ -221,12 +221,15 @@ Use with Composer:
 
 ```json
 {
-    require: {
-        "c9s/assettoolkit": 0
-    }
+    require: { "c9s/assettoolkit": "dev-master" }
 }
 ```
 
+Get the command-line assetkit:
+
+    $ curl -O https://raw.github.com/c9s/php-AssetToolkit/master/assetkit
+    $ chmod +x assetkit
+    $ sudo mv assetkit /usr/bin
 
 The Asset Manifest File
 ---------------------------
