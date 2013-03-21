@@ -293,9 +293,7 @@ $compiler->enableProductionFstatCheck();
 $compiler->defaultJsCompressor = 'uglifyjs';
 $compiler->defaultCssCompressor = 'cssmin';
 
-$assets = array();
-$assets[] = $loader->load( 'jquery' );
-$assets[] = $loader->load( 'jquery-ui' );
+$assets = $loader->loadAssets(array( 'jquery', 'jquery-ui') );
 $render = new AssetToolkit\AssetRender($config,$loader, $compiler);
 $render->renderAssets($assets,'page-id');
 ```
