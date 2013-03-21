@@ -229,7 +229,6 @@ $assets = $loader->loadAssets(array( 'jquery', 'jquery-ui' ));
 // Use AssetRender to compile and render the HTML tag
 
 
-
 ```
 
 Advanced Usage
