@@ -79,20 +79,6 @@ Features
 - Twig Extension support. (see below)
 
 
-Installation
----------------------------
-
-Install library from composer:
-
-```json
-{
-    "require": {
-        "corneltek/assettoolkit": "2.*"
-    }
-}
-```
-
-
 
 Synopsis
 ---------------------------
@@ -220,14 +206,17 @@ $ pear channel-discover pear.corneltek.com
 $ pear install corneltek/AssetToolkit
 ```
 
-Use with Composer:
-
+Install library from composer:
 
 ```json
 {
-    require: { "c9s/assettoolkit": "dev-master" }
+    "require": {
+        "corneltek/assettoolkit": "2.*"
+    }
 }
 ```
+
+
 
 Get the command-line assetkit:
 
