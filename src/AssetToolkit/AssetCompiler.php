@@ -404,7 +404,7 @@ class AssetCompiler
     {
         foreach( array('css_file','js_file')  as $k ) {
             if( $m[$k] ) {
-                file_exists($m[$k]) && unlink($m[$k]);
+                futil_unlink_if_exists( $m[$k] );
             }
         }
     }
