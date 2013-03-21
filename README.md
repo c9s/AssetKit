@@ -287,10 +287,16 @@ $config = new AssetToolkit\AssetConfig( '../.assetkit.php',array(
 ));
 
 $loader = new AssetToolkit\AssetLoader( $config );
+
+$compiler = new AssetToolkit\AssetCompiler( $config, $loader);
+$compiler->enableProductionFstatCheck();
+$compiler->defaultJsCompressor = 'uglifyjs';
+$compiler->defaultCssCompressor = 'cssmin';
+
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
-$render = new AssetToolkit\AssetRender($config,$loader);
+$render = new AssetToolkit\AssetRender($config,$loader, $compiler);
 $render->renderAssets($assets,'page-id');
 ```
 
