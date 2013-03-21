@@ -80,107 +80,6 @@ Features
 
 
 
-Synopsis
----------------------------
-
-This creates and initializes the `.assetkit.php` file:
-
-```sh
-$ assetkit init --baseUrl=/assets --baseDir=public/assets
-```
-
-The `--baseDir` is where the assets will be installed to.
-
-THe `--baseUrl` is where the assets can be loaded from front-end browser.
-
-
-Register the assets you need:
-
-```sh
-$ assetkit add app/assets/jquery
-$ assetkit add plugins/foo/assets/jquery-ui
-$ assetkit add plugins/bar/assets/bootstrap
-```
-
-
-
-Then install asset resources into the `--baseDir` that you've setup:
-
-```sh
-$ assetkit install
-```
-
-There are two modes for installation, link and copy, to simply copy assets files
-into the `baseDir`, we use default asset installer.
-
-To symbol link assets to the `baseDir`, you may pass the `--link` flag.
-
-
-
-Then integrate the AssetToolkit API into your PHP web application,
-there are just few lines to write (you may check the `public/index.php` sample):
-
-```php
-// Please install php-fileutil extension for beter performance, 
-// If you cann't install extension, you should install the pear.corneltek.com/FileUtil package.
-if ( ! extension_loaded('fileutil') ) {
-    require "FileUtil.php";
-}
-
-// To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
-    // the application root, contains the .assetkit.php file.
-    'root' => APPLICATION_ROOT,
-    'environment' =>  AssetToolkit\AssetConfig::PRODUCTION,
-));
-
-$loader = new AssetToolkit\AssetLoader( $config );
-$assets = array();
-$assets[] = $loader->load( 'jquery' );
-$assets[] = $loader->load( 'jquery-ui' );
-$render = new AssetToolkit\AssetRender($config,$loader);
-$render->renderAssets($assets,'page-id');
-```
-
-The rendered result:
-
-```html
-<script type="text/javascript"  src="assets/demo/d95da0fbdccc220ccb5e4949a41ec796.min.js" ></script>
-<link rel="stylesheet" type="text/css"  href="assets/demo/3fffd7e7bf5d2a459cad396bd3c375b4.min.css"/>
-```
-
-To update asset resource from remote (eg: git, github, hg or svn) if needed.
-
-```sh
-$ assetkit update
-```
-
-Pre-compile targets:
-
-```sh
-$ assetkit compile --target demo jquery jquery-ui
-Compiling assets to target 'demo'...
-Stylesheet:
-  MD5:   9399a997d354919cba9f84517eb7604a
-  URL:   assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
-  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
-  Size:  59 KBytes
-Javascript:
-  MD5:   4a09100517e2d98c3f462376fd69d887
-  URL:   assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
-  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
-  Size:  304 KBytes
-Done
-```
-
-You can also do:
-
-    assetkit compile --target main --html-output head.php jquery
-
-So that in your application, you can simple drop a line:
-
-    <?php require "head.php"; ?>
-
 Requirement
 ---------------------------
 
@@ -244,6 +143,114 @@ assets:
 
 You can also define the resource, assetkit would fetch it for you. currently assetkit supports 
 svn, git, hg resource types.
+
+
+
+
+Synopsis
+---------------------------
+
+This creates and initializes the `.assetkit.php` file:
+
+```sh
+$ assetkit init --baseUrl=/assets --baseDir=public/assets
+```
+
+The `--baseDir` is where the assets will be installed to.
+
+THe `--baseUrl` is where the assets can be loaded from front-end browser.
+
+
+Register the assets you need:
+
+```sh
+$ assetkit add app/assets/jquery
+$ assetkit add plugins/foo/assets/jquery-ui
+$ assetkit add plugins/bar/assets/bootstrap
+```
+
+
+
+Then install asset resources into the `--baseDir` that you've setup:
+
+```sh
+$ assetkit install
+```
+
+There are two modes for installation, link and copy, to simply copy assets files
+into the `baseDir`, we use default asset installer.
+
+To symbol link assets to the `baseDir`, you may pass the `--link` flag.
+
+
+
+Then integrate the AssetToolkit API into your PHP web application,
+there are just few lines to write (you may check the `public/index.php` sample):
+
+```php
+// Please install php-fileutil extension for beter performance, 
+// If you cann't install extension, you should install the pear.corneltek.com/FileUtil package.
+if ( ! extension_loaded('fileutil') ) {
+    require "FileUtil.php";
+}
+
+// To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
+$config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
+    // the application root, contains the .assetkit.php file.
+    'root' => APPLICATION_ROOT,
+    'cache' => new UniversalCache\ApcCache(array( 'namespace' => 'myapp_' ));
+    'environment' =>  AssetToolkit\AssetConfig::PRODUCTION,
+));
+
+$loader = new AssetToolkit\AssetLoader( $config );
+$assets = array();
+$assets[] = $loader->load( 'jquery' );
+$assets[] = $loader->load( 'jquery-ui' );
+$render = new AssetToolkit\AssetRender($config,$loader);
+$render->renderAssets($assets,'page-id');
+```
+
+The rendered result:
+
+```html
+<script type="text/javascript"  src="assets/demo/d95da0fbdccc220ccb5e4949a41ec796.min.js" ></script>
+<link rel="stylesheet" type="text/css"  href="assets/demo/3fffd7e7bf5d2a459cad396bd3c375b4.min.css"/>
+```
+
+To update asset resource from remote (eg: git, github, hg or svn) if needed.
+
+```sh
+$ assetkit update
+```
+
+Pre-compile targets:
+
+```sh
+$ assetkit compile --target demo jquery jquery-ui
+Compiling assets to target 'demo'...
+Stylesheet:
+  MD5:   9399a997d354919cba9f84517eb7604a
+  URL:   assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-9399a997d354919cba9f84517eb7604a.min.css
+  Size:  59 KBytes
+Javascript:
+  MD5:   4a09100517e2d98c3f462376fd69d887
+  URL:   assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
+  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/compiled/demo-4a09100517e2d98c3f462376fd69d887.min.js
+  Size:  304 KBytes
+Done
+```
+
+You can also do:
+
+    assetkit compile --target main --html-output head.php jquery
+
+So that in your application, you can simple drop a line:
+
+    <?php require "head.php"; ?>
+
+
+
 
 
 Usage
