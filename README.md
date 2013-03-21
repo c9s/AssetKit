@@ -85,7 +85,7 @@ Install library from composer:
 ```json
 {
     "require": {
-        "corneltek/assettoolkit": "dev-master"
+        "corneltek/assettoolkit": "2.*"
     }
 }
 ```
