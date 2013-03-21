@@ -123,7 +123,7 @@ Get the command-line assetkit:
 
 
 The Asset Manifest File
----------------------------
+-----------------------
 
 To define file collections, you need to create a manifest.yml file in your asset directory,
 for example, the backbonejs manifest.yml file:
