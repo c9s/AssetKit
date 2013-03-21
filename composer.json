@@ -4,5 +4,6 @@
         "php": ">=5.3.0",
         "corneltek/universal-cache": "1.x"
     },
+    "bin": ["assetkit"],
     "autoload": { "psr-0": { "AssetToolkit": "src" } }
 }
