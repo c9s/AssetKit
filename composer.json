@@ -2,9 +2,12 @@
     "name": "corneltek/assettoolkit",
     "require": {
         "php": ">=5.3.0",
+        "twig/twig": "1.*",
         "corneltek/universal-cache": "1.*",
-        "corneltek/fileutil": "*",
-        "twig/twig": "1.*"
+        "corneltek/fileutil": "*"
+    },
+    "require-dev": {
+        "corneltek/phpunit-testmore": "dev-master"
     },
     "bin": ["assetkit"],
     "autoload": { "psr-0": { "AssetToolkit": "src" } }

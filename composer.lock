@@ -1,5 +1,5 @@
 {
-    "hash": "9fcddd6dc6a5227cdbff9fa49f19b3e8",
+    "hash": "2b40cf944b2b6f2d23b8861cb2d889be",
     "packages": [
         {
             "name": "corneltek/fileutil",
@@ -56,18 +56,85 @@
             "description": "General cache interface",
             "homepage": "http://github.com/c9s/UniversalCache",
             "time": "2013-03-20 23:01:06"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v1.12.2",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/fabpot/Twig.git",
+                "reference": "v1.12.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.12.2",
+                "reference": "v1.12.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.12-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2013-02-09 18:21:53"
         }
     ],
     "packages-dev": [
-
+        {
+            "name": "corneltek/phpunit-testmore",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@git.corneltek.com:php/PHPUnit_TestMore.git",
+                "reference": "a717114a10e7dc5373bfa175d7dc038b5d67ff4d"
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/PHPUnit/TestMore.php"
+                ]
+            },
+            "time": "2013-03-21 01:39:11"
+        }
     ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "corneltek/phpunit-testmore": 20
+    },
     "platform": {
         "php": ">=5.3.0"
     },
