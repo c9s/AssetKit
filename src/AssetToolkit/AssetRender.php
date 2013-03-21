@@ -31,8 +31,9 @@ class AssetRender
 
     public function getCompiler()
     {
-        if($this->compiler)
+        if ($this->compiler) {
             return $this->compiler;
+        }
 
         // default compiler
         $this->compiler = new AssetCompiler($this->config,$this->loader);
