@@ -150,9 +150,9 @@ class AssetCompiler
             foreach( $asset->getCollections() as $c ) {
 
                 $type = null;
-                if( $c->isCoffeescript || $c->isJavascript ) {
+                if ( $c->isCoffeescript || $c->isJavascript ) {
                     $type = 'javascript';
-                } elseif( $c->isStylesheet ) {
+                } elseif ( $c->isStylesheet ) {
                     $type = 'stylesheet';
                 } else {
                     // skip non-filetype collections
@@ -173,7 +173,7 @@ class AssetCompiler
                 // for coffee-script we need to pass the coffee-script to compiler
                 // and get the javascript from the output, we can simply render the 
                 // content in the pipe.
-                if( $filtered ) {
+                if ( $filtered ) {
                     $content = $c->getContent();
                     $out[] = array(
                         'type' => $type,
@@ -235,13 +235,13 @@ class AssetCompiler
             $cache = $this->config->cache->get($cacheKey);
 
             // cache validation
-            if( $cache ) {
-                if( ! $this->productionFstatCheck ) {
+            if ( $cache ) {
+                if ( ! $this->productionFstatCheck ) {
                     return $cache;
                 } else {
                     $upToDate = true;
                     if ( $mtime = @$cache['mtime'] ) {
-                        if( $asset->isOutOfDate($mtime) ) {
+                        if ( $asset->isOutOfDate($mtime) ) {
                             $upToDate = false;
                         }
                     }
@@ -266,12 +266,12 @@ class AssetCompiler
         $jsUrl = $compiledUrl . "/$name.js";
         $cssUrl = $compiledUrl . "/$name.css";
 
-        if($out['js']) {
+        if ($out['js']) {
             $out['js_file'] = $jsFile;
             $out['js_url'] = $jsUrl;
             $this->writeFile( $jsFile, $out['js'] );
         }
-        if($out['css']) {
+        if ($out['css']) {
             $out['css_file'] = $cssFile;
             $out['css_url'] = $cssUrl;
             $this->writeFile( $cssFile , $out['css'] );
@@ -322,9 +322,9 @@ class AssetCompiler
             if ( $cache && ! $force ) {
                 if ( $this->productionFstatCheck ) {
                     $upToDate = true;
-                    if( $mtime = @$cache['mtime'] ) {
+                    if ( $mtime = @$cache['mtime'] ) {
                         foreach( $assets as $asset ) {
-                            if( $asset->isOutOfDate($mtime) ) {
+                            if ( $asset->isOutOfDate($mtime) ) {
                                 $upToDate = false;
                                 break;
                             }
@@ -360,14 +360,14 @@ class AssetCompiler
         $outfiles = array();
 
         // write minified results to file
-        if($contents['js']) {
+        if ($contents['js']) {
             $outfiles['js_checksum'] = hash($this->checksumAlgo, $contents['js']);
             $outfiles['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['js_checksum'] . '.min.js';
             $outfiles['js_url']  = "$compiledUrl/$target-" . $outfiles['js_checksum']  . '.min.js';
             $this->writeFile( $outfiles['js_file'], $contents['js'] );
         }
 
-        if($contents['css']) {
+        if ($contents['css']) {
             $outfiles['css_checksum'] = hash($this->checksumAlgo, $contents['css']);
             $outfiles['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['css_checksum'] . '.min.css';
             $outfiles['css_url'] = "$compiledUrl/$target-" . $outfiles['css_checksum'] . '.min.css';
@@ -403,7 +403,7 @@ class AssetCompiler
     public function clean($m)
     {
         foreach( array('css_file','js_file')  as $k ) {
-            if( $m[$k] ) {
+            if ( $m[$k] ) {
                 futil_unlink_if_exists( $m[$k] );
             }
         }
@@ -423,7 +423,7 @@ class AssetCompiler
 
     public function writeFile($path,$content) 
     {
-        if( false === file_put_contents($path, $content) ) {
+        if ( false === file_put_contents($path, $content) ) {
             throw new Exception("AssetCompiler: can not write $path");
         }
     }
@@ -461,16 +461,16 @@ class AssetCompiler
      */
     public function getFilter($name)
     {
-        if( isset($this->filters[$name]) )
+        if ( isset($this->filters[$name]) )
             return $this->filters[$name];
 
-        if( ! isset($this->_filters[$name]) )
+        if ( ! isset($this->_filters[$name]) )
             return;
 
         $cb = $this->_filters[ $name ];
-        if( is_callable($cb) ) {
+        if ( is_callable($cb) ) {
             return $this->filters[ $name ] = call_user_func($cb);
-        } elseif( class_exists($cb,true) ) {
+        } elseif ( class_exists($cb,true) ) {
             return $this->filters[ $name ] = new $cb;
         }
     }
@@ -491,22 +491,22 @@ class AssetCompiler
      */
     public function getCompressor($name)
     {
-        if( isset($this->compressors[$name]) )
+        if ( isset($this->compressors[$name]) )
             return $this->compressors[$name];
 
         // check compressor builder
-        if( ! isset($this->_compressors[$name]) )
+        if ( ! isset($this->_compressors[$name]) )
             return;
 
         $cb = $this->_compressors[ $name ];
 
-        if( is_string($cb) ) {
-            if( class_exists($cb,true) ) {
+        if ( is_string($cb) ) {
+            if ( class_exists($cb,true) ) {
                 return $this->compressors[ $name ] = new $cb;
             } else {
                 throw new Exception("$cb class not found.");
             }
-        } else if( is_callable($cb) ) {
+        } else if ( is_callable($cb) ) {
             return $this->compressors[ $name ] = call_user_func($cb);
         } else {
             throw new Exception("Unsupported compressor builder");
@@ -528,13 +528,13 @@ class AssetCompiler
      */
     public function runUserDefinedFilters($collection)
     {
-        if( empty($this->filters) )
+        if ( empty($this->filters) )
             return false;
-        if( $this->hasFilter('no') )
+        if ( $this->hasFilter('no') )
             return false;
 
         foreach( $this->filters as $n ) {
-            if( $filter = $this->getFilter( $n ) ) {
+            if ( $filter = $this->getFilter( $n ) ) {
                 $filter->filter($collection);
                 return true;
             } else {
@@ -562,23 +562,23 @@ class AssetCompiler
         foreach( $collections as $collection ) {
 
             // skip unknown types
-            if( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
+            if ( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
                 continue;
 
-            if( $lastm = $collection->getLastModifiedTime() ) {
-                if( $lastm > $out['mtime'] ) {
+            if ( $lastm = $collection->getLastModifiedTime() ) {
+                if ( $lastm > $out['mtime'] ) {
                     $out['mtime'] = $lastm;
                 }
             }
 
             // if we are in development mode, we don't need to compress them all,
             // we just filter them
-            if( $this->enableCompressor ) 
+            if ( $this->enableCompressor ) 
             {
                 // run user-defined filters, user-defined filters can override 
                 // default filters.
                 // NOTE: users must define css_import filter for production mode.
-                if( $collection->getFilters() ) {
+                if ( $collection->getFilters() ) {
                     $this->runUserDefinedFilters($collection);
                 }
                 // for stylesheets, before compress it, we should import the css contents
@@ -592,16 +592,16 @@ class AssetCompiler
                 $this->runCollectionCompressors($collection);
             }
             else {
-                if( $collection->getFilters() ) {
+                if ( $collection->getFilters() ) {
                     $this->runUserDefinedFilters($collection);
                 } else {
                     $collection->runDefaultFilters();
                 }
             }
 
-            if( $collection->isJavascript || $collection->isCoffeescript ) {
+            if ( $collection->isJavascript || $collection->isCoffeescript ) {
                 $out['js'] .= $collection->getContent();
-            } elseif( $collection->isStylesheet ) {
+            } elseif ( $collection->isStylesheet ) {
                 $out['css'] .= $collection->getContent();
             }
         }
@@ -631,14 +631,14 @@ class AssetCompiler
     public function runCollectionCompressors($collection)
     {
         // if custom compresor is not define, use default compressors
-        if( empty($collection->compressors) ) {
+        if ( empty($collection->compressors) ) {
             $this->runDefaultCompressors($collection);
         } else {
-            if( $collection->hasCompressor('no') )
+            if ( $collection->hasCompressor('no') )
                 return;
 
             foreach( $collection->compressors as $n ) {
-                if( $compressor = $this->getCompressor( $n ) ) {
+                if ( $compressor = $this->getCompressor( $n ) ) {
                     $compressor->compress($collection);
                 }
                 else {
