@@ -184,23 +184,6 @@ And your `.assetkit.php` file will be updated, these asset files will be install
 >   To install asset files with symbol link, use --link option,
 >   Which is convenient for asset development.
 
-Once you've done, you can precompile the asset files to a squashed javascript/stylesheet files:
-
-```sh
-$ assetkit compile --target demo-page jquery jquery-ui
-Notice: You may enable apc.enable_cli option to precompile production files from command-line.
-Compiling assets to target 'demo-page'...
-Stylesheet:
-  MD5:  9399a997d354919cba9f84517eb7604a
-  URL:  assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
-  File: /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
-Javascript:
-  MD5:   4a09100517e2d98c3f462376fd69d887
-  URL:   assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
-  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
-Done
-```
-
 If B wants to clone your project, please add `.assetkit` file to the repository, then B should 
 do `update` command to update assets:
 
