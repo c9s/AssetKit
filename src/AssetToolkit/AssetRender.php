@@ -16,10 +16,13 @@ class AssetRender
 
     public $compiler;
 
-    public function __construct($config,$loader)
+    public function __construct($config,$loader, $compiler = null)
     {
         $this->config = $config;
         $this->loader = $loader;
+        if ( $compiler ) {
+            $this->compiler = $compiler;
+        }
     }
 
 
