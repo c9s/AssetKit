@@ -216,8 +216,6 @@ Install library from composer:
 }
 ```
 
-
-
 Get the command-line assetkit:
 
     $ curl -O https://raw.github.com/c9s/php-AssetToolkit/master/assetkit
