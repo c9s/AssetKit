@@ -222,6 +222,7 @@ Get the command-line assetkit:
     $ chmod +x assetkit
     $ sudo mv assetkit /usr/bin
 
+
 The Asset Manifest File
 ---------------------------
 
