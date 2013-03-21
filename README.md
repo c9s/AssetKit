@@ -76,6 +76,20 @@ Features
 - APC cache support, which caches the compiled manifest, so you don't need to recompile them everytime.
 - Twig Extension support. (see below)
 
+
+Installation
+---------------------------
+
+Install library from composer:
+
+```json
+{
+    require: {
+        "corneltek/assettoolkit": "dev-master"
+    }
+}
+```
+
 Synopsis
 ---------------------------
 
