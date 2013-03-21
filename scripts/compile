@@ -1,7 +1,9 @@
 #!/bin/bash
+set -e
 onion -d compile \
     --lib src \
-    --lib vendor/pear \
+    --lib vendor/corneltek/universal/src \
+    --lib vendor/corneltek/universal-cache/src \
     --classloader \
     --bootstrap scripts/assetkit.embed.php \
     --executable \
