@@ -1,5 +1,6 @@
 <?php
 define('ROOT', dirname(__DIR__));
+require 'vendor/autoload.php';
 require 'PHPUnit/TestMore.php';
 require ROOT . '/vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
 

@@ -8,7 +8,7 @@ class AssetConfigTest extends AssetToolkit\TestCase
     {
         $configFile = $this->getConfigFile();
         $config = new AssetToolkit\AssetConfig($configFile,array(  
-            'cache' => true,
+            'cache' => new UniversalCache\ApcCache,
             'cache_id' => 'custom_app_id',
             'cache_expiry' => 3600
         ));

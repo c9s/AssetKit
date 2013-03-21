@@ -2,7 +2,7 @@
     "name": "corneltek/assettoolkit",
     "require": {
         "php": ">=5.3.0",
-        "corneltek/universal-cache": "1.x"
+        "corneltek/universal-cache": "1.*"
     },
     "bin": ["assetkit"],
     "autoload": { "psr-0": { "AssetToolkit": "src" } }

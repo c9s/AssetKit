@@ -115,17 +115,16 @@ class AssetConfig
     {
         $this->file = $file;
 
-        if(isset($this->options['root']) ) {
+        if (isset($this->options['root']) ) {
             $this->root = $this->options['root'];
         }
 
-
-        if($this->cache) {
+        if ($this->cache) {
             // get apc cache
             $cacheId = isset($this->options['cache_id'])
                 ? $this->options['cache_id']
                 : __DIR__;
-            $this->config = apc_fetch($cacheId);
+            $this->config = $this->cache->get($cacheId);
         }
 
         if ( ! $this->config ) {
@@ -139,8 +138,7 @@ class AssetConfig
                 $this->load($format);
 
                 if($this->cache) {
-                    apc_store($cacheId, 
-                        $this->config, 
+                    $this->cache->set($cacheId, $this->config, 
                         isset($this->options['cache_expiry']) 
                             ? $this->options['cache_expiry'] 
                             : 0 
@@ -169,19 +167,6 @@ class AssetConfig
     }
 
     /**
-     * Check if apc cache is supported and is cache enabled by user.
-     *
-     * @return bool 
-     */
-    public function cacheEnabled() 
-    {
-        return $this->cache;
-    }
-
-
-
-
-    /**
      * Load or reload the config file.
      * 
      * @param integer $format FORMAT_PHP or FORMAT_JSON
@@ -190,11 +175,6 @@ class AssetConfig
     {
         return $this->config = $this->readFile( $this->file , $format );
     }
-
-
-
-
-
 
     public function configExists()
     {

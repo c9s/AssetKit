@@ -40,7 +40,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function getLoader()
     {
-        if($this->loader)
+        if ($this->loader)
             return $this->loader;
         return $this->loader =  new \AssetToolkit\AssetLoader($this->getConfig());
     }
