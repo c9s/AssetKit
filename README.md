@@ -1,9 +1,9 @@
 AssetToolkit
 ============
 
-AssetToolkit is different from Rails' asset pipeline, AssetToolkit is designed for PHP.
+AssetToolkit is different from Rails' asset pipeline, AssetToolkit is designed for PHP, the concept is different.
 
-**What for!? Because we need a different strategy to compile/load assets for PHP web applications. 
+**What for? Because we need a different strategy to compile/load assets for PHP web applications. 
 you know, Rails is too slow, the same strategy might not be suitable in PHP applications.**
 
 AssetToolkit is designed for PHP's performance, all configuration files are compiled into
@@ -14,6 +14,8 @@ interface and a simple PHP library with simple API, there are many built-in
 filters and compressors in it.
 
 [![Build Status](https://travis-ci.org/c9s/php-AssetToolkit.png?branch=master)](https://travis-ci.org/c9s/php-AssetToolkit)
+
+
 
 Concepts of AssetToolkit
 ---------------------------
@@ -572,6 +574,13 @@ Re-Compile the command-line binary:
 ```sh
 $ scripts/compile
 ```
+
+Test the compiled binary, simply type:
+
+```sh
+$ ./assetkit
+```
+
 
 ### Setup XHProf
 
