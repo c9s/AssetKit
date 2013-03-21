@@ -232,7 +232,7 @@ class AssetCompiler
     {
         if ( $this->config->cache ) {
             $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
-            $cache = apc_fetch($cacheKey);
+            $cache = $this->config->cache->get($cacheKey);
 
             // cache validation
             if( $cache ) {
@@ -278,7 +278,7 @@ class AssetCompiler
         }
 
         if ( $this->config->cache ) {
-            apc_store($cacheKey, $out);
+            $this->config->cache->set($cacheKey, $out);
         }
         return $out;
     }
@@ -316,7 +316,7 @@ class AssetCompiler
 
 
         if ( $this->config->cache ) {
-            $cache = apc_fetch($cacheKey);
+            $cache = $this->config->cache->get($cacheKey);
 
             // cache validation
             if ( $cache && ! $force ) {
@@ -377,7 +377,7 @@ class AssetCompiler
         $outfiles['mtime']   = time();
 
         if ( $this->config->cache ) {
-            apc_store($cacheKey, $outfiles);
+            $this->config->cache->set($cacheKey, $outfiles);
         }
         return $outfiles;
     }
