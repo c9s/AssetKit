@@ -29,8 +29,6 @@ class AssetCompiler
      */
     public $productionFstatCheck = false;
 
-    public $enableCache = true;
-
 
     /**
      * @var boolean enable compressor in production mode
@@ -232,7 +230,7 @@ class AssetCompiler
      */
     public function compile($asset) 
     {
-        if ( $this->enableCache ) {
+        if ( $this->config->cache ) {
             $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
             $cache = apc_fetch($cacheKey);
 
@@ -279,7 +277,7 @@ class AssetCompiler
             $this->writeFile( $cssFile , $out['css'] );
         }
 
-        if ( $this->enableCache ) {
+        if ( $this->config->cache ) {
             apc_store($cacheKey, $out);
         }
         return $out;
@@ -317,7 +315,7 @@ class AssetCompiler
         }
 
 
-        if ( $this->enableCache ) {
+        if ( $this->config->cache ) {
             $cache = apc_fetch($cacheKey);
 
             // cache validation
@@ -378,7 +376,7 @@ class AssetCompiler
 
         $outfiles['mtime']   = time();
 
-        if ( $this->enableCache ) {
+        if ( $this->config->cache ) {
             apc_store($cacheKey, $outfiles);
         }
         return $outfiles;
