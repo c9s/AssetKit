@@ -543,12 +543,17 @@ Install deps:
 ```sh
 $ git clone git://github.com/c9s/AssetToolkit.git
 $ cd AssetToolkit
-$ onion install
+$ composer install --dev
+```
+Make sure all staff work:
+
+```sh
+phpunit
 ```
 
 ... Hack Hack Hack ...
 
-Run tests:
+Run tests again:
 
 ```sh
 $ phpunit
@@ -557,9 +562,14 @@ $ phpunit
 Make sure command runs fine:
 
 ```sh
+$ php bin/assetkit init --base-dir .... --base-url ....
 $ php bin/assetkit compile --target mainpage jquery jquery-ui 
 ```
+Re-Compile the command-line binary:
 
+```sh
+$ scripts/compile
+```
 
 ### Setup XHProf
 
