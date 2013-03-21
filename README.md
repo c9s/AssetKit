@@ -227,8 +227,8 @@ $loader = new AssetToolkit\AssetLoader( $config );
 $assets = $loader->loadAssets(array( 'jquery', 'jquery-ui' ));
 
 // Use AssetRender to compile and render the HTML tag
-
-
+$render = new AssetToolkit\AssetRender($config, $loader);
+$render->renderAssets($assets); // pipe to output buffer
 ```
 
 Advanced Usage
