@@ -147,7 +147,97 @@ svn, git, hg resource types.
 
 
 
-Synopsis
+
+Basic Usage
+-----------
+
+Once you got `assetkit`, you can initialize it with your public path (web root):
+
+```sh
+$ assetkit init --baseDir public/assets --baseUrl "/assets"
+```
+
+The config is stored at `.assetkit.php` file.
+
+Then fetch anything you want:
+
+```sh
+$ assetkit add assets/jquery/manifest.yml
+Submodule 'src/sizzle' () registered for path 'src/sizzle'
+Submodule 'test/qunit' () registered for path 'test/qunit'
+Submodule 'src/sizzle' () registered for path 'src/sizzle'
+Submodule 'test/qunit' () registered for path 'test/qunit'
+Checking jQuery against JSHint...
+JSHint check passed.
+jQuery Size - compared to last make
+  252787      (-) jquery.js
+   94771      (-) jquery.min.js
+   33635      (-) jquery.min.js.gz
+jQuery build complete.
+Saving config...
+Done
+```
+
+And your `.assetkit.php` file will be updated, these asset files will be installed into `public/assets`.
+
+>   NOTE:
+>   To install asset files with symbol link, use --link option,
+>   Which is convenient for asset development.
+
+Once you've done, you can precompile the asset files to a squashed javascript/stylesheet files:
+
+```sh
+$ assetkit compile --target demo-page jquery jquery-ui
+Notice: You may enable apc.enable_cli option to precompile production files from command-line.
+Compiling assets to target 'demo-page'...
+Stylesheet:
+  MD5:  9399a997d354919cba9f84517eb7604a
+  URL:  assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
+  File: /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
+Javascript:
+  MD5:   4a09100517e2d98c3f462376fd69d887
+  URL:   assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
+  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
+Done
+```
+
+If B wants to clone your project, please add `.assetkit` file to the repository, then B should 
+do `update` command to update assets:
+
+```sh
+$ assetkit update
+```
+
+You can simply include these files in your pages, or use the asset writer in your application.
+
+To use assetkit in your application, just few lines to write:
+
+```php
+<?php
+// pick up a SPL classloader, we need this to load library files
+// you can check public/index.php for examples
+require 'bootstrap.php';
+define( ROOT , dirname(__DIR__) );
+
+// load your asset config file, this contains asset manifest and types
+$config = new AssetToolkit\AssetConfig( '../.assetkit', ROOT );
+
+// initialize an asset loader
+$loader = new AssetToolkit\AssetLoader( $config );
+
+// load the required assets (of your page, application or controller)
+$assets = array();
+$assets[]   = $loader->load( 'jquery' );
+$assets[]   = $loader->load( 'jquery-ui' );
+$assets[]   = $loader->load( 'extjs4-gpl' );
+```
+
+To use YUI Compressor:
+
+    YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
+        assetkit add assets/test/manifest.yml
+
+Advanced Usage
 ---------------------------
 
 This creates and initializes the `.assetkit.php` file:
@@ -251,95 +341,16 @@ So that in your application, you can simple drop a line:
 <?php require "head.php"; ?>
 ```
 
+You can also use the Twig Extension in your template:
 
-Usage
------
-
-Once you got `assetkit`, you can initialize it with your public path (web root):
-
-```sh
-$ assetkit init --baseDir public/assets --baseUrl "/assets"
+```html+jinja
+<html>
+    <head>
+    {% assets "jquery", "jquery-ui" as "jquery-all" %}
+    </head>
+</html>
 ```
 
-The config is stored at `.assetkit.php` file.
-
-Then fetch anything you want:
-
-```sh
-$ assetkit add assets/jquery/manifest.yml
-Submodule 'src/sizzle' () registered for path 'src/sizzle'
-Submodule 'test/qunit' () registered for path 'test/qunit'
-Submodule 'src/sizzle' () registered for path 'src/sizzle'
-Submodule 'test/qunit' () registered for path 'test/qunit'
-Checking jQuery against JSHint...
-JSHint check passed.
-jQuery Size - compared to last make
-  252787      (-) jquery.js
-   94771      (-) jquery.min.js
-   33635      (-) jquery.min.js.gz
-jQuery build complete.
-Saving config...
-Done
-```
-
-And your `.assetkit.php` file will be updated, these asset files will be installed into `public/assets`.
-
->   NOTE:
->   To install asset files with symbol link, use --link option,
->   Which is convenient for asset development.
-
-Once you've done, you can precompile the asset files to a squashed javascript/stylesheet files:
-
-```sh
-$ assetkit compile --target demo-page jquery jquery-ui
-Notice: You may enable apc.enable_cli option to precompile production files from command-line.
-Compiling assets to target 'demo-page'...
-Stylesheet:
-  MD5:  9399a997d354919cba9f84517eb7604a
-  URL:  assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
-  File: /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
-Javascript:
-  MD5:   4a09100517e2d98c3f462376fd69d887
-  URL:   assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
-  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
-Done
-```
-
-If B wants to clone your project, please add `.assetkit` file to the repository, then B should 
-do `update` command to update assets:
-
-```sh
-$ assetkit update
-```
-
-You can simply include these files in your pages, or use the asset writer in your application.
-
-To use assetkit in your application, just few lines to write:
-
-```php
-<?php
-// pick up a SPL classloader, we need this to load library files
-// you can check public/index.php for examples
-require 'bootstrap.php';
-define( ROOT , dirname(__DIR__) );
-
-// load your asset config file, this contains asset manifest and types
-$config = new AssetToolkit\AssetConfig( '../.assetkit', ROOT );
-
-// initialize an asset loader
-$loader = new AssetToolkit\AssetLoader( $config );
-
-// load the required assets (of your page, application or controller)
-$assets = array();
-$assets[]   = $loader->load( 'jquery' );
-$assets[]   = $loader->load( 'jquery-ui' );
-$assets[]   = $loader->load( 'extjs4-gpl' );
-```
-
-To use YUI Compressor:
-
-    YUI_COMPRESSOR_BIN=utils/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar \
-        assetkit add assets/test/manifest.yml
 
 
 Setting Up Your Preferred Default Compressor
