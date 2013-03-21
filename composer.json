@@ -8,7 +8,7 @@
     },
     "require-dev": {
         "corneltek/universal": "dev-master",
-        "corneltek/cliframework": "dev-master",
+        "corneltek/cliframework": "*",
         "corneltek/phpunit-testmore": "dev-master"
     },
     "bin": ["assetkit"],
