@@ -110,7 +110,7 @@ Install library from composer:
 ```json
 {
     "require": {
-        "corneltek/assettoolkit": "2.*"
+        "corneltek/assettoolkit": "2.0.*"
     }
 }
 ```
@@ -184,14 +184,12 @@ And your `.assetkit.php` file will be updated, these asset files will be install
 >   To install asset files with symbol link, use --link option,
 >   Which is convenient for asset development.
 
-If B wants to clone your project, please add `.assetkit` file to the repository, then B should 
+If someone wants to clone your project, you can add `.assetkit.php` file to the repository, then B can 
 do `update` command to update assets:
 
 ```sh
 $ assetkit update
 ```
-
-You can simply include these files in your pages, or use the asset writer in your application.
 
 To use assetkit in your application, just few lines to write:
 
@@ -201,7 +199,9 @@ To use assetkit in your application, just few lines to write:
 require 'vendor/autoload.php';
 
 // load your asset config file, this contains asset manifest and types
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php', APP_ROOT );
+$config = new AssetToolkit\AssetConfig( '../.assetkit.php', array( 
+    'root' => APP_ROOT // the absolute path where you run "assetkit" command.
+));
 
 // initialize an asset loader
 $loader = new AssetToolkit\AssetLoader( $config );
@@ -260,10 +260,6 @@ there are just few lines to write (you may check the `public/index.php` sample):
 
 ```php
 // Please install php-fileutil extension for beter performance, 
-// If you cann't install extension, you should install the pear.corneltek.com/FileUtil package.
-if ( ! extension_loaded('fileutil') ) {
-    require "FileUtil.php";
-}
 
 // To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
 $config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
