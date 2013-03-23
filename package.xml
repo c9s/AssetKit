@@ -10,8 +10,8 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2013-03-18</date>
-  <time>22:25:05</time>
+  <date>2013-03-24</date>
+  <time>00:02:43</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -24,18 +24,14 @@
   <notes>-</notes>
   <contents>
     <dir name="/">
-      <file name="doc/asset.md" role="doc" md5sum="3acac6df2d6fd7e329c7b34cdcaef98f"/>
-      <file name="doc/asset_manifest.md" role="doc" md5sum="e7f80ecb48a13a712f8d64d49e7dabad"/>
-      <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
-      <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="ecf996d7688722fe71f03c85d0f6f5a2"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="56a77775db283fe5e2a42a18edd6df64"/>
-      <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="f06a624147de4a41326f5cd9b76ab287"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="7edb2ffeabf4286e232c6c63c2213002"/>
+      <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="446672b902120a300efe595fc75e860b"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="4caf0fe9b3d357115b7fcf0b6cfc6ac4"/>
-      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="ad851233ccb967862fb0a07e3a089906"/>
+      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="8a85af86ed294bf91e29b2a7d9bab022"/>
       <file name="src/AssetToolkit/Collection.php" role="php" md5sum="cf4318fd249a6c1e8fbf7c0fc4e435b0"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="9db1f7af411fad2823dd39a7c9800c1c"/>
-      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="ab7a9ca6d49b9ea31b0689a899ab12de"/>
+      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="9eb8a9e7667d0f7f68a618b2c503896f"/>
       <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="b3b84ee791d25430d396ed777638e769"/>
       <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="067b1f24c8e180057b364ac0062b676a"/>
       <file name="src/AssetToolkit/Command/RemoveCommand.php" role="php" md5sum="9faf540a380bca6186cc4c4b43321e73"/>
@@ -62,9 +58,8 @@
       <file name="src/AssetToolkit/LinkInstaller.php" role="php" md5sum="402c4f7b89ae718cb1fc1977f9c2c97f"/>
       <file name="src/AssetToolkit/Process.php" role="php" md5sum="01eb0b32249f9a601a90a629b15a7f4d"/>
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
-      <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="98a2aa7272f0aeb9ed86bbab8c79c554"/>
+      <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="f147d27199560387f1bd11b07a15cd72"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="9d3ab74b5addbd2c43c90065fff713dc"/>
     </dir>
   </contents>
   <dependencies>
@@ -104,10 +99,6 @@
   </dependencies>
   <phprelease>
     <filelist>
-      <install name="doc/asset.md" as="asset.md"/>
-      <install name="doc/asset_manifest.md" as="asset_manifest.md"/>
-      <install name="doc/file_collection.md" as="file_collection.md"/>
-      <install name="doc/migration_notes.md" as="migration_notes.md"/>
       <install name="src/AssetToolkit/Asset.php" as="AssetToolkit/Asset.php"/>
       <install name="src/AssetToolkit/AssetCompiler.php" as="AssetToolkit/AssetCompiler.php"/>
       <install name="src/AssetToolkit/AssetConfig.php" as="AssetToolkit/AssetConfig.php"/>
@@ -144,7 +135,6 @@
       <install name="src/AssetToolkit/ResourceUpdater.php" as="AssetToolkit/ResourceUpdater.php"/>
       <install name="src/AssetToolkit/TestCase.php" as="AssetToolkit/TestCase.php"/>
       <install name="src/AssetToolkit/Utils.php" as="AssetToolkit/Utils.php"/>
-      <install name="assetkit" as="assetkit"/>
     </filelist>
   </phprelease>
 </package>
