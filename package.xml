@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-24</date>
-  <time>00:02:43</time>
+  <time>19:35:16</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -24,6 +24,10 @@
   <notes>-</notes>
   <contents>
     <dir name="/">
+      <file name="doc/asset.md" role="doc" md5sum="3acac6df2d6fd7e329c7b34cdcaef98f"/>
+      <file name="doc/asset_manifest.md" role="doc" md5sum="e7f80ecb48a13a712f8d64d49e7dabad"/>
+      <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
+      <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="ecf996d7688722fe71f03c85d0f6f5a2"/>
       <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="7edb2ffeabf4286e232c6c63c2213002"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="446672b902120a300efe595fc75e860b"/>
@@ -60,6 +64,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="f147d27199560387f1bd11b07a15cd72"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
+      <file name="assetkit" role="script" md5sum="b49d307d6b34e9b305c0e1514d96075e"/>
     </dir>
   </contents>
   <dependencies>
@@ -99,6 +104,10 @@
   </dependencies>
   <phprelease>
     <filelist>
+      <install name="doc/asset.md" as="asset.md"/>
+      <install name="doc/asset_manifest.md" as="asset_manifest.md"/>
+      <install name="doc/file_collection.md" as="file_collection.md"/>
+      <install name="doc/migration_notes.md" as="migration_notes.md"/>
       <install name="src/AssetToolkit/Asset.php" as="AssetToolkit/Asset.php"/>
       <install name="src/AssetToolkit/AssetCompiler.php" as="AssetToolkit/AssetCompiler.php"/>
       <install name="src/AssetToolkit/AssetConfig.php" as="AssetToolkit/AssetConfig.php"/>
@@ -135,6 +144,7 @@
       <install name="src/AssetToolkit/ResourceUpdater.php" as="AssetToolkit/ResourceUpdater.php"/>
       <install name="src/AssetToolkit/TestCase.php" as="AssetToolkit/TestCase.php"/>
       <install name="src/AssetToolkit/Utils.php" as="AssetToolkit/Utils.php"/>
+      <install name="assetkit" as="assetkit"/>
     </filelist>
   </phprelease>
 </package>
