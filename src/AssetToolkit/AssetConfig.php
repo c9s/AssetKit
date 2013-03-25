@@ -82,12 +82,30 @@ class AssetConfig
             $this->environment = $this->options['environment'];
         }
         if ( isset($options['cache']) ) {
+            // the cache object
             $this->cache = $options['cache'];
         }
         if ( isset($options['namespace']) ) {
-            $this->namespace = $options['namespace'];
+            $this->setNamespace( $options['namespace'] );
         }
         $this->fileLoaded = $this->loadFromFile($file);
+    }
+
+
+    public function setCacheDir($dir)
+    {
+        $this->config['cache_dir'] = $dir;
+    }
+
+    public function getCacheDir($absolute = false)
+    {
+        $dir = null;
+        if ( isset($this->config['cache_dir']) ) {
+            $dir = $this->config['cache_dir'];
+        } else {
+            $dir = 'cache'; // default cache_dir
+        }
+        return $absolute ? $this->getRoot() . DIRECTORY_SEPARATOR . $dir : $dir;
     }
 
 
@@ -96,10 +114,22 @@ class AssetConfig
      */
     public function getNamespace()
     {
-        if ( $this->namespace )
+        if ( $this->namespace ) {
             return $this->namespace;
+        }
+        if ( isset($this->config['namespace']) ) {
+            return $this->config['namespace'];
+        }
         return __DIR__;
     }
+
+
+    public function setNamespace($namespace)
+    {
+        $this->config['namespace'] = $namespace;
+        $this->namespace = $namespace;
+    }
+
 
     public function setOptions($options)
     {
@@ -150,6 +180,8 @@ class AssetConfig
                     'baseDir' => null,
                     'baseUrl' => null,
                     'dirs' => array(),
+                    'cache_dir' => 'cache',
+                    'namespace' => $this->getNamespace(), // which returns default namespace (__DIR__)
                     'pages' => array(),
                     'assets' => array(),
                 );
@@ -508,8 +540,9 @@ class AssetConfig
      */
     public function getRoot()
     {
-        if($this->root)
+        if ($this->root) {
             return $this->root;
+        }
         return realpath(dirname($this->file));
     }
 
