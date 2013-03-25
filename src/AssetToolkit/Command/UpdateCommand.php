@@ -9,28 +9,24 @@ use AssetToolkit\LinkInstaller;
 use CLIFramework\Command;
 use Exception;
 
-class UpdateCommand extends Command
+class UpdateCommand extends BaseCommand
 {
     public function brief() { return 'update and install assets'; }
 
     public function options($opts)
     {
+        parent::options($opts);
         $opts->add('l|link','link asset files, instead of copy install.');
-        $opts->add('config?','config file');
     }
 
     public function execute()
     {
-        $configFile = $this->options->config ?: ".assetkit.php";
-
         $options = $this->options;
 
-        $config = new AssetConfig($configFile);
-        $loader = new AssetLoader($config);
+        $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
 
-        $installer = $options->link
-                ? new LinkInstaller
-                : new Installer;
+        $installer = $this->getInstaller();
         $installer->logger = $this->logger;
 
         $assets = $loader->updateAssetManifests();
