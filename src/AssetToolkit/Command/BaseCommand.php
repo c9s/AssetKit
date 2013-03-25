@@ -6,10 +6,8 @@ use AssetToolkit\Asset;
 use AssetToolkit\FileUtils;
 use AssetToolkit\Installer;
 use AssetToolkit\LinkInstaller;
+use AssetToolkit\Cache;
 use CLIFramework\Command;
-use UniversalCache\ApcCache;
-use UniversalCache\FileSystemCache;
-use UniversalCache\UniversalCache;
 use Exception;
 
 class BaseCommand extends Command
@@ -29,16 +27,15 @@ class BaseCommand extends Command
 
     public function getAssetConfig()
     {
-        if ( $this->assetConfig )
+        if ( $this->assetConfig ) {
             return $this->assetConfig;
-
-        $cache = new UniversalCache;
-
+        }
 
         $configFile = $this->getAssetConfigFile();
-        return $this->assetConfig = new AssetConfig($configFile,array( 
-       
-        ));
+        $this->assetConfig = new AssetConfig($configFile);
+        $cache = Cache::create($this->assetConfig);
+        $this->assetConfig->setCache($cache);
+        return $this->assetConfig;
     }
 
     public function getAssetLoader()

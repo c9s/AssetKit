@@ -40,4 +40,5 @@
       1 => 'jquery-ui',
     ),
   ),
+  'namespace' => 'assetkit',
 );

@@ -26,7 +26,6 @@ class CompileCommand extends BaseCommand
             throw new Exception("asset name is required.");
         }
 
-        $target = $this->options->target;
 
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
@@ -35,17 +34,24 @@ class CompileCommand extends BaseCommand
             $this->logger->info("Notice: You may enable apc.enable_cli option to precompile production files from command-line.");
         }
 
-        $this->logger->info("Compiling assets to target '$target'...");
 
         // initialize loader and writer
+        $this->logger->info("Loading assets " . join(', ', $assetNames));
         $assets = $loader->loadAssets($assetNames);
 
         $compiler = new AssetCompiler($config,$loader);
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
+
+        $target = $this->options->target ?: $config->getDefaultTarget();
+        $this->logger->info("Compiling assets to target '$target'...");
         
         // force compile
         $files = $compiler->compileAssetsForProduction($assets,$target, true);
+
+        printf( "----------------------------------------------------\n" );
+        printf( "Target:    %s\n" , $files['target'] );
+        printf( "Cache Key: %s\n" , $files['cache_key'] );
 
         if ( isset($files['css_file']) ) {
             printf( "Stylesheet:\n" );
@@ -62,6 +68,8 @@ class CompileCommand extends BaseCommand
             printf( "  File:  %s\n" , $files['js_file'] );
             printf( "  Size:  %d KBytes\n" , filesize($files['js_file']) / 1024 );
         }
+        printf( "----------------------------------------------------\n" );
+
 
         $render = new \AssetToolkit\AssetRender($config, $loader);
         ob_start();

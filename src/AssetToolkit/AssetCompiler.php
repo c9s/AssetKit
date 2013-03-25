@@ -311,7 +311,7 @@ class AssetCompiler
             $cacheKey = $this->config->getNamespace() . ':' . $target;
         } else {
             $cacheKey = $this->config->getNamespace() . ':' . $this->_getCacheKeyFromAssets($assets);
-            $target = 'minified';
+            $target = $this->config->getDefaultTarget();
         }
 
 
@@ -375,6 +375,8 @@ class AssetCompiler
         }
 
         $outfiles['mtime']   = time();
+        $outfiles['cache_key'] = $cacheKey;
+        $outfiles['target'] = $target;
 
         if ( $this->config->cache ) {
             $this->config->cache->set($cacheKey, $outfiles);

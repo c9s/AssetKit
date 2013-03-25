@@ -91,6 +91,31 @@ class AssetConfig
         $this->fileLoaded = $this->loadFromFile($file);
     }
 
+    public function getDefaultTarget()
+    {
+        return 'minified';
+    }
+
+
+    /**
+     * Set the cache backend.
+     */
+    public function setCache($cache)
+    {
+        $this->cache = $cache;
+    }
+
+
+
+    /**
+     * Get the cache object.
+     */
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
+
 
     public function setCacheDir($dir)
     {
