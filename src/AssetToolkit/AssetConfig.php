@@ -262,6 +262,12 @@ class AssetConfig
     }
 
 
+    public function getTargets()
+    {
+        if ( isset($this->config['target']) ) {
+            return $this->config['target'];
+        }
+    }
 
 
     /**
