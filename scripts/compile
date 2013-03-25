@@ -4,8 +4,11 @@ onion -d compile \
     --lib src \
     --lib vendor/corneltek/universal/src \
     --lib vendor/corneltek/universal-cache/src \
+    --lib vendor/corneltek/getoptionkit/src \
+    --lib vendor/corneltek/fileutil/src \
+    --lib vendor/corneltek/cliframework/src \
     --classloader \
-    --bootstrap scripts/assetkit.embed.php \
+    --bootstrap scripts/assetkit.php \
     --executable \
     --output assetkit.phar
 mv assetkit.phar assetkit
