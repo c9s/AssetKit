@@ -9,8 +9,8 @@
   array (
     'jquery' => 
     array (
-      'manifest' => 'assets/jquery/manifest.php',
-      'source_dir' => 'assets/jquery',
+      'manifest' => 'tests/assets/jquery/manifest.php',
+      'source_dir' => 'tests/assets/jquery',
       'name' => 'jquery',
     ),
     'jquery-ui' => 
