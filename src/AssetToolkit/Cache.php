@@ -7,8 +7,6 @@ use UniversalCache\UniversalCache;
 class Cache
 {
 
-
-
     /**
      * Create default universal cache from config object.
      */

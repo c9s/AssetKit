@@ -11,8 +11,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function getConfigFile()
     {
-        if($this->configFile)
+        if ($this->configFile) {
             return $this->configFile;
+        }
         return $this->configFile = $this->createConfigFile();
     }
 
@@ -34,6 +35,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->config = new \AssetToolkit\AssetConfig($configFile);
         $this->config->setBaseDir("tests/public");
         $this->config->setBaseUrl("/assets");
+        $this->config->setNamespace("assetkit-testing");
+        $this->config->setCacheDir("cache");
         $this->config->setRoot(getcwd());
         return $this->config;
     }
