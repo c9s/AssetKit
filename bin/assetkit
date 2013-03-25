@@ -9,14 +9,6 @@
  * file that was distributed with this source code.
  *
  */
-
-define( 'ROOT', dirname(__DIR__) );
-require ROOT . '/vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
-$classLoader = new \Universal\ClassLoader\BasePathClassLoader(array( 
-    ROOT . '/src', 
-    ROOT . '/vendor/pear',
-));
-$classLoader->useIncludePath(true);
-$classLoader->register();
+$loader = require 'vendor/autoload.php';
 $app = AssetToolkit\Console::getInstance();
 $app->run( $argv );
