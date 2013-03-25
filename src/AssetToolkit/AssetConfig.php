@@ -150,6 +150,7 @@ class AssetConfig
                     'baseDir' => null,
                     'baseUrl' => null,
                     'dirs' => array(),
+                    'pages' => array(),
                     'assets' => array(),
                 );
                 return false;
@@ -218,6 +219,48 @@ class AssetConfig
     {
         return $this->writeFile($this->file, $this->config, $format);
     }
+
+
+
+
+    /**
+     * Register Assets to a target,
+     * So that we can get assets by a target Id.
+     *
+     * @param string $targetId
+     * @param string[] $assets
+     */
+    public function addTarget($targetId, $assets) 
+    {
+        if ( ! isset($this->config['target']) ) {
+            $this->config['target'] = array();
+        }
+        $this->config['target'][ $targetId ] = $assets;
+    }
+
+
+    /**
+     * Remove a target from the config stash
+     *
+     * @param string $targetId
+     */
+    public function removeTarget($targetId)
+    {
+        unset($this->config['target'][ $targetId ]);
+    }
+
+    public function hasTarget($targetId)
+    {
+        return isset($this->config['target'][ $targetId ]);
+    }
+
+    public function getTarget($targetId)
+    {
+        if ( isset($this->config['target'][ $targetId ]) ) {
+            return $this->config['target'][ $targetId ];
+        }
+    }
+
 
 
 
