@@ -12,7 +12,7 @@ class Cache
      */
     static public function create($config)
     {
-        $cache = new UniversalCache;
+        $cache = new UniversalCache(array());
 
         // since APC is faster.
         if ( extension_loaded('apc') ) {
@@ -24,7 +24,7 @@ class Cache
         $cache->addBackend( new FileSystemCache(array(  
             'cache_dir' => $config->getCacheDir(),
         )));
-        return $fsCache;
+        return $cache;
     }
 
 }
