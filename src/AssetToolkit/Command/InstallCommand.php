@@ -9,7 +9,7 @@ use AssetToolkit\LinkInstaller;
 use CLIFramework\Command;
 use Exception;
 
-class InstallCommand extends Command
+class InstallCommand extends BaseCommand
 {
 
     public function brief()
@@ -19,8 +19,8 @@ class InstallCommand extends Command
 
     public function options($opts)
     {
+        parent::options($opts);
         $opts->add('l|link','link asset files, instead of copy install.');
-        $opts->add('config?','config file');
     }
 
     public function execute()

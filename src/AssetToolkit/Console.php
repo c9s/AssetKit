@@ -23,6 +23,7 @@ class Console extends Application
         $this->registerCommand('compile');
         $this->registerCommand('update');
         $this->registerCommand('install');
+        $this->registerCommand('target');
     }
 }
 

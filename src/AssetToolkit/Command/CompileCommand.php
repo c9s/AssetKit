@@ -5,9 +5,10 @@ use AssetToolkit\AssetConfig;
 use AssetToolkit\AssetLoader;
 use AssetToolkit\AssetCompiler;
 use AssetToolkit\Asset;
+use AssetToolkit\Command\BaseCommand;
 use CLIFramework\Command;
 
-class CompileCommand extends Command
+class CompileCommand extends BaseCommand
 {
     public function options($opts)
     {
@@ -26,9 +27,9 @@ class CompileCommand extends Command
         }
 
         $target = $this->options->target;
-        $configFile = $this->options->config ?: ".assetkit.php";
-        $config = new AssetConfig($configFile);
-        $loader = new AssetLoader($config);
+
+        $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
 
         if( ! ini_get('apc.enable_cli') ) {
             $this->logger->info("Notice: You may enable apc.enable_cli option to precompile production files from command-line.");
