@@ -23,11 +23,11 @@ class InitCommand extends BaseCommand
 
     public function execute()
     {
-        if(! $this->options->baseUrl) {
+        if (! $this->options->baseUrl) {
             return $this->logger->error("--baseUrl option is required.");
         }
 
-        if(! $this->options->baseDir) {
+        if (! $this->options->baseDir) {
             return $this->logger->error("--baseDir option is required.");
         }
 

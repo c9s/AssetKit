@@ -21,8 +21,6 @@ class UpdateCommand extends BaseCommand
 
     public function execute()
     {
-        $options = $this->options;
-
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
 

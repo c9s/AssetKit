@@ -25,19 +25,13 @@ class InstallCommand extends BaseCommand
 
     public function execute()
     {
-        $options = $this->options;
-        $configFile = $this->options->config ?: ".assetkit.php";
+        $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
+        $loader->updateAssetManifests();
 
-        $installer = $options->link
-                ? new LinkInstaller
-                : new Installer;
-
+        $installer = $this->getInstaller();
         $installer->logger = $this->logger;
 
-
-        $config = new AssetConfig($configFile);
-        $loader = new AssetLoader($config);
-        $loader->updateAssetManifests();
 
         $compiledDir = $config->getCompiledDir();
         $this->logger->info("Creating compiled dir: $compiledDir");
