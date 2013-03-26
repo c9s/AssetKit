@@ -26,7 +26,5 @@ class Cache
         )));
         return $cache;
     }
-
 }
-
 
