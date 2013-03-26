@@ -95,7 +95,9 @@ class CompileCommand extends BaseCommand
             $this->logger->info("You may simply require this file to render.");
         } else {
             $this->logger->info("HTML Output (you may use --html-output option to write as a file):");
+            printf( "----------------------------------------------------\n" );
             echo $html;
+            printf( "----------------------------------------------------\n" );
         }
         $this->logger->info("Done");
     }
