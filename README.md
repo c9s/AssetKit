@@ -211,7 +211,7 @@ $assets = $loader->loadAssets(array( 'jquery', 'jquery-ui' ));
 $render = new AssetToolkit\AssetRender($config, $loader);
 
 $targetName = 'demo-page';
-$render->renderAssets($assets, $targetName); // pipe html tags to output buffer
+$render->renderAssets($assets, $targetName); // pipe html tags to output buffer, the targetName is optional.
 ```
 
 Now just load the script from your browser, it should work.

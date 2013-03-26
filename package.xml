@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-26</date>
-  <time>12:02:03</time>
+  <time>12:15:05</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -29,7 +29,7 @@
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="ecf996d7688722fe71f03c85d0f6f5a2"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="1571f90eb46de33b6dccb055e7d11f86"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="75d1931947cae20e5716a0c4785bbe13"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="98f8a56d37826d19137e3945008497a2"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="4caf0fe9b3d357115b7fcf0b6cfc6ac4"/>
       <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="3044d5cffca191f6c615b20ad3436f21"/>
@@ -49,7 +49,7 @@
       <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
       <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
       <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
-      <file name="src/AssetToolkit/Console.php" role="php" md5sum="313dc1df42661386816be1e300816ef5"/>
+      <file name="src/AssetToolkit/Console.php" role="php" md5sum="2cff3225e2f68e0a2ddf704675d01c62"/>
       <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
       <file name="src/AssetToolkit/Data.php" role="php" md5sum="8bb32becf726ce09d0c4f2d587e65246"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="db39618b4f3b2cb19b94d2ff3556162b"/>
@@ -68,7 +68,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="9dee95e6966d7bebeb00a633a39d7cf3"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="6828aee7a39e0fda664b0de8e13cf1dc"/>
+      <file name="assetkit" role="script" md5sum="1abb8da20d63572b93f6fa36b4c5049a"/>
     </dir>
   </contents>
   <dependencies>
