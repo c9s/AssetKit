@@ -246,8 +246,9 @@ class AssetCompiler
      */
     public function compile($asset, $force = false) 
     {
+        $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
+
         if ( ! $force && $this->config->cache ) {
-            $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
             $cache = $this->config->cache->get($cacheKey);
 
             // cache validation
