@@ -1,5 +1,6 @@
 <?php
 namespace AssetToolkit\Command;
+
 use Exception;
 use DateTime;
 use AssetToolkit\AssetConfig;
@@ -13,6 +14,7 @@ class CompileCommand extends BaseCommand
 {
     public function options($opts)
     {
+        parent::options($opts);
         $opts->add('t|target:', 'The target ID');
         $opts->add('html-output:', 'Output html file');
     }

@@ -244,9 +244,9 @@ class AssetCompiler
      *    }
      *
      */
-    public function compile($asset) 
+    public function compile($asset, $force = false) 
     {
-        if ( $this->config->cache ) {
+        if ( ! $force && $this->config->cache ) {
             $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
             $cache = $this->config->cache->get($cacheKey);
 
@@ -361,7 +361,7 @@ class AssetCompiler
             $assetNames[] = $asset->name;
 
             // get manifest after compiling
-            $m = $this->compile($asset);
+            $m = $this->compile($asset, $force);
 
             // concat results from manifest
             if (isset($m['js_file']) ) {

@@ -21,6 +21,7 @@ class Console extends Application
         $this->registerCommand('add');
         $this->registerCommand('remove');
         $this->registerCommand('compile');
+        $this->registerCommand('clean');
         $this->registerCommand('update');
         $this->registerCommand('install');
         $this->registerCommand('target');
