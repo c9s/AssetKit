@@ -393,9 +393,7 @@ class AssetCompiler
         $outfiles['target'] = $target;
 
         $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta';
-        if( false === file_put_contents( $outfiles['metafile'], serialize($outfiles) ) ) {
-            throw new AssetCompilerException("Can not write metafile.");
-        }
+        $this->writeFile( $outfiles['metafile'], serialize($outfiles) );
 
         if ( $this->config->cache ) {
             $this->config->cache->set($cacheKey, $outfiles);
