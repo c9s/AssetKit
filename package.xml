@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-26</date>
-  <time>14:25:08</time>
+  <time>14:26:00</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -50,7 +50,7 @@
       <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
       <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
       <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
-      <file name="src/AssetToolkit/Console.php" role="php" md5sum="aed72014a27f4629bd548417158daa98"/>
+      <file name="src/AssetToolkit/Console.php" role="php" md5sum="b5b9cc62923f98cf2a7b0a6084e2f50f"/>
       <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
       <file name="src/AssetToolkit/Data.php" role="php" md5sum="8bb32becf726ce09d0c4f2d587e65246"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="db39618b4f3b2cb19b94d2ff3556162b"/>
@@ -69,7 +69,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="9dee95e6966d7bebeb00a633a39d7cf3"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="6b38eb2ff5ab8a816712f6c06ec6ee4c"/>
+      <file name="assetkit" role="script" md5sum="474470784a7cd3e30a39e1c47b42ea74"/>
     </dir>
   </contents>
   <dependencies>
