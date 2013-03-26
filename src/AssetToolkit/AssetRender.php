@@ -69,7 +69,7 @@ class AssetRender
     {
         $compiler = $this->getCompiler();
         if($this->config->environment === AssetConfig::DEVELOPMENT ) {
-            $outs = $compiler->compileAssetsForDevelopment($assets);
+            $outs = $compiler->compileAssetsForDevelopment($assets, $target);
             $this->renderFragments($outs);
         }
         elseif ($this->config->environment === AssetConfig::PRODUCTION ) {

@@ -140,15 +140,18 @@ class AssetCompiler
      *
      * @param AssetToolkit\Assets[] asset objects
      */
-    public function compileAssetsForDevelopment($assets)
+    public function compileAssetsForDevelopment($assets, $target = null)
     {
         $assets = (array)$assets;
+        $assetNames = array();
         $out = array();
 
         $root = $this->config->getRoot();
         $baseDir = $this->config->getBaseDir(true);
         $baseUrl = $this->config->getBaseUrl();
+
         foreach( $assets as $asset ) {
+            $assetNames[] = $asset->name;
             $assetBaseUrl = $baseUrl . '/' . $asset->name;
             foreach( $asset->getCollections() as $c ) {
 
@@ -195,6 +198,16 @@ class AssetCompiler
                 }
             }
         }
+
+        // if we got target name, then we should register the target to the assetkit config.
+        if ( $target ) {
+            // we should always update the target, because we might change the target assets from
+            // template or php code.
+            $this->config->addTarget($target, $assetNames);
+            $this->config->save();
+        }
+
+
         return $out;
     }
 
