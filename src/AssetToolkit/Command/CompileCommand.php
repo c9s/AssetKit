@@ -20,15 +20,23 @@ class CompileCommand extends BaseCommand
 
     public function execute()
     {
-        $assetNames = func_get_args();
-
-        if( empty($assetNames) ) {
-            throw new Exception("asset name is required.");
-        }
-
-
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
+
+        $target = $this->options->target ?: $config->getDefaultTarget();
+
+        if ( $target != $config->getDefaultTarget() ) {
+            if ( $config->hasTarget($target) ) {
+                $assetNames = $config->getTarget($target);
+            } else {
+                $assetNames = func_get_args();
+            }
+        } else {
+            $assetNames = func_get_args();
+            if( empty($assetNames) ) {
+                throw new Exception("Asset names are required.");
+            }
+        }
 
         if( ! ini_get('apc.enable_cli') ) {
             $this->logger->info("Notice: You may enable apc.enable_cli option to precompile production files from command-line.");
@@ -43,11 +51,11 @@ class CompileCommand extends BaseCommand
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 
-        $target = $this->options->target ?: $config->getDefaultTarget();
+
         $this->logger->info("Compiling assets to target '$target'...");
         
         // force compile
-        $files = $compiler->compileAssetsForProduction($assets,$target, true);
+        $files = $compiler->compileAssetsForProduction($assets, $target, true); // use force to compile.
 
         printf( "----------------------------------------------------\n" );
         printf( "Target:    %s\n" , $files['target'] );
