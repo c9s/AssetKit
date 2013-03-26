@@ -80,6 +80,13 @@ class AssetRender
         }
     }
 
+
+
+    /**
+     * Render the output fragments to html tags.
+     *
+     * @param array $outs
+     */
     public function renderFragments($outs)
     {
         foreach( $outs as $out ) {
@@ -88,6 +95,11 @@ class AssetRender
     }
 
 
+    /**
+     * Render one single fragment.
+     *
+     * @param array $out
+     */
     public function renderFragment($out)
     {
         // check for css_url and js_url
