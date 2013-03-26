@@ -53,6 +53,14 @@ class AssetRender
         $this->renderAssets($assets, $target);
     }
 
+    public function renderTarget($target)
+    {
+        // get assets from the target
+        $assetNames = $this->config->getTarget($target);
+        $assets = $this->loader->loadAssets($assetNames);
+        return $this->renderAssets($assets, $target);
+    }
+
     public function renderAssets($assets, $target = '')
     {
         $compiler = $this->getCompiler();
