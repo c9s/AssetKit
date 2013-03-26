@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-26</date>
-  <time>13:33:15</time>
+  <time>14:11:09</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -29,7 +29,7 @@
       <file name="doc/file_collection.md" role="doc" md5sum="bfb8a978d2f77c16cf4e13b1d8bd27eb"/>
       <file name="doc/migration_notes.md" role="doc" md5sum="cd0fc69975c678a48de9240134edf3cd"/>
       <file name="src/AssetToolkit/Asset.php" role="php" md5sum="ecf996d7688722fe71f03c85d0f6f5a2"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="aa180c9c560ff23c7b6d123d05b93195"/>
+      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="2b17b01714cc27cbee1ee28416cf828b"/>
       <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="98f8a56d37826d19137e3945008497a2"/>
       <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="4caf0fe9b3d357115b7fcf0b6cfc6ac4"/>
       <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="9a39e045ed15c0801bb0801f6418e4c9"/>
@@ -37,7 +37,8 @@
       <file name="src/AssetToolkit/Collection.php" role="php" md5sum="cf4318fd249a6c1e8fbf7c0fc4e435b0"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="12d02a4d5af10ed491ba758a5c633cbc"/>
       <file name="src/AssetToolkit/Command/BaseCommand.php" role="php" md5sum="ca8eb088d32e1b15a77f7694df7d15f9"/>
-      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="d4c679c1c497ff1bc5e930db36928062"/>
+      <file name="src/AssetToolkit/Command/CleanCommand.php" role="php" md5sum="4887e4f30329ff73d116437679bbd332"/>
+      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="f025a7db2e09177c1223c61d25a4959a"/>
       <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="942d759475ecd97e3ac82afcc42693a0"/>
       <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="647f77d94ade9dc9b8de3ee6e74c32af"/>
       <file name="src/AssetToolkit/Command/RemoveCommand.php" role="php" md5sum="a2c9fce309beb6c623c22b57543927fe"/>
@@ -49,7 +50,7 @@
       <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
       <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
       <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
-      <file name="src/AssetToolkit/Console.php" role="php" md5sum="efbeb68f1429bd986e0684a919eee63b"/>
+      <file name="src/AssetToolkit/Console.php" role="php" md5sum="423ec15712939d6a1e91055e6e44a641"/>
       <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
       <file name="src/AssetToolkit/Data.php" role="php" md5sum="8bb32becf726ce09d0c4f2d587e65246"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="db39618b4f3b2cb19b94d2ff3556162b"/>
@@ -68,7 +69,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="9dee95e6966d7bebeb00a633a39d7cf3"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="1de7a957dbeb8ce39cd8392024499300"/>
+      <file name="assetkit" role="script" md5sum="6afa7ba5ad8fab626b45921bf14c6750"/>
     </dir>
   </contents>
   <dependencies>
@@ -121,6 +122,7 @@
       <install name="src/AssetToolkit/Collection.php" as="AssetToolkit/Collection.php"/>
       <install name="src/AssetToolkit/Command/AddCommand.php" as="AssetToolkit/Command/AddCommand.php"/>
       <install name="src/AssetToolkit/Command/BaseCommand.php" as="AssetToolkit/Command/BaseCommand.php"/>
+      <install name="src/AssetToolkit/Command/CleanCommand.php" as="AssetToolkit/Command/CleanCommand.php"/>
       <install name="src/AssetToolkit/Command/CompileCommand.php" as="AssetToolkit/Command/CompileCommand.php"/>
       <install name="src/AssetToolkit/Command/InitCommand.php" as="AssetToolkit/Command/InitCommand.php"/>
       <install name="src/AssetToolkit/Command/InstallCommand.php" as="AssetToolkit/Command/InstallCommand.php"/>
