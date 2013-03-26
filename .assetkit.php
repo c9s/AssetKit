@@ -39,6 +39,11 @@
       0 => 'jquery',
       1 => 'jquery-ui',
     ),
+    'demo-page' => 
+    array (
+      0 => 'jquery',
+      1 => 'jquery-ui',
+    ),
   ),
   'namespace' => 'assetkit',
 );

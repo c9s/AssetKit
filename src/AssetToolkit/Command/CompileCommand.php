@@ -1,6 +1,7 @@
 <?php
 namespace AssetToolkit\Command;
 use Exception;
+use DateTime;
 use AssetToolkit\AssetConfig;
 use AssetToolkit\AssetLoader;
 use AssetToolkit\AssetCompiler;
@@ -58,8 +59,9 @@ class CompileCommand extends BaseCommand
         $files = $compiler->compileAssetsForProduction($assets, $target, true); // use force to compile.
 
         printf( "----------------------------------------------------\n" );
-        printf( "Target:    %s\n" , $files['target'] );
-        printf( "Cache Key: %s\n" , $files['cache_key'] );
+        printf( "Target:            %s\n" , $files['target'] );
+        printf( "Cache Key:         %s\n" , $files['cache_key'] );
+        printf( "Modofication Time: %s\n" , date(\DateTime::ATOM,$files['mtime']) );
 
         if ( isset($files['css_file']) ) {
             printf( "Stylesheet:\n" );
