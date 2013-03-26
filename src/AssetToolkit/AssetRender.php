@@ -1,6 +1,7 @@
 <?php
 namespace AssetToolkit;
 use Exception;
+use RuntimeException;
 
 /**
  * AssetIncluder is the top-level API for including asset files.
@@ -57,6 +58,9 @@ class AssetRender
     {
         // get assets from the target
         $assetNames = $this->config->getTarget($target);
+        if ( ! $assetNames ) {
+            throw new RuntimeException("Target $target not found.");
+        }
         $assets = $this->loader->loadAssets($assetNames);
         return $this->renderAssets($assets, $target);
     }
