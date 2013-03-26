@@ -50,6 +50,9 @@ Concepts of AssetToolkit
   collection can use "cssmin" and "yuicss" compressor, and a SASS file collection 
   can use "sass" filter and "cssmin" compressor to generate the minified output.
 
+- A "target" is consist of many assets, which is something like "page", we usually includes
+  many assets in one single page, so called "target".
+
 Why do we separately loading the different assets and define the asset manifest ?
 Because in the modern web application, most compononents are modularized, so 
 in one application, there are many different plugins, modules, libraries, some
@@ -83,9 +86,7 @@ Features
 Requirement
 ---------------------------
 
-- APC extension.
 - yaml extension.
-
 
 Installation
 ---------------------------
@@ -143,8 +144,6 @@ assets:
 
 You can also define the resource, assetkit would fetch it for you. currently assetkit supports 
 svn, git, hg resource types.
-
-
 
 
 
@@ -210,12 +209,16 @@ $assets = $loader->loadAssets(array( 'jquery', 'jquery-ui' ));
 
 // Use AssetRender to compile and render the HTML tag
 $render = new AssetToolkit\AssetRender($config, $loader);
-$render->renderAssets($assets); // pipe html tags to output buffer
+
+$targetName = 'demo-page';
+$render->renderAssets($assets, $targetName); // pipe html tags to output buffer
 ```
 
 Now just load the script from your browser, it should work.
 
 You may simply check example script in the `example` folder.
+
+
 
 Advanced Usage
 ---------------------------
@@ -330,7 +333,17 @@ You can also use the Twig Extension in your template:
 </html>
 ```
 
+To check all compiled target, you may simply run:
 
+    $ assetkit target
+
+To add assets to a target, you can run:
+
+    $ assetkit target --add demo-page jquery jquery-ui bootstrap
+
+To remove a target, you can run:
+
+    $ assetkit target --remove demo-page
 
 Setting Up Your Preferred Default Compressor
 --------------------------------------------
