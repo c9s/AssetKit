@@ -11,7 +11,7 @@
     <active>yes</active>
   </lead>
   <date>2013-03-26</date>
-  <time>13:12:07</time>
+  <time>13:22:30</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -37,7 +37,7 @@
       <file name="src/AssetToolkit/Collection.php" role="php" md5sum="cf4318fd249a6c1e8fbf7c0fc4e435b0"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="12d02a4d5af10ed491ba758a5c633cbc"/>
       <file name="src/AssetToolkit/Command/BaseCommand.php" role="php" md5sum="ca8eb088d32e1b15a77f7694df7d15f9"/>
-      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="91e2c88774b35478e10f3bc1b3e305e2"/>
+      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="d4c679c1c497ff1bc5e930db36928062"/>
       <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="942d759475ecd97e3ac82afcc42693a0"/>
       <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="647f77d94ade9dc9b8de3ee6e74c32af"/>
       <file name="src/AssetToolkit/Command/RemoveCommand.php" role="php" md5sum="a2c9fce309beb6c623c22b57543927fe"/>
@@ -49,7 +49,7 @@
       <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
       <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
       <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
-      <file name="src/AssetToolkit/Console.php" role="php" md5sum="a6b1b492057b03414c54be119840d87d"/>
+      <file name="src/AssetToolkit/Console.php" role="php" md5sum="874c8ccdd9f41b6d85094fc4442b657e"/>
       <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
       <file name="src/AssetToolkit/Data.php" role="php" md5sum="8bb32becf726ce09d0c4f2d587e65246"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="db39618b4f3b2cb19b94d2ff3556162b"/>
@@ -68,7 +68,7 @@
       <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
       <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="9dee95e6966d7bebeb00a633a39d7cf3"/>
       <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
-      <file name="assetkit" role="script" md5sum="6813ecb59feb99d1acd3122ea79d7758"/>
+      <file name="assetkit" role="script" md5sum="1116d1df1caf8f30882aba2ad4877410"/>
     </dir>
   </contents>
   <dependencies>
