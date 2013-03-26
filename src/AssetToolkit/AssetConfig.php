@@ -145,7 +145,7 @@ class AssetConfig
         if ( isset($this->config['namespace']) ) {
             return $this->config['namespace'];
         }
-        return __DIR__;
+        return getcwd();
     }
 
 

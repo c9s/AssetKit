@@ -29,7 +29,10 @@ class SetCommand extends BaseCommand
             $config->setNamespace($value);
             break;
         case "cachedir":
-            $cofnig->setCacheDir($value);
+            $config->setCacheDir($value);
+            break;
+        default:
+            $this->logger->error("Unsupported option: $name");
             break;
         }
         $config->save();
