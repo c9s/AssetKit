@@ -342,11 +342,21 @@ class AssetCompiler
             }
         }
 
+        $contents = array( 'js' => '', 'css' => '' );
         $assetNames = array();
-        $manifests = array();
         foreach( $assets as $asset ) {
             $assetNames[] = $asset->name;
-            $manifests[] = $this->compile($asset);
+
+            // get manifest after compiling
+            $m = $this->compile($asset);
+
+            // concat results from manifest
+            if (isset($m['js_file']) ) {
+                $contents['js'] .= file_get_contents($m['js_file']);
+            }
+            if (isset($m['css_file']) ) {
+                $contents['css'] .= file_get_contents($m['css_file']);
+            }
         }
 
         // register target (assets) to the config, if it's not defaultTarget,
@@ -355,20 +365,6 @@ class AssetCompiler
             // template or php code.
             $this->config->addTarget($target, $assetNames);
             $this->config->save();
-        }
-
-
-        $contents = array(
-            'js' => '',
-            'css' => '',
-        );
-
-        // concat results
-        foreach( $manifests as $m ) {
-            if (isset($m['js_file']) )
-                $contents['js'] .= file_get_contents($m['js_file']);
-            if (isset($m['css_file']) )
-                $contents['css'] .= file_get_contents($m['css_file']);
         }
 
         $compiledDir = $this->prepareCompiledDir();
