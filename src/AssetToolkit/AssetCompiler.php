@@ -1,7 +1,10 @@
 <?php
 namespace AssetToolkit;
 use Exception;
+use RuntimeException;
 use AssetToolkit\FileUtil;
+
+class AssetCompilerException extends Exception {  }
 
 class AssetCompiler
 {
@@ -307,10 +310,11 @@ class AssetCompiler
      */
     public function compileAssetsForProduction($assets, $target = '', $force = false)
     {
+        $hasTarget = $target ? true : false;
         if ( $target ) {
             $cacheKey = $this->config->getNamespace() . ':' . $target;
         } else {
-            $cacheKey = $this->config->getNamespace() . ':' . $this->_getCacheKeyFromAssets($assets);
+            $cacheKey = $this->config->getNamespace() . ':' . $this->_generateCacheKeyFromAssets($assets);
             $target = $this->config->getDefaultTarget();
         }
 
@@ -338,10 +342,22 @@ class AssetCompiler
             }
         }
 
+        $assetNames = array();
         $manifests = array();
         foreach( $assets as $asset ) {
+            $assetNames[] = $asset->name;
             $manifests[] = $this->compile($asset);
         }
+
+        // register target (assets) to the config, if it's not defaultTarget,
+        if ( $hasTarget ) {
+            // we should always update the target, because we might change the target assets from
+            // template or php code.
+            $this->config->addTarget($target, $assetNames);
+            $this->config->save();
+        }
+
+
         $contents = array(
             'js' => '',
             'css' => '',
@@ -374,9 +390,16 @@ class AssetCompiler
             $this->writeFile( $outfiles['css_file'], $contents['css'] );
         }
 
+
+        $outfiles['assets']  = $assetNames;
         $outfiles['mtime']   = time();
         $outfiles['cache_key'] = $cacheKey;
         $outfiles['target'] = $target;
+
+        $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta';
+        if( false === file_put_contents( $outfiles['metafile'], serialize($outfiles) ) ) {
+            throw new AssetCompilerException("Can not write metafile.");
+        }
 
         if ( $this->config->cache ) {
             $this->config->cache->set($cacheKey, $outfiles);
@@ -385,7 +408,7 @@ class AssetCompiler
     }
 
 
-    protected function _getCacheKeyFromAssets($assets)
+    protected function _generateCacheKeyFromAssets($assets)
     {
         $names = array();
         foreach($assets as $a) {
@@ -414,10 +437,10 @@ class AssetCompiler
     public function prepareCompiledDir()
     {
         $compiledDir = $this->config->getCompiledDir();
-        futil_mkdir_if_not_exists($compiledDir,0755, true);
+        futil_mkdir_if_not_exists($compiledDir,0766, true);
 
         if ( ! is_writable($compiledDir) ) {
-            throw new Exception("AssetCompiler: The $compiledDir is not writable.");
+            throw new AssetCompilerException("The $compiledDir is not writable.");
         }
         return $compiledDir;
     }
@@ -426,7 +449,7 @@ class AssetCompiler
     public function writeFile($path,$content) 
     {
         if ( false === file_put_contents($path, $content) ) {
-            throw new Exception("AssetCompiler: can not write $path");
+            throw new AssetCompilerException("Can not write $path");
         }
     }
 
@@ -506,12 +529,12 @@ class AssetCompiler
             if ( class_exists($cb,true) ) {
                 return $this->compressors[ $name ] = new $cb;
             } else {
-                throw new Exception("$cb class not found.");
+                throw new AssetCompilerException("$cb class not found.");
             }
         } else if ( is_callable($cb) ) {
             return $this->compressors[ $name ] = call_user_func($cb);
         } else {
-            throw new Exception("Unsupported compressor builder");
+            throw new AssetCompilerException("Unsupported compressor builder");
         }
     }
 
@@ -540,7 +563,7 @@ class AssetCompiler
                 $filter->filter($collection);
                 return true;
             } else {
-                throw new Exception("filter $n not found.");
+                throw new AssetCompilerException("filter $n not found.");
             }
         }
         return false;
@@ -600,7 +623,6 @@ class AssetCompiler
                     $collection->runDefaultFilters();
                 }
             }
-
             if ( $collection->isJavascript || $collection->isCoffeescript ) {
                 $out['js'] .= $collection->getContent();
             } elseif ( $collection->isStylesheet ) {
@@ -636,15 +658,14 @@ class AssetCompiler
         if ( empty($collection->compressors) ) {
             $this->runDefaultCompressors($collection);
         } else {
-            if ( $collection->hasCompressor('no') )
+            if ( $collection->hasCompressor('no') ) {
                 return;
-
+            }
             foreach( $collection->compressors as $n ) {
                 if ( $compressor = $this->getCompressor( $n ) ) {
                     $compressor->compress($collection);
-                }
-                else {
-                    throw new Exception("compressor $n not found.");
+                } else {
+                    throw new AssetCompilerException("compressor $n not found.");
                 }
             }
         }

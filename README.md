@@ -194,7 +194,6 @@ $ assetkit update
 To use assetkit in your application, just few lines to write:
 
 ```php
-<?php
 // load the autoload.php from composer
 require 'vendor/autoload.php';
 
@@ -211,7 +210,7 @@ $assets = $loader->loadAssets(array( 'jquery', 'jquery-ui' ));
 
 // Use AssetRender to compile and render the HTML tag
 $render = new AssetToolkit\AssetRender($config, $loader);
-$render->renderAssets($assets); // pipe to output buffer
+$render->renderAssets($assets); // pipe html tags to output buffer
 ```
 
 Now just load the script from your browser, it should work.
