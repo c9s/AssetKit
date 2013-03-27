@@ -585,6 +585,10 @@ $ ./assetkit
 ```
 
 
+### Todos
+
+- watch command (fork filter process to watch asset files or directories)
+
 ### Setup XHProf
 
 You should install the xhprof extension from http://github.com/facebook/xhprof
