@@ -91,20 +91,10 @@ Requirement
 Installation
 ---------------------------
 
-Install from repository (suggested):
+Install the requirements:
 
-```sh
-git clone git@github.com:c9s/php-AssetToolkit.git
-pear install -f package.xml
-cp assetkit /usr/bin
-```
-
-Install from PEAR:
-
-```sh
-$ pear channel-discover pear.corneltek.com
-$ pear install corneltek/AssetToolkit
-```
+    $ gem install compass sass   # for sass/compass filter
+    $ npm install coffee-script  # for coffee-script filter
 
 Install library from composer:
 
