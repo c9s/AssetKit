@@ -38,6 +38,8 @@
     array (
       0 => 'jquery',
       1 => 'jquery-ui',
+      2 => 'underscore',
+      3 => 'test',
     ),
     'demo-page' => 
     array (

@@ -1,18 +1,9 @@
 <?php
-require '../vendor/pear/Universal/ClassLoader/BasePathClassLoader.php';
-define( 'ROOT', dirname(dirname(__FILE__) ));
-$classLoader = new \Universal\ClassLoader\BasePathClassLoader(array(
-    ROOT . '/src', ROOT . '/vendor/pear',
-));
-
-if ( ! extension_loaded('fileutil') ) {
-    require 'FileUtil.php';
-}
+require "../vendor/autoload.php";
 
 $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 
-$classLoader->useIncludePath(false);
-$classLoader->register();
+define('ROOT', dirname(__DIR__) );
 
 $config = new AssetToolkit\AssetConfig( '../.assetkit.php', array( 
     'root' => ROOT,
@@ -29,7 +20,6 @@ $assets[] = $loader->load( 'test' );
 $render = new AssetToolkit\AssetRender($config,$loader);
 $compiler = $render->getCompiler();
 $compiler->enableProductionFstatCheck();
-
 $render->force();
 ?>
 <html>
