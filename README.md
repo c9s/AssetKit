@@ -151,7 +151,7 @@ The config is stored at `.assetkit.php` file.
 Then fetch anything you want:
 
 ```sh
-$ assetkit add assets/jquery/manifest.yml
+$ assetkit add assets/jquery
 Submodule 'src/sizzle' () registered for path 'src/sizzle'
 Submodule 'test/qunit' () registered for path 'test/qunit'
 Submodule 'src/sizzle' () registered for path 'src/sizzle'
