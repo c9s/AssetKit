@@ -10,8 +10,8 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2013-07-06</date>
-  <time>11:31:59</time>
+  <date>2013-08-10</date>
+  <time>22:52:09</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -47,7 +47,7 @@
       <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
       <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
       <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
-      <file name="src/AssetToolkit/Console.php" role="php" md5sum="12a1eeceda1c45518e899bacfd90d8dc"/>
+      <file name="src/AssetToolkit/Console.php" role="php" md5sum="cb210d1733100a6cc5466fd5f513f8f6"/>
       <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
       <file name="src/AssetToolkit/Data.php" role="php" md5sum="8bb32becf726ce09d0c4f2d587e65246"/>
       <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="db39618b4f3b2cb19b94d2ff3556162b"/>
