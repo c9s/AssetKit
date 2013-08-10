@@ -6,11 +6,11 @@
         "twig\/twig": "~1.12",
         "corneltek\/universal-cache": "~1.0",
         "corneltek\/fileutil": "~1.6",
+        "corneltek\/cliframework": "*",
         "corneltek\/configkit": "~1.3"
     },
     "require-dev": {
         "corneltek\/universal": "dev-master",
-        "corneltek\/cliframework": "*",
         "corneltek\/phpunit-testmore": "dev-master"
     },
     "bin": [
