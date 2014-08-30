@@ -1,19 +1,15 @@
 <?php
 namespace AssetToolkit;
 use ArrayAccess;
+use AssetToolkit\Cache;
+
+
 /**
  * An asset cache container that caches the config of the 
  * assets.
  */
-class AssetCache implements ArrayAccess
+class AssetEntryCluster implements ArrayAccess
 {
-    /**
-     * @var string namespace for caching
-     */
-    public $namespace;
-
-    public $options = array();
-
     /**
      * @array the assets array that contains the config of all assets.
      *
@@ -21,15 +17,9 @@ class AssetCache implements ArrayAccess
      *       [asset name] = [ 'source' => .... ];
      *   ];
      */
-    public $assets = array();
+    public $stash = array();
 
-
-    public function __construct($options = array()) {
-        $this->options = $options;
-        if ( isset($options['namespace']) ) {
-            $this->namespace = $options['namespace'];
-        }
-    }
+    public function __construct() { }
 
     /**
      * Get the config of name asset.
@@ -44,8 +34,8 @@ class AssetCache implements ArrayAccess
      */
     public function get($name)
     {
-        if( isset($this->assets[$name]) ) {
-            return $this->assets[$name];
+        if( isset($this->stash[$name]) ) {
+            return $this->stash[$name];
         }
     }
 
@@ -55,7 +45,7 @@ class AssetCache implements ArrayAccess
      */
     public function has($name)
     {
-        return isset($this->assets[$name]);
+        return isset($this->stash[$name]);
     }
 
     /**
@@ -66,7 +56,7 @@ class AssetCache implements ArrayAccess
      */
     public function set($name, $config)
     {
-        $this->assets[$name] = $config;
+        $this->stash[$name] = $config;
     }
 
 
@@ -78,11 +68,11 @@ class AssetCache implements ArrayAccess
     public function remove($name)
     {
         // TODO: should also remove from assetObjects
-        unset($this->assets[$name]);
+        unset($this->stash[$name]);
     }
 
     public function removeAll() {
-        $this->assets = array();
+        $this->stash = array();
     }
 
 
@@ -93,7 +83,7 @@ class AssetCache implements ArrayAccess
      */
     public function add(Asset $asset)
     {
-        $this->assets[ $asset->name ] = $asset->export(); 
+        $this->stash[ $asset->name ] = $asset->export(); 
     }
 
 
@@ -102,7 +92,7 @@ class AssetCache implements ArrayAccess
      */
     public function pairs()
     {
-        return $this->assets;
+        return $this->stash;
     }
 
     /**
@@ -112,7 +102,7 @@ class AssetCache implements ArrayAccess
      */
     public function all()
     {
-        return array_values($this->assets);
+        return array_values($this->stash);
     }
 
 
@@ -125,24 +115,33 @@ class AssetCache implements ArrayAccess
 
     public function offsetSet($name, $value)
     {
-        $this->assets[ $name ] = $value;
+        $this->stash[ $name ] = $value;
     }
 
     public function offsetExists($name)
     {
-        return isset($this->assets[ $name ]);
+        return isset($this->stash[ $name ]);
     }
 
     public function offsetGet($name)
     {
-        return $this->assets[ $name ];
+        return $this->stash[ $name ];
     }
 
     public function offsetUnset($name)
     {
-        unset($this->assets[$name]);
+        unset($this->stash[$name]);
     }
 
+    public function export() {
+        return $this->stash;
+    }
+
+    public function save() {
+        if (extension_loaded('apc') ) {
+            apc_store($this->namespace . ':assets', $this->stash);
+        }
+    }
 }
 
 

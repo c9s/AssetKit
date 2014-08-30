@@ -2,7 +2,7 @@
 namespace AssetToolkit;
 use Exception;
 use AssetToolkit\AssetConfig;
-use AssetToolkit\AssetCache;
+use AssetToolkit\AssetEntryCluster;
 use AssetToolkit\Asset;
 use ConfigKit\ConfigCompiler;
 
@@ -35,6 +35,8 @@ class AssetLoader
 
     public $objects = array();
 
+    public $entries;
+
     /**
      *
      * @param AssetToolkit\AssetConfig $config
@@ -42,7 +44,16 @@ class AssetLoader
     public function __construct(AssetConfig $config)
     {
         $this->config = $config;
-        $this->cache = new AssetCache;
+
+        if ($cache = $config->getCache()) {
+            if ($entries = $cache->get('asset_entries')) {
+                $this->entries = $entries;
+            } else {
+                $this->entries = new AssetEntryCluster;
+            }
+        } else {
+            $this->entries = new AssetEntryCluster;
+        }
     }
 
 
@@ -60,7 +71,7 @@ class AssetLoader
         }
 
 
-        $config = $this->cache->get($name);
+        $config = $this->entries->get($name);
         if (!$config) {
             throw new Exception("Asset $name is not defined.");
         }
@@ -133,7 +144,7 @@ class AssetLoader
     public function loadAll()
     {
         $assets = array();
-        $registered = $this->cache->pairs();
+        $registered = $this->entries->pairs();
         foreach( $registered as $name => $subconfig ) {
             $assets[] = $this->load($name);
         }
@@ -172,16 +183,21 @@ class AssetLoader
         $compiledFile = ConfigCompiler::compile($path);
         $asset = new Asset($this->config);
         $asset->loadFromManifestFile($compiledFile);
-        $this->cache->add($asset);
+        $this->entries->add($asset);
         return $asset;
     }
 
     public function __call($method, $args) {
-        if (method_exists($this->cache, $method)) {
-            return call_user_func_array(array($this->cache, $method), $args);
+        if (method_exists($this->entries, $method)) {
+            return call_user_func_array(array($this->entries, $method), $args);
         }
         throw new Exception("Method $method is not defined.");
     }
 
+    public function save() {
+        if ($cache = $this->config->getCache()) {
+            $cache->set('asset_entries', $this->entries);
+        }
+    }
 }
 

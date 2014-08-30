@@ -54,15 +54,21 @@ class AssetConfig implements ArrayAccess
     public $options = array();
 
     /**
-     * Cache Interface object
+     * Cache object instance
      */
     public $cache;
+
 
     public function __construct($file, $options = null) {
         $this->file = $file;
         $this->options = $options;
-        if ($options && isset($options['root']) ) {
-            $this->root = $options['root'];
+        if ($options) { 
+            if ( isset($options['root']) ) {
+                $this->root = $options['root'];
+            }
+            if ( isset($options['cache']) ) {
+                $this->cache = $options['cache'];
+            }
         }
         if (file_exists($file)) {
             $this->load();
@@ -78,9 +84,9 @@ class AssetConfig implements ArrayAccess
         return 'minified';
     }
 
-
-
-
+    public function getCache() {
+        return $this->cache;
+    }
 
     public function setCacheDir($dir)
     {

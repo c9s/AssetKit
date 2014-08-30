@@ -21,7 +21,7 @@ class Cache
             )));
         }
 
-        $cache->addBackend( new FileSystemCache(array(  
+        $cache->addBackend( new FileSystemCache(array(
             'cache_dir' => $config->getCacheDir(),
         )));
         return $cache;
