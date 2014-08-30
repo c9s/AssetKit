@@ -7,7 +7,7 @@
         "corneltek\/universal-cache": "~1",
         "corneltek\/fileutil": "~1.6",
         "corneltek\/cliframework": "*",
-        "corneltek\/configkit": "~1.3"
+        "corneltek\/configkit": "~1"
     },
     "require-dev": {
         "corneltek\/universal": "dev-master",
