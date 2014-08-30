@@ -22,9 +22,9 @@ class AssetNode extends Twig_Node
         $compiler->raw("\$assetrender = \$extension->getAssetRender();\n");
         $compiler->raw("\$assets = array();\n");
         foreach($assetNames as $assetName) {
-            $compiler->raw("\$assets[] = \$assetloader->load('$assetName');");
+            $compiler->raw("\$assets[] = \$assetloader->load('$assetName');\n");
         }
-        $compiler->raw("\$assetrender->renderAssets(\$assets,'$target');");
+        $compiler->raw("\$assetrender->renderAssets(\$assets,'$target');\n");
     }
 
     /*

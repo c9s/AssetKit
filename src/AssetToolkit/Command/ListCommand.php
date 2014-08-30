@@ -29,7 +29,7 @@ class ListCommand extends BaseCommand
         $loader->updateAssetManifests();
 
         $cwdLen =  strlen(getcwd()) + 1;
-        foreach( $config->getRegisteredAssets() as $name => $stash ) {
+        foreach( $config->all() as $name => $stash ) {
             $asset = $loader->load($name);
             $this->logger->info( sprintf('%12s  | %2d collections | %s',$name, count($asset->collections)  ,  substr($asset->manifestFile, $cwdLen)   ),1);
         }

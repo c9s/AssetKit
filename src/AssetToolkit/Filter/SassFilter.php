@@ -5,7 +5,9 @@ use AssetToolkit\Process;
 use RuntimeException;
 use AssetToolkit\Utils;
 
-class SassFilter 
+use Symfony\Component\Process\ProcessBuilder;
+
+class SassFilter
 {
     public $bin;
 
@@ -81,7 +83,7 @@ class SassFilter
 
     public function filter(Collection $collection)
     {
-        if( $collection->filetype !== Collection::FILETYPE_SASS )
+        if ($collection->filetype !== Collection::FILETYPE_SASS)
             return;
 
         $assetBaseUrl = $collection->asset->getBaseUrl();
@@ -96,7 +98,7 @@ class SassFilter
             // echo $proc->getCommand();
             $code = $proc->run();
             if ( $code != 0 ) {
-                throw new RuntimeException("SassFilter failure: $code. ");
+                throw new RuntimeException("SassFilter failure: $code. Command: " . $proc->getCommand() . " Output:" . $proc->getOutput());
             }
             $output = $proc->getOutput();
 

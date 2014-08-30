@@ -24,23 +24,11 @@ class AssetLoaderTest extends AssetToolkit\TestCase
      */
     public function testInit($manifestPath)
     {
-        $config = $this->getConfig();
+        $config = $this->getConfigArray();
         $loader = $this->getLoader();
 
-        $asset = $loader->loadFromPath($manifestPath);
+        $asset = $loader->register($manifestPath);
         ok($asset, "asset is loaded from $manifestPath");
-
-        foreach( $loader->pairs() as $name => $a ) {
-            ok( is_string($name) );
-            ok( $a );
-            ok($loader->has($name));
-        }
-
-        foreach( $loader->all() as $a ) {
-            ok($loader->has($a->name));
-        }
-        ok($loader->get($asset->name));
-
 
         $updater = new ResourceUpdater();
         ok($updater,'resource updater is loaded');

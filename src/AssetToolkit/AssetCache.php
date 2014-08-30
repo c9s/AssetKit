@@ -1,7 +1,6 @@
 <?php
 namespace AssetToolkit;
 use ArrayAccess;
-
 /**
  * An asset cache container that caches the config of the 
  * assets.
@@ -19,10 +18,11 @@ class AssetCache implements ArrayAccess
      * @array the assets array that contains the config of all assets.
      *
      *   $assets = [
-     *     [asset name] = [ ... ];
+     *       [asset name] = [ 'source' => .... ];
      *   ];
      */
     public $assets = array();
+
 
     public function __construct($options = array()) {
         $this->options = $options;
@@ -32,7 +32,6 @@ class AssetCache implements ArrayAccess
     }
 
     /**
-     *
      * Get the config of name asset.
      *
      * The asset config contains:
@@ -78,7 +77,12 @@ class AssetCache implements ArrayAccess
      */
     public function remove($name)
     {
+        // TODO: should also remove from assetObjects
         unset($this->assets[$name]);
+    }
+
+    public function removeAll() {
+        $this->assets = array();
     }
 
 
@@ -89,20 +93,7 @@ class AssetCache implements ArrayAccess
      */
     public function add(Asset $asset)
     {
-        if( ! isset($this->assets[$asset->name]) ) {
-            $this->assetObjects[] = $asset;
-            return $this->assets[$asset->name] = $asset;
-        }
-
-
-        /*
-        XXX:
-        $this->assets[ $asset->name ] = array(
-            'manifest' => $asset->manifestFile,
-            'source_dir' => $asset->sourceDir,
-            'name' => $asset->name,
-        );
-         */
+        $this->assets[ $asset->name ] = $asset->export(); 
     }
 
 
@@ -121,7 +112,7 @@ class AssetCache implements ArrayAccess
      */
     public function all()
     {
-        return $this->assetObjects;
+        return array_values($this->assets);
     }
 
 

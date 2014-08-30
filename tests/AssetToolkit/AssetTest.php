@@ -4,7 +4,7 @@ class AssetTest extends AssetToolkit\TestCase
 {
     public function test()
     {
-        $config = $this->getConfig();
+        $config = $this->getConfigArray();
         $loader = $this->getLoader();
 
         /*

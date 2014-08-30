@@ -46,8 +46,9 @@ class AssetExtension extends Twig_Extension
 
     public function getAssetRender()
     {
-        if($this->render)
+        if ($this->render) {
             return $this->render;
+        }
         return $this->render = new AssetRender($this->assetConfig,$this->assetLoader);
     }
 

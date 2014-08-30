@@ -6,13 +6,13 @@ class AssetCompilerTest extends AssetToolkit\TestCase
 {
     public function testCssImportUrlFromTestAssetInProductionMode()
     {
-        $config = $this->getConfig();
+        $config = $this->getConfigArray();
         $loader = $this->getLoader();
 
         $assets = array();
-        // $assets[] = $loader->loadFromPath("tests/assets/jquery");
-        // $assets[] = $loader->loadFromPath("tests/assets/jquery-ui");
-        $assets[] = $loader->loadFromPath("tests/assets/test");
+        // $assets[] = $loader->register("tests/assets/jquery");
+        // $assets[] = $loader->register("tests/assets/jquery-ui");
+        $assets[] = $loader->register("tests/assets/test");
         ok($assets);
 
         $this->installAssets($assets);
@@ -73,12 +73,12 @@ class AssetCompilerTest extends AssetToolkit\TestCase
 
     public function testDevelopmentModeShouldOnlyRunFiltersForjQueryUI()
     {
-        $config = $this->getConfig();
+        $config = $this->getConfigArray();
         $loader = $this->getLoader();
         $assets = array();
-        $assets[] = $loader->loadFromPath("tests/assets/test");
-        $assets[] = $loader->loadFromPath("tests/assets/jquery");
-        $assets[] = $loader->loadFromPath("tests/assets/jquery-ui");
+        $assets[] = $loader->register("tests/assets/test");
+        $assets[] = $loader->register("tests/assets/jquery");
+        $assets[] = $loader->register("tests/assets/jquery-ui");
         ok($assets);
 
         $this->installAssets($assets);
@@ -99,7 +99,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
      */
     public function testAssetRenderForDevelopment($outs)
     {
-        $render = new AssetToolkit\AssetRender($this->getConfig(),$this->getLoader());
+        $render = new AssetToolkit\AssetRender($this->getConfigArray(),$this->getLoader());
         ok($render);
 
         // the below tests are only for local.
@@ -125,10 +125,10 @@ class AssetCompilerTest extends AssetToolkit\TestCase
 
     public function testProductionModeForjQueryUI()
     {
-        $config = $this->getConfig();
+        $config = $this->getConfigArray();
         $loader = $this->getLoader();
 
-        $asset = $loader->loadFromPath("tests/assets/jquery-ui");
+        $asset = $loader->register("tests/assets/jquery-ui");
         ok($asset);
 
         $compiler = $this->getCompiler();

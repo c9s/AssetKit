@@ -251,14 +251,15 @@ Then integrate the AssetToolkit API into your PHP web application,
 there are just few lines to write (you may check the `public/index.php` sample):
 
 ```php
+use AssetToolkit\AssetConfig;
 // Please install php-fileutil extension for beter performance, 
 
 // To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
+$config = new AssetToolkit\AssetConfig( 'config/assetkit.yml',array(
     // the application root, contains the .assetkit.php file.
     'root' => APPLICATION_ROOT,
     'cache' => new UniversalCache\ApcCache(array( 'namespace' => 'myapp_' ));
-    'environment' =>  AssetToolkit\AssetConfig::PRODUCTION,
+    'environment' => AssetConfig::PRODUCTION,
 ));
 
 $loader = new AssetToolkit\AssetLoader( $config );
@@ -397,7 +398,7 @@ $compiledUrl = $config->getCompiledUrl();
 
 $config->addAssetDirectory('vendor/assets');
 
-$assetStashes = $config->getRegisteredAssets();
+$assetStashes = $config->all();
 
 $config->save();
 ```
@@ -412,7 +413,7 @@ $loader = new AssetToolkit\AssetLoader($config);
 // Note: Since you're going to put the .assetkit.php file 
 //       In your VCS, you should use relative path instead of 
 //       absolute path.
-$asset = $loader->loadFromPath("tests/assets/jquery");
+$asset = $loader->register("tests/assets/jquery");
 
 // load asset from a manifest file directly, 
 $asset = $loader->loadFromManifestFile("tests/assets/jquery/manifest.yml");

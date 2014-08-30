@@ -2,7 +2,9 @@
 namespace AssetToolkit;
 use Exception;
 use AssetToolkit\AssetConfig;
+use AssetToolkit\AssetCache;
 use AssetToolkit\Asset;
+use ConfigKit\ConfigCompiler;
 
 /**
  * @class
@@ -24,16 +26,6 @@ class AssetLoader
 {
 
 
-    /**
-     * @var array asset object map, asset name => asset object
-     */
-    public $assets = array();
-
-
-    /**
-     * @var array asset object queue.
-     */
-    public $assetObjects = array();
 
 
     /**
@@ -41,7 +33,7 @@ class AssetLoader
      */
     public $config;
 
-
+    public $objects = array();
 
     /**
      *
@@ -50,7 +42,10 @@ class AssetLoader
     public function __construct(AssetConfig $config)
     {
         $this->config = $config;
+        $this->cache = new AssetCache;
     }
+
+
 
     /**
      * Load asset from assetkit config stash
@@ -59,55 +54,29 @@ class AssetLoader
      *
      * @return Asset
      */
-    public function load($name)
-    {
-        if( $this->has($name) ) {
-            return $this->get($name);
+    public function load($name) {
+        if (isset($this->objects[$name])) {
+            return $this->objects[$name];
         }
 
 
-        /**
-         * 'manifest'
-         * 'source_dir'
-         * 'name'
-         */
-        if( $assetConfig = $this->config->getAssetConfig($name) ) {
-            if( ! isset($assetConfig['manifest']) ) {
-                throw new Exception("manifest file is not defined in $name");
-            }
-
-            $format = isset($assetConfig['format']) 
-                          ? $assetConfig['format']
-                          : 0;
-            
-            // load the asset manifest file
-            $asset = new Asset($this->config);
-            $asset->loadFromManifestFile( 
-                $this->config->getRoot() . '/' . $assetConfig['manifest'], 
-                $format);
-
-            // save the asset object into the pool
-            return $this->add($asset);
-        } else {
-            // some code to find asset automatically.
-            // if there is not asset registered in config, we should look up from the asset paths
-            if($asset = $this->lookup($name)) {
-                return $this->add($asset);
-            }
-            throw new Exception("asset $name not found.");
+        $config = $this->cache->get($name);
+        if (!$config) {
+            throw new Exception("Asset $name is not defined.");
         }
-    }
 
-    public function loadFromManifestFile($file)
-    {
-        $asset = $this->config->registerAssetFromManifestFile($file);
-        return $this->assets[$name] = $asset;
-    }
+        if( ! isset($config['manifest']) ) {
+            throw new Exception("manifest path is not defined in $name");
+        }
 
-    public function loadFromPath($path)
-    {
-        $asset = $this->config->registerAssetFromPath($path);
-        return $this->assets[$asset->name] = $asset;
+        // load the asset manifest file
+        $asset = new Asset($this->config);
+
+        // load the asset config from manifest.php file.
+        $asset->loadFromManifestFile($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
+
+        // Save the asset object into the pool
+        return $this->objects[$name] = $asset;
     }
 
 
@@ -117,9 +86,8 @@ class AssetLoader
      * @param string[] asset names
      * @return Asset[]
      */
-    public function loadAssets($names) 
+    public function loadAssets($names)
     {
-        $self = $this;
         $assets = array();
         foreach( $names as $name ) {
             $assets[] = $this->load($name);
@@ -130,9 +98,9 @@ class AssetLoader
 
     public function updateAsset($asset)
     {
-        $manifestFile = FileUtil::find_non_php_manifest_file_from_directory( dirname($asset->manifestFile) );
-        $phpManifestFile = Data::compile_manifest_to_php($manifestFile);
-        $this->config->registerFromManifestFile($phpManifestFile);
+        $manifestFile = dirname($asset->manifestFile) . DIRECTORY_SEPARATOR . 'manifest.yml';
+        $compiledFile = ConfigCompiler::compile($manifestFile);
+        $this->register($compiledFile);
     }
 
     public function updateAssetByName($name)
@@ -148,12 +116,13 @@ class AssetLoader
     public function updateAssetManifests()
     {
         $assets = array();
-        $registered = $this->config->getRegisteredAssets();
+        $registered = $this->config->all();
         foreach( $registered as $name => $subconfig ) {
-            $assets[] = $this->config->registerAssetFromPath( dirname($subconfig['manifest']) );
+            $assets[] = $this->register( dirname($subconfig['manifest']) );
         }
         return $assets;
     }
+
 
 
     /**
@@ -161,10 +130,10 @@ class AssetLoader
      *
      * @return Asset[]
      */
-    public function loadAll() 
+    public function loadAll()
     {
         $assets = array();
-        $registered = $this->config->getRegisteredAssets();
+        $registered = $this->cache->pairs();
         foreach( $registered as $name => $subconfig ) {
             $assets[] = $this->load($name);
         }
@@ -177,69 +146,41 @@ class AssetLoader
         // some code to find asset automatically.
         // if there is not asset registered in config, we should look up from the asset paths
         $root = $this->config->getRoot();
-        foreach( $this->config->getAssetDirectories() as $dir ) {
-            if($asset = $this->config->registerAssetFromPath( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name )) {
+        foreach ($this->config->getAssetDirectories() as $dir ) {
+            if ($asset = $this->register( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'manifest.yml' )) {
                 return $asset;
             }
         }
     }
 
 
-
     /**
-     * Get asset object.
+     * Load asset from a manifest file or a directory that contains a manifest.yml file.
      *
-     * @param string $name asset name.
+     * @param string $path
+     * @parma integer $format
      */
-    public function get($name)
+    public function register($path)
     {
-        if(isset($this->assets[$name]) ) {
-            return $this->assets[$name];
+        if (is_dir($path) ) {
+            $path = $path . DIRECTORY_SEPARATOR . 'manifest.yml';
         }
-    }
-
-
-    /**
-     * Remove all asset objects
-     */
-    public function clear()
-    {
-        $this->assets = array();
-    }
-
-    /**
-     * @var string check if we've loaded this asset.
-     * @return bool
-     */
-    public function has($name)
-    {
-        return isset($this->assets[$name]);
-    }
-
-
-    /**
-     * @var Asset Add an asset to the asset queue and map.
-     */
-    public function add($asset)
-    {
-        // Add asset object safely.
-        if( ! isset($this->assets[$asset->name]) ) {
-            $this->assetObjects[] = $asset;
-            return $this->assets[$asset->name] = $asset;
+        if (! file_exists($path)) {
+            throw new Exception("Manifest file not found: $path.");
         }
+
+        $compiledFile = ConfigCompiler::compile($path);
+        $asset = new Asset($this->config);
+        $asset->loadFromManifestFile($compiledFile);
+        $this->cache->add($asset);
+        return $asset;
     }
 
-    /**
-     * Returns all asset objects (keys and values)
-     */
-    public function pairs()
-    {
-        return $this->assets;
-    }
-
-    public function all()
-    {
-        return $this->assetObjects;
+    public function __call($method, $args) {
+        if (method_exists($this->cache, $method)) {
+            return call_user_func_array(array($this->cache, $method), $args);
+        }
+        throw new Exception("Method $method is not defined.");
     }
 
 }
