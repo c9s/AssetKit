@@ -74,9 +74,11 @@ class InitCommand extends BaseCommand
             $this->logger->info("Creating compiled dir: $compiledDir");
             mkdir($compiledDir,0777,true);
         } else {
-            $this->logger->info("Changing directory permissions to 777 for enabling compilation through nginx/apache.");
-            chmod($compiledDir,777);
+            $this->logger->info("Changing directory permission to 777 for enabling compilation through nginx/apache.");
+            $this->logger->info("(You will need write permission to be opened for AssetCompiler.)");
+            chmod($compiledDir, 777);
         }
+        $this->logger->info("Done");
     }
 
 }
