@@ -22,7 +22,7 @@ class AssetLoaderTest extends AssetToolkit\TestCase
      *
      * @dataProvider manifestProvider
      */
-    public function testInit($manifestPath)
+    public function testAssetLoader($manifestPath)
     {
         $config = $this->getConfigArray();
         $loader = $this->getLoader();

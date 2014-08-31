@@ -41,6 +41,6 @@ class AssetExtensionTest extends Twig_Test_IntegrationTestCase
 
 class AssetObject extends AssetToolkit\TestCase {
     // dirty hack
-    function test() {  }
+    public function testAssetTwigExtension() {  }
 }
 

@@ -21,7 +21,6 @@ class CacheFactory
                 'namespace' => $config->getNamespace(),
             )));
         }
-
         $cache->addBackend( new FileSystemCache(array(
             'cache_dir' => $config->getCacheDir(),
         )));
