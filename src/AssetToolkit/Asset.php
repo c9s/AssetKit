@@ -3,10 +3,11 @@ namespace AssetToolkit;
 use ZipArchive;
 use Exception;
 use SerializerKit;
-use AssetToolkit\FileUtils;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use AssetToolkit\FileUtil;
+use AssetToolkit\FileUtils;
+use AssetToolkit\AssetConfig;
 
 
 /**
@@ -38,6 +39,7 @@ use AssetToolkit\FileUtil;
  *    public/assets/jquery/jquery.min.css
  *    public/assets/jquery/jquery.min.js
  *
+ * For now, Asset depends on AssetConfig, we shouldn't do that.
  */
 class Asset
 {
@@ -76,7 +78,7 @@ class Asset
     public $collections = array();
 
 
-    public function __construct($config) 
+    public function __construct(AssetConfig $config) 
     {
         $this->config = $config;
     }
@@ -297,7 +299,6 @@ class Asset
         }
         return true;
     }
-
 
 }
 

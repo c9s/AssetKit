@@ -1,19 +1,21 @@
 <?php
+use AssetToolkit\Asset;
 
 class AssetTest extends AssetToolkit\TestCase
 {
-    public function test()
+    public function testLoadFromManifestFile()
     {
         $config = $this->getConfigArray();
         $loader = $this->getLoader();
+        ok($config);
+        ok($loader);
+
+        $as = new Asset($config);
+        $as->loadFromManifestFile('tests/assets/jquery-ui/manifest.yml');
+        ok($as);
 
         /*
-        $as = new AssetToolkit\Asset('assets/jquery-ui/manifest.yml');
-        $as->config = $config;
-        ok( $as );
-
         $config->addAsset( 'jquery-ui', $as );
-
         $installer = new \AssetToolkit\Installer;
         $installer->enableLog = false;
         $installer->install( $as );
