@@ -8,7 +8,7 @@ class AssetExtensionTest extends Twig_Test_IntegrationTestCase
     {
         $extension = new AssetToolkit\Extension\Twig\AssetExtension();
 
-        $config = $this->test->getConfigArray();
+        $config = $this->test->getConfig();
         $loader = $this->test->getLoader();
 
         $extension->setAssetConfig($config);

@@ -24,7 +24,7 @@ class AssetLoaderTest extends AssetToolkit\TestCase
      */
     public function testAssetLoader($manifestPath)
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
 
         $asset = $loader->register($manifestPath);

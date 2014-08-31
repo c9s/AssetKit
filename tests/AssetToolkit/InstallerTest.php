@@ -38,7 +38,7 @@ class InstallerTest extends AssetToolkit\TestCase
 
     public function assetDataProvider()
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
         $assets = array();
         $assets[] = $loader->register('tests/assets/jquery');

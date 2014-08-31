@@ -6,7 +6,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
 {
     public function testCssImportUrlFromTestAssetInProductionMode()
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
 
         $assets = array();
@@ -73,7 +73,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
 
     public function testDevelopmentModeShouldOnlyRunFiltersForjQueryUI()
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
         $assets = array();
         $assets[] = $loader->register("tests/assets/test");
@@ -99,7 +99,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
      */
     public function testAssetRenderForDevelopment($outs)
     {
-        $render = new AssetToolkit\AssetRender($this->getConfigArray(),$this->getLoader());
+        $render = new AssetToolkit\AssetRender($this->getConfig(),$this->getLoader());
         ok($render);
 
         // the below tests are only for local.
@@ -125,7 +125,7 @@ class AssetCompilerTest extends AssetToolkit\TestCase
 
     public function testProductionModeForjQueryUI()
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
 
         $asset = $loader->register("tests/assets/jquery-ui");

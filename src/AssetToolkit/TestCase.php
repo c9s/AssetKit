@@ -9,7 +9,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     public $configFile;
     public $loader;
 
-    public function getConfigArrayFile()
+    public function getConfigFile()
     {
         if ($this->configFile) {
             return $this->configFile;
@@ -23,12 +23,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         return "tests/$filename.yml";
     }
 
-    public function getConfigArray()
+    public function getConfig()
     {
         if($this->config)
             return $this->config;
 
-        $configFile = $this->getConfigArrayFile();
+        $configFile = $this->getConfigFile();
         if (file_exists($configFile)) {
             unlink($configFile);
         }
@@ -45,12 +45,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         if ($this->loader)
             return $this->loader;
-        return $this->loader =  new \AssetToolkit\AssetLoader($this->getConfigArray());
+        return $this->loader =  new \AssetToolkit\AssetLoader($this->getConfig());
     }
 
     public function getCompiler()
     {
-        $compiler = new AssetCompiler($this->getConfigArray(),$this->getLoader());
+        $compiler = new AssetCompiler($this->getConfig(),$this->getLoader());
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
         return $compiler;
@@ -103,7 +103,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $configFile = $this->getConfigArrayFile();
+        $configFile = $this->getConfigFile();
         if (file_exists($configFile)) {
             unlink($configFile);
         }

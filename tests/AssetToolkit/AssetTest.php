@@ -5,7 +5,7 @@ class AssetTest extends AssetToolkit\TestCase
 {
     public function testLoadFromManifestFile()
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
         ok($config);
         ok($loader);

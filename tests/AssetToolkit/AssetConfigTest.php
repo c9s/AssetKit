@@ -5,7 +5,7 @@ class AssetConfigTest extends AssetToolkit\TestCase
 {
 
     public function testAssetConfigWithRootOption() {
-        $configFile = $this->getConfigArrayFile();
+        $configFile = $this->getConfigFile();
         $config = new AssetConfig($configFile, array(
             'root' => realpath('tests'),
         ));
@@ -16,7 +16,7 @@ class AssetConfigTest extends AssetToolkit\TestCase
     }
 
     public function testCreateAssetConfigWithArray() {
-        $configFile = $this->getConfigArrayFile();
+        $configFile = $this->getConfigFile();
         $config = new AssetConfig(array(
             'Environment' => 'production',
         ), array(
@@ -34,7 +34,7 @@ class AssetConfigTest extends AssetToolkit\TestCase
 
     public function testCreateAssetConfig()
     {
-        $configFile = $this->getConfigArrayFile();
+        $configFile = $this->getConfigFile();
         $config = new AssetConfig($configFile, array());
         ok($config);
 

@@ -5,7 +5,7 @@ class CssImportFilterTest extends AssetToolkit\TestCase
 
     public function test()
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
 
         $jqueryui = $loader->register('tests/assets/jquery-ui');
@@ -30,7 +30,7 @@ class CssImportFilterTest extends AssetToolkit\TestCase
 
     public function testFilterPath()
     {
-        $config = $this->getConfigArray();
+        $config = $this->getConfig();
         $loader = $this->getLoader();
 
         $collection = new AssetToolkit\Collection;
