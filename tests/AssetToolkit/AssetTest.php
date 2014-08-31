@@ -3,6 +3,7 @@ use AssetToolkit\Asset;
 
 class AssetTest extends AssetToolkit\TestCase
 {
+
     public function testLoadFromManifestFile()
     {
         $config = $this->getConfig();
@@ -14,6 +15,21 @@ class AssetTest extends AssetToolkit\TestCase
         $as->loadFromManifestFile('tests/assets/jquery-ui/manifest.yml');
         ok($as);
 
+        $collections = $as->getCollections();
+        ok($collections);
+
+        foreach( $collections as $c ) {
+            $paths = $c->getSourcePaths();
+            foreach( $paths as $p ) {
+                file_ok( $p );
+            }
+            ok( $paths );
+        }
+    }
+
+
+
+
 
         /*
         $config->addAsset( 'jquery-ui', $as );
@@ -24,13 +40,6 @@ class AssetTest extends AssetToolkit\TestCase
         is('public/assets/jquery-ui',$as->getInstallDir());
         is('assets/jquery-ui',$as->getSourceDir());
 
-        foreach( $as->getCollections() as $c ) {
-            $paths = $c->getSourcePaths();
-            foreach( $paths as $p ) { 
-                file_ok( $p );
-            }
-            ok( $paths );
-        }
 
 #          $installer->uninstall( $as );
 
@@ -38,6 +47,5 @@ class AssetTest extends AssetToolkit\TestCase
 
         // $jssha->initResource();
          */
-    }
 }
 

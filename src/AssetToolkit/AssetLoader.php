@@ -68,12 +68,13 @@ class AssetLoader
         }
 
 
+        // Get the asset config from entries cluster
         $config = $this->entries->get($name);
         if (!$config) {
             throw new Exception("Asset $name is not defined.");
         }
 
-        if( ! isset($config['manifest']) ) {
+        if (! isset($config['manifest'])) {
             throw new Exception("manifest path is not defined in $name");
         }
 
@@ -106,9 +107,7 @@ class AssetLoader
 
     public function updateAsset($asset)
     {
-        $manifestFile = dirname($asset->manifestFile) . DIRECTORY_SEPARATOR . 'manifest.yml';
-        $compiledFile = ConfigCompiler::compile($manifestFile);
-        $this->register($compiledFile);
+        $this->register($asset->manifestFile);
     }
 
     public function updateAssetByName($name)
@@ -177,9 +176,9 @@ class AssetLoader
             throw new Exception("Manifest file not found: $path.");
         }
 
-        $compiledFile = ConfigCompiler::compile($path);
+        // $compiledFile = ConfigCompiler::compile($path);
         $asset = new Asset($this->config);
-        $asset->loadFromManifestFile($compiledFile);
+        $asset->loadFromManifestFile($path);
         $this->entries->add($asset);
         return $asset;
     }

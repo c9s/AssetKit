@@ -8,6 +8,7 @@ use RecursiveIteratorIterator;
 use AssetToolkit\FileUtil;
 use AssetToolkit\FileUtils;
 use AssetToolkit\AssetConfig;
+use ConfigKit\ConfigCompiler;
 
 
 /**
@@ -86,24 +87,13 @@ class Asset
 
 
     /**
-     * @var string $manifestFile related manifest file path.
-     * @var integer $format file format: PHP, JSON or YAML.
+     * @var string $manifestYamlFile related YAML manifest file path.
      */
-    public function loadFromManifestFile($manifestFile, $format = 0)
+    public function loadFromManifestFile($manifestYamlFile)
     {
-        # NOTE: this file checking should be in outside of this function
-        # to add another file checking might increase file IO and more system calls.
-        # if( ! file_exists( $manifestFile ) ) {
-        #     $manifestFile = FileUtil::find_non_php_manifest_file_from_directory(dirname($manifestFile));
-        # }
-        $config = null;
-        if( $format ) {
-            $config = Data::decode_file($manifestFile, $format);
-        } else {
-            $config = Data::detect_format_and_decode( $manifestFile );
-        }
-        $this->manifestFile = $manifestFile;
-        $this->sourceDir    = dirname($manifestFile);
+        $config = ConfigCompiler::load($manifestYamlFile);
+        $this->manifestFile = $manifestYamlFile;
+        $this->sourceDir    = dirname($manifestYamlFile);
         $this->name         = basename($this->sourceDir);
         $this->loadFromArray($config);
     }
@@ -115,7 +105,7 @@ class Asset
         // load assets
         if( isset($this->stash['collections']) ) {
             // create collection objects
-            $this->collections = $this->create_collections($this->stash['collections']);
+            $this->collections = $this->loadCollections($this->stash['collections']);
         } else {
             throw new Exception("the 'collections' is not defined in {$this->name}");
         }
@@ -125,7 +115,7 @@ class Asset
     /**
      * simply copy class members to to the file collection
      */
-    public function create_collections( $collectionStash )
+    public function loadCollections( $collectionStash )
     {
         $sourceDir = $this->sourceDir;
         $collections = array();
