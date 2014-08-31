@@ -8,7 +8,7 @@
         "corneltek/fileutil": "~1.6",
         "corneltek/cliframework": "*",
         "corneltek/configkit": "~1",
-        "symfony/process": "~2.6"
+        "symfony/process": "~2"
     },
     "require-dev": {
         "corneltek\/universal": "dev-master",
