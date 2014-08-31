@@ -36,8 +36,8 @@ class AssetConfig implements ArrayAccess
     /**
      * @var array $config the config hash.
      *
-     *    'baseDir': The base directory for public files.
-     *    'baseUrl': The base url for front-end.
+     *    'BaseDir': The base directory for public files.
+     *    'BaseUrl': The base url for front-end.
      *    'dirs': asset directories.
      *    'assets': contains asset configs
      *
@@ -62,7 +62,7 @@ class AssetConfig implements ArrayAccess
     public function __construct($file, $options = null) {
         $this->file = $file;
         $this->options = $options;
-        if ($options) { 
+        if ($options) {
             if ( isset($options['root']) ) {
                 $this->root = $options['root'];
             }
@@ -86,6 +86,10 @@ class AssetConfig implements ArrayAccess
 
     public function getCache() {
         return $this->cache;
+    }
+
+    public function setCache($cache) {
+        $this->cache = $cache;
     }
 
     public function setCacheDir($dir)
@@ -151,7 +155,7 @@ class AssetConfig implements ArrayAccess
 
     public function loadFile($file) {
         $this->file = $file;
-        $this->stash = ConfigCompiler::load($file);
+        $this->load();
     }
 
     /**
@@ -159,6 +163,16 @@ class AssetConfig implements ArrayAccess
      */
     public function load()
     {
+        if (extension_loaded('apc')) {
+            $key = 'asset-config:' . $this->root . ':' . $this->file;
+            if ($stash = apc_fetch($key)) {
+                $this->stash = $stash;
+            } else {
+                $this->stash = ConfigCompiler::load($this->file);
+                apc_store($key, $this->stash);
+            }
+            return $this->stash;
+        }
         return $this->stash = ConfigCompiler::load($this->file);
     }
 
@@ -172,7 +186,6 @@ class AssetConfig implements ArrayAccess
         ConfigCompiler::write_yaml($filepath, $config);
     }
 
-
     /**
      * Save current asset config with $format
      */
@@ -180,7 +193,6 @@ class AssetConfig implements ArrayAccess
     {
         ConfigCompiler::write_yaml($this->file, $this->stash);
     }
-
 
 
 
@@ -266,7 +278,7 @@ class AssetConfig implements ArrayAccess
 
 
     /**
-     * Get baseDir, this is usually used for compiling and minifing.
+     * Get BaseDir, this is usually used for compiling and minifing.
      *
      * @param bool $absolute reutrn absolute path or not 
      * @return string the path
@@ -275,27 +287,27 @@ class AssetConfig implements ArrayAccess
     {
         // Here the absolute base dir path should not be prefixed by fileDirectory
         // We should simply get the realpath in their context.
-        if( isset($this->stash['baseDir']) && $this->stash['baseDir'] ) 
+        if( isset($this->stash['BaseDir']) && $this->stash['BaseDir'] ) 
         {
             if( $absolute ) {
-                return $this->getRoot() . DIRECTORY_SEPARATOR .  $this->stash['baseDir'];
+                return $this->getRoot() . DIRECTORY_SEPARATOR .  $this->stash['BaseDir'];
             }
-            return $this->stash['baseDir'];
+            return $this->stash['BaseDir'];
         }
-        throw new Exception("baseDir is not defined in asset config.");
+        throw new Exception("BaseDir is not defined in asset config.");
     }
 
 
     /**
-     * Get baseUrl for front-end including
+     * Get BaseUrl for front-end including
      *
      * @return string the path.
      */
     public function getBaseUrl()
     {
-        if( isset($this->stash['baseUrl']) && $this->stash['baseUrl'] ) 
-            return $this->stash['baseUrl'];
-        throw new Exception("baseUrl is not defined in asset config.");
+        if( isset($this->stash['BaseUrl']) && $this->stash['BaseUrl'] ) 
+            return $this->stash['BaseUrl'];
+        throw new Exception("BaseUrl is not defined in asset config.");
     }
 
 
@@ -305,7 +317,7 @@ class AssetConfig implements ArrayAccess
      */
     public function setBaseUrl($url) 
     {
-        $this->stash['baseUrl'] = $url;
+        $this->stash['BaseUrl'] = $url;
     }
 
     /**
@@ -313,7 +325,7 @@ class AssetConfig implements ArrayAccess
      */
     public function setBaseDir($dir) 
     {
-        $this->stash['baseDir'] = $dir;
+        $this->stash['BaseDir'] = $dir;
     }
 
 

@@ -25,9 +25,6 @@ use ConfigKit\ConfigCompiler;
 class AssetLoader
 {
 
-
-
-
     /**
      * @var \AssetToolkit\AssetConfig
      */

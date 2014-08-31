@@ -59,19 +59,24 @@ class InitCommand extends BaseCommand
                 $config->addAssetDirectory($dir);
             }
         }
-        $config->write($configFile);
-
-
-        /*
-        $compiledDir = $config->getCompiledDir();
-        $this->logger->info("Creating compiled dir: $compiledDir");
-        $this->logger->info("Please chmod this directory as you need.");
-        if ( ! file_exists($compiledDir) )
-            mkdir($compiledDir,0755,true);
-
-        $this->logger->info("Writing config file $configFile");
+        $this->logger->info("Saving config to $configFile");
         $config->save();
-        */
+
+
+        if (file_exists($this->getAssetConfigLink()) ) {
+            unlink($this->getAssetConfigLink());
+        }
+        $this->logger->info("Creating link {$this->getAssetConfigLink()} for $configFile");
+        symlink($configFile, $this->getAssetConfigLink());
+
+        $compiledDir = $config->getCompiledDir();
+        if ( ! file_exists($compiledDir) ) {
+            $this->logger->info("Creating compiled dir: $compiledDir");
+            mkdir($compiledDir,0777,true);
+        } else {
+            $this->logger->info("Changing directory permissions to 777 for enabling compilation through nginx/apache.");
+            chmod($compiledDir,777);
+        }
     }
 
 }

@@ -146,7 +146,7 @@ Once you got `assetkit`, you can initialize it with your public path (web root):
 $ assetkit init --baseDir public/assets --baseUrl "/assets"
 ```
 
-The config is stored at `.assetkit.php` file.
+The config is stored at `assetkit.yml` file.
 
 Then fetch anything you want:
 
@@ -167,13 +167,13 @@ Saving config...
 Done
 ```
 
-And your `.assetkit.php` file will be updated, these asset files will be installed into `public/assets`.
+And your `assetkit.yml` file will be updated, these asset files will be installed into `public/assets`.
 
 >   NOTE:
 >   To install asset files with symbol link, use --link option,
 >   Which is convenient for asset development.
 
-If someone wants to clone your project, you can add `.assetkit.php` file to the repository, then B can 
+If someone wants to clone your project, you can add `assetkit.yml` file to the repository, then B can 
 do `update` command to update assets:
 
 ```sh
@@ -187,7 +187,7 @@ To use assetkit in your application, just few lines to write:
 require 'vendor/autoload.php';
 
 // load your asset config file, this contains asset manifest and types
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php', array( 
+$config = new AssetToolkit\AssetConfig( '../assetkit.yml', array( 
     'root' => APP_ROOT // the absolute path where you run "assetkit" command.
 ));
 
@@ -213,7 +213,7 @@ You may simply check example script in the `example` folder.
 Advanced Usage
 ---------------------------
 
-This creates and initializes the `.assetkit.php` file:
+This creates and initializes the `assetkit.yml` file:
 
 ```sh
 $ assetkit init --baseUrl=/assets --baseDir=public/assets
@@ -256,7 +256,7 @@ use AssetToolkit\AssetConfig;
 
 // To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
 $config = new AssetToolkit\AssetConfig( 'config/assetkit.yml',array(
-    // the application root, contains the .assetkit.php file.
+    // the application root, contains the assetkit.yml file.
     'root' => APPLICATION_ROOT,
     'cache' => new UniversalCache\ApcCache(array( 'namespace' => 'myapp_' ));
     'environment' => AssetConfig::PRODUCTION,
@@ -381,7 +381,7 @@ API
 ### AssetConfig API
 
 ```php
-$config = new AssetToolkit\AssetConfig('.assetkit.php',array(  
+$config = new AssetToolkit\AssetConfig('assetkit.yml',array(  
     'cache' => true,
     'cache_id' => 'your_app_id',
     'cache_expiry' => 3600
@@ -410,7 +410,7 @@ $config->save();
 $loader = new AssetToolkit\AssetLoader($config);
 
 // load asset from a directory that might contains a manifest file,
-// Note: Since you're going to put the .assetkit.php file 
+// Note: Since you're going to put the assetkit.yml file 
 //       In your VCS, you should use relative path instead of 
 //       absolute path.
 $asset = $loader->register("tests/assets/jquery");
