@@ -14,6 +14,7 @@ class AssetTest extends AssetToolkit\TestCase
         $as->loadFromManifestFile('tests/assets/jquery-ui/manifest.yml');
         ok($as);
 
+
         /*
         $config->addAsset( 'jquery-ui', $as );
         $installer = new \AssetToolkit\Installer;

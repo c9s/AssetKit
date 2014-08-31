@@ -4,13 +4,31 @@ use AssetToolkit\AssetConfig;
 class AssetConfigTest extends AssetToolkit\TestCase
 {
 
-    public function testAssetConfigWithRoot() {
+    public function testAssetConfigWithRootOption() {
         $configFile = $this->getConfigArrayFile();
         $config = new AssetConfig($configFile, array(
             'root' => realpath('tests'),
         ));
         ok($config);
+        $config->save();
+        path_ok($configFile);
+        unlink($configFile);
     }
+
+    public function testCreateAssetConfigWithArray() {
+        $configFile = $this->getConfigArrayFile();
+        $config = new AssetConfig(array(
+            'Environment' => 'production',
+        ), array(
+            'root' => realpath('tests'),
+        ));
+        ok($config);
+        $config->save($configFile);
+        path_ok($configFile);
+        unlink($configFile);
+    }
+
+
 
 
 

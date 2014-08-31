@@ -58,11 +58,9 @@ class AssetConfig implements ArrayAccess
      */
     public $cache;
 
-
-    public function __construct($file, $options = null) {
-        $this->file = $file;
-        $this->options = $options;
+    public function __construct($arg = null, $options = null) {
         if ($options) {
+            $this->options = $options;
             if ( isset($options['root']) ) {
                 $this->root = $options['root'];
             }
@@ -70,8 +68,15 @@ class AssetConfig implements ArrayAccess
                 $this->cache = $options['cache'];
             }
         }
-        if (file_exists($file)) {
-            $this->load();
+        if ($arg) {
+            if (is_string($arg)) {
+                $this->file = $arg;
+                if (file_exists($arg)) {
+                    $this->load();
+                }
+            } elseif (is_array($arg)) {
+                $this->stash = $arg;
+            }
         }
     }
 
@@ -189,8 +194,14 @@ class AssetConfig implements ArrayAccess
     /**
      * Save current asset config with $format
      */
-    public function save()
+    public function save($file = null)
     {
+        if ($file) {
+            $this->file = $file;
+        }
+        if (!$this->file) {
+            throw new Exception("Filename for config is not defined.");
+        }
         ConfigCompiler::write_yaml($this->file, $this->stash);
     }
 
