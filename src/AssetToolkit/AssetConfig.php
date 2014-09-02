@@ -176,6 +176,9 @@ class AssetConfig implements ArrayAccess
                 $this->stash = ConfigCompiler::load($this->file);
                 apc_store($key, $this->stash);
             }
+            if (!$this->stash) {
+                throw new Exception('Config load failed: ' . $this->file);
+            }
             return $this->stash;
         }
         return $this->stash = ConfigCompiler::load($this->file);

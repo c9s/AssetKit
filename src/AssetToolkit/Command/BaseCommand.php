@@ -33,13 +33,15 @@ class BaseCommand extends Command
 
     public function getAssetConfig()
     {
-        if ( $this->assetConfig ) {
+        if ($this->assetConfig) {
             return $this->assetConfig;
         }
 
-        $configFile = $this->getAssetConfigFile();
-        $this->assetConfig = new AssetConfig($configFile);
-        return $this->assetConfig;
+        $file = $this->getAssetConfigLink();
+        if ( file_exists($file) ) {
+            return $this->assetConfig = new AssetConfig($file);
+        }
+        return $this->assetConfig = new AssetConfig($this->getAssetConfigFile());
     }
 
     public function getAssetCache() {

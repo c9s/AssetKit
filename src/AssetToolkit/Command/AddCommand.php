@@ -18,7 +18,7 @@ class AddCommand extends BaseCommand
     {
         $config = $this->getAssetConfig();
         $loader = $this->getAssetLoader();
-        $asset = $config->registerAssetFromPath($manifestFile);
+        $asset = $loader->register($manifestFile);
 
         if (!$asset) {
             throw new Exception("Can not load asset from $manifestFile.");
@@ -34,7 +34,9 @@ class AddCommand extends BaseCommand
         $installer = $this->getInstaller();
         $installer->install( $asset );
 
+        /*
         $config->addAsset( $asset );
+         */
         $this->logger->info("Saving config...");
         $config->save();
 
