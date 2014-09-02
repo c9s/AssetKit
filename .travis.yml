@@ -5,12 +5,7 @@ php:
 before_install:
   - sudo apt-get -qq install coffeescript ruby-sass
 before_script:
-  - curl -o APC-3.1.13.tgz http://pecl.php.net/get/APC-3.1.13.tgz
-  - tar -xzf APC-3.1.13.tgz
-  - sh -c "cd APC-3.1.13 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
-  - rm -rf APC-3.1.13
-  - rm APC-3.1.13.tgz
-  - echo "extension=apc.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+  - echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - curl -o yaml-1.1.0.tgz http://pecl.php.net/get/yaml-1.1.0.tgz
   - tar -xzf yaml-1.1.0.tgz
   - sh -c "cd yaml-1.1.0 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
