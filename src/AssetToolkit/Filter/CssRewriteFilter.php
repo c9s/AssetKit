@@ -2,6 +2,7 @@
 namespace AssetToolkit\Filter;
 use AssetToolkit\AssetConfig;
 use AssetToolkit\AssetUrlBuilder;
+use AssetToolkit\Collection;
 
 /**
  * Rewrite css url to absolute url (from root path)
@@ -106,7 +107,7 @@ class CssRewriteFilter extends BaseFilter
      *
      * @param Collection $collection
      */
-    public function filter($collection)
+    public function filter(Collection $collection)
     {
         if ( ! $collection->isStylesheet )
             return;

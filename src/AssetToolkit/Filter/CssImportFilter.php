@@ -3,6 +3,7 @@ namespace AssetToolkit\Filter;
 use AssetToolkit\AssetUrlBuilder;
 use AssetToolkit\AssetConfig;
 use AssetToolkit\Asset;
+use AssetToolkit\Collection;
 
 class CssImportFilter extends BaseFilter
 {
@@ -97,7 +98,7 @@ class CssImportFilter extends BaseFilter
         return $content;
     }
 
-    public function filter($collection)
+    public function filter(Collection $collection)
     {
         if ( ! $collection->isStylesheet ) {
             return;

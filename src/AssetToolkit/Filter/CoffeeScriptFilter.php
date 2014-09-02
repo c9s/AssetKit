@@ -4,6 +4,7 @@ use RuntimeException;
 use AssetToolkit\Process;
 use AssetToolkit\Utils;
 use AssetToolkit\AssetConfig;
+use AssetToolkit\Collection;
 
 class CoffeeScriptFilter extends BaseFilter
 {
@@ -25,7 +26,7 @@ class CoffeeScriptFilter extends BaseFilter
         parent::__construct($config);
     }
 
-    public function filter($collection)
+    public function filter(Collection $collection)
     {
         if( ! $collection->isJavascript && ! $collection->isCoffeescript ) {
             return;

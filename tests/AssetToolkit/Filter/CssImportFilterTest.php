@@ -13,8 +13,8 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         $jqueryui = $loader->register('tests/assets/jquery-ui');
         ok($jqueryui, 'jqueryui asset is loaded');
 
-        $rewriteFilter = new \AssetToolkit\Filter\CssRewriteFilter($config);
-        $filter        = new \AssetToolkit\Filter\CssImportFilter($config);
+        $rewriteFilter = new CssRewriteFilter($config);
+        $filter        = new CssImportFilter($config);
         foreach( $jqueryui->getCollections() as $c ) {
 
             // for css stylesheet
@@ -42,8 +42,8 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         ok($jqueryui, 'jqueryui asset is loaded');
 
 
-        $rewriteFilter = new \AssetToolkit\Filter\CssRewriteFilter($config);
-        $filter        = new \AssetToolkit\Filter\CssImportFilter($config);
+        $rewriteFilter = new CssRewriteFilter($config);
+        $filter        = new CssImportFilter($config);
         foreach( $jqueryui->getCollections() as $c ) {
 
             ok( $c->getContent() ,'get content ok' );
