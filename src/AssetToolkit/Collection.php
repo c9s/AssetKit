@@ -54,7 +54,7 @@ class Collection
      * @param bool $absolute Should return absolute or relative.
      * @return string
      */
-    public function getSourcePaths($absolute = false)
+    public function getSourcePaths()
     {
         $dir = $this->asset->getSourceDir();
         return \futil_paths_prepend($this->files,$dir);
@@ -201,7 +201,7 @@ class Collection
 
     public function getIterator()
     {
-        return new ArrayIterator($this->getSourcePaths(true));
+        return new ArrayIterator($this->getSourcePaths());
     }
 
 

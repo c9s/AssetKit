@@ -280,10 +280,11 @@ class Asset
     public function hasSourceFiles()
     {
         foreach( $this->collections as $collection ) {
-            $paths = $collection->getSourcePaths(true);
+            $paths = $collection->getSourcePaths();
             foreach( $paths as $path ) {
-                if( ! file_exists($path) )
+                if ( ! file_exists($path) ) {
                     return false;
+                }
             }
         }
         return true;
