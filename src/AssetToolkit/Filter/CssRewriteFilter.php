@@ -14,19 +14,26 @@ use AssetToolkit\Collection;
  *
  * To use CssRewriteFilter with your own content:
  *
- *    $rewrite = new CssRewriteFilter;
+ *    $rewrite = new CssRewriteFilter($config, '/assets/jquery');
  *    $rewrite->rewrite( $yourContent, '/url/to/your/asset/file' );
  *
  * To use CssRewriteFilter with collection object:
  *
- *    $rewrite = new CssRewriteFilter;
+ *    $rewrite = new CssRewriteFilter($config, '/assets/jquery');
  *    $rewrite->filter( $collection );
  *    $css = $collection->getContent();
  *
  */
 class CssRewriteFilter extends BaseFilter
 {
-    const DEBUG = false;
+    const DEBUG = 0;
+
+    public $rewriteBaseUrl = '/';
+
+    public function __construct(AssetConfig $config, $rewriteBaseUrl) {
+        $this->rewriteBaseUrl = $rewriteBaseUrl;
+        parent::__construct($config);
+    }
 
 
     /**
@@ -113,15 +120,15 @@ class CssRewriteFilter extends BaseFilter
             return;
 
         //  path:  /assets/{asset name}
-        $urlBuilder = new AssetUrlBuilder($this->config);
-        $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
+        // $urlBuilder = new AssetUrlBuilder($this->config);
+        // $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
 
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $chunk['content'] = $this->rewrite( 
                 $chunk['content'],
                 // url to the directory of the asset.
-                $assetBaseUrl . '/' . dirname($chunk['path'])
+                $this->rewriteBaseUrl . '/' . dirname($chunk['path'])
             );
         }
         $collection->setChunks($chunks);

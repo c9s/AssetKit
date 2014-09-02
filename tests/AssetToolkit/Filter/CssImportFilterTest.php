@@ -10,10 +10,12 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
+        $urlBuilder = new AssetToolkit\AssetUrlBuilder($config);
+
         $jqueryui = $loader->register('tests/assets/jquery-ui');
         ok($jqueryui, 'jqueryui asset is loaded');
 
-        $rewriteFilter = new CssRewriteFilter($config);
+        $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         $filter        = new CssImportFilter($config);
         foreach( $jqueryui->getCollections() as $c ) {
 
@@ -35,6 +37,8 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
+        $urlBuilder = new AssetToolkit\AssetUrlBuilder($config);
+
         $collection = new AssetToolkit\Collection;
         $collection->setContent("background: url(../images/file.png)");
 
@@ -42,7 +46,7 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         ok($jqueryui, 'jqueryui asset is loaded');
 
 
-        $rewriteFilter = new CssRewriteFilter($config);
+        $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         $filter        = new CssImportFilter($config);
         foreach( $jqueryui->getCollections() as $c ) {
 

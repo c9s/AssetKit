@@ -9,7 +9,6 @@ class CssImportFilter extends BaseFilter
 {
     const DEBUG = 0;
 
-
     public function importCss($content, $fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
     {
         if (CssImportFilter::DEBUG) {
@@ -17,7 +16,7 @@ class CssImportFilter extends BaseFilter
         }
 
         // we should rewrite url( ) paths first, before we import css contents
-        $rewrite = new CssRewriteFilter($this->config);
+        $rewrite = new CssRewriteFilter($this->config, $assetBaseUrl);
         $content = $rewrite->rewrite($content, $dirnameUrl);
 
         $self = $this;

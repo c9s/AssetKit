@@ -109,7 +109,7 @@ class SassFilter extends BaseFilter
             $output = $proc->getOutput();
 
             if ( $this->rewrite ) {
-                $rewrite = new CssRewriteFilter($this->config);
+                $rewrite = new CssRewriteFilter($this->config, $assetBaseUrl);
                 $output = $rewrite->rewrite( $output, $assetBaseUrl . '/' . dirname($chunk['path']) );
             }
 
