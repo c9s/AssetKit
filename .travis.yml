@@ -7,6 +7,7 @@ before_install:
   - sudo apt-get -qq install coffeescript ruby-sass
 before_script:
   - echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - curl -o yaml-1.1.0.tgz http://pecl.php.net/get/yaml-1.1.0.tgz
   - tar -xzf yaml-1.1.0.tgz
   - sh -c "cd yaml-1.1.0 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
