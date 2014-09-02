@@ -49,13 +49,13 @@ class AssetLoaderTest extends AssetToolkit\TestCase
         ok($updater, "Resource updater is loaded");
         $updater->update($asset);
 
-        $installer = new AssetToolkit\LinkInstaller;
+        $installer = new AssetToolkit\LinkInstaller($config);
         ob_start();
         $installer->install( $asset );
         $installer->uninstall( $asset );
         ob_clean();
 
-        $installer = new AssetToolkit\Installer;
+        $installer = new AssetToolkit\Installer($config);
         ob_start();
         $installer->install( $asset );
         $installer->uninstall( $asset );

@@ -33,7 +33,7 @@ class AssetTest extends AssetToolkit\TestCase
 
         /*
         $config->addAsset( 'jquery-ui', $as );
-        $installer = new \AssetToolkit\Installer;
+        $installer = new \AssetToolkit\Installer($config);
         $installer->enableLog = false;
         $installer->install( $as );
 

@@ -11,7 +11,7 @@ class InstallerTest extends AssetToolkit\TestCase
      */
     public function testInstaller($assets)
     {
-        $installer = new AssetToolkit\Installer;
+        $installer = new AssetToolkit\Installer($this->getConfig());
         ok($installer);
         foreach($assets as $asset) {
             $installer->install($asset);
@@ -26,7 +26,7 @@ class InstallerTest extends AssetToolkit\TestCase
      */
     public function testLinkInstaller($assets)
     {
-        $installer = new AssetToolkit\LinkInstaller;
+        $installer = new AssetToolkit\LinkInstaller($this->getConfig());
         ok($installer);
         foreach($assets as $asset) {
             $installer->install($asset);

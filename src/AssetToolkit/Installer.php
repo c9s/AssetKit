@@ -6,6 +6,13 @@ class Installer
 {
     public $enableLog = false;
     public $logger;
+    public $config;
+
+    public function __construct(AssetConfig $config) {
+        $this->config = $config;
+    }
+
+
 
     public function setLogger($logger) 
     {
@@ -40,7 +47,7 @@ class Installer
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
-                $targetFile = $asset->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $this->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
                 $this->info("x $targetFile");
                 if( file_exists($targetFile) ) {
@@ -67,7 +74,7 @@ class Installer
                     continue;
                 }
 
-                $targetFile = $asset->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $this->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
 
                 $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {

@@ -62,7 +62,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         static $installer;
         if($installer)
             return $installer;
-        $installer = new \AssetToolkit\Installer;
+        $installer = new \AssetToolkit\Installer($this->getConfig());
         $installer->enableLog = false;
         return $installer;
     }

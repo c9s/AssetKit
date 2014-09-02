@@ -316,8 +316,9 @@ class AssetConfig implements ArrayAccess
      */
     public function getBaseUrl()
     {
-        if( isset($this->stash['BaseUrl']) && $this->stash['BaseUrl'] ) 
+        if ( isset($this->stash['BaseUrl']) && $this->stash['BaseUrl'] ) {
             return $this->stash['BaseUrl'];
+        }
         throw new Exception("BaseUrl is not defined in asset config.");
     }
 
@@ -332,11 +333,14 @@ class AssetConfig implements ArrayAccess
     }
 
     /**
-     * Get the base dir of installed asset.
+     * Set the base dir of installed asset.
+     *
+     * @param string $path must be relative path.
+     *
      */
-    public function setBaseDir($dir) 
+    public function setBaseDir($path) 
     {
-        $this->stash['BaseDir'] = $dir;
+        $this->stash['BaseDir'] = $path;
     }
 
 
@@ -349,6 +353,15 @@ class AssetConfig implements ArrayAccess
     {
         return $this->getBaseUrl() . '/compiled';
     }
+
+    /**
+     * Get installation dir (the target directory of public)
+     */
+    public function getAssetInstallDir(Asset $asset, $absolute = false)
+    {
+        return $this->getBaseDir(true) . DIRECTORY_SEPARATOR . $asset->name;
+    }
+
 
 
     public function setRoot($root)

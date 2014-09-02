@@ -57,12 +57,23 @@ class Asset
 
     /**
      * @var string asset dir (related path, relate to config file) 
+     *
+     *     "assets/jquery"
+     *     "bundles/ResourceA/assets/underscore"
+     *     "bundles/ResourceA/assets/font-awesome"
+     *
      */
     public $sourceDir;
 
 
+    public $baseDir;
+
+
+
     /**
      * @var string manifest file path, we assume that the manifest file should be PHP format.
+     *
+     *     "bundles/ResourceA/assets/font-awesome/manifest.yml"
      */
     public $manifestFile;
 
@@ -195,6 +206,9 @@ class Asset
 
                 } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
                     $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
+
+                    // We remove the base dir becase we need to build the 
+                    // asset urls
                     $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
                     $expandedFiles = array_unique(array_merge( $expandedFiles , $expanded ));
                 } else {
@@ -244,7 +258,7 @@ class Asset
 
 
     /**
-     * Get installation dir (the target directory of public)
+     * Get target installation dir (the target directory of public)
      */
     public function getInstallDir($absolute = false)
     {
@@ -292,6 +306,10 @@ class Asset
             }
         }
         return true;
+    }
+
+    public function __set_state($array) {
+        // TODO: implement this
     }
 
 }

@@ -72,9 +72,9 @@ class BaseCommand extends Command
     public function getInstaller()
     {
         if( $this->options->link ) {
-            return new LinkInstaller;
+            return new LinkInstaller($this->getAssetConfig());
         }
-        return new Installer;
+        return new Installer($this->getAssetConfig());
     }
 }
 
