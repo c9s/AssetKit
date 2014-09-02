@@ -16,14 +16,14 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         ok($jqueryui, 'jqueryui asset is loaded');
 
         $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
-        $filter        = new CssImportFilter($config);
+        $importFilter        = new CssImportFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         foreach( $jqueryui->getCollections() as $c ) {
 
             // for css stylesheet
             if( $c->isStylesheet ) {
                 $rewriteFilter->filter( $c );
 
-                // $filter->filter( $c );
+                // $importFilter->filter( $c );
                 $content = $c->getContent();
                 ok($content,"Got content");
                 // echo $content;
@@ -47,7 +47,7 @@ class CssImportFilterTest extends AssetToolkit\TestCase
 
 
         $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
-        $filter        = new CssImportFilter($config);
+        $importFilter        = new CssImportFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         foreach( $jqueryui->getCollections() as $c ) {
 
             ok( $c->getContent() ,'get content ok' );
@@ -56,7 +56,7 @@ class CssImportFilterTest extends AssetToolkit\TestCase
             if( $c->isStylesheet ) {
                 $rewriteFilter->filter( $c );
 
-                // $filter->filter( $c );
+                // $importFilter->filter( $c );
                 $content = $c->getContent();
                 ok($content,"Got content");
                 // echo $content;

@@ -13,7 +13,12 @@ class Collection
 
     public $files = array();
 
-    public $asset;
+    // public $asset;
+
+    /**
+     * @param path Asset source directory
+     */
+    public $sourceDir;
 
     public $isJavascript;
 
@@ -56,8 +61,7 @@ class Collection
      */
     public function getSourcePaths()
     {
-        $dir = $this->asset->getSourceDir();
-        return \futil_paths_prepend($this->files,$dir);
+        return \futil_paths_prepend($this->files,$this->sourceDir);
     }
 
 
@@ -68,8 +72,7 @@ class Collection
      */
     public function getFullpaths()
     {
-        $dir = $this->asset->getSourceDir();
-        return \futil_paths_prepend($this->files, $dir);
+        return \futil_paths_prepend($this->files, $this->sourceDir);
     }
 
     /**
@@ -146,9 +149,8 @@ class Collection
             return $this->chunks;
         }
 
-        $sourceDir = $this->asset->getSourceDir();
         foreach( $this->files as $file ) {
-            $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
+            $fullpath = $this->sourceDir . DIRECTORY_SEPARATOR . $file;
 
             if ( ($out = file_get_contents( $fullpath )) !== false ) {
                 $this->chunks[] = array(
@@ -205,5 +207,12 @@ class Collection
     }
 
 
+    /**
+     * Check if collection files are out of date.
+     */
+    public function isOutOfDate($fromTime)
+    {
+        return $c->getLastModifiedTime() > $fromTime;
+    }
 }
 

@@ -177,7 +177,7 @@ class AssetCompiler
                 if ( $filters = $c->getFilters() ) {
                     $filtered = $this->runUserDefinedFilters($c);
                 } else {
-                    $filtered = $this->runDefaultFilters($c);
+                    $filtered = $this->runDefaultFilters($asset, $c);
                 }
 
                 // for coffee-script we need to pass the coffee-script to compiler
@@ -585,18 +585,21 @@ class AssetCompiler
      *
      * @return bool returns true if filter is matched, returns false if there is no filter matched.
      */
-    public function runDefaultFilters(Collection $collection)
+    public function runDefaultFilters(Asset $asset, Collection $collection)
     {
+        $urlBuilder = new AssetUrlBuilder($this->config);
+        $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+
         if ( $collection->isCoffeescript || $collection->filetype === Collection::FILETYPE_COFFEE ) {
             $coffee = new Filter\CoffeeScriptFilter($this->config);
             $coffee->filter( $collection );
             return true;
         } elseif ( $collection->filetype === Collection::FILETYPE_SASS ) {
-            $sass = new Filter\SassFilter($this->config);
+            $sass = new Filter\SassFilter($this->config, $assetBaseUrl);
             $sass->filter($collection);
             return true;
         } elseif ( $collection->filetype === Collection::FILETYPE_SCSS ) {
-            $scss = new Filter\ScssFilter($this->config);
+            $scss = new Filter\ScssFilter($this->config, $assetBaseUrl);
             $scss->filter( $collection );
             return true;
         }
@@ -619,8 +622,9 @@ class AssetCompiler
             'mtime' => 0,
         );
         $collections = $asset->getCollections();
+        $urlBuilder = new AssetUrlBuilder($this->config);
+        $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
         foreach( $collections as $collection ) {
-
             // skip unknown types
             if ( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
                 continue;
@@ -644,10 +648,10 @@ class AssetCompiler
                 // for stylesheets, before compress it, we should import the css contents
                 elseif ( $collection->isStylesheet && $collection->filetype === Collection::FILETYPE_CSS ) {
                     // css import filter implies css rewrite
-                    $import = new Filter\CssImportFilter($this->config);
+                    $import = new Filter\CssImportFilter($this->config, $assetBaseUrl);
                     $import->filter( $collection );
                 } else {
-                    $this->runDefaultFilters($collection);
+                    $this->runDefaultFilters($asset, $collection);
                 }
                 $this->runCollectionCompressors($collection);
             }
@@ -655,7 +659,7 @@ class AssetCompiler
                 if ( $collection->getFilters() ) {
                     $this->runUserDefinedFilters($collection);
                 } else {
-                    $this->runDefaultFilters($collection);
+                    $this->runDefaultFilters($asset, $collection);
                 }
             }
             if ( $collection->isJavascript || $collection->isCoffeescript ) {

@@ -9,6 +9,13 @@ class CssImportFilter extends BaseFilter
 {
     const DEBUG = 0;
 
+    public $assetBaseUrl;
+
+    public function __construct(AssetConfig $config, $assetBaseUrl) {
+        $this->assetBaseUrl = $assetBaseUrl;
+        parent::__construct($config);
+    }
+
     public function importCss($content, $fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
     {
         if (CssImportFilter::DEBUG) {
@@ -105,12 +112,7 @@ class CssImportFilter extends BaseFilter
 
 
         // get css files and find @import statement to import related content
-        // $assetDir = $collection->asset->getPublicDir();
-        $assetSourceDir = $collection->asset->getSourceDir(true);
-
-        $urlBuilder = new AssetUrlBuilder($this->config);
-        $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
-
+        $assetSourceDir = $collection->sourceDir;
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $fullpath = $chunk['fullpath'];
@@ -119,7 +121,7 @@ class CssImportFilter extends BaseFilter
             $dirname = dirname($chunk['path']);
 
             // url to the directory of the asset.
-            $dirnameUrl = $assetBaseUrl . '/' . $dirname;
+            $dirnameUrl = $this->assetBaseUrl . '/' . $dirname;
 
             $chunk['content'] = $this->importCss(
                 $chunk['content'],
@@ -127,7 +129,7 @@ class CssImportFilter extends BaseFilter
                 $assetSourceDir, 
                 $dirname, 
                 $dirnameUrl, 
-                $assetBaseUrl);
+                $this->assetBaseUrl);
         }
         $collection->setChunks($chunks);
     }

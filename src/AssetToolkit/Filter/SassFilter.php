@@ -25,13 +25,21 @@ class SassFilter extends BaseFilter
 
     public $debug = false;
 
-    public function __construct(AssetConfig $config, $bin = null)
+    /**
+     * $assetBaseUrl
+     */
+    public $rewriteBaseUrl;
+
+    public function __construct(AssetConfig $config, $rewriteBaseUrl, $bin = null)
     {
         if ( $bin ) {
             $this->bin = $bin;
         } else {
             $this->bin = Utils::findbin('sass');
         }
+
+        $this->rewriteBaseUrl = $rewriteBaseUrl;
+
         parent::__construct($config);
     }
 
@@ -90,9 +98,6 @@ class SassFilter extends BaseFilter
             return;
         }
 
-        $urlBuilder = new AssetUrlBuilder($this->config);
-        $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
-
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $proc = $this->createProcess();
@@ -109,8 +114,8 @@ class SassFilter extends BaseFilter
             $output = $proc->getOutput();
 
             if ( $this->rewrite ) {
-                $rewrite = new CssRewriteFilter($this->config, $assetBaseUrl);
-                $output = $rewrite->rewrite( $output, $assetBaseUrl . '/' . dirname($chunk['path']) );
+                $rewrite = new CssRewriteFilter($this->config, $this->rewriteBaseUrl);
+                $output = $rewrite->rewrite( $output, $this->rewriteBaseUrl . '/' . dirname($chunk['path']) );
             }
 
             $chunk['content'] = $output;

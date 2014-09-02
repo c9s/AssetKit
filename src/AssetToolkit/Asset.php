@@ -211,7 +211,7 @@ class Asset
                 $collection->compressors = $stash['compressors'];
             }
             $collection->files = $expandedFiles;
-            $collection->asset = $this;
+            $collection->sourceDir = $this->getSourceDir();
             $collections[] = $collection;
         }
         return $collections;
@@ -265,7 +265,7 @@ class Asset
         $collections = $this->getCollections();
         foreach( $collections as $c ) {
             // if the collectino is newer than from time.
-            if ( $c->getLastModifiedTime() > $fromTime ) {
+            if ( $c->isOutOfDate($fromTime) ) {
                 return true;
             }
         }
