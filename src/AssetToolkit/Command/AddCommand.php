@@ -33,6 +33,8 @@ class AddCommand extends BaseCommand
 
         $installer = $this->getInstaller();
         $installer->install( $asset );
+
+        $loader->saveEntries();
         $this->logger->info("Done");
     }
 }

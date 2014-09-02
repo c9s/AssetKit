@@ -15,9 +15,12 @@ class RemoveCommand extends BaseCommand
     public function execute($assetName)
     {
         $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
+
         $this->logger->info("Removing $assetName ...");
-        $config->removeAsset( $assetName );
-        $config->save();
+
+        $loader->remove($assetName);
+        $loader->saveEntries();
     }
 }
 

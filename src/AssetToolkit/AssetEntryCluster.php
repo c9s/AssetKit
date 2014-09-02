@@ -69,7 +69,6 @@ class AssetEntryCluster implements ArrayAccess
      */
     public function remove($name)
     {
-        // TODO: should also remove from assetObjects
         unset($this->stash[$name]);
     }
 
@@ -133,10 +132,6 @@ class AssetEntryCluster implements ArrayAccess
     public function offsetUnset($name)
     {
         unset($this->stash[$name]);
-    }
-
-    public function export() {
-        return $this->stash;
     }
 
     static public function __set_state($array) {

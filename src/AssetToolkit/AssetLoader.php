@@ -51,7 +51,23 @@ class AssetLoader
     public function __construct(AssetConfig $config)
     {
         $this->config = $config;
-        $this->loadEntryCache();
+
+        // TODO: support entry file stat check
+        if ($cache = $config->getCache()) {
+            if ($entries = $cache->get('asset_entries')) {
+                $this->entries = $entries;
+                return;
+            }
+        }
+
+        // Fallback to entry file automatically
+        $entryFile = $config->getEntryFile();
+        if (file_exists($entryFile)) {
+            $this->entries = require $config->getEntryFile();
+            return;
+        }
+
+        $this->entries = new AssetEntryCluster;
     }
 
 
@@ -80,6 +96,7 @@ class AssetLoader
             // Save the asset object into the pool
             return $this->objects[$name] = $asset;
         }
+
         // fallback to lookup
         return $this->objects[$name] = $this->lookup($name);
     }
@@ -119,7 +136,7 @@ class AssetLoader
     public function updateAssetManifests()
     {
         $assets = array();
-        $registered = $this->config->all();
+        $registered = $this->entries->all();
         foreach( $registered as $name => $subconfig ) {
             $assets[] = $this->register( dirname($subconfig['manifest']) );
         }
@@ -154,6 +171,7 @@ class AssetLoader
                 return $asset;
             }
         }
+        return false;
     }
 
 
@@ -173,7 +191,7 @@ class AssetLoader
         }
 
         // $compiledFile = ConfigCompiler::compile($path);
-        $asset = new Asset();
+        $asset = new Asset;
 
         // load the asset config from manifest.php file.
         $asset->loadFromManifestFile($path);
@@ -199,16 +217,15 @@ class AssetLoader
 
     public function loadEntryCache() {
         if ($cache = $this->config->getCache()) {
-            if ($entries = $cache->get('asset_entries')) {
-                $this->entries = $entries;
-            } else {
-                $this->entries = new AssetEntryCluster;
-            }
         } else {
             $this->entries = new AssetEntryCluster;
         }
+        return false;
     }
 
+    public function saveEntries() {
+        return ConfigCompiler::write($this->config->getEntryFile(), $this->entries);
+    }
 
 
     public function getEntries() {
