@@ -28,7 +28,8 @@ before_script:
 script:
   - phpunit
   - bin/assetkit init --baseDir "public/assets" --baseUrl "/assets" assetkit.yml
+  - [[ -e .assetkit.yml ]]
   - bin/assetkit add tests/assets/jquery
 
 notifications:
-  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"
+  #  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"
