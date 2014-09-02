@@ -87,7 +87,10 @@ class Asset
 
 
     /**
-     * @var string $manifestYamlFile related YAML manifest file path.
+     *
+     *
+     * @param string $manifestYamlFile related YAML manifest file path, which 
+     *          should be absolute path.
      */
     public function loadFromManifestFile($manifestYamlFile)
     {
@@ -113,7 +116,16 @@ class Asset
 
 
     /**
-     * simply copy class members to to the file collection
+     * This method create collection objects based on the config from manifest file,
+     *
+     * File paths will be expanded.
+     *
+     * Thie method copies class members to to the file collection
+     *
+     * TODO: Save the absolute path in our cache.
+     * TODO: Save the collection object in the asset config, so we may use APC to cache the objects.
+     *       To save the collection objects in our APC, the objects must not depend on the config/loader object.
+     *       
      */
     public function loadCollections( $collectionStash )
     {
@@ -173,7 +185,7 @@ class Asset
             $expandedFiles = array();
             foreach( $files as $p ) {
 
-                // found glob pattern
+                // found a glob pattern
                 if( strpos($p,'*') !== false )
                 {
                     $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
@@ -182,12 +194,9 @@ class Asset
                     $expandedFiles = array_unique( array_merge( $expandedFiles , $expanded ) );
 
                 } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
-
                     $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
                     $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
-
                     $expandedFiles = array_unique(array_merge( $expandedFiles , $expanded ));
-
                 } else {
                     $expandedFiles[] = $p;
                 }
@@ -216,10 +225,11 @@ class Asset
         // we should also save installed_dir
         // installed_dir = public dir + source dir
         return array(
-            'stash'      => $this->stash,
-            'manifest'   => $this->manifestFile,
-            'source_dir' => $this->sourceDir,
-            'name'       => $this->name,
+            'stash'       => $this->stash,
+            'manifest'    => $this->manifestFile,
+            'source_dir'  => $this->sourceDir,
+            // 'collections' => $this->collections,
+            'name'        => $this->name,
         );
     }
 

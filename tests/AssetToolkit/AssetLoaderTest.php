@@ -1,8 +1,8 @@
 <?php
-
 use AssetToolkit\ResourceUpdater;
 use AssetToolkit\AssetConfig;
 use AssetToolkit\AssetLoader;
+use AssetToolkit\AssetUrlBuilder;
 use AssetToolkit\Asset;
 
 class AssetLoaderTest extends AssetToolkit\TestCase
@@ -13,13 +13,13 @@ class AssetLoaderTest extends AssetToolkit\TestCase
         return array(
             array("tests/assets/jquery-ui"),
             array("tests/assets/jquery"),
+            array("tests/assets/underscore"),
         );
     }
 
 
 
     /**
-     *
      * @dataProvider manifestProvider
      */
     public function testAssetLoader($manifestPath)
@@ -28,10 +28,18 @@ class AssetLoaderTest extends AssetToolkit\TestCase
         $loader = $this->getLoader();
 
         $asset = $loader->register($manifestPath);
-        ok($asset, "asset is loaded from $manifestPath");
+        ok($asset, "Asset is loaded from $manifestPath");
 
+        $collections = $asset->getCollections();
+        ok($collections);
+
+
+        $urlBuilder = new AssetUrlBuilder($config);
+        $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+        is( "/assets/" . $asset->name, $assetBaseUrl);
+        /*
         $updater = new ResourceUpdater();
-        ok($updater,'resource updater is loaded');
+        ok($updater, "Resource updater is loaded");
         $updater->update($asset);
 
         $installer = new AssetToolkit\LinkInstaller;
@@ -45,7 +53,7 @@ class AssetLoaderTest extends AssetToolkit\TestCase
         $installer->install( $asset );
         $installer->uninstall( $asset );
         ob_clean();
-
+        */
         $config->save();
     }
 }
