@@ -112,7 +112,6 @@ class CssRewriteFilter extends BaseFilter
             return;
 
         //  path:  /assets/{asset name}
-        // $assetBaseUrl = $collection->asset->getBaseUrl();
         $urlBuilder = new AssetUrlBuilder($this->config);
         $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
 

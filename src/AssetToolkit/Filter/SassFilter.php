@@ -91,7 +91,6 @@ class SassFilter extends BaseFilter
 
         $urlBuilder = new AssetUrlBuilder($this->config);
         $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
-        // $assetBaseUrl = $collection->asset->getBaseUrl();
 
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {

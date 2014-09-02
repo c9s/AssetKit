@@ -107,7 +107,6 @@ class CssImportFilter extends BaseFilter
         // get css files and find @import statement to import related content
         // $assetDir = $collection->asset->getPublicDir();
         $assetSourceDir = $collection->asset->getSourceDir(true);
-        // $assetBaseUrl = $collection->asset->getBaseUrl();
 
         $urlBuilder = new AssetUrlBuilder($this->config);
         $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
