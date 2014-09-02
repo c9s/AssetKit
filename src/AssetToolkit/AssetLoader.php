@@ -1,9 +1,9 @@
 <?php
 namespace AssetToolkit;
 use Exception;
+use AssetToolkit\Asset;
 use AssetToolkit\AssetConfig;
 use AssetToolkit\AssetEntryCluster;
-use AssetToolkit\Asset;
 use ConfigKit\ConfigCompiler;
 
 /**
@@ -24,14 +24,24 @@ use ConfigKit\ConfigCompiler;
  */
 class AssetLoader
 {
-
     /**
-     * @var \AssetToolkit\AssetConfig
+     * @var AssetConfig
      */
     public $config;
 
+
+    /**
+     * @var Asset[string name]
+     *
+     * Used for storing loaded asset objects
+     */
     public $objects = array();
 
+    /**
+     * @var AssetEntryCluster 
+     *
+     * Used for saving registered asset configs (PHP arrays)
+     */
     public $entries;
 
     /**
