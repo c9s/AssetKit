@@ -13,7 +13,8 @@ before_script:
   - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - phpenv rehash
   - npm install -g coffee-script
-  - gem install sass compass
+  - gem install sass
+  - gem install compass --pre
   - composer install --dev
     # - pear channel-discover pear.corneltek.com
     # - pear channel-discover pear.twig-project.org
