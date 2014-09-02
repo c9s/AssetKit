@@ -58,23 +58,20 @@ class AssetLoader
             return $this->objects[$name];
         }
 
-
         // Get the asset config from entries cluster
-        $config = $this->entries->get($name);
-        if (!$config) {
-            // lookup asset automatically
-            return $this->objects[$name] = $this->lookup($name);
+        if ($config = $this->entries->get($name)) {
+            if (! isset($config['manifest'])) {
+                throw new Exception("manifest path is not defined in $name");
+            }
+
+            // load the asset manifest file
+            $asset = $this->register($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
+
+            // Save the asset object into the pool
+            return $this->objects[$name] = $asset;
         }
-
-        if (! isset($config['manifest'])) {
-            throw new Exception("manifest path is not defined in $name");
-        }
-
-        // load the asset manifest file
-        $asset = $this->register($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
-
-        // Save the asset object into the pool
-        return $this->objects[$name] = $asset;
+        // fallback to lookup
+        return $this->objects[$name] = $this->lookup($name);
     }
 
 
