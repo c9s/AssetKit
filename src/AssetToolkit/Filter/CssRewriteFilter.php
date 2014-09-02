@@ -30,7 +30,10 @@ class CssRewriteFilter extends BaseFilter
 
     public $rewriteBaseUrl = '/';
 
-    public function __construct(AssetConfig $config, $rewriteBaseUrl) {
+    /**
+     * @param string $rewriteBaseUrl path:  /assets/{asset name}
+     */
+    public function __construct(AssetConfig $config, $rewriteBaseUrl = '/') {
         $this->rewriteBaseUrl = $rewriteBaseUrl;
         parent::__construct($config);
     }
@@ -118,10 +121,6 @@ class CssRewriteFilter extends BaseFilter
     {
         if ( ! $collection->isStylesheet )
             return;
-
-        //  path:  /assets/{asset name}
-        // $urlBuilder = new AssetUrlBuilder($this->config);
-        // $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
 
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
