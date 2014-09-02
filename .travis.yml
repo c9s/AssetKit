@@ -7,6 +7,9 @@ before_install:
   - sudo apt-get -qq install coffeescript ruby-sass
 before_script:
   - echo "no" | pecl install apcu-beta
+    # - ./bin/install-apcu.sh
+    # - phpenv config-add tests/$TRAVIS_PHP_VERSION.ini
+    # - phpenv config-add tests/apc.ini
   - echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - php -m | grep apc
