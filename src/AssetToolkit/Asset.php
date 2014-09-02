@@ -257,13 +257,6 @@ class Asset
     }
 
 
-    /**
-     * Get target installation dir (the target directory of public)
-     */
-    public function getInstallDir($absolute = false)
-    {
-        return $this->config->getBaseDir(true) . DIRECTORY_SEPARATOR . $this->name;
-    }
 
     /**
      * Get the asset source directory

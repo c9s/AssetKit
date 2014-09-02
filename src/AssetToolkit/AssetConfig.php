@@ -354,16 +354,6 @@ class AssetConfig implements ArrayAccess
         return $this->getBaseUrl() . '/compiled';
     }
 
-    /**
-     * Get installation dir (the target directory of public)
-     */
-    public function getAssetInstallDir(Asset $asset, $absolute = false)
-    {
-        return $this->getBaseDir(true) . DIRECTORY_SEPARATOR . $asset->name;
-    }
-
-
-
     public function setRoot($root)
     {
         $this->root = $root;

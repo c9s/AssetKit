@@ -12,6 +12,13 @@ class Installer
         $this->config = $config;
     }
 
+    /**
+     * Get target installation dir (the target directory of public)
+     */
+    public function getAssetInstallDir($asset, $absolute = false) {
+        return $this->config->getBaseDir(true) . DIRECTORY_SEPARATOR . $asset->name;
+    }
+
 
 
     public function setLogger($logger) 
@@ -47,7 +54,7 @@ class Installer
             foreach( $collection->getFilePaths() as $path ) {
                 $subpath = $path;
                 $srcFile = $fromDir . DIRECTORY_SEPARATOR . $subpath;
-                $targetFile = $this->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $this->getAssetInstallDir($asset, true) . DIRECTORY_SEPARATOR . $subpath;
 
                 $this->info("x $targetFile");
                 if( file_exists($targetFile) ) {
@@ -74,7 +81,7 @@ class Installer
                     continue;
                 }
 
-                $targetFile = $this->config->getBaseDir() . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $subpath;
+                $targetFile = $this->getAssetInstallDir($asset, true) . DIRECTORY_SEPARATOR . $subpath;
 
                 $content = file_get_contents($srcFile);
                 if( file_exists($targetFile) ) {
