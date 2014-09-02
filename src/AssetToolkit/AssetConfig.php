@@ -141,6 +141,19 @@ class AssetConfig implements ArrayAccess
         $this->options = $options;
     }
 
+
+    /**
+     * @var string
+     *
+     * Return the file that stores data from AssetEntryCluster.
+     */
+    public function getEntryFile() {
+        if (isset($this->stash['EntryFile']) ) {
+            return $this->stash['EntryFile'];
+        }
+        return '.asset-entries.php';
+    }
+
     public function getEnvironment() {
         if (isset($this->stash['Environment']) ) {
             return $this->stash['Environment'];
