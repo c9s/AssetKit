@@ -4,6 +4,7 @@ use AssetToolkit\AssetConfig;
 use AssetToolkit\AssetLoader;
 use AssetToolkit\AssetUrlBuilder;
 use AssetToolkit\Asset;
+use AssetToolkit\Collection;
 
 class AssetLoaderTest extends AssetToolkit\TestCase
 {
@@ -33,10 +34,16 @@ class AssetLoaderTest extends AssetToolkit\TestCase
         $collections = $asset->getCollections();
         ok($collections);
 
+        foreach( $collections as $collection ) {
+            ok( $collection instanceof Collection, 'Got Collection object');
+        }
 
         $urlBuilder = new AssetUrlBuilder($config);
         $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
         is( "/assets/" . $asset->name, $assetBaseUrl);
+
+
+
         /*
         $updater = new ResourceUpdater();
         ok($updater, "Resource updater is loaded");
