@@ -667,10 +667,12 @@ class AssetCompiler
                     $this->runDefaultFilters($asset, $collection);
                 }
             }
+
+            // concat js and css
             if ( $collection->isJavascript || $collection->isCoffeescript ) {
-                $out['js'] .= $collection->getContent();
+                $out['js'] .= ";" . $collection->getContent() . "\n";
             } elseif ( $collection->isStylesheet ) {
-                $out['css'] .= $collection->getContent();
+                $out['css'] .= $collection->getContent() . "\n";
             }
         }
         return $out;
