@@ -11,7 +11,7 @@ before_script:
   - curl -o yaml-1.1.1.tgz http://pecl.php.net/get/yaml-1.1.1.tgz
   - tar -xzf yaml-1.1.1.tgz
   - sh -c "cd yaml-1.1.1 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
-  - echo "extension=yaml.so" >> >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - phpenv rehash
   - npm install -g coffee-script
   - gem install sass --version "=3.2.12"
