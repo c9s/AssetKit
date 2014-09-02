@@ -56,7 +56,7 @@ class Collection
      */
     public function getSourcePaths($absolute = false)
     {
-        $dir = $this->asset->getSourceDir($absolute);
+        $dir = $this->asset->getSourceDir();
         return \futil_paths_prepend($this->files,$dir);
     }
 
@@ -68,7 +68,7 @@ class Collection
      */
     public function getFullpaths()
     {
-        $dir = $this->asset->getSourceDir(true);
+        $dir = $this->asset->getSourceDir();
         return \futil_paths_prepend($this->files, $dir);
     }
 
@@ -146,7 +146,7 @@ class Collection
             return $this->chunks;
         }
 
-        $sourceDir = $this->asset->getSourceDir(true);
+        $sourceDir = $this->asset->getSourceDir();
         foreach( $this->files as $file ) {
             $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
 

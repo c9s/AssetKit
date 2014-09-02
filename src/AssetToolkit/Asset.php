@@ -93,11 +93,11 @@ class Asset
      */
     public function loadFromManifestFile($manifestYamlFile)
     {
-        $config = ConfigCompiler::load($manifestYamlFile);
+        $data = ConfigCompiler::load($manifestYamlFile);
         $this->manifestFile = $manifestYamlFile;
         $this->sourceDir    = dirname($manifestYamlFile);
         $this->name         = basename($this->sourceDir);
-        $this->loadFromArray($config);
+        $this->loadFromArray($data);
     }
 
 
