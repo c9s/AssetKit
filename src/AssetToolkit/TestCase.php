@@ -105,6 +105,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         $configFile = $this->getConfigFile();
         if (file_exists($configFile)) {
+            // fwrite(STDERR,"Cleaning up config file $configFile...\n");
             unlink($configFile);
         }
         if (extension_loaded('apc') ) {
