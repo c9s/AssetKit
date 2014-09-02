@@ -79,7 +79,7 @@ class AssetLoader
         }
 
         // load the asset manifest file
-        $asset = new Asset($this->config);
+        $asset = new Asset();
 
         // load the asset config from manifest.php file.
         $asset->loadFromManifestFile($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
@@ -177,7 +177,7 @@ class AssetLoader
         }
 
         // $compiledFile = ConfigCompiler::compile($path);
-        $asset = new Asset($this->config);
+        $asset = new Asset();
         $asset->loadFromManifestFile($path);
         $this->entries->add($asset);
         return $asset;

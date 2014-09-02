@@ -7,7 +7,6 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use AssetToolkit\FileUtil;
 use AssetToolkit\FileUtils;
-use AssetToolkit\AssetConfig;
 use ConfigKit\ConfigCompiler;
 
 
@@ -40,7 +39,6 @@ use ConfigKit\ConfigCompiler;
  *    public/assets/jquery/jquery.min.css
  *    public/assets/jquery/jquery.min.js
  *
- * For now, Asset depends on AssetConfig, we shouldn't do that.
  */
 class Asset
 {
@@ -79,22 +77,12 @@ class Asset
 
 
     /**
-     * @var AssetToolkit\AssetConfig
-     */
-    public $config;
-
-
-    /**
      * @var AssetToolkit\Collection[]
      */
     public $collections = array();
 
 
-    public function __construct(AssetConfig $config) 
-    {
-        $this->config = $config;
-    }
-
+    public function __construct() { }
 
 
     /**
