@@ -1,7 +1,8 @@
 <?php
 use AssetToolkit\AssetConfig;
+use AssetToolkit\TestCase;
 
-class AssetConfigTest extends AssetToolkit\TestCase
+class AssetConfigTest extends TestCase
 {
 
     public function testAssetConfigWithRootOption() {
@@ -12,7 +13,6 @@ class AssetConfigTest extends AssetToolkit\TestCase
         ok($config);
         $config->save();
         path_ok($configFile);
-        unlink($configFile);
     }
 
     public function testCreateAssetConfigWithArray() {
@@ -25,11 +25,7 @@ class AssetConfigTest extends AssetToolkit\TestCase
         ok($config);
         $config->save($configFile);
         path_ok($configFile);
-        unlink($configFile);
     }
-
-
-
 
 
     public function testCreateAssetConfig()
@@ -38,18 +34,28 @@ class AssetConfigTest extends AssetToolkit\TestCase
         $config = new AssetConfig($configFile, array());
         ok($config);
 
-        // test force reload
         $config->setBaseUrl('/assets');
         $config->setBaseDir('tests/assets');
         $config->setEnvironment('production');
         $config->addAssetDirectory('vendor/assets');
-        $config->save(); // save the config
-        $configContent = file_get_contents($configFile);
-        ok($configContent);
 
-        path_ok($configFile);
-        $config->load(); // load it back
-        unlink($configFile);
+        $config->save(); // save the config
+        ok($array = $config->getConfigArray());
+
+        is('/assets',$array['BaseUrl']);
+        is('tests/assets',$array['BaseDir']);
+        is('production',$array['Environment']);
+
+        $yamlContent = file_get_contents($configFile);
+        ok($yamlContent);
+
+        if (extension_loaded('yaml')) {
+            $array = yaml_parse($yamlContent);
+            is('/assets',$array['BaseUrl']);
+            is('tests/assets',$array['BaseDir']);
+            is('production',$array['Environment']);
+        }
+
     }
 }
 

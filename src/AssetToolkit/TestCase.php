@@ -6,7 +6,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 {
 
     public $config;
+
     public $configFile;
+
     public $loader;
 
     public function getConfigFile()
@@ -14,10 +16,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         if ($this->configFile) {
             return $this->configFile;
         }
-        return $this->configFile = $this->createConfigFile();
+        return $this->configFile = $this->createConfigFilename();
     }
 
-    public function createConfigFile()
+    public function createConfigFilename()
     {
         $filename = str_replace('\\', '_', get_class($this)) . '_' . md5(microtime());
         return "tests/$filename.yml";
@@ -25,13 +27,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function getConfig()
     {
-        if($this->config)
+        if ($this->config) {
             return $this->config;
+        }
 
         $configFile = $this->getConfigFile();
-        if (file_exists($configFile)) {
-            unlink($configFile);
-        }
         $this->config = new \AssetToolkit\AssetConfig($configFile);
         $this->config->setBaseDir("tests/public");
         $this->config->setBaseUrl("/assets");
