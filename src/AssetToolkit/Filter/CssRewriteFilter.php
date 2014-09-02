@@ -1,5 +1,7 @@
 <?php
 namespace AssetToolkit\Filter;
+use AssetToolkit\AssetConfig;
+use AssetToolkit\AssetUrlBuilder;
 
 /**
  * Rewrite css url to absolute url (from root path)
@@ -110,7 +112,10 @@ class CssRewriteFilter extends BaseFilter
             return;
 
         //  path:  /assets/{asset name}
-        $assetBaseUrl = $collection->asset->getBaseUrl();
+        // $assetBaseUrl = $collection->asset->getBaseUrl();
+        $urlBuilder = new AssetUrlBuilder($this->config);
+        $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
+
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $chunk['content'] = $this->rewrite( 

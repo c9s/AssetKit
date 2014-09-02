@@ -3,6 +3,7 @@ namespace AssetToolkit\Filter;
 use AssetToolkit\Collection;
 use AssetToolkit\Process;
 use AssetToolkit\AssetConfig;
+use AssetToolkit\AssetUrlBuilder;
 use RuntimeException;
 use AssetToolkit\Utils;
 
@@ -88,7 +89,10 @@ class SassFilter extends BaseFilter
         if ($collection->filetype !== Collection::FILETYPE_SASS)
             return;
 
-        $assetBaseUrl = $collection->asset->getBaseUrl();
+        $urlBuilder = new AssetUrlBuilder($this->config);
+        $assetBaseUrl = $urlBuilder->buildBaseUrl($collection->asset);
+        // $assetBaseUrl = $collection->asset->getBaseUrl();
+
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $proc = $this->createProcess();
