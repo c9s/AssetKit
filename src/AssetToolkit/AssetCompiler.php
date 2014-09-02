@@ -558,9 +558,11 @@ class AssetCompiler
 
 
     /**
-     * Run user-defined filters
+     * Run user-defined filters to the file collection
+     *
+     * @param Collection the collection objecct
      */
-    public function runUserDefinedFilters($collection)
+    public function runUserDefinedFilters(Collection $collection)
     {
         if ( empty($this->filters) )
             return false;
@@ -582,6 +584,9 @@ class AssetCompiler
     /**
      * Run default filters, for coffee-script, sass, scss filetype,
      * these content must be filtered.
+     *
+     * @param Asset 
+     * @param Collection
      *
      * @return bool returns true if filter is matched, returns false if there is no filter matched.
      */
