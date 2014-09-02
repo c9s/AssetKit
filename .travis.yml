@@ -25,7 +25,9 @@ before_script:
     # - pear -q install -f -a twig/Twig
     # - curl -O https://raw.github.com/phpbrew/Onion/master/onion
     # - php onion -q install
-script: phpunit
+script:
+  - phpunit
+  - bin/assetkit init --baseDir "public/assets" --baseUrl "/assets" assetkit.yml
 
 notifications:
   webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"

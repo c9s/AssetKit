@@ -140,7 +140,7 @@ Basic Usage
 Once you got `assetkit`, you can initialize it with your public path (web root):
 
 ```sh
-$ assetkit init --baseDir public/assets --baseUrl "/assets"
+$ assetkit init --baseDir "public/assets" --baseUrl "/assets" assetkit.yml
 ```
 
 The config is stored at `assetkit.yml` file.
