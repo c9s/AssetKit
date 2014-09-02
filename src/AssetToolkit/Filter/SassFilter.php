@@ -2,12 +2,13 @@
 namespace AssetToolkit\Filter;
 use AssetToolkit\Collection;
 use AssetToolkit\Process;
+use AssetToolkit\AssetConfig;
 use RuntimeException;
 use AssetToolkit\Utils;
 
 use Symfony\Component\Process\ProcessBuilder;
 
-class SassFilter
+class SassFilter extends BaseFilter
 {
     public $bin;
 
@@ -23,13 +24,14 @@ class SassFilter
 
     public $debug = false;
 
-    public function __construct($bin = null)
+    public function __construct(AssetConfig $config, $bin = null)
     {
         if ( $bin ) {
             $this->bin = $bin;
         } else {
             $this->bin = Utils::findbin('sass');
         }
+        parent::__construct($config);
     }
 
     public function setDebug($bool)
@@ -103,7 +105,7 @@ class SassFilter
             $output = $proc->getOutput();
 
             if ( $this->rewrite ) {
-                $rewrite = new CssRewriteFilter;
+                $rewrite = new CssRewriteFilter($this->config);
                 $output = $rewrite->rewrite( $output, $assetBaseUrl . '/' . dirname($chunk['path']) );
             }
 

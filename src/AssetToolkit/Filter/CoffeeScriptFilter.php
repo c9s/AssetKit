@@ -3,13 +3,14 @@ namespace AssetToolkit\Filter;
 use RuntimeException;
 use AssetToolkit\Process;
 use AssetToolkit\Utils;
+use AssetToolkit\AssetConfig;
 
-class CoffeeScriptFilter
+class CoffeeScriptFilter extends BaseFilter
 {
     public $coffeescript;
     public $nodejs;
 
-    public function __construct($bin = null, $nodejs = null )
+    public function __construct(AssetConfig $config, $bin = null, $nodejs = null )
     {
         if ( $bin ) {
             $this->coffeescript = $bin;
@@ -21,6 +22,7 @@ class CoffeeScriptFilter
         } else {
             $this->nodejs = Utils::findbin('node');
         }
+        parent::__construct($config);
     }
 
     public function filter($collection)

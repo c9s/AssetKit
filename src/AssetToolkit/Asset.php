@@ -261,12 +261,6 @@ class Asset
         return $this->sourceDir;
     }
 
-    public function getBaseUrl() 
-    {
-        return $this->config->getBaseUrl() . '/' . $this->name;
-    }
-
-
 
     /**
      * Check if collection files are out of date.

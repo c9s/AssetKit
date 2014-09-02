@@ -197,29 +197,6 @@ class Collection
     }
 
 
-    /**
-     * Run default filters, for coffee-script, sass, scss filetype,
-     * these content must be filtered.
-     *
-     * @return bool returns true if filter is matched, returns false if there is no filter matched.
-     */
-    public function runDefaultFilters()
-    {
-        if ( $this->isCoffeescript || $this->filetype === self::FILETYPE_COFFEE ) {
-            $coffee = new Filter\CoffeeScriptFilter;
-            $coffee->filter( $this );
-            return true;
-        } elseif ( $this->filetype === self::FILETYPE_SASS ) {
-            $sass = new Filter\SassFilter;
-            $sass->filter( $this );
-            return true;
-        } elseif ( $this->filetype === self::FILETYPE_SCSS ) {
-            $scss = new Filter\ScssFilter;
-            $scss->filter( $this );
-            return true;
-        }
-        return false;
-    }
 
 
     public function getIterator()

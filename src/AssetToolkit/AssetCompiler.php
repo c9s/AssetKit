@@ -3,6 +3,8 @@ namespace AssetToolkit;
 use Exception;
 use RuntimeException;
 use AssetToolkit\FileUtil;
+use AssetToolkit\AssetUrlBuilder;
+use AssetToolkit\Collection;
 
 class AssetCompilerException extends Exception {  }
 
@@ -146,13 +148,15 @@ class AssetCompiler
         $assetNames = array();
         $out = array();
 
+        $urlBuilder = new AssetUrlBuilder($this->config);
+
         $root = $this->config->getRoot();
         $baseDir = $this->config->getBaseDir(true);
-        $baseUrl = $this->config->getBaseUrl();
 
         foreach( $assets as $asset ) {
             $assetNames[] = $asset->name;
-            $assetBaseUrl = $baseUrl . '/' . $asset->name;
+            $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+
             foreach( $asset->getCollections() as $c ) {
 
                 $type = null;
@@ -173,7 +177,7 @@ class AssetCompiler
                 if ( $filters = $c->getFilters() ) {
                     $filtered = $this->runUserDefinedFilters($c);
                 } else {
-                    $filtered = $c->runDefaultFilters();
+                    $filtered = $this->runDefaultFilters($c);
                 }
 
                 // for coffee-script we need to pass the coffee-script to compiler
@@ -270,9 +274,6 @@ class AssetCompiler
         }
 
         $out = $this->squash($asset);
-
-        // get the absolute path of install dir.
-        $baseUrl    = $asset->getBaseUrl();
         $name = $asset->name . '.min';
 
         $compiledDir = $this->prepareCompiledDir();
@@ -504,7 +505,7 @@ class AssetCompiler
         if ( is_callable($cb) ) {
             return $this->filters[ $name ] = call_user_func($cb);
         } elseif ( class_exists($cb,true) ) {
-            return $this->filters[ $name ] = new $cb;
+            return $this->filters[ $name ] = new $cb($this->config);
         }
     }
 
@@ -577,6 +578,32 @@ class AssetCompiler
         return false;
     }
 
+
+    /**
+     * Run default filters, for coffee-script, sass, scss filetype,
+     * these content must be filtered.
+     *
+     * @return bool returns true if filter is matched, returns false if there is no filter matched.
+     */
+    public function runDefaultFilters(Collection $collection)
+    {
+        if ( $collection->isCoffeescript || $collection->filetype === Collection::FILETYPE_COFFEE ) {
+            $coffee = new Filter\CoffeeScriptFilter($this->config);
+            $coffee->filter( $collection );
+            return true;
+        } elseif ( $collection->filetype === Collection::FILETYPE_SASS ) {
+            $sass = new Filter\SassFilter($this->config);
+            $sass->filter($collection);
+            return true;
+        } elseif ( $collection->filetype === Collection::FILETYPE_SCSS ) {
+            $scss = new Filter\ScssFilter($this->config);
+            $scss->filter( $collection );
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * Squash asset contents,
      * run through filters, compressors ...
@@ -617,10 +644,10 @@ class AssetCompiler
                 // for stylesheets, before compress it, we should import the css contents
                 elseif ( $collection->isStylesheet && $collection->filetype === Collection::FILETYPE_CSS ) {
                     // css import filter implies css rewrite
-                    $import = new Filter\CssImportFilter;
+                    $import = new Filter\CssImportFilter($this->config);
                     $import->filter( $collection );
                 } else {
-                    $collection->runDefaultFilters();
+                    $this->runDefaultFilters($collection);
                 }
                 $this->runCollectionCompressors($collection);
             }
@@ -628,7 +655,7 @@ class AssetCompiler
                 if ( $collection->getFilters() ) {
                     $this->runUserDefinedFilters($collection);
                 } else {
-                    $collection->runDefaultFilters();
+                    $this->runDefaultFilters($collection);
                 }
             }
             if ( $collection->isJavascript || $collection->isCoffeescript ) {

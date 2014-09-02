@@ -1,19 +1,22 @@
 <?php
 namespace AssetToolkit\Filter;
+use AssetToolkit\AssetUrlBuilder;
+use AssetToolkit\AssetConfig;
+use AssetToolkit\Asset;
 
-
-class CssImportFilter
+class CssImportFilter extends BaseFilter
 {
     const DEBUG = 0;
 
+
     public function importCss($content, $fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
     {
-        if(CssImportFilter::DEBUG)
+        if (CssImportFilter::DEBUG) {
             echo "Importing from $fullpath\n";
-
+        }
 
         // we should rewrite url( ) paths first, before we import css contents
-        $rewrite = new CssRewriteFilter;
+        $rewrite = new CssRewriteFilter($this->config);
         $content = $rewrite->rewrite($content, $dirnameUrl);
 
         $self = $this;

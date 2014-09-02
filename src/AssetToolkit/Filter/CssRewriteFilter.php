@@ -21,7 +21,7 @@ namespace AssetToolkit\Filter;
  *    $css = $collection->getContent();
  *
  */
-class CssRewriteFilter
+class CssRewriteFilter extends BaseFilter
 {
     const DEBUG = false;
 
