@@ -4,7 +4,7 @@ php:
   - 5.4
   - 5.5
 before_install:
-  - sudo apt-get -qq install coffeescript ruby-sass
+  - sudo apt-get -qq install coffeescript ruby-sass libyaml-dev
 before_script:
   - echo -e "yes\nno\n" | pecl -d preferred_state=beta install apcu
     # - ./bin/install-apcu.sh
