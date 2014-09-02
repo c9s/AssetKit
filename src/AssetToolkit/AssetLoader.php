@@ -62,7 +62,8 @@ class AssetLoader
         // Get the asset config from entries cluster
         $config = $this->entries->get($name);
         if (!$config) {
-            throw new Exception("Asset $name is not defined.");
+            // lookup asset automatically
+            return $this->objects[$name] = $this->lookup($name);
         }
 
         if (! isset($config['manifest'])) {
@@ -70,10 +71,7 @@ class AssetLoader
         }
 
         // load the asset manifest file
-        $asset = new Asset();
-
-        // load the asset config from manifest.php file.
-        $asset->loadFromManifestFile($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
+        $asset = $this->register($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
 
         // Save the asset object into the pool
         return $this->objects[$name] = $asset;
@@ -169,6 +167,8 @@ class AssetLoader
 
         // $compiledFile = ConfigCompiler::compile($path);
         $asset = new Asset();
+
+        // load the asset config from manifest.php file.
         $asset->loadFromManifestFile($path);
         $this->entries->add($asset);
         return $asset;
