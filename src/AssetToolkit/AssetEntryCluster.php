@@ -139,13 +139,7 @@ class AssetEntryCluster implements ArrayAccess
         return $this->stash;
     }
 
-    public function save() {
-        if (extension_loaded('apc') ) {
-            apc_store($this->namespace . ':assets', $this->stash);
-        }
-    }
-
-    public function __set_state($array) {
+    static public function __set_state($array) {
         $o = new self( $array['stash'] );
         return $o;
     }

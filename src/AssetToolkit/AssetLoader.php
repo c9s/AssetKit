@@ -41,16 +41,7 @@ class AssetLoader
     public function __construct(AssetConfig $config)
     {
         $this->config = $config;
-
-        if ($cache = $config->getCache()) {
-            if ($entries = $cache->get('asset_entries')) {
-                $this->entries = $entries;
-            } else {
-                $this->entries = new AssetEntryCluster;
-            }
-        } else {
-            $this->entries = new AssetEntryCluster;
-        }
+        $this->loadEntryCache();
     }
 
 
@@ -190,10 +181,32 @@ class AssetLoader
         throw new Exception("Method $method is not defined.");
     }
 
-    public function save() {
+    /**
+     * Save cache
+     */
+    public function saveEntryCache() {
         if ($cache = $this->config->getCache()) {
             $cache->set('asset_entries', $this->entries);
         }
     }
+
+    public function loadEntryCache() {
+        if ($cache = $this->config->getCache()) {
+            if ($entries = $cache->get('asset_entries')) {
+                $this->entries = $entries;
+            } else {
+                $this->entries = new AssetEntryCluster;
+            }
+        } else {
+            $this->entries = new AssetEntryCluster;
+        }
+    }
+
+
+
+    public function getEntries() {
+        return $this->entries;
+    }
+
 }
 

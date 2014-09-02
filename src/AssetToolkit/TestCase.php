@@ -37,6 +37,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->config->setBaseUrl("/assets");
         $this->config->setNamespace("assetkit-testing");
         $this->config->setCacheDir("cache");
+        $this->config->addAssetDirectory("tests/assets");
         $this->config->setRoot(getcwd());
         return $this->config;
     }
