@@ -20,13 +20,13 @@ before_script:
   - npm install -g coffee-script
   - gem install sass compass
   - composer install --dev
-  - pear channel-discover pear.corneltek.com
-  - pear channel-discover pear.twig-project.org
-  - pear channel-update pear.corneltek.com
-  - pear -q install -f -a corneltek/PHPUnit_TestMore
-  - pear -q install -f -a twig/Twig
-  - curl -O https://raw.github.com/phpbrew/Onion/master/onion
-  - php onion -q install
+    # - pear channel-discover pear.corneltek.com
+    # - pear channel-discover pear.twig-project.org
+    # - pear channel-update pear.corneltek.com
+    # - pear -q install -f -a corneltek/PHPUnit_TestMore
+    # - pear -q install -f -a twig/Twig
+    # - curl -O https://raw.github.com/phpbrew/Onion/master/onion
+    # - php onion -q install
 script: phpunit
 
 notifications:
