@@ -7,7 +7,7 @@
         "corneltek/universal-cache": "~1",
         "corneltek/fileutil": "~1.6",
         "corneltek/cliframework": "*",
-        "corneltek/configkit": "~1",
+        "corneltek/configkit": "~1.5",
         "symfony/process": "~2"
     },
     "require-dev": {
