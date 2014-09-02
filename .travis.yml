@@ -10,7 +10,7 @@ before_script:
     # - ./bin/install-apcu.sh
     # - phpenv config-add tests/$TRAVIS_PHP_VERSION.ini
     # - phpenv config-add tests/apc.ini
-  - echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    # - echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - php -m | grep apc
   - curl -o yaml-1.1.1.tgz http://pecl.php.net/get/yaml-1.1.1.tgz
