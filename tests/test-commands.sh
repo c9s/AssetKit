@@ -11,3 +11,4 @@ php bin/assetkit add tests/assets/jquery
 php bin/assetkit target add main jquery
 php bin/assetkit target list
 php bin/assetkit compile jquery
+php bin/assetkit _zsh --bind assetkit >| assetkit && source assetkit

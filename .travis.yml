@@ -31,14 +31,7 @@ before_script:
     # - php onion -q install
 script:
   - phpunit
-  - bin/assetkit init --baseDir "public/assets" --baseUrl "/assets" assetkit.yml
-  - cat .assetkit.yml
-  - php bin/assetkit add tests/assets/jquery
-  - php bin/assetkit list
-  - php bin/assetkit remove jquery
-  - php bin/assetkit target add main jquery
-  - php bin/assetkit target list
-  - php bin/assetkit compile jquery
+  - tests/test-commands.sh
 
 notifications:
   #  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"

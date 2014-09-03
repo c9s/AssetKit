@@ -12,7 +12,7 @@ use Exception;
 class RemoveTargetCommand extends BaseCommand {
 
     public function brief() {
-        return 'Add asset target'; 
+        return 'Remove asset target'; 
     }
 
     /*
