@@ -3,14 +3,15 @@ namespace AssetToolkit;
 use UniversalCache\ApcCache;
 use UniversalCache\FileSystemCache;
 use UniversalCache\UniversalCache;
+use AssetToolkit\AssetConfig;
 
-class Cache
+class CacheFactory
 {
 
     /**
      * Create default universal cache from config object.
      */
-    static public function create($config)
+    static public function create(AssetConfig $config)
     {
         $cache = new UniversalCache(array());
 
@@ -20,8 +21,7 @@ class Cache
                 'namespace' => $config->getNamespace(),
             )));
         }
-
-        $cache->addBackend( new FileSystemCache(array(  
+        $cache->addBackend( new FileSystemCache(array(
             'cache_dir' => $config->getCacheDir(),
         )));
         return $cache;

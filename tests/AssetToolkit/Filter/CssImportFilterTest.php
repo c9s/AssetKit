@@ -1,4 +1,6 @@
 <?php
+use AssetToolkit\Filter\CssRewriteFilter;
+use AssetToolkit\Filter\CssImportFilter;
 
 class CssImportFilterTest extends AssetToolkit\TestCase
 {
@@ -8,18 +10,20 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
-        $jqueryui = $loader->loadFromPath('tests/assets/jquery-ui');
+        $urlBuilder = new AssetToolkit\AssetUrlBuilder($config);
+
+        $jqueryui = $loader->register('tests/assets/jquery-ui');
         ok($jqueryui, 'jqueryui asset is loaded');
 
-        $rewriteFilter = new \AssetToolkit\Filter\CssRewriteFilter;
-        $filter        = new \AssetToolkit\Filter\CssImportFilter;
+        $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
+        $importFilter        = new CssImportFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         foreach( $jqueryui->getCollections() as $c ) {
 
             // for css stylesheet
             if( $c->isStylesheet ) {
                 $rewriteFilter->filter( $c );
 
-                // $filter->filter( $c );
+                // $importFilter->filter( $c );
                 $content = $c->getContent();
                 ok($content,"Got content");
                 // echo $content;
@@ -33,15 +37,17 @@ class CssImportFilterTest extends AssetToolkit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
+        $urlBuilder = new AssetToolkit\AssetUrlBuilder($config);
+
         $collection = new AssetToolkit\Collection;
         $collection->setContent("background: url(../images/file.png)");
 
-        $jqueryui = $loader->loadFromPath('tests/assets/jquery-ui');
+        $jqueryui = $loader->register('tests/assets/jquery-ui');
         ok($jqueryui, 'jqueryui asset is loaded');
 
 
-        $rewriteFilter = new \AssetToolkit\Filter\CssRewriteFilter;
-        $filter        = new \AssetToolkit\Filter\CssImportFilter;
+        $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
+        $importFilter        = new CssImportFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         foreach( $jqueryui->getCollections() as $c ) {
 
             ok( $c->getContent() ,'get content ok' );
@@ -50,7 +56,7 @@ class CssImportFilterTest extends AssetToolkit\TestCase
             if( $c->isStylesheet ) {
                 $rewriteFilter->filter( $c );
 
-                // $filter->filter( $c );
+                // $importFilter->filter( $c );
                 $content = $c->getContent();
                 ok($content,"Got content");
                 // echo $content;

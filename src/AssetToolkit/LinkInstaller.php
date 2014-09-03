@@ -4,11 +4,10 @@ use AssetToolkit\FileUtil;
 
 class LinkInstaller extends Installer 
 {
-
     public function uninstall($asset)
     {
         $name       = $asset->name;
-        $targetDir = $asset->getInstallDir(true);
+        $targetDir = $this->getAssetInstallDir($asset, true);
         if ( file_exists($targetDir) ) {
             $this->info("Removing $targetDir");
             if( is_link($targetDir) ) {
@@ -23,7 +22,7 @@ class LinkInstaller extends Installer
     {
         // asset name
         $name       = $asset->name;
-        $targetDir = $asset->getInstallDir(true);
+        $targetDir = $this->getAssetInstallDir($asset, true);
         $sourceDir  = $asset->getSourceDir(true);
 
         // simply use symbol link

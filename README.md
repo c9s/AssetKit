@@ -3,9 +3,6 @@ AssetToolkit
 
 AssetToolkit is different from Rails' asset pipeline, AssetToolkit is designed for PHP, the concept is different.
 
-**What for? Because we need a different strategy to compile/load assets for PHP web applications. 
-you know, Rails is too slow, the same strategy might not be suitable in PHP applications.**
-
 AssetToolkit is designed for PHP's performance, all configuration files are compiled into
 PHP source code, this makes AssetToolkit loads these asset configuration files very quickly.
 
@@ -143,10 +140,10 @@ Basic Usage
 Once you got `assetkit`, you can initialize it with your public path (web root):
 
 ```sh
-$ assetkit init --baseDir public/assets --baseUrl "/assets"
+$ assetkit init --baseDir "public/assets" --baseUrl "/assets" assetkit.yml
 ```
 
-The config is stored at `.assetkit.php` file.
+The config is stored at `assetkit.yml` file.
 
 Then fetch anything you want:
 
@@ -167,13 +164,13 @@ Saving config...
 Done
 ```
 
-And your `.assetkit.php` file will be updated, these asset files will be installed into `public/assets`.
+And your `assetkit.yml` file will be updated, these asset files will be installed into `public/assets`.
 
 >   NOTE:
 >   To install asset files with symbol link, use --link option,
 >   Which is convenient for asset development.
 
-If someone wants to clone your project, you can add `.assetkit.php` file to the repository, then B can 
+If someone wants to clone your project, you can add `assetkit.yml` file to the repository, then B can 
 do `update` command to update assets:
 
 ```sh
@@ -187,7 +184,7 @@ To use assetkit in your application, just few lines to write:
 require 'vendor/autoload.php';
 
 // load your asset config file, this contains asset manifest and types
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php', array( 
+$config = new AssetToolkit\AssetConfig( '../assetkit.yml', array( 
     'root' => APP_ROOT // the absolute path where you run "assetkit" command.
 ));
 
@@ -213,15 +210,19 @@ You may simply check example script in the `example` folder.
 Advanced Usage
 ---------------------------
 
-This creates and initializes the `.assetkit.php` file:
+This creates and initializes the `assetkit.yml` file:
 
 ```sh
-$ assetkit init --baseUrl=/assets --baseDir=public/assets
+$ assetkit init --baseUrl=/assets --baseDir=public/assets --dir=private/assets assetkit.yml
 ```
 
-The `--baseDir` is where the assets will be installed to.
+Where the `--baseDir` option is the assets will be installed to.
 
-THe `--baseUrl` is where the assets can be loaded from front-end browser.
+Where the `--baseUrl` option is the assets can be loaded from front-end browser.
+
+Where the `--dir` option is the location that you store your private asset files.
+
+`assetkit.yml` is your config file, it's in YAML format, you can also modify it directly.
 
 
 Register the assets you need:
@@ -251,19 +252,19 @@ Then integrate the AssetToolkit API into your PHP web application,
 there are just few lines to write (you may check the `public/index.php` sample):
 
 ```php
+use AssetToolkit\AssetConfig;
 // Please install php-fileutil extension for beter performance, 
 
 // To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
-$config = new AssetToolkit\AssetConfig( '../.assetkit.php',array( 
-    // the application root, contains the .assetkit.php file.
+$config = new AssetToolkit\AssetConfig( 'config/assetkit.yml',array(
+    // the application root, contains the assetkit.yml file.
     'root' => APPLICATION_ROOT,
     'cache' => new UniversalCache\ApcCache(array( 'namespace' => 'myapp_' ));
-    'environment' =>  AssetToolkit\AssetConfig::PRODUCTION,
 ));
 
 $loader = new AssetToolkit\AssetLoader( $config );
 
-$compiler = new AssetToolkit\AssetCompiler( $config, $loader);
+$compiler = new AssetToolkit\AssetCompiler($config, $loader);
 $compiler->enableProductionFstatCheck();
 $compiler->defaultJsCompressor = 'uglifyjs';
 $compiler->defaultCssCompressor = 'cssmin';
@@ -329,11 +330,11 @@ To check all compiled target, you may simply run:
 
 To add assets to a target, you can run:
 
-    $ assetkit target --add demo-page jquery jquery-ui bootstrap
+    $ assetkit target add demo-page jquery jquery-ui bootstrap
 
 To remove a target, you can run:
 
-    $ assetkit target --remove demo-page
+    $ assetkit target remove demo-page
 
 Setting Up Your Preferred Default Compressor
 --------------------------------------------
@@ -380,14 +381,14 @@ API
 ### AssetConfig API
 
 ```php
-$config = new AssetToolkit\AssetConfig('.assetkit.php',array(  
+$config = new AssetToolkit\AssetConfig('assetkit.yml',array(  
     'cache' => true,
     'cache_id' => 'your_app_id',
     'cache_expiry' => 3600
 ));
 $config->setBaseUrl('/assets');
 $config->setBaseDir('tests/assets');
-$config->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
+$config->setEnvironment('production');
 
 $baseDir = $config->getBaseDir(true); // absolute path
 $baseUrl = $config->getBaseUrl();
@@ -397,7 +398,7 @@ $compiledUrl = $config->getCompiledUrl();
 
 $config->addAssetDirectory('vendor/assets');
 
-$assetStashes = $config->getRegisteredAssets();
+$assetStashes = $config->all();
 
 $config->save();
 ```
@@ -409,10 +410,10 @@ $config->save();
 $loader = new AssetToolkit\AssetLoader($config);
 
 // load asset from a directory that might contains a manifest file,
-// Note: Since you're going to put the .assetkit.php file 
+// Note: Since you're going to put the assetkit.yml file 
 //       In your VCS, you should use relative path instead of 
 //       absolute path.
-$asset = $loader->loadFromPath("tests/assets/jquery");
+$asset = $loader->register("tests/assets/jquery");
 
 // load asset from a manifest file directly, 
 $asset = $loader->loadFromManifestFile("tests/assets/jquery/manifest.yml");

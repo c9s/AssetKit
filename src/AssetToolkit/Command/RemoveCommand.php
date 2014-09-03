@@ -9,15 +9,18 @@ class RemoveCommand extends BaseCommand
 
     public function brief()
     {
-        return 'remove an asset.';
+        return 'Remove an asset.';
     }
 
     public function execute($assetName)
     {
         $config = $this->getAssetConfig();
+        $loader = $this->getAssetLoader();
+
         $this->logger->info("Removing $assetName ...");
-        $config->removeAsset( $assetName );
-        $config->save();
+
+        $loader->remove($assetName);
+        $loader->saveEntries();
     }
 }
 

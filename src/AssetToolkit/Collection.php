@@ -13,7 +13,12 @@ class Collection
 
     public $files = array();
 
-    public $asset;
+    // public $asset;
+
+    /**
+     * @param path Asset source directory
+     */
+    public $sourceDir;
 
     public $isJavascript;
 
@@ -54,10 +59,9 @@ class Collection
      * @param bool $absolute Should return absolute or relative.
      * @return string
      */
-    public function getSourcePaths($absolute = false)
+    public function getSourcePaths()
     {
-        $dir = $this->asset->getSourceDir($absolute);
-        return \futil_paths_prepend($this->files,$dir);
+        return \futil_paths_prepend($this->files,$this->sourceDir);
     }
 
 
@@ -68,8 +72,7 @@ class Collection
      */
     public function getFullpaths()
     {
-        $dir = $this->asset->getSourceDir(true);
-        return \futil_paths_prepend($this->files, $dir);
+        return \futil_paths_prepend($this->files, $this->sourceDir);
     }
 
     /**
@@ -146,9 +149,8 @@ class Collection
             return $this->chunks;
         }
 
-        $sourceDir = $this->asset->getSourceDir(true);
         foreach( $this->files as $file ) {
-            $fullpath = $sourceDir . DIRECTORY_SEPARATOR . $file;
+            $fullpath = $this->sourceDir . DIRECTORY_SEPARATOR . $file;
 
             if ( ($out = file_get_contents( $fullpath )) !== false ) {
                 $this->chunks[] = array(
@@ -197,36 +199,20 @@ class Collection
     }
 
 
-    /**
-     * Run default filters, for coffee-script, sass, scss filetype,
-     * these content must be filtered.
-     *
-     * @return bool returns true if filter is matched, returns false if there is no filter matched.
-     */
-    public function runDefaultFilters()
-    {
-        if ( $this->isCoffeescript || $this->filetype === self::FILETYPE_COFFEE ) {
-            $coffee = new Filter\CoffeeScriptFilter;
-            $coffee->filter( $this );
-            return true;
-        } elseif ( $this->filetype === self::FILETYPE_SASS ) {
-            $sass = new Filter\SassFilter;
-            $sass->filter( $this );
-            return true;
-        } elseif ( $this->filetype === self::FILETYPE_SCSS ) {
-            $scss = new Filter\ScssFilter;
-            $scss->filter( $this );
-            return true;
-        }
-        return false;
-    }
 
 
     public function getIterator()
     {
-        return new ArrayIterator($this->getSourcePaths(true));
+        return new ArrayIterator($this->getSourcePaths());
     }
 
 
+    /**
+     * Check if collection files are out of date.
+     */
+    public function isOutOfDate($fromTime)
+    {
+        return $c->getLastModifiedTime() > $fromTime;
+    }
 }
 

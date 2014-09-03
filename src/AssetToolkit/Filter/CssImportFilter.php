@@ -1,19 +1,29 @@
 <?php
 namespace AssetToolkit\Filter;
+use AssetToolkit\AssetUrlBuilder;
+use AssetToolkit\AssetConfig;
+use AssetToolkit\Asset;
+use AssetToolkit\Collection;
 
-
-class CssImportFilter
+class CssImportFilter extends BaseFilter
 {
     const DEBUG = 0;
 
+    public $assetBaseUrl;
+
+    public function __construct(AssetConfig $config, $assetBaseUrl) {
+        $this->assetBaseUrl = $assetBaseUrl;
+        parent::__construct($config);
+    }
+
     public function importCss($content, $fullpath, $assetSourceDir, $dirname, $dirnameUrl, $assetBaseUrl)
     {
-        if(CssImportFilter::DEBUG)
+        if (CssImportFilter::DEBUG) {
             echo "Importing from $fullpath\n";
-
+        }
 
         // we should rewrite url( ) paths first, before we import css contents
-        $rewrite = new CssRewriteFilter;
+        $rewrite = new CssRewriteFilter($this->config, $assetBaseUrl);
         $content = $rewrite->rewrite($content, $dirnameUrl);
 
         $self = $this;
@@ -94,16 +104,15 @@ class CssImportFilter
         return $content;
     }
 
-    public function filter($collection)
+    public function filter(Collection $collection)
     {
-        if( ! $collection->isStylesheet )
+        if ( ! $collection->isStylesheet ) {
             return;
+        }
+
 
         // get css files and find @import statement to import related content
-        // $assetDir = $collection->asset->getPublicDir();
-        $assetSourceDir = $collection->asset->getSourceDir(true);
-        $assetBaseUrl = $collection->asset->getBaseUrl();
-
+        $assetSourceDir = $collection->sourceDir;
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $fullpath = $chunk['fullpath'];
@@ -112,7 +121,7 @@ class CssImportFilter
             $dirname = dirname($chunk['path']);
 
             // url to the directory of the asset.
-            $dirnameUrl = $assetBaseUrl . '/' . $dirname;
+            $dirnameUrl = $this->assetBaseUrl . '/' . $dirname;
 
             $chunk['content'] = $this->importCss(
                 $chunk['content'],
@@ -120,7 +129,7 @@ class CssImportFilter
                 $assetSourceDir, 
                 $dirname, 
                 $dirnameUrl, 
-                $assetBaseUrl);
+                $this->assetBaseUrl);
         }
         $collection->setChunks($chunks);
     }

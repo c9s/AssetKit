@@ -33,7 +33,7 @@
       <file name="src/AssetToolkit/Collection.php" role="php" md5sum="cf4318fd249a6c1e8fbf7c0fc4e435b0"/>
       <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="12d02a4d5af10ed491ba758a5c633cbc"/>
       <file name="src/AssetToolkit/Command/BaseCommand.php" role="php" md5sum="ca8eb088d32e1b15a77f7694df7d15f9"/>
-      <file name="src/AssetToolkit/Command/CleanCommand.php" role="php" md5sum="4887e4f30329ff73d116437679bbd332"/>
+      <file name="src/AssetToolkit/Command/CleanCommand.php" role="php" md5sum="4887e4f30329ff73d1.7.17679bbd332"/>
       <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="f025a7db2e09177c1223c61d25a4959a"/>
       <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="942d759475ecd97e3ac82afcc42693a0"/>
       <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="d2e00ffe0f497f5f534c8589beec8e82"/>

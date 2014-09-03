@@ -1,4 +1,16 @@
-vendor/
+.sass-cache/
+
+# The installed assets
 public/assets/
+public/.sass-cache
+composer.lock
 .onion
 cache
+tests/AssetConfigTest_*.php
+vendor/
+.assetkit.yml
+assetkit.yml
+assetkit.php
+node_modules
+npm-debug.log
+.asset-entries.php

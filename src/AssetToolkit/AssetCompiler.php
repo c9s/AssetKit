@@ -3,6 +3,8 @@ namespace AssetToolkit;
 use Exception;
 use RuntimeException;
 use AssetToolkit\FileUtil;
+use AssetToolkit\AssetUrlBuilder;
+use AssetToolkit\Collection;
 
 class AssetCompilerException extends Exception {  }
 
@@ -146,13 +148,15 @@ class AssetCompiler
         $assetNames = array();
         $out = array();
 
+        $urlBuilder = new AssetUrlBuilder($this->config);
+
         $root = $this->config->getRoot();
         $baseDir = $this->config->getBaseDir(true);
-        $baseUrl = $this->config->getBaseUrl();
 
         foreach( $assets as $asset ) {
             $assetNames[] = $asset->name;
-            $assetBaseUrl = $baseUrl . '/' . $asset->name;
+            $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+
             foreach( $asset->getCollections() as $c ) {
 
                 $type = null;
@@ -173,7 +177,7 @@ class AssetCompiler
                 if ( $filters = $c->getFilters() ) {
                     $filtered = $this->runUserDefinedFilters($c);
                 } else {
-                    $filtered = $c->runDefaultFilters();
+                    $filtered = $this->runDefaultFilters($asset, $c);
                 }
 
                 // for coffee-script we need to pass the coffee-script to compiler
@@ -270,9 +274,6 @@ class AssetCompiler
         }
 
         $out = $this->squash($asset);
-
-        // get the absolute path of install dir.
-        $baseUrl    = $asset->getBaseUrl();
         $name = $asset->name . '.min';
 
         $compiledDir = $this->prepareCompiledDir();
@@ -333,14 +334,14 @@ class AssetCompiler
         }
 
 
-        if ( $this->config->cache ) {
-            $cache = $this->config->cache->get($cacheKey);
+        if ( $cache = $this->config->getCache() ) {
+            $cached = $cache->get($cacheKey);
 
             // cache validation
-            if ( $cache && ! $force ) {
+            if ( $cached && ! $force ) {
                 if ( $this->productionFstatCheck ) {
                     $upToDate = true;
-                    if ( $mtime = @$cache['mtime'] ) {
+                    if ( $mtime = @$cached['mtime'] ) {
                         foreach( $assets as $asset ) {
                             if ( $asset->isOutOfDate($mtime) ) {
                                 $upToDate = false;
@@ -349,9 +350,9 @@ class AssetCompiler
                         }
                     }
                     if ( $upToDate )
-                        return $cache;
+                        return $cached;
                 } else {
-                    return $cache;
+                    return $cached;
                 }
             }
         }
@@ -409,8 +410,8 @@ class AssetCompiler
         $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta';
         $this->writeFile( $outfiles['metafile'], serialize($outfiles) );
 
-        if ( $this->config->cache ) {
-            $this->config->cache->set($cacheKey, $outfiles);
+        if ( $cache = $this->config->getCache() ) {
+            $cache->set($cacheKey, $outfiles);
         }
         return $outfiles;
     }
@@ -442,13 +443,25 @@ class AssetCompiler
         }
     }
 
+    public $defaultCompiledDirPermission = 0777;
+
+
     public function prepareCompiledDir()
     {
         $compiledDir = $this->config->getCompiledDir();
-        futil_mkdir_if_not_exists($compiledDir,0766, true);
 
-        if ( ! is_writable($compiledDir) ) {
-            throw new AssetCompilerException("The $compiledDir is not writable.");
+        if ( ! file_exists($compiledDir) ) {
+            mkdir($compiledDir,$this->defaultCompiledDirPermission, true);
+        }
+
+        if (!is_dir($compiledDir)) {
+            throw new AssetCompilerException("The $compiledDir is not a directory.");
+        }
+
+        if (is_writable($compiledDir)) {
+            chmod($compiledDir,$this->defaultCompiledDirPermission);
+        } else {
+            throw new AssetCompilerException("The $compiledDir is not writable for asset compilation.");
         }
         return $compiledDir;
     }
@@ -504,7 +517,7 @@ class AssetCompiler
         if ( is_callable($cb) ) {
             return $this->filters[ $name ] = call_user_func($cb);
         } elseif ( class_exists($cb,true) ) {
-            return $this->filters[ $name ] = new $cb;
+            return $this->filters[ $name ] = new $cb($this->config);
         }
     }
 
@@ -557,9 +570,11 @@ class AssetCompiler
 
 
     /**
-     * Run user-defined filters
+     * Run user-defined filters to the file collection
+     *
+     * @param Collection the collection objecct
      */
-    public function runUserDefinedFilters($collection)
+    public function runUserDefinedFilters(Collection $collection)
     {
         if ( empty($this->filters) )
             return false;
@@ -577,6 +592,38 @@ class AssetCompiler
         return false;
     }
 
+
+    /**
+     * Run default filters, for coffee-script, sass, scss filetype,
+     * these content must be filtered.
+     *
+     * @param Asset 
+     * @param Collection
+     *
+     * @return bool returns true if filter is matched, returns false if there is no filter matched.
+     */
+    public function runDefaultFilters(Asset $asset, Collection $collection)
+    {
+        $urlBuilder = new AssetUrlBuilder($this->config);
+        $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+
+        if ( $collection->isCoffeescript || $collection->filetype === Collection::FILETYPE_COFFEE ) {
+            $coffee = new Filter\CoffeeScriptFilter($this->config);
+            $coffee->filter( $collection );
+            return true;
+        } elseif ( $collection->filetype === Collection::FILETYPE_SASS ) {
+            $sass = new Filter\SassFilter($this->config, $assetBaseUrl);
+            $sass->filter($collection);
+            return true;
+        } elseif ( $collection->filetype === Collection::FILETYPE_SCSS ) {
+            $scss = new Filter\ScssFilter($this->config, $assetBaseUrl);
+            $scss->filter( $collection );
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * Squash asset contents,
      * run through filters, compressors ...
@@ -592,8 +639,9 @@ class AssetCompiler
             'mtime' => 0,
         );
         $collections = $asset->getCollections();
+        $urlBuilder = new AssetUrlBuilder($this->config);
+        $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
         foreach( $collections as $collection ) {
-
             // skip unknown types
             if ( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
                 continue;
@@ -617,10 +665,10 @@ class AssetCompiler
                 // for stylesheets, before compress it, we should import the css contents
                 elseif ( $collection->isStylesheet && $collection->filetype === Collection::FILETYPE_CSS ) {
                     // css import filter implies css rewrite
-                    $import = new Filter\CssImportFilter;
+                    $import = new Filter\CssImportFilter($this->config, $assetBaseUrl);
                     $import->filter( $collection );
                 } else {
-                    $collection->runDefaultFilters();
+                    $this->runDefaultFilters($asset, $collection);
                 }
                 $this->runCollectionCompressors($collection);
             }
@@ -628,13 +676,15 @@ class AssetCompiler
                 if ( $collection->getFilters() ) {
                     $this->runUserDefinedFilters($collection);
                 } else {
-                    $collection->runDefaultFilters();
+                    $this->runDefaultFilters($asset, $collection);
                 }
             }
+
+            // concat js and css
             if ( $collection->isJavascript || $collection->isCoffeescript ) {
-                $out['js'] .= $collection->getContent();
+                $out['js'] .= ";" . $collection->getContent() . "\n";
             } elseif ( $collection->isStylesheet ) {
-                $out['css'] .= $collection->getContent();
+                $out['css'] .= $collection->getContent() . "\n";
             }
         }
         return $out;

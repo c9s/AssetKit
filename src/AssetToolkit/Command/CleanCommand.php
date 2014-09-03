@@ -20,7 +20,7 @@ class CleanCommand extends BaseCommand
         parent::options($opts);
     }
 
-    public function brief() { return 'precompile asset files.'; }
+    public function brief() { return 'Clean up caches'; }
 
     public function execute()
     {

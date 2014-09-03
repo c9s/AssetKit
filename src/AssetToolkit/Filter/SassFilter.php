@@ -2,10 +2,14 @@
 namespace AssetToolkit\Filter;
 use AssetToolkit\Collection;
 use AssetToolkit\Process;
+use AssetToolkit\AssetConfig;
+use AssetToolkit\AssetUrlBuilder;
 use RuntimeException;
 use AssetToolkit\Utils;
 
-class SassFilter 
+use Symfony\Component\Process\ProcessBuilder;
+
+class SassFilter extends BaseFilter
 {
     public $bin;
 
@@ -21,13 +25,22 @@ class SassFilter
 
     public $debug = false;
 
-    public function __construct($bin = null)
+    /**
+     * $assetBaseUrl
+     */
+    public $rewriteBaseUrl;
+
+    public function __construct(AssetConfig $config, $rewriteBaseUrl, $bin = null)
     {
         if ( $bin ) {
             $this->bin = $bin;
         } else {
             $this->bin = Utils::findbin('sass');
         }
+
+        $this->rewriteBaseUrl = $rewriteBaseUrl;
+
+        parent::__construct($config);
     }
 
     public function setDebug($bool)
@@ -81,10 +94,10 @@ class SassFilter
 
     public function filter(Collection $collection)
     {
-        if( $collection->filetype !== Collection::FILETYPE_SASS )
+        if ($collection->filetype !== Collection::FILETYPE_SASS) {
             return;
+        }
 
-        $assetBaseUrl = $collection->asset->getBaseUrl();
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $proc = $this->createProcess();
@@ -96,13 +109,13 @@ class SassFilter
             // echo $proc->getCommand();
             $code = $proc->run();
             if ( $code != 0 ) {
-                throw new RuntimeException("SassFilter failure: $code. ");
+                throw new RuntimeException("SassFilter failure: $code. Command: " . $proc->getCommand() . " Output:" . $proc->getOutput());
             }
             $output = $proc->getOutput();
 
             if ( $this->rewrite ) {
-                $rewrite = new CssRewriteFilter;
-                $output = $rewrite->rewrite( $output, $assetBaseUrl . '/' . dirname($chunk['path']) );
+                $rewrite = new CssRewriteFilter($this->config, $this->rewriteBaseUrl);
+                $output = $rewrite->rewrite( $output, $this->rewriteBaseUrl . '/' . dirname($chunk['path']) );
             }
 
             $chunk['content'] = $output;

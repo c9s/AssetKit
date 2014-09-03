@@ -4,6 +4,10 @@ use CLIFramework\Command;
 use AssetToolkit\AssetConfig;
 use AssetToolkit\Command\BaseCommand;
 
+use ConfigKit\ConfigCompiler;
+
+// $config = ConfigCompiler::load('tests/ConfigKit/data/framework.yml');
+
 class InitCommand extends BaseCommand
 {
     public function brief()
@@ -16,12 +20,26 @@ class InitCommand extends BaseCommand
         parent::options($opts);
 
         // required options
-        $opts->add('baseUrl:','base URL');
-        $opts->add('baseDir:','base directory');
-        $opts->add('assetdir+','asset directory for looking up assets.');
+        $opts->add('baseUrl:','base URL')
+            ->required()
+            ;
+        $opts->add('baseDir:','base directory')
+            ->isa('path')
+            ->required()
+            ;
+        $opts->add('dir+','asset directory for looking up assets.')
+            ->isa('path')
+            ->required()
+            ;
     }
 
-    public function execute()
+    public function arguments($args) {
+        $args->add('configFile')
+            ->isa('file')
+            ;
+    }
+
+    public function execute($configFile)
     {
         if (! $this->options->baseUrl) {
             return $this->logger->error("--baseUrl option is required.");
@@ -35,21 +53,32 @@ class InitCommand extends BaseCommand
         $config = $this->getAssetConfig();
         $config->setBaseUrl($this->options->baseUrl );
         $config->setBaseDir($this->options->baseDir );
-
-        $compiledDir = $config->getCompiledDir();
-        $this->logger->info("Creating compiled dir: $compiledDir");
-        $this->logger->info("Please chmod this directory as you need.");
-        if ( ! file_exists($compiledDir) )
-            mkdir($compiledDir,0755,true);
-
-        if ($this->options->assetdir) {
-            foreach($this->options->assetdir as $dir) {
+        if ($dirs = (array) $this->options->dir) {
+            foreach($dirs as $dir) {
                 $this->logger->info("Adding asset directory $dir");
                 $config->addAssetDirectory($dir);
             }
         }
-        $this->logger->info("Writing config file $configFile");
+        $this->logger->info("Saving config to $configFile");
         $config->save();
+
+
+        if (file_exists($this->getAssetConfigLink()) ) {
+            unlink($this->getAssetConfigLink());
+        }
+        $this->logger->info("Creating link {$this->getAssetConfigLink()} for $configFile");
+        symlink($configFile, $this->getAssetConfigLink());
+
+        $compiledDir = $config->getCompiledDir();
+        if ( ! file_exists($compiledDir) ) {
+            $this->logger->info("Creating compiled dir: $compiledDir");
+            mkdir($compiledDir,0777,true);
+        } else {
+            $this->logger->info("Changing directory permission to 777 for enabling compilation through nginx/apache.");
+            $this->logger->info("(You will need write permission to be opened for AssetCompiler.)");
+            chmod($compiledDir, 0777);
+        }
+        $this->logger->info("Done");
     }
 
 }

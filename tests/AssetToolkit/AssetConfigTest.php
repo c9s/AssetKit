@@ -1,27 +1,61 @@
 <?php
+use AssetToolkit\AssetConfig;
+use AssetToolkit\TestCase;
 
-class AssetConfigTest extends AssetToolkit\TestCase
+class AssetConfigTest extends TestCase
 {
 
-
-    public function testEmptyAssetConfig()
-    {
+    public function testAssetConfigWithRootOption() {
         $configFile = $this->getConfigFile();
-        $config = new AssetToolkit\AssetConfig($configFile,array(  
-            'cache' => new UniversalCache\ApcCache,
-            'cache_id' => 'custom_app_id',
-            'cache_expiry' => 3600
+        $config = new AssetConfig($configFile, array(
+            'root' => realpath('tests'),
         ));
         ok($config);
+        $config->save();
+        path_ok($configFile);
+    }
 
-        // test force reload
+    public function testCreateAssetConfigWithArray() {
+        $configFile = $this->getConfigFile();
+        $config = new AssetConfig(array(
+            'Environment' => 'production',
+        ), array(
+            'root' => realpath('tests'),
+        ));
+        ok($config);
+        $config->save($configFile);
+        path_ok($configFile);
+    }
+
+
+    public function testCreateAssetConfig()
+    {
+        $configFile = $this->getConfigFile();
+        $config = new AssetConfig($configFile, array());
+        ok($config);
+
         $config->setBaseUrl('/assets');
         $config->setBaseDir('tests/assets');
+        $config->setEnvironment('production');
         $config->addAssetDirectory('vendor/assets');
 
-        $assets = $config->getRegisteredAssets();
-        ok( empty($assets) );
-        $config->save();
+        $config->save(); // save the config
+        ok($array = $config->getConfigArray());
+
+        is('/assets',$array['BaseUrl']);
+        is('tests/assets',$array['BaseDir']);
+        is('production',$array['Environment']);
+
+        $yamlContent = file_get_contents($configFile);
+        ok($yamlContent);
+
+        if (extension_loaded('yaml')) {
+            $array = yaml_parse($yamlContent);
+            is('/assets',$array['BaseUrl']);
+            is('tests/assets',$array['BaseDir']);
+            is('production',$array['Environment']);
+        }
+
     }
 }
 

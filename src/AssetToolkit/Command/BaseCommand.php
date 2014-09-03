@@ -6,7 +6,8 @@ use AssetToolkit\Asset;
 use AssetToolkit\FileUtils;
 use AssetToolkit\Installer;
 use AssetToolkit\LinkInstaller;
-use AssetToolkit\Cache;
+use AssetToolkit\CacheFactory;
+use AssetToolkit\ResourceUpdater;
 use CLIFramework\Command;
 use Exception;
 
@@ -14,28 +15,41 @@ class BaseCommand extends Command
 {
     public $assetConfig;
     public $assetLoader;
+    public $assetCache;
 
     public function options($opts)
     {
-        $opts->add('config?','the asset config file, defualt to .assetkit.php');
+        $opts->add('config?','the asset config file, defualt to assetkit.yml');
+    }
+
+    public function getAssetConfigLink() {
+        return ".assetkit.yml";
     }
 
     public function getAssetConfigFile()
     {
-        return $this->options->config ?: ".assetkit.php";
+        return $this->options->config ?: "assetkit.yml";
     }
 
     public function getAssetConfig()
     {
-        if ( $this->assetConfig ) {
+        if ($this->assetConfig) {
             return $this->assetConfig;
         }
 
-        $configFile = $this->getAssetConfigFile();
-        $this->assetConfig = new AssetConfig($configFile);
-        $cache = Cache::create($this->assetConfig);
-        $this->assetConfig->setCache($cache);
-        return $this->assetConfig;
+        $file = $this->getAssetConfigLink();
+        if ( file_exists($file) ) {
+            return $this->assetConfig = new AssetConfig($file);
+        }
+        return $this->assetConfig = new AssetConfig($this->getAssetConfigFile());
+    }
+
+    public function getAssetCache() {
+        if ($this->assetCache) {
+            return $this->assetCache;
+        }
+        $config = $this->getAssetConfig();
+        return $this->assetCache = CacheFactory::create($config);
     }
 
     public function getAssetLoader()
@@ -60,9 +74,9 @@ class BaseCommand extends Command
     public function getInstaller()
     {
         if( $this->options->link ) {
-            return new LinkInstaller;
+            return new LinkInstaller($this->getAssetConfig());
         }
-        return new Installer;
+        return new Installer($this->getAssetConfig());
     }
 }
 

@@ -40,7 +40,7 @@ class InstallCommand extends BaseCommand
             mkdir($compiledDir,0755,true);
 
         $updater = new \AssetToolkit\ResourceUpdater();
-        foreach( $config->getRegisteredAssets() as $name => $stash ) {
+        foreach( $config->all() as $name => $stash ) {
             $asset = $loader->load($name);
 
             $this->logger->info("Updating $name ...");

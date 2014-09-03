@@ -42,6 +42,9 @@
                     <element key="appNamespace">
                         <string>AssetToolkit</string>
                     </element>
+                    <element key="xhprofIgnore">
+                        <string>PHPUnit_Framework_TestCase</string>
+                    </element>
                     <element key="xhprofFlags">
                         <string>XHPROF_FLAGS_CPU,XHPROF_FLAGS_MEMORY</string>
                     </element>

@@ -1,5 +1,8 @@
 <?php
 namespace AssetToolkit\Filter;
+use AssetToolkit\AssetConfig;
+use AssetToolkit\AssetUrlBuilder;
+use AssetToolkit\Collection;
 
 /**
  * Rewrite css url to absolute url (from root path)
@@ -11,19 +14,29 @@ namespace AssetToolkit\Filter;
  *
  * To use CssRewriteFilter with your own content:
  *
- *    $rewrite = new CssRewriteFilter;
+ *    $rewrite = new CssRewriteFilter($config, '/assets/jquery');
  *    $rewrite->rewrite( $yourContent, '/url/to/your/asset/file' );
  *
  * To use CssRewriteFilter with collection object:
  *
- *    $rewrite = new CssRewriteFilter;
+ *    $rewrite = new CssRewriteFilter($config, '/assets/jquery');
  *    $rewrite->filter( $collection );
  *    $css = $collection->getContent();
  *
  */
-class CssRewriteFilter
+class CssRewriteFilter extends BaseFilter
 {
-    const DEBUG = false;
+    const DEBUG = 0;
+
+    public $rewriteBaseUrl = '/';
+
+    /**
+     * @param string $rewriteBaseUrl path:  /assets/{asset name}
+     */
+    public function __construct(AssetConfig $config, $rewriteBaseUrl = '/') {
+        $this->rewriteBaseUrl = $rewriteBaseUrl;
+        parent::__construct($config);
+    }
 
 
     /**
@@ -104,19 +117,17 @@ class CssRewriteFilter
      *
      * @param Collection $collection
      */
-    public function filter($collection)
+    public function filter(Collection $collection)
     {
         if ( ! $collection->isStylesheet )
             return;
 
-        //  path:  /assets/{asset name}
-        $assetBaseUrl = $collection->asset->getBaseUrl();
         $chunks = $collection->getChunks();
         foreach( $chunks as &$chunk ) {
             $chunk['content'] = $this->rewrite( 
                 $chunk['content'],
                 // url to the directory of the asset.
-                $assetBaseUrl . '/' . dirname($chunk['path'])
+                $this->rewriteBaseUrl . '/' . dirname($chunk['path'])
             );
         }
         $collection->setChunks($chunks);

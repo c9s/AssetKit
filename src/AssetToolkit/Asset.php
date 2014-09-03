@@ -3,10 +3,11 @@ namespace AssetToolkit;
 use ZipArchive;
 use Exception;
 use SerializerKit;
-use AssetToolkit\FileUtils;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use AssetToolkit\FileUtil;
+use AssetToolkit\FileUtils;
+use ConfigKit\ConfigCompiler;
 
 
 /**
@@ -54,20 +55,25 @@ class Asset
 
     /**
      * @var string asset dir (related path, relate to config file) 
+     *
+     *     "assets/jquery"
+     *     "bundles/ResourceA/assets/underscore"
+     *     "bundles/ResourceA/assets/font-awesome"
+     *
      */
     public $sourceDir;
 
 
+    public $baseDir;
+
+
+
     /**
      * @var string manifest file path, we assume that the manifest file should be PHP format.
+     *
+     *     "bundles/ResourceA/assets/font-awesome/manifest.yml"
      */
     public $manifestFile;
-
-
-    /**
-     * @var AssetToolkit\AssetConfig
-     */
-    public $config;
 
 
     /**
@@ -76,34 +82,22 @@ class Asset
     public $collections = array();
 
 
-    public function __construct($config) 
-    {
-        $this->config = $config;
-    }
-
+    public function __construct() { }
 
 
     /**
-     * @var string $manifestFile related manifest file path.
-     * @var integer $format file format: PHP, JSON or YAML.
+     *
+     *
+     * @param string $manifestYamlFile related YAML manifest file path, which 
+     *          should be absolute path.
      */
-    public function loadFromManifestFile($manifestFile, $format = 0)
+    public function loadFromManifestFile($manifestYamlFile)
     {
-        # NOTE: this file checking should be in outside of this function
-        # to add another file checking might increase file IO and more system calls.
-        # if( ! file_exists( $manifestFile ) ) {
-        #     $manifestFile = FileUtil::find_non_php_manifest_file_from_directory(dirname($manifestFile));
-        # }
-        $config = null;
-        if( $format ) {
-            $config = Data::decode_file($manifestFile, $format);
-        } else {
-            $config = Data::detect_format_and_decode( $manifestFile );
-        }
-        $this->manifestFile = $manifestFile;
-        $this->sourceDir    = dirname($manifestFile);
+        $data = ConfigCompiler::load($manifestYamlFile);
+        $this->manifestFile = $manifestYamlFile;
+        $this->sourceDir    = dirname($manifestYamlFile);
         $this->name         = basename($this->sourceDir);
-        $this->loadFromArray($config);
+        $this->loadFromArray($data);
     }
 
 
@@ -113,7 +107,7 @@ class Asset
         // load assets
         if( isset($this->stash['collections']) ) {
             // create collection objects
-            $this->collections = $this->create_collections($this->stash['collections']);
+            $this->collections = $this->loadCollections($this->stash['collections']);
         } else {
             throw new Exception("the 'collections' is not defined in {$this->name}");
         }
@@ -121,9 +115,18 @@ class Asset
 
 
     /**
-     * simply copy class members to to the file collection
+     * This method create collection objects based on the config from manifest file,
+     *
+     * File paths will be expanded.
+     *
+     * Thie method copies class members to to the file collection
+     *
+     * TODO: Save the absolute path in our cache.
+     * TODO: Save the collection object in the asset config, so we may use APC to cache the objects.
+     *       To save the collection objects in our APC, the objects must not depend on the config/loader object.
+     *       
      */
-    public function create_collections( $collectionStash )
+    public function loadCollections( $collectionStash )
     {
         $sourceDir = $this->sourceDir;
         $collections = array();
@@ -181,7 +184,7 @@ class Asset
             $expandedFiles = array();
             foreach( $files as $p ) {
 
-                // found glob pattern
+                // found a glob pattern
                 if( strpos($p,'*') !== false )
                 {
                     $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
@@ -190,12 +193,12 @@ class Asset
                     $expandedFiles = array_unique( array_merge( $expandedFiles , $expanded ) );
 
                 } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
-
                     $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
+
+                    // We remove the base dir becase we need to build the 
+                    // asset urls
                     $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
-
                     $expandedFiles = array_unique(array_merge( $expandedFiles , $expanded ));
-
                 } else {
                     $expandedFiles[] = $p;
                 }
@@ -208,7 +211,7 @@ class Asset
                 $collection->compressors = $stash['compressors'];
             }
             $collection->files = $expandedFiles;
-            $collection->asset = $this;
+            $collection->sourceDir = $this->getSourceDir();
             $collections[] = $collection;
         }
         return $collections;
@@ -224,10 +227,11 @@ class Asset
         // we should also save installed_dir
         // installed_dir = public dir + source dir
         return array(
-            'stash'      => $this->stash,
-            'manifest'   => $this->manifestFile,
-            'source_dir' => $this->sourceDir,
-            'name'       => $this->name,
+            'stash'       => $this->stash,
+            'manifest'    => $this->manifestFile,
+            'source_dir'  => $this->sourceDir,
+            // 'collections' => $this->collections,
+            'name'        => $this->name,
         );
     }
 
@@ -241,13 +245,6 @@ class Asset
     }
 
 
-    /**
-     * Get installation dir (the target directory of public)
-     */
-    public function getInstallDir($absolute = false)
-    {
-        return $this->config->getBaseDir(true) . DIRECTORY_SEPARATOR . $this->name;
-    }
 
     /**
      * Get the asset source directory
@@ -259,12 +256,6 @@ class Asset
         return $this->sourceDir;
     }
 
-    public function getBaseUrl() 
-    {
-        return $this->config->getBaseUrl() . '/' . $this->name;
-    }
-
-
 
     /**
      * Check if collection files are out of date.
@@ -274,7 +265,7 @@ class Asset
         $collections = $this->getCollections();
         foreach( $collections as $c ) {
             // if the collectino is newer than from time.
-            if ( $c->getLastModifiedTime() > $fromTime ) {
+            if ( $c->isOutOfDate($fromTime) ) {
                 return true;
             }
         }
@@ -289,15 +280,19 @@ class Asset
     public function hasSourceFiles()
     {
         foreach( $this->collections as $collection ) {
-            $paths = $collection->getSourcePaths(true);
+            $paths = $collection->getSourcePaths();
             foreach( $paths as $path ) {
-                if( ! file_exists($path) )
+                if ( ! file_exists($path) ) {
                     return false;
+                }
             }
         }
         return true;
     }
 
+    public function __set_state($array) {
+        // TODO: implement this
+    }
 
 }
 

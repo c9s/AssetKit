@@ -15,9 +15,9 @@ class AssetExtensionTest extends Twig_Test_IntegrationTestCase
         $extension->setAssetLoader($loader);
         $config->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
 
-        ok($config->registerAssetFromManifestFile('tests/assets/jquery/manifest.yml'));
-        ok($config->registerAssetFromManifestFile('tests/assets/jquery-ui/manifest.yml'));
-        ok($config->registerAssetFromManifestFile('tests/assets/test/manifest.yml'));
+        ok($loader->register('tests/assets/jquery/manifest.yml'));
+        ok($loader->register('tests/assets/jquery-ui/manifest.yml'));
+        ok($loader->register('tests/assets/test/manifest.yml'));
         ok($loader);
         return array( $extension );
     }
@@ -41,6 +41,6 @@ class AssetExtensionTest extends Twig_Test_IntegrationTestCase
 
 class AssetObject extends AssetToolkit\TestCase {
     // dirty hack
-    function test() {  }
+    public function testAssetTwigExtension() {  }
 }
 

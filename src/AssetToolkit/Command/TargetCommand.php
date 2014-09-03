@@ -20,36 +20,16 @@ class TargetCommand extends BaseCommand
         $opts->add('add:', 'add target');
     }
 
+    public function init() {
+        $this->registerCommand('list', 'AssetToolkit\Command\ListTargetCommand');
+        $this->registerCommand('add', 'AssetToolkit\Command\AddTargetCommand');
+        $this->registerCommand('remove', 'AssetToolkit\Command\RemoveTargetCommand');
+    }
+
     public function execute()
     {
-        $config = $this->getAssetConfig();
-        $loader = $this->getAssetLoader();
-
-        if ( $targetName = $this->options->add ) {
-            $assetNames = func_get_args();
-            foreach( $assetNames as $n ) {
-                $a = $loader->load($n);
-                if ( ! $a ) {
-                    throw new Exception("Asset $n not found, please add the asset first.");
-                }
-            }
-            $this->logger->info("Adding target $targetName: " . join(", ", $assetNames) );
-            $config->addTarget($targetName, $assetNames);
-            $config->save();
-        } elseif ( $targetName = $this->options->remove ) {
-            if ( $config->hasTarget($targetName) ) {
-                $this->logger->info("Removing target $targetName");
-                $config->removeTarget($targetName);
-                $config->save();
-            }
-        } else {
-            // list targets
-            if ( $targets = $config->getTargets() ) {
-                foreach( $targets as $target => $assetNames ) {
-                    $this->logger->info("$target: " . join(', ', $assetNames) ,1);
-                }
-            }
-        }
+        $list = $this->createCommand('AssetToolkit\Command\ListTargetCommand');
+        $list->execute();
     }
 }
 

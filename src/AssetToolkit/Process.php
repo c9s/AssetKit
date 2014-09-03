@@ -26,10 +26,6 @@ class Process
     {
         $this->args = $args;
         $this->cwd = getcwd();
-        $this->env['PATH'] = getenv('PATH'); // inherit from the PATH env
-
-        // append default PATH env
-        $this->env['PATH'] .= ':/usr/local/bin:/opt/local/bin'; // inherit from the PATH env
     }
 
     public function arg($arg)
@@ -79,7 +75,8 @@ class Process
 
         $command = $this->getCommand();
         $pipes = array();
-        $process = proc_open($command, $descriptorspec, $pipes, $this->cwd, $this->env);
+        // $process = proc_open($command, $descriptorspec, $pipes, $this->cwd, $this->env);
+        $process = proc_open($command, $descriptorspec, $pipes, $this->cwd);
 
         if (is_resource($process)) {
             // $pipes now looks like this:

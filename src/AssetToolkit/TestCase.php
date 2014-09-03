@@ -6,7 +6,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 {
 
     public $config;
+
     public $configFile;
+
     public $loader;
 
     public function getConfigFile()
@@ -14,29 +16,28 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         if ($this->configFile) {
             return $this->configFile;
         }
-        return $this->configFile = $this->createConfigFile();
+        return $this->configFile = $this->createConfigFilename();
     }
 
-    public function createConfigFile()
+    public function createConfigFilename()
     {
         $filename = str_replace('\\', '_', get_class($this)) . '_' . md5(microtime());
-        return "tests/$filename.php";
+        return "tests/$filename.yml";
     }
 
     public function getConfig()
     {
-        if($this->config)
+        if ($this->config) {
             return $this->config;
+        }
 
         $configFile = $this->getConfigFile();
-        if (file_exists($configFile)) {
-            unlink($configFile);
-        }
         $this->config = new \AssetToolkit\AssetConfig($configFile);
         $this->config->setBaseDir("tests/public");
         $this->config->setBaseUrl("/assets");
         $this->config->setNamespace("assetkit-testing");
         $this->config->setCacheDir("cache");
+        $this->config->addAssetDirectory("tests/assets");
         $this->config->setRoot(getcwd());
         return $this->config;
     }
@@ -62,7 +63,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         static $installer;
         if($installer)
             return $installer;
-        $installer = new \AssetToolkit\Installer;
+        $installer = new \AssetToolkit\Installer($this->getConfig());
         $installer->enableLog = false;
         return $installer;
     }
@@ -105,6 +106,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         $configFile = $this->getConfigFile();
         if (file_exists($configFile)) {
+            // fwrite(STDERR,"Cleaning up config file $configFile...\n");
             unlink($configFile);
         }
         if (extension_loaded('apc') ) {

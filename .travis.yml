@@ -2,32 +2,36 @@ language: php
 php:
   - 5.3
   - 5.4
+  - 5.5
 before_install:
-  - sudo apt-get -qq install coffeescript ruby-sass
+  - sudo apt-get -qq install coffeescript ruby-sass libyaml-dev
 before_script:
-  - curl -o APC-3.1.13.tgz http://pecl.php.net/get/APC-3.1.13.tgz
-  - tar -xzf APC-3.1.13.tgz
-  - sh -c "cd APC-3.1.13 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
-  - rm -rf APC-3.1.13
-  - rm APC-3.1.13.tgz
-  - echo "extension=apc.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
-  - curl -o yaml-1.1.0.tgz http://pecl.php.net/get/yaml-1.1.0.tgz
-  - tar -xzf yaml-1.1.0.tgz
-  - sh -c "cd yaml-1.1.0 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
-  - rm -rf yaml-1.1.0 yaml-1.1.0.tgz
-  - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+  - echo -e "yes\nno\n" | pecl -d preferred_state=beta install apcu
+    # - ./bin/install-apcu.sh
+    # - phpenv config-add tests/$TRAVIS_PHP_VERSION.ini
+    # - phpenv config-add tests/apc.ini
+    # - echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - php -m | grep apc
+  - curl -o yaml-1.1.1.tgz http://pecl.php.net/get/yaml-1.1.1.tgz
+  - tar -xzf yaml-1.1.1.tgz
+  - sh -c "cd yaml-1.1.1 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
+  - echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - phpenv rehash
   - npm install -g coffee-script
-  - gem install sass compass
+  - gem install sass --version "=3.2.12"
+  - gem install compass --version "=0.12.2"
   - composer install --dev
-  - pear channel-discover pear.corneltek.com
-  - pear channel-discover pear.twig-project.org
-  - pear channel-update pear.corneltek.com
-  - pear -q install -f -a corneltek/PHPUnit_TestMore
-  - pear -q install -f -a twig/Twig
-  - curl -O https://raw.github.com/c9s/Onion/master/onion
-  - php onion -q install
-script: phpunit
+    # - pear channel-discover pear.corneltek.com
+    # - pear channel-discover pear.twig-project.org
+    # - pear channel-update pear.corneltek.com
+    # - pear -q install -f -a corneltek/PHPUnit_TestMore
+    # - pear -q install -f -a twig/Twig
+    # - curl -O https://raw.github.com/phpbrew/Onion/master/onion
+    # - php onion -q install
+script:
+  - phpunit
+  - tests/test-commands.sh
 
 notifications:
-  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"
+  #  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"
