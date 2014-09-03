@@ -22,16 +22,12 @@ before_script:
   - gem install sass --version "=3.2.12"
   - gem install compass --version "=0.12.2"
   - composer install --dev
-    # - pear channel-discover pear.corneltek.com
-    # - pear channel-discover pear.twig-project.org
-    # - pear channel-update pear.corneltek.com
-    # - pear -q install -f -a corneltek/PHPUnit_TestMore
-    # - pear -q install -f -a twig/Twig
-    # - curl -O https://raw.github.com/phpbrew/Onion/master/onion
-    # - php onion -q install
 script:
   - phpunit
   - tests/test-commands.sh
-
+cache:
+  apt: true
+  directories:
+    - vendor
 notifications:
   #  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"
