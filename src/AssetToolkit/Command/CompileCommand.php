@@ -27,7 +27,6 @@ class CompileCommand extends BaseCommand
         $loader = $this->getAssetLoader();
 
         $target = $this->options->target ?: $config->getDefaultTarget();
-
         if ( $target != $config->getDefaultTarget() ) {
             if ( $config->hasTarget($target) ) {
                 $assetNames = $config->getTarget($target);

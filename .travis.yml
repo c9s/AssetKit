@@ -38,6 +38,7 @@ script:
   - php bin/assetkit remove jquery
   - php bin/assetkit target add main jquery
   - php bin/assetkit target list
+  - php bin/assetkit compile jquery
 
 notifications:
   #  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"

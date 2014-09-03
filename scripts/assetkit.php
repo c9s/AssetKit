@@ -3,4 +3,4 @@
 // require the FileUtil.php from phar
 require "phar://assetkit.phar/FileUtil.php";
 $app = AssetToolkit\Console::getInstance();
-$app->run( $argv );
+$app->runWithTry( $argv );
