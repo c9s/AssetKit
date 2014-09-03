@@ -6,6 +6,9 @@ onion -d compile \
     --lib vendor/corneltek/universal-cache/src \
     --lib vendor/corneltek/getoptionkit/src \
     --lib vendor/corneltek/fileutil/src \
+    --lib vendor/corneltek/configkit/src \
+    --lib vendor/twig/twig/lib \
+    --lib vendor/symfony/yaml/Symfony/Component/Yaml \
     --lib vendor/corneltek/cliframework/src \
     --classloader \
     --bootstrap scripts/assetkit.php \
