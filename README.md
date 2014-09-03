@@ -213,12 +213,16 @@ Advanced Usage
 This creates and initializes the `assetkit.yml` file:
 
 ```sh
-$ assetkit init --baseUrl=/assets --baseDir=public/assets
+$ assetkit init --baseUrl=/assets --baseDir=public/assets --dir=private/assets assetkit.yml
 ```
 
-The `--baseDir` is where the assets will be installed to.
+Where the `--baseDir` option is the assets will be installed to.
 
-THe `--baseUrl` is where the assets can be loaded from front-end browser.
+Where the `--baseUrl` option is the assets can be loaded from front-end browser.
+
+Where the `--dir` option is the location that you store your private asset files.
+
+`assetkit.yml` is your config file, it's in YAML format, you can also modify it directly.
 
 
 Register the assets you need:
