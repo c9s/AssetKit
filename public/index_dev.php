@@ -7,7 +7,7 @@ define('ROOT', dirname(__DIR__) );
 
 $config = new AssetToolkit\AssetConfig( '../assetkit.yml', array( 
     'root' => ROOT,
-    'environment' => AssetToolkit\AssetConfig::DEVELOPMENT,
+    'environment' => 'production',
 ));
 
 $loader = new AssetToolkit\AssetLoader( $config );

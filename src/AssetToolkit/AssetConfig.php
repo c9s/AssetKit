@@ -17,11 +17,6 @@ class AssetConfig implements ArrayAccess
     const DEVELOPMENT = 2;
 
     /**
-     * @var string namespace for caching
-     */
-    public $namespace;
-
-    /**
      * @var string $file the config file path
      */
     public $file;
