@@ -3,5 +3,9 @@
   'BaseDir' => 'public/assets',
   'Targets' => 
   array (
+    'minified' => 
+    array (
+      0 => 'jquery',
+    ),
   ),
 );

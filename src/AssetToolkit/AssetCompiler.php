@@ -334,14 +334,14 @@ class AssetCompiler
         }
 
 
-        if ( $this->config->cache ) {
-            $cache = $this->config->cache->get($cacheKey);
+        if ( $cache = $this->config->getCache() ) {
+            $cached = $cache->get($cacheKey);
 
             // cache validation
-            if ( $cache && ! $force ) {
+            if ( $cached && ! $force ) {
                 if ( $this->productionFstatCheck ) {
                     $upToDate = true;
-                    if ( $mtime = @$cache['mtime'] ) {
+                    if ( $mtime = @$cached['mtime'] ) {
                         foreach( $assets as $asset ) {
                             if ( $asset->isOutOfDate($mtime) ) {
                                 $upToDate = false;
@@ -350,9 +350,9 @@ class AssetCompiler
                         }
                     }
                     if ( $upToDate )
-                        return $cache;
+                        return $cached;
                 } else {
-                    return $cache;
+                    return $cached;
                 }
             }
         }
@@ -410,8 +410,8 @@ class AssetCompiler
         $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta';
         $this->writeFile( $outfiles['metafile'], serialize($outfiles) );
 
-        if ( $this->config->cache ) {
-            $this->config->cache->set($cacheKey, $outfiles);
+        if ( $cache = $this->config->getCache() ) {
+            $cache->set($cacheKey, $outfiles);
         }
         return $outfiles;
     }
@@ -443,13 +443,25 @@ class AssetCompiler
         }
     }
 
+    public $defaultCompiledDirPermission = 0777;
+
+
     public function prepareCompiledDir()
     {
         $compiledDir = $this->config->getCompiledDir();
-        futil_mkdir_if_not_exists($compiledDir,0766, true);
 
-        if ( ! is_writable($compiledDir) ) {
-            throw new AssetCompilerException("The $compiledDir is not writable.");
+        if ( ! file_exists($compiledDir) ) {
+            mkdir($compiledDir,$this->defaultCompiledDirPermission, true);
+        }
+
+        if (!is_dir($compiledDir)) {
+            throw new AssetCompilerException("The $compiledDir is not a directory.");
+        }
+
+        if (is_writable($compiledDir)) {
+            chmod($compiledDir,$this->defaultCompiledDirPermission);
+        } else {
+            throw new AssetCompilerException("The $compiledDir is not writable for asset compilation.");
         }
         return $compiledDir;
     }
