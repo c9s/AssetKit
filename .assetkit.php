@@ -7,5 +7,9 @@
     array (
       0 => 'jquery',
     ),
+    'main' => 
+    array (
+      0 => 'jquery',
+    ),
   ),
 );

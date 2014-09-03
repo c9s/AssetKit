@@ -27,7 +27,7 @@ class InitCommand extends BaseCommand
             ->isa('path')
             ->required()
             ;
-        $opts->add('assetdir+','asset directory for looking up assets.')
+        $opts->add('dir+','asset directory for looking up assets.')
             ->isa('path')
             ->required()
             ;
@@ -53,8 +53,8 @@ class InitCommand extends BaseCommand
         $config = $this->getAssetConfig();
         $config->setBaseUrl($this->options->baseUrl );
         $config->setBaseDir($this->options->baseDir );
-        if ($this->options->assetdir) {
-            foreach($this->options->assetdir as $dir) {
+        if ($dirs = (array) $this->options->dir) {
+            foreach($dirs as $dir) {
                 $this->logger->info("Adding asset directory $dir");
                 $config->addAssetDirectory($dir);
             }

@@ -1,5 +1,8 @@
 #!/bin/bash
-php bin/assetkit init --baseDir "public/assets" --baseUrl "/assets" assetkit.yml
+php bin/assetkit init --baseDir "public/assets" \
+    --baseUrl "/assets" \
+    --dir "tests/assets" \
+    assetkit.yml
 cat .assetkit.yml
 php bin/assetkit add tests/assets/jquery
 php bin/assetkit list
