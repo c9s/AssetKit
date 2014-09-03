@@ -26,7 +26,6 @@ class Console extends Application
         $this->registerCommand('install');
         $this->registerCommand('target');
         $this->registerCommand('list');
-        $this->registerCommand('set');
     }
 }
 
