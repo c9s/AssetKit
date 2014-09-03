@@ -1,4 +1,6 @@
 .sass-cache/
+
+# The installed assets
 public/assets/
 public/.sass-cache
 composer.lock
@@ -11,3 +13,4 @@ assetkit.yml
 assetkit.php
 node_modules
 npm-debug.log
+.asset-entries.php
