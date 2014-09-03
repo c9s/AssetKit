@@ -120,7 +120,7 @@ for example, the backbonejs manifest.yml file:
 ---
 resource:
   url: http://backbonejs.org/backbone.js
-assets:
+collections:
   - js:
     - backbone.js
   - css:
