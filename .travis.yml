@@ -33,9 +33,11 @@ script:
   - phpunit
   - bin/assetkit init --baseDir "public/assets" --baseUrl "/assets" assetkit.yml
   - cat .assetkit.yml
-  - bin/assetkit add tests/assets/jquery
-  - bin/assetkit list
-  - bin/assetkit remove jquery
+  - php bin/assetkit add tests/assets/jquery
+  - php bin/assetkit list
+  - php bin/assetkit remove jquery
+  - php bin/assetkit target add main jquery
+  - php bin/assetkit target list
 
 notifications:
   #  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"

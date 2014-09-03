@@ -20,6 +20,11 @@ class TargetCommand extends BaseCommand
         $opts->add('add:', 'add target');
     }
 
+    public function init() {
+        $this->registerCommand('list', 'AssetToolkit\Command\ListTargetCommand');
+        $this->registerCommand('add', 'AssetToolkit\Command\AddTargetCommand');
+    }
+
     public function execute()
     {
         $config = $this->getAssetConfig();
