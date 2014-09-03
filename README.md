@@ -256,12 +256,11 @@ $config = new AssetToolkit\AssetConfig( 'config/assetkit.yml',array(
     // the application root, contains the assetkit.yml file.
     'root' => APPLICATION_ROOT,
     'cache' => new UniversalCache\ApcCache(array( 'namespace' => 'myapp_' ));
-    'environment' => AssetConfig::PRODUCTION,
 ));
 
 $loader = new AssetToolkit\AssetLoader( $config );
 
-$compiler = new AssetToolkit\AssetCompiler( $config, $loader);
+$compiler = new AssetToolkit\AssetCompiler($config, $loader);
 $compiler->enableProductionFstatCheck();
 $compiler->defaultJsCompressor = 'uglifyjs';
 $compiler->defaultCssCompressor = 'cssmin';
@@ -327,11 +326,11 @@ To check all compiled target, you may simply run:
 
 To add assets to a target, you can run:
 
-    $ assetkit target --add demo-page jquery jquery-ui bootstrap
+    $ assetkit target add demo-page jquery jquery-ui bootstrap
 
 To remove a target, you can run:
 
-    $ assetkit target --remove demo-page
+    $ assetkit target remove demo-page
 
 Setting Up Your Preferred Default Compressor
 --------------------------------------------
@@ -385,7 +384,7 @@ $config = new AssetToolkit\AssetConfig('assetkit.yml',array(
 ));
 $config->setBaseUrl('/assets');
 $config->setBaseDir('tests/assets');
-$config->setEnvironment( AssetToolkit\AssetConfig::PRODUCTION );
+$config->setEnvironment('production');
 
 $baseDir = $config->getBaseDir(true); // absolute path
 $baseUrl = $config->getBaseUrl();
