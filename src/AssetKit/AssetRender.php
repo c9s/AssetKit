@@ -45,12 +45,6 @@ class AssetRender
     }
 
 
-    public function renderLoadedAssets($target = '') 
-    {
-        $assetMap = $this->loader->all();
-        $assets = array_values($assetMap);
-        $this->renderAssets($assets, $target);
-    }
 
 
     /**
