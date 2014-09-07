@@ -52,6 +52,12 @@ class AssetRender
         $this->renderAssets($assets, $target);
     }
 
+
+    /**
+     * Render assets by target name
+     *
+     * @param string $target
+     */
     public function renderTarget($target)
     {
         // get assets from the target
@@ -60,11 +66,19 @@ class AssetRender
             throw new RuntimeException("Target $target not found.");
         }
         $assets = $this->loader->loadAssets($assetNames);
-        return $this->renderAssets($assets, $target);
+        $this->renderAssets($assets, $target);
     }
 
+    /**
+     *
+     * @param Asset[] $assets
+     * @param string $target
+     */
     public function renderAssets($assets, $target = '')
     {
+        // TODO: Get compiled info by target name from cache or mmap.
+
+
         $compiler = $this->getCompiler();
         $out = $compiler->compileAssets($assets, $target, $this->force);
         $this->renderFragments($out);
