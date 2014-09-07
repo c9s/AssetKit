@@ -1,12 +1,15 @@
 <?php
 require "../vendor/autoload.php";
+use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
+use AssetKit\CacheFactory;
 
 $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 
 define('ROOT', dirname(__DIR__) );
 
 // create a virtual asset config object.
-$config = new AssetKit\AssetConfig("assetkit.yml");
+$config = new AssetConfig("assetkit.yml");
 $config->setRoot(ROOT);
 $config->setBaseDir("public/assets");
 $config->setBaseUrl("/assets");
@@ -17,9 +20,9 @@ $config->setCacheDir(ROOT . "/cache"); // setup asset cache path
 $config->addAssetDirectory("tests/assets"); // setup asset lookup directory (based on ROOT directory)
 
 // create a cache handler based on the current config
-$config->setCache(AssetKit\CacheFactory::create($config));
+$config->setCache(CacheFactory::create($config));
 
-$loader = new \AssetKit\AssetLoader($config);
+$loader = new AssetLoader($config);
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
