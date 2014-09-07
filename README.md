@@ -12,7 +12,7 @@ filters and compressors in it.
 
 
 
-Concepts of AssetKit
+Concept
 ---------------------------
 
 - To improvement the asset loading performance, we register these wanted asset
@@ -107,6 +107,15 @@ Get the command-line assetkit:
     $ chmod +x assetkit
     $ sudo mv assetkit /usr/bin
 
+Demo
+-----------------------
+
+```sh
+git clone https://github.com/c9s/AssetKit
+cd public
+php -S localhost:3000
+// open your browser and go to http://localhost:3000 to see the sample app in production mode.
+```
 
 The Asset Manifest File
 -----------------------
