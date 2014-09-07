@@ -92,7 +92,6 @@ class AssetLoader
 
             // load the asset manifest file
             $asset = $this->register($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
-
             // Save the asset object into the pool
             return $this->objects[$name] = $asset;
         }
@@ -171,7 +170,7 @@ class AssetLoader
                 return $asset;
             }
         }
-        return false;
+        throw Exception("Asset $name not found. auto lookup failed.");
     }
 
 

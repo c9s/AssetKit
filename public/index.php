@@ -5,12 +5,17 @@ $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 
 define('ROOT', dirname(__DIR__) );
 
-$config = new AssetKit\AssetConfig( '../assetkit.yml', array( 
-    'root' => ROOT,
-    'environment' => AssetKit\AssetConfig::PRODUCTION,
-));
+// create a virtual asset config object.
+$config = new AssetKit\AssetConfig("assetkit.yml");
+$config->setRoot(ROOT);
+$config->setBaseDir("public/assets");
+$config->setBaseUrl("/assets");
+$config->setNamespace("assetkit-testing-prod");
+$config->setEnvironment("production");
+$config->setCacheDir(ROOT . "/cache"); // setup asset cache path
+$config->addAssetDirectory("tests/assets"); // setup asset lookup directory (based on ROOT directory)
 
-$loader = new AssetKit\AssetLoader( $config );
+$loader = new \AssetKit\AssetLoader($config);
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );

@@ -26,7 +26,7 @@ class AssetProductionCompiler extends AssetCompiler
      */
     public function compileAssets($assets, $target = '', $force = false)
     {
-        $hasTarget = $target ? true : false;
+        $targetDefined = $target ? true : false;
         if ( $target ) {
             $cacheKey = $this->config->getNamespace() . ':' . $target;
         } else {
@@ -76,11 +76,17 @@ class AssetProductionCompiler extends AssetCompiler
         }
 
         // register target (assets) to the config, if it's not defaultTarget,
-        if ( $hasTarget ) {
+        if ( $targetDefined ) {
+
+
             // we should always update the target, because we might change the target assets from
             // template or php code.
             $this->config->addTarget($target, $assetNames);
-            $this->config->save();
+
+            // the config filename is defined.
+            if ($this->config->getConfigFile() ) {
+                $this->config->save();
+            }
         }
 
         $compiledDir = $this->prepareCompiledDir();
