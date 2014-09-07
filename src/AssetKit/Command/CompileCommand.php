@@ -49,7 +49,7 @@ class CompileCommand extends BaseCommand
         $this->logger->info("Loading assets " . join(', ', $assetNames));
         $assets = $loader->loadAssets($assetNames);
 
-        $compiler = new AssetCompiler($config,$loader);
+        $compiler = new AssetProductionCompiler($config,$loader);
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 
@@ -57,7 +57,7 @@ class CompileCommand extends BaseCommand
         $this->logger->info("Compiling assets to target '$target'...");
         
         // force compile
-        $files = $compiler->compileAssetsForProduction($assets, $target, true); // use force to compile.
+        $files = $compiler->compileAssets($assets, $target, true); // use force to compile.
 
         printf( "----------------------------------------------------\n" );
         printf( "Target:            %s\n" , $files['target'] );

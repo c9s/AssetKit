@@ -1,6 +1,7 @@
 <?php
-
 use AssetKit\AssetCompiler;
+use AssetKit\AssetProductionCompiler;
+use AssetKit\AssetRender;
 
 class AssetCompilerTest extends AssetKit\TestCase
 {
@@ -17,10 +18,10 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $this->installAssets($assets);
 
-        $compiler = $this->getCompiler();
+        $compiler = new AssetProductionCompiler($config,$loader);
         $compiler->enableProductionFstatCheck();
 
-        $files = $compiler->compileAssetsForProduction($assets,'myapp');
+        $files = $compiler->compileAssets($assets,'myapp', $force = true);
         ok($files);
 
         path_ok($files['js_file']);
@@ -83,8 +84,8 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $this->installAssets($assets);
 
-        $compiler = $this->getCompiler();
-        $outs = $compiler->compileAssetsForDevelopment($assets);
+        $compiler = new AssetCompiler($config,$loader);
+        $outs = $compiler->compileAssets($assets);
         ok($outs);
         foreach($outs as $out) {
             ok($out['type']);
@@ -99,7 +100,7 @@ class AssetCompilerTest extends AssetKit\TestCase
      */
     public function testAssetRenderForDevelopment($outs)
     {
-        $render = new AssetKit\AssetRender($this->getConfig(),$this->getLoader());
+        $render = new \AssetKit\AssetRender($this->getConfig(),$this->getLoader());
         ok($render);
 
         // the below tests are only for local.

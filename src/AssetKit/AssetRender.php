@@ -38,9 +38,13 @@ class AssetRender
         if ($this->compiler) {
             return $this->compiler;
         }
-
-        // default compiler
-        $this->compiler = new AssetCompiler($this->config,$this->loader);
+        if ($this->config->getEnvironment() === 'production' ) {
+            $this->compiler = new AssetProductionCompiler($this->config,$this->loader);
+        } elseif ($this->config->getEnvironment() === 'development' ) {
+            $this->compiler = new AssetCompiler($this->config,$this->loader);
+        } else {
+            $this->compiler = new AssetCompiler($this->config,$this->loader);
+        }
         $this->compiler->registerDefaultCompressors();
         $this->compiler->registerDefaultFilters();
         return $this->compiler;
@@ -68,17 +72,8 @@ class AssetRender
     public function renderAssets($assets, $target = '')
     {
         $compiler = $this->getCompiler();
-
-        if ($this->config->getEnvironment() === 'production' ) {
-            $out = $compiler->compileAssetsForProduction($assets, $target, $this->force);
-            $this->renderFragment($out);
-        } elseif ($this->config->getEnvironment() === 'development' ) {
-            $outs = $compiler->compileAssetsForDevelopment($assets, $target);
-            $this->renderFragments($outs);
-        } else {
-            $outs = $compiler->compileAssetsForDevelopment($assets, $target);
-            $this->renderFragments($outs);
-        }
+        $out = $compiler->compileAssets($assets, $target, $this->force);
+        $this->renderFragment($out);
     }
 
 
