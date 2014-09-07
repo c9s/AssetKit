@@ -111,14 +111,15 @@ class AssetProductionCompiler extends AssetCompiler
         $outfiles['mtime']   = time();
         $outfiles['cache_key'] = $cacheKey;
         $outfiles['target'] = $target;
-
         $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta';
         file_put_contents($outfiles['metafile'], serialize($outfiles));
 
+        // include entries
+        $result = array($outfiles);
         if ( $cache = $this->config->getCache() ) {
-            $cache->set($cacheKey, $outfiles);
+            $cache->set($cacheKey, $result);
         }
-        return $outfiles;
+        return $result;
     }
 
     public function setProductionFstatCheck($b)
