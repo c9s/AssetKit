@@ -5,6 +5,8 @@ use RuntimeException;
 use AssetKit\FileUtil;
 use AssetKit\AssetUrlBuilder;
 use AssetKit\Collection;
+use AssetKit\Exception\UndefinedFilterException;
+use AssetKit\Exception\UndefinedCompressorException;
 
 class AssetCompilerException extends Exception {  }
 
@@ -383,11 +385,14 @@ class AssetCompiler
      */
     public function getFilter($name)
     {
-        if ( isset($this->filters[$name]) )
+        if ( isset($this->filters[$name]) ) {
             return $this->filters[$name];
+        }
 
-        if ( ! isset($this->_filters[$name]) )
-            return;
+        // check the factory closure
+        if ( ! isset($this->_filters[$name]) ) {
+            throw new UndefinedFilterException("$name filter is undefined.");
+        }
 
         $cb = $this->_filters[ $name ];
         if ( is_callable($cb) ) {
@@ -413,12 +418,14 @@ class AssetCompiler
      */
     public function getCompressor($name)
     {
-        if ( isset($this->compressors[$name]) )
+        if ( isset($this->compressors[$name]) ) {
             return $this->compressors[$name];
+        }
 
         // check compressor builder
-        if ( ! isset($this->_compressors[$name]) )
-            return;
+        if ( ! isset($this->_compressors[$name]) ) {
+            throw new UndefinedCompressorException("$name compressor is undefined.");
+        }
 
         $cb = $this->_compressors[ $name ];
 
