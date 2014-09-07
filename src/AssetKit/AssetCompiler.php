@@ -289,12 +289,12 @@ class AssetCompiler
         if ($out['js']) {
             $out['js_file'] = $jsFile;
             $out['js_url'] = $jsUrl;
-            $this->writeFile( $jsFile, $out['js'] );
+            file_put_contents( $jsFile, $out['js'] );
         }
         if ($out['css']) {
             $out['css_file'] = $cssFile;
             $out['css_url'] = $cssUrl;
-            $this->writeFile( $cssFile , $out['css'] );
+            file_put_contents( $cssFile , $out['css'] );
         }
 
         if ( $this->config->cache ) {
@@ -338,7 +338,7 @@ class AssetCompiler
     {
         $compiledDir = $this->config->getCompiledDir();
 
-        if ( ! file_exists($compiledDir) ) {
+        if (! file_exists($compiledDir)) {
             mkdir($compiledDir,$this->defaultCompiledDirPermission, true);
         }
 
@@ -346,23 +346,12 @@ class AssetCompiler
             throw new RuntimeException("The $compiledDir is not a directory.");
         }
 
-        if (is_writable($compiledDir)) {
-            chmod($compiledDir,$this->defaultCompiledDirPermission);
-        } else {
+        if (!is_writable($compiledDir)) {
             throw new UnwritableFileException("The $compiledDir is not writable for asset compilation.");
         }
+        chmod($compiledDir,$this->defaultCompiledDirPermission);
         return $compiledDir;
     }
-
-
-    public function writeFile($path,$content) 
-    {
-        if ( false === file_put_contents($path, $content) ) {
-            throw new AssetCompilerException("Can not write $path");
-        }
-    }
-
-
 
     /**
      * Register filter builder
