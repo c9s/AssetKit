@@ -1,8 +1,6 @@
 AssetKit
 ============
 
-AssetKit is different from Rails' asset pipeline, AssetKit is designed for PHP, the concept is different.
-
 AssetKit is designed for PHP's performance, all configuration files are compiled into
 PHP source code, this makes AssetKit loads these asset configuration files very quickly.
 
@@ -98,7 +96,7 @@ Install library from composer:
 ```json
 {
     "require": {
-        "corneltek/assetkit": "2.0.*"
+        "corneltek/assetkit": "~3"
     }
 }
 ```
