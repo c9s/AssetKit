@@ -5,9 +5,10 @@ use Exception;
 use DateTime;
 use AssetKit\AssetConfig;
 use AssetKit\AssetLoader;
-use AssetKit\AssetCompiler;
 use AssetKit\Asset;
 use AssetKit\Command\BaseCommand;
+use AssetKit\AssetCompiler;
+use AssetKit\AssetProductionCompiler;
 use CLIFramework\Command;
 
 class CompileCommand extends BaseCommand

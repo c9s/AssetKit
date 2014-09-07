@@ -133,7 +133,6 @@ class AssetCompilerTest extends AssetKit\TestCase
         ok($asset);
 
         $compiler = $this->getCompiler();
-
         $installer = $this->getInstaller();
         $installer->install($asset);
 
