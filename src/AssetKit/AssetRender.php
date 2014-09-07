@@ -3,22 +3,15 @@ namespace AssetKit;
 use Exception;
 use RuntimeException;
 use AssetKit\AssetCompilerFactory;
-
-class UnknownFragmentException extends Exception {
-
-    public $fragment;
-
-    public function __construct($message, $fragment) {
-        $this->fragment = $fragment;
-        parent::__construct($message);
-    }
-}
+use AssetKit\AssetCompiler;
+use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
+use AssetKit\Exception\UnknownFragmentException;
 
 /**
  * AssetIncluder is the top-level API for including asset files.
  *
  * $render = new AssetRender($config,$loader);
- * $render->setEnvironment(  )
  * $render->render( $manifest );
  */
 class AssetRender
@@ -28,7 +21,7 @@ class AssetRender
 
     public $compiler;
 
-    public function __construct($config,$loader, $compiler = null)
+    public function __construct(AssetConfig $config, AssetLoader $loader, AssetCompiler $compiler = null)
     {
         $this->config = $config;
         $this->loader = $loader;
@@ -36,7 +29,6 @@ class AssetRender
             $this->compiler = $compiler;
         }
     }
-
 
     public function force() 
     {
@@ -87,7 +79,7 @@ class AssetRender
     public function renderFragments($outs)
     {
         foreach( $outs as $out ) {
-            echo $this->renderFragment($out);
+            $this->renderFragment($out);
         }
     }
 
@@ -141,8 +133,7 @@ class AssetRender
             echo ' ' , $name , '="' , $value , '"';
         }
         echo '>';
-
-        if($innerContent) {
+        if ($innerContent) {
             echo $innerContent;
         }
         echo '</script>' , PHP_EOL;
