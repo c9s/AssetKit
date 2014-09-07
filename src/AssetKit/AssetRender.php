@@ -4,6 +4,8 @@ use Exception;
 use RuntimeException;
 use AssetKit\AssetCompilerFactory;
 
+class UnknownFragmentException extends Exception {}
+
 /**
  * AssetIncluder is the top-level API for including asset files.
  *
@@ -65,7 +67,7 @@ class AssetRender
     {
         $compiler = $this->getCompiler();
         $out = $compiler->compileAssets($assets, $target, $this->force);
-        $this->renderFragment($out);
+        $this->renderFragments($out);
     }
 
 
@@ -95,14 +97,13 @@ class AssetRender
         } if ( isset($out['css_url']) ) {
             $this->renderStylesheetTag($out['css_url']);
         } elseif ( isset($out['type']) ) {
-
             if ( isset($out['url']) ) {
                 if ($out['type'] === "stylesheet") {
                     $this->renderStylesheetTag( $out['url'] );
                 } elseif ( $out['type'] === "javascript" ) {
                     $this->renderJavascriptTag( $out['url'] );
                 } else {
-                    throw new Exception("Unknown fragment.");
+                    throw new UnknownFragmentException("Unknown fragment type: " . $out['type']);
                 }
             } else if ( isset($out['content']) ) {
                 if($out['type'] === "stylesheet") {
@@ -110,9 +111,11 @@ class AssetRender
                 } elseif( $out['type'] === "javascript" ) {
                     echo '<script type="text/javascript">', $out['content'] , '</script>' , PHP_EOL;
                 } else {
-                    throw new Exception("Unknown fragment.");
+                    throw new UnknownFragmentException("Unknown fragment type: " . $out['type']);
                 }
             }
+        } else {
+            throw new UnknownFragmentException("Fragment type undefined.");
         }
     }
 

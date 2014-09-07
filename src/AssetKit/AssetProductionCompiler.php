@@ -77,8 +77,6 @@ class AssetProductionCompiler extends AssetCompiler
 
         // register target (assets) to the config, if it's not defaultTarget,
         if ( $targetDefined ) {
-
-
             // we should always update the target, because we might change the target assets from
             // template or php code.
             $this->config->addTarget($target, $assetNames);

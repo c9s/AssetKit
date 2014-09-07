@@ -9,10 +9,12 @@ $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 define('ROOT', dirname(__DIR__) );
 
 // create a virtual asset config object.
-$config = new AssetConfig("assetkit.yml");
+$config = new AssetConfig("../assetkit.yml");
 $config->setRoot(ROOT);
 $config->setBaseDir("public/assets");
 $config->setBaseUrl("/assets");
+
+// namespace is used for caching
 $config->setNamespace("assetkit-testing-prod");
 $config->setEnvironment("production");
 $config->setCacheDir(ROOT . "/cache"); // setup asset cache path
@@ -30,9 +32,9 @@ $assets[] = $loader->load( 'underscore' );
 $assets[] = $loader->load( 'test' );
 
 $render = new AssetKit\AssetRender($config,$loader);
-$compiler = $render->getCompiler();
 
 if (isset($_GET['force'])) {
+    $compiler = $render->getCompiler();
     $compiler->enableProductionFstatCheck();
     $render->force();
 }

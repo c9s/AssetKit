@@ -1,27 +1,33 @@
 <?php
 require "../vendor/autoload.php";
+use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
+use AssetKit\CacheFactory;
 
 $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 
 define('ROOT', dirname(__DIR__) );
 
-$config = new AssetKit\AssetConfig( '../assetkit.yml', array( 
-    'root' => ROOT,
-    'environment' => 'production',
-));
+$config = new AssetConfig("../assetkit.yml");
+$config->setRoot(ROOT);
+$config->setBaseDir("public/assets");
+$config->setBaseUrl("/assets");
+$config->setEnvironment("development");
 
-$loader = new AssetKit\AssetLoader( $config );
+// namespace is used for caching
+$config->setNamespace("assetkit-testing-dev");
+$config->setCacheDir(ROOT . "/cache"); // setup asset cache path
+$config->addAssetDirectory("tests/assets"); // setup asset lookup directory (based on ROOT directory)
+// create a cache handler based on the current config
+$config->setCache(CacheFactory::create($config));
+
+$loader = new AssetLoader( $config );
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'underscore' );
 $assets[] = $loader->load( 'test' );
-
 $render = new AssetKit\AssetRender($config,$loader);
-$compiler = $render->getCompiler();
-$compiler->enableProductionFstatCheck();
-
-$render->force();
 ?>
 <html>
 <head>
@@ -34,6 +40,15 @@ body { font-size: 12px; }
 </head>
 <body>
 
+
+<h2>Loaded assets</h2>
+<ol>
+<?php 
+foreach($assets as $asset) {
+    echo '<li>' . $asset->name . '</li>';
+} 
+?>
+</ol>
 <div id="accordion">
   <h3>Section 1</h3>
   <div>
@@ -84,7 +99,9 @@ body { font-size: 12px; }
 </div>
 
 <div id="dialog-confirm" title="Empty the recycle bin?">
-  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+  Development mode of AssetKit.
+  </p>
 </div>
 
 </body>
