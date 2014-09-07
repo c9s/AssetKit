@@ -2,6 +2,7 @@
 namespace AssetKit;
 use Exception;
 use RuntimeException;
+use AssetKit\AssetCompilerFactory;
 
 /**
  * AssetIncluder is the top-level API for including asset files.
@@ -38,16 +39,7 @@ class AssetRender
         if ($this->compiler) {
             return $this->compiler;
         }
-        if ($this->config->getEnvironment() === 'production' ) {
-            $this->compiler = new AssetProductionCompiler($this->config,$this->loader);
-        } elseif ($this->config->getEnvironment() === 'development' ) {
-            $this->compiler = new AssetCompiler($this->config,$this->loader);
-        } else {
-            $this->compiler = new AssetCompiler($this->config,$this->loader);
-        }
-        $this->compiler->registerDefaultCompressors();
-        $this->compiler->registerDefaultFilters();
-        return $this->compiler;
+        return $this->compiler = AssetCompilerFactory::create($this->config, $this->loader);
     }
 
 
