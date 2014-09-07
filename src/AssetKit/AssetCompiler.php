@@ -527,7 +527,7 @@ class AssetCompiler
         $urlBuilder = new AssetUrlBuilder($this->config);
         $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
         foreach( $collections as $collection ) {
-            // skip unknown types
+            // skip unknown collection type
             if ( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
                 continue;
 
@@ -537,11 +537,11 @@ class AssetCompiler
                 }
             }
 
-            // if we are in development mode, we don't need to compress them all,
+            // If we are in development mode, we don't need to compress them all,
             // we just filter them
             if ( $this->enableCompressor ) 
             {
-                // run user-defined filters, user-defined filters can override 
+                // Run user-defined filters, user-defined filters can override 
                 // default filters.
                 // NOTE: users must define css_import filter for production mode.
                 if ( $collection->getFilters() ) {
@@ -605,11 +605,8 @@ class AssetCompiler
                 return;
             }
             foreach( $collection->compressors as $n ) {
-                if ( $compressor = $this->getCompressor( $n ) ) {
-                    $compressor->compress($collection);
-                } else {
-                    throw new AssetCompilerException("compressor $n not found.");
-                }
+                $compressor = $this->getCompressor( $n );
+                $compressor->compress($collection);
             }
         }
     }

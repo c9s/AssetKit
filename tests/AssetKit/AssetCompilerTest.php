@@ -11,9 +11,10 @@ class AssetCompilerTest extends AssetKit\TestCase
         $loader = $this->getLoader();
 
         $assets = array();
-        // $assets[] = $loader->register("tests/assets/jquery");
-        // $assets[] = $loader->register("tests/assets/jquery-ui");
+        $assets[] = $loader->register("tests/assets/jquery");
+        $assets[] = $loader->register("tests/assets/jquery-ui");
         $assets[] = $loader->register("tests/assets/test");
+        $assets[] = $loader->register("tests/assets/underscore");
         ok($assets);
 
         $this->installAssets($assets);
