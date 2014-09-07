@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.10" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0               http://pear.php.net/dtd/tasks-1.0.xsd               http://pear.php.net/dtd/package-2.0               http://pear.php.net/dtd/package-2.0.xsd">
-  <name>AssetToolkit</name>
+  <name>AssetKit</name>
   <channel>pear.corneltek.com</channel>
   <summary>A powerful asset manager for PHP</summary>
   <description>A powerful asset manager for PHP</description>
@@ -24,53 +24,53 @@
   <notes>-</notes>
   <contents>
     <dir name="/">
-      <file name="src/AssetToolkit/Asset.php" role="php" md5sum="ebe717b6ff9cd87a9c7daec33e4114a2"/>
-      <file name="src/AssetToolkit/AssetCompiler.php" role="php" md5sum="d217302b188916357a63a108d6255d77"/>
-      <file name="src/AssetToolkit/AssetConfig.php" role="php" md5sum="9060ed53ebf52d0078cd7c1a6537c127"/>
-      <file name="src/AssetToolkit/AssetEntryCluster.php" role="php" md5sum="41896e64c392ebc9c41f98dfa32821d1"/>
-      <file name="src/AssetToolkit/AssetLoader.php" role="php" md5sum="90ef60193871fae5d345753a88d795ae"/>
-      <file name="src/AssetToolkit/AssetRender.php" role="php" md5sum="1a8ca22452e266acbe564d750ae7914c"/>
-      <file name="src/AssetToolkit/AssetUrlBuilder.php" role="php" md5sum="056dcd20476067bb3d082fdf7344e893"/>
-      <file name="src/AssetToolkit/CacheFactory.php" role="php" md5sum="e6575db903fb1a3895f6266525969fae"/>
-      <file name="src/AssetToolkit/Collection.php" role="php" md5sum="00a27d38e190d891fc176ec9c2b9a9a7"/>
-      <file name="src/AssetToolkit/Command/AddCommand.php" role="php" md5sum="3398e8d694d57221879e60d90f3e47cb"/>
-      <file name="src/AssetToolkit/Command/AddTargetCommand.php" role="php" md5sum="53d603b42152d2109585af1273c7b046"/>
-      <file name="src/AssetToolkit/Command/BaseCommand.php" role="php" md5sum="9e556e65257b4ecfc5984f2d5eb31812"/>
-      <file name="src/AssetToolkit/Command/CleanCommand.php" role="php" md5sum="e05d1c13138eadcbac5883fb935b3ec1"/>
-      <file name="src/AssetToolkit/Command/CompileCommand.php" role="php" md5sum="f7018944abd2781257c1dbff32c31f7a"/>
-      <file name="src/AssetToolkit/Command/InitCommand.php" role="php" md5sum="c84d68976514220c92517ef376b1d77f"/>
-      <file name="src/AssetToolkit/Command/InstallCommand.php" role="php" md5sum="c9a65f6ee08fa18b58ed4b80bdaca147"/>
-      <file name="src/AssetToolkit/Command/ListCommand.php" role="php" md5sum="94b3a32390761d7bf43d359b62920432"/>
-      <file name="src/AssetToolkit/Command/ListTargetCommand.php" role="php" md5sum="2678cf95d9f5de1a315701e9ef30aff6"/>
-      <file name="src/AssetToolkit/Command/RemoveCommand.php" role="php" md5sum="83e63c994081d4d6c60777d9aedc0f3c"/>
-      <file name="src/AssetToolkit/Command/RemoveTargetCommand.php" role="php" md5sum="12e8f536ffe243bd7e7896f49061c3db"/>
-      <file name="src/AssetToolkit/Command/TargetCommand.php" role="php" md5sum="d0bd8b75c692dd1c07eefb14e27284ab"/>
-      <file name="src/AssetToolkit/Command/UpdateCommand.php" role="php" md5sum="42bed48ba639b9084795fe62518676b0"/>
-      <file name="src/AssetToolkit/Compressor/CssMinCompressor.php" role="php" md5sum="6c67e3c75f79f0d3dc44b64b7fcfa90a"/>
-      <file name="src/AssetToolkit/Compressor/JsMinCompressor.php" role="php" md5sum="d7ee85a62e59f3ed9fa15d471202bda5"/>
-      <file name="src/AssetToolkit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
-      <file name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
-      <file name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
-      <file name="src/AssetToolkit/Console.php" role="php" md5sum="0b981d109a2745c2774868908a99272c"/>
-      <file name="src/AssetToolkit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
-      <file name="src/AssetToolkit/Data.php" role="php" md5sum="8bb32becf726ce09d0c4f2d587e65246"/>
-      <file name="src/AssetToolkit/Extension/Twig/AssetExtension.php" role="php" md5sum="e693c1bacf24deaa12bd0a549629fc7a"/>
-      <file name="src/AssetToolkit/Extension/Twig/AssetNode.php" role="php" md5sum="6c295ac723a3d229d1c38ca9c7244124"/>
-      <file name="src/AssetToolkit/Extension/Twig/AssetTokenParser.php" role="php" md5sum="21917caefd22792fb9ee6a9258a44651"/>
-      <file name="src/AssetToolkit/FileUtil.php" role="php" md5sum="74cd5dea2253c3e2a66499e08c75387c"/>
-      <file name="src/AssetToolkit/Filter/BaseFilter.php" role="php" md5sum="2a767b638d082f6724d50d06a21cc1d8"/>
-      <file name="src/AssetToolkit/Filter/CoffeeScriptFilter.php" role="php" md5sum="7db6f94ae260f906c4049f3dcef1f7c5"/>
-      <file name="src/AssetToolkit/Filter/CssImportFilter.php" role="php" md5sum="49f074aaedf2f3646dab2cd739aa3373"/>
-      <file name="src/AssetToolkit/Filter/CssRewriteFilter.php" role="php" md5sum="fd2caa2beca65eeb2d734eddf2639070"/>
-      <file name="src/AssetToolkit/Filter/SassFilter.php" role="php" md5sum="ddefef2a053a1a3be96d4cddaa327b06"/>
-      <file name="src/AssetToolkit/Filter/ScssFilter.php" role="php" md5sum="6bec3401c7dfbd522a829a4c65ce47e1"/>
-      <file name="src/AssetToolkit/Installer.php" role="php" md5sum="a40589fbb5a524bd641997cd6cf7da8a"/>
-      <file name="src/AssetToolkit/JSMin.php" role="php" md5sum="cc7ec597e591a29ee477910c5617e53e"/>
-      <file name="src/AssetToolkit/LinkInstaller.php" role="php" md5sum="974280e1b2348c5d6a865d8d790f40de"/>
-      <file name="src/AssetToolkit/Process.php" role="php" md5sum="f5f11c7911b626c4b1bbf3dcd0c24c9e"/>
-      <file name="src/AssetToolkit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
-      <file name="src/AssetToolkit/TestCase.php" role="php" md5sum="fb48bd0fccb47a4b96845e5e2bbdf040"/>
-      <file name="src/AssetToolkit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
+      <file name="src/AssetKit/Asset.php" role="php" md5sum="ebe717b6ff9cd87a9c7daec33e4114a2"/>
+      <file name="src/AssetKit/AssetCompiler.php" role="php" md5sum="d217302b188916357a63a108d6255d77"/>
+      <file name="src/AssetKit/AssetConfig.php" role="php" md5sum="9060ed53ebf52d0078cd7c1a6537c127"/>
+      <file name="src/AssetKit/AssetEntryCluster.php" role="php" md5sum="41896e64c392ebc9c41f98dfa32821d1"/>
+      <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="90ef60193871fae5d345753a88d795ae"/>
+      <file name="src/AssetKit/AssetRender.php" role="php" md5sum="1a8ca22452e266acbe564d750ae7914c"/>
+      <file name="src/AssetKit/AssetUrlBuilder.php" role="php" md5sum="056dcd20476067bb3d082fdf7344e893"/>
+      <file name="src/AssetKit/CacheFactory.php" role="php" md5sum="e6575db903fb1a3895f6266525969fae"/>
+      <file name="src/AssetKit/Collection.php" role="php" md5sum="00a27d38e190d891fc176ec9c2b9a9a7"/>
+      <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="3398e8d694d57221879e60d90f3e47cb"/>
+      <file name="src/AssetKit/Command/AddTargetCommand.php" role="php" md5sum="53d603b42152d2109585af1273c7b046"/>
+      <file name="src/AssetKit/Command/BaseCommand.php" role="php" md5sum="9e556e65257b4ecfc5984f2d5eb31812"/>
+      <file name="src/AssetKit/Command/CleanCommand.php" role="php" md5sum="e05d1c13138eadcbac5883fb935b3ec1"/>
+      <file name="src/AssetKit/Command/CompileCommand.php" role="php" md5sum="f7018944abd2781257c1dbff32c31f7a"/>
+      <file name="src/AssetKit/Command/InitCommand.php" role="php" md5sum="c84d68976514220c92517ef376b1d77f"/>
+      <file name="src/AssetKit/Command/InstallCommand.php" role="php" md5sum="c9a65f6ee08fa18b58ed4b80bdaca147"/>
+      <file name="src/AssetKit/Command/ListCommand.php" role="php" md5sum="94b3a32390761d7bf43d359b62920432"/>
+      <file name="src/AssetKit/Command/ListTargetCommand.php" role="php" md5sum="2678cf95d9f5de1a315701e9ef30aff6"/>
+      <file name="src/AssetKit/Command/RemoveCommand.php" role="php" md5sum="83e63c994081d4d6c60777d9aedc0f3c"/>
+      <file name="src/AssetKit/Command/RemoveTargetCommand.php" role="php" md5sum="12e8f536ffe243bd7e7896f49061c3db"/>
+      <file name="src/AssetKit/Command/TargetCommand.php" role="php" md5sum="d0bd8b75c692dd1c07eefb14e27284ab"/>
+      <file name="src/AssetKit/Command/UpdateCommand.php" role="php" md5sum="42bed48ba639b9084795fe62518676b0"/>
+      <file name="src/AssetKit/Compressor/CssMinCompressor.php" role="php" md5sum="6c67e3c75f79f0d3dc44b64b7fcfa90a"/>
+      <file name="src/AssetKit/Compressor/JsMinCompressor.php" role="php" md5sum="d7ee85a62e59f3ed9fa15d471202bda5"/>
+      <file name="src/AssetKit/Compressor/UglifyCompressor.php" role="php" md5sum="e1020fb2e7906e8fd79d3c4e7d4ff11c"/>
+      <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="40751a6492715b9d2d5447b6299c8073"/>
+      <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="86ce252819259598d4d444cee502c228"/>
+      <file name="src/AssetKit/Console.php" role="php" md5sum="0b981d109a2745c2774868908a99272c"/>
+      <file name="src/AssetKit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
+      <file name="src/AssetKit/Data.php" role="php" md5sum="8bb32becf726ce09d0c4f2d587e65246"/>
+      <file name="src/AssetKit/Extension/Twig/AssetExtension.php" role="php" md5sum="e693c1bacf24deaa12bd0a549629fc7a"/>
+      <file name="src/AssetKit/Extension/Twig/AssetNode.php" role="php" md5sum="6c295ac723a3d229d1c38ca9c7244124"/>
+      <file name="src/AssetKit/Extension/Twig/AssetTokenParser.php" role="php" md5sum="21917caefd22792fb9ee6a9258a44651"/>
+      <file name="src/AssetKit/FileUtil.php" role="php" md5sum="74cd5dea2253c3e2a66499e08c75387c"/>
+      <file name="src/AssetKit/Filter/BaseFilter.php" role="php" md5sum="2a767b638d082f6724d50d06a21cc1d8"/>
+      <file name="src/AssetKit/Filter/CoffeeScriptFilter.php" role="php" md5sum="7db6f94ae260f906c4049f3dcef1f7c5"/>
+      <file name="src/AssetKit/Filter/CssImportFilter.php" role="php" md5sum="49f074aaedf2f3646dab2cd739aa3373"/>
+      <file name="src/AssetKit/Filter/CssRewriteFilter.php" role="php" md5sum="fd2caa2beca65eeb2d734eddf2639070"/>
+      <file name="src/AssetKit/Filter/SassFilter.php" role="php" md5sum="ddefef2a053a1a3be96d4cddaa327b06"/>
+      <file name="src/AssetKit/Filter/ScssFilter.php" role="php" md5sum="6bec3401c7dfbd522a829a4c65ce47e1"/>
+      <file name="src/AssetKit/Installer.php" role="php" md5sum="a40589fbb5a524bd641997cd6cf7da8a"/>
+      <file name="src/AssetKit/JSMin.php" role="php" md5sum="cc7ec597e591a29ee477910c5617e53e"/>
+      <file name="src/AssetKit/LinkInstaller.php" role="php" md5sum="974280e1b2348c5d6a865d8d790f40de"/>
+      <file name="src/AssetKit/Process.php" role="php" md5sum="f5f11c7911b626c4b1bbf3dcd0c24c9e"/>
+      <file name="src/AssetKit/ResourceUpdater.php" role="php" md5sum="04daa23f865a0c1b67c4730394ff2e30"/>
+      <file name="src/AssetKit/TestCase.php" role="php" md5sum="fb48bd0fccb47a4b96845e5e2bbdf040"/>
+      <file name="src/AssetKit/Utils.php" role="php" md5sum="778f3352dec5b072470991089c91d93b"/>
       <file name="assetkit" role="script" md5sum="647b7ab7b5d5c6ccfc75819c02245b2b"/>
     </dir>
   </contents>
@@ -111,53 +111,53 @@
   </dependencies>
   <phprelease>
     <filelist>
-      <install name="src/AssetToolkit/Asset.php" as="AssetToolkit/Asset.php"/>
-      <install name="src/AssetToolkit/AssetCompiler.php" as="AssetToolkit/AssetCompiler.php"/>
-      <install name="src/AssetToolkit/AssetConfig.php" as="AssetToolkit/AssetConfig.php"/>
-      <install name="src/AssetToolkit/AssetEntryCluster.php" as="AssetToolkit/AssetEntryCluster.php"/>
-      <install name="src/AssetToolkit/AssetLoader.php" as="AssetToolkit/AssetLoader.php"/>
-      <install name="src/AssetToolkit/AssetRender.php" as="AssetToolkit/AssetRender.php"/>
-      <install name="src/AssetToolkit/AssetUrlBuilder.php" as="AssetToolkit/AssetUrlBuilder.php"/>
-      <install name="src/AssetToolkit/CacheFactory.php" as="AssetToolkit/CacheFactory.php"/>
-      <install name="src/AssetToolkit/Collection.php" as="AssetToolkit/Collection.php"/>
-      <install name="src/AssetToolkit/Command/AddCommand.php" as="AssetToolkit/Command/AddCommand.php"/>
-      <install name="src/AssetToolkit/Command/AddTargetCommand.php" as="AssetToolkit/Command/AddTargetCommand.php"/>
-      <install name="src/AssetToolkit/Command/BaseCommand.php" as="AssetToolkit/Command/BaseCommand.php"/>
-      <install name="src/AssetToolkit/Command/CleanCommand.php" as="AssetToolkit/Command/CleanCommand.php"/>
-      <install name="src/AssetToolkit/Command/CompileCommand.php" as="AssetToolkit/Command/CompileCommand.php"/>
-      <install name="src/AssetToolkit/Command/InitCommand.php" as="AssetToolkit/Command/InitCommand.php"/>
-      <install name="src/AssetToolkit/Command/InstallCommand.php" as="AssetToolkit/Command/InstallCommand.php"/>
-      <install name="src/AssetToolkit/Command/ListCommand.php" as="AssetToolkit/Command/ListCommand.php"/>
-      <install name="src/AssetToolkit/Command/ListTargetCommand.php" as="AssetToolkit/Command/ListTargetCommand.php"/>
-      <install name="src/AssetToolkit/Command/RemoveCommand.php" as="AssetToolkit/Command/RemoveCommand.php"/>
-      <install name="src/AssetToolkit/Command/RemoveTargetCommand.php" as="AssetToolkit/Command/RemoveTargetCommand.php"/>
-      <install name="src/AssetToolkit/Command/TargetCommand.php" as="AssetToolkit/Command/TargetCommand.php"/>
-      <install name="src/AssetToolkit/Command/UpdateCommand.php" as="AssetToolkit/Command/UpdateCommand.php"/>
-      <install name="src/AssetToolkit/Compressor/CssMinCompressor.php" as="AssetToolkit/Compressor/CssMinCompressor.php"/>
-      <install name="src/AssetToolkit/Compressor/JsMinCompressor.php" as="AssetToolkit/Compressor/JsMinCompressor.php"/>
-      <install name="src/AssetToolkit/Compressor/UglifyCompressor.php" as="AssetToolkit/Compressor/UglifyCompressor.php"/>
-      <install name="src/AssetToolkit/Compressor/Yui/CssCompressor.php" as="AssetToolkit/Compressor/Yui/CssCompressor.php"/>
-      <install name="src/AssetToolkit/Compressor/Yui/JsCompressor.php" as="AssetToolkit/Compressor/Yui/JsCompressor.php"/>
-      <install name="src/AssetToolkit/Console.php" as="AssetToolkit/Console.php"/>
-      <install name="src/AssetToolkit/CssMin.php" as="AssetToolkit/CssMin.php"/>
-      <install name="src/AssetToolkit/Data.php" as="AssetToolkit/Data.php"/>
-      <install name="src/AssetToolkit/Extension/Twig/AssetExtension.php" as="AssetToolkit/Extension/Twig/AssetExtension.php"/>
-      <install name="src/AssetToolkit/Extension/Twig/AssetNode.php" as="AssetToolkit/Extension/Twig/AssetNode.php"/>
-      <install name="src/AssetToolkit/Extension/Twig/AssetTokenParser.php" as="AssetToolkit/Extension/Twig/AssetTokenParser.php"/>
-      <install name="src/AssetToolkit/FileUtil.php" as="AssetToolkit/FileUtil.php"/>
-      <install name="src/AssetToolkit/Filter/BaseFilter.php" as="AssetToolkit/Filter/BaseFilter.php"/>
-      <install name="src/AssetToolkit/Filter/CoffeeScriptFilter.php" as="AssetToolkit/Filter/CoffeeScriptFilter.php"/>
-      <install name="src/AssetToolkit/Filter/CssImportFilter.php" as="AssetToolkit/Filter/CssImportFilter.php"/>
-      <install name="src/AssetToolkit/Filter/CssRewriteFilter.php" as="AssetToolkit/Filter/CssRewriteFilter.php"/>
-      <install name="src/AssetToolkit/Filter/SassFilter.php" as="AssetToolkit/Filter/SassFilter.php"/>
-      <install name="src/AssetToolkit/Filter/ScssFilter.php" as="AssetToolkit/Filter/ScssFilter.php"/>
-      <install name="src/AssetToolkit/Installer.php" as="AssetToolkit/Installer.php"/>
-      <install name="src/AssetToolkit/JSMin.php" as="AssetToolkit/JSMin.php"/>
-      <install name="src/AssetToolkit/LinkInstaller.php" as="AssetToolkit/LinkInstaller.php"/>
-      <install name="src/AssetToolkit/Process.php" as="AssetToolkit/Process.php"/>
-      <install name="src/AssetToolkit/ResourceUpdater.php" as="AssetToolkit/ResourceUpdater.php"/>
-      <install name="src/AssetToolkit/TestCase.php" as="AssetToolkit/TestCase.php"/>
-      <install name="src/AssetToolkit/Utils.php" as="AssetToolkit/Utils.php"/>
+      <install name="src/AssetKit/Asset.php" as="AssetKit/Asset.php"/>
+      <install name="src/AssetKit/AssetCompiler.php" as="AssetKit/AssetCompiler.php"/>
+      <install name="src/AssetKit/AssetConfig.php" as="AssetKit/AssetConfig.php"/>
+      <install name="src/AssetKit/AssetEntryCluster.php" as="AssetKit/AssetEntryCluster.php"/>
+      <install name="src/AssetKit/AssetLoader.php" as="AssetKit/AssetLoader.php"/>
+      <install name="src/AssetKit/AssetRender.php" as="AssetKit/AssetRender.php"/>
+      <install name="src/AssetKit/AssetUrlBuilder.php" as="AssetKit/AssetUrlBuilder.php"/>
+      <install name="src/AssetKit/CacheFactory.php" as="AssetKit/CacheFactory.php"/>
+      <install name="src/AssetKit/Collection.php" as="AssetKit/Collection.php"/>
+      <install name="src/AssetKit/Command/AddCommand.php" as="AssetKit/Command/AddCommand.php"/>
+      <install name="src/AssetKit/Command/AddTargetCommand.php" as="AssetKit/Command/AddTargetCommand.php"/>
+      <install name="src/AssetKit/Command/BaseCommand.php" as="AssetKit/Command/BaseCommand.php"/>
+      <install name="src/AssetKit/Command/CleanCommand.php" as="AssetKit/Command/CleanCommand.php"/>
+      <install name="src/AssetKit/Command/CompileCommand.php" as="AssetKit/Command/CompileCommand.php"/>
+      <install name="src/AssetKit/Command/InitCommand.php" as="AssetKit/Command/InitCommand.php"/>
+      <install name="src/AssetKit/Command/InstallCommand.php" as="AssetKit/Command/InstallCommand.php"/>
+      <install name="src/AssetKit/Command/ListCommand.php" as="AssetKit/Command/ListCommand.php"/>
+      <install name="src/AssetKit/Command/ListTargetCommand.php" as="AssetKit/Command/ListTargetCommand.php"/>
+      <install name="src/AssetKit/Command/RemoveCommand.php" as="AssetKit/Command/RemoveCommand.php"/>
+      <install name="src/AssetKit/Command/RemoveTargetCommand.php" as="AssetKit/Command/RemoveTargetCommand.php"/>
+      <install name="src/AssetKit/Command/TargetCommand.php" as="AssetKit/Command/TargetCommand.php"/>
+      <install name="src/AssetKit/Command/UpdateCommand.php" as="AssetKit/Command/UpdateCommand.php"/>
+      <install name="src/AssetKit/Compressor/CssMinCompressor.php" as="AssetKit/Compressor/CssMinCompressor.php"/>
+      <install name="src/AssetKit/Compressor/JsMinCompressor.php" as="AssetKit/Compressor/JsMinCompressor.php"/>
+      <install name="src/AssetKit/Compressor/UglifyCompressor.php" as="AssetKit/Compressor/UglifyCompressor.php"/>
+      <install name="src/AssetKit/Compressor/Yui/CssCompressor.php" as="AssetKit/Compressor/Yui/CssCompressor.php"/>
+      <install name="src/AssetKit/Compressor/Yui/JsCompressor.php" as="AssetKit/Compressor/Yui/JsCompressor.php"/>
+      <install name="src/AssetKit/Console.php" as="AssetKit/Console.php"/>
+      <install name="src/AssetKit/CssMin.php" as="AssetKit/CssMin.php"/>
+      <install name="src/AssetKit/Data.php" as="AssetKit/Data.php"/>
+      <install name="src/AssetKit/Extension/Twig/AssetExtension.php" as="AssetKit/Extension/Twig/AssetExtension.php"/>
+      <install name="src/AssetKit/Extension/Twig/AssetNode.php" as="AssetKit/Extension/Twig/AssetNode.php"/>
+      <install name="src/AssetKit/Extension/Twig/AssetTokenParser.php" as="AssetKit/Extension/Twig/AssetTokenParser.php"/>
+      <install name="src/AssetKit/FileUtil.php" as="AssetKit/FileUtil.php"/>
+      <install name="src/AssetKit/Filter/BaseFilter.php" as="AssetKit/Filter/BaseFilter.php"/>
+      <install name="src/AssetKit/Filter/CoffeeScriptFilter.php" as="AssetKit/Filter/CoffeeScriptFilter.php"/>
+      <install name="src/AssetKit/Filter/CssImportFilter.php" as="AssetKit/Filter/CssImportFilter.php"/>
+      <install name="src/AssetKit/Filter/CssRewriteFilter.php" as="AssetKit/Filter/CssRewriteFilter.php"/>
+      <install name="src/AssetKit/Filter/SassFilter.php" as="AssetKit/Filter/SassFilter.php"/>
+      <install name="src/AssetKit/Filter/ScssFilter.php" as="AssetKit/Filter/ScssFilter.php"/>
+      <install name="src/AssetKit/Installer.php" as="AssetKit/Installer.php"/>
+      <install name="src/AssetKit/JSMin.php" as="AssetKit/JSMin.php"/>
+      <install name="src/AssetKit/LinkInstaller.php" as="AssetKit/LinkInstaller.php"/>
+      <install name="src/AssetKit/Process.php" as="AssetKit/Process.php"/>
+      <install name="src/AssetKit/ResourceUpdater.php" as="AssetKit/ResourceUpdater.php"/>
+      <install name="src/AssetKit/TestCase.php" as="AssetKit/TestCase.php"/>
+      <install name="src/AssetKit/Utils.php" as="AssetKit/Utils.php"/>
       <install name="assetkit" as="assetkit"/>
     </filelist>
   </phprelease>

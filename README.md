@@ -1,20 +1,20 @@
-AssetToolkit
+AssetKit
 ============
 
-AssetToolkit is different from Rails' asset pipeline, AssetToolkit is designed for PHP, the concept is different.
+AssetKit is different from Rails' asset pipeline, AssetKit is designed for PHP, the concept is different.
 
-AssetToolkit is designed for PHP's performance, all configuration files are compiled into
-PHP source code, this makes AssetToolkit loads these asset configuration files very quickly.
+AssetKit is designed for PHP's performance, all configuration files are compiled into
+PHP source code, this makes AssetKit loads these asset configuration files very quickly.
 
-AssetToolkit is a powerful asset manager, provides a simple command-line
+AssetKit is a powerful asset manager, provides a simple command-line
 interface and a simple PHP library with simple API, there are many built-in
 filters and compressors in it.
 
-[![Build Status](https://travis-ci.org/c9s/php-AssetToolkit.png?branch=master)](https://travis-ci.org/c9s/php-AssetToolkit)
+[![Build Status](https://travis-ci.org/c9s/php-AssetKit.png?branch=master)](https://travis-ci.org/c9s/php-AssetKit)
 
 
 
-Concepts of AssetToolkit
+Concepts of AssetKit
 ---------------------------
 
 - To improvement the asset loading performance, we register these wanted asset
@@ -64,7 +64,7 @@ files, some people use Makefile, some people use Grunt.js, but it's still hard
 to configure, manage and distribute.
 
 To give PHP applications a better flexibility, we designed a better
-archtecture to organize these asset files. that is, AssetToolkit.
+archtecture to organize these asset files. that is, AssetKit.
 
 Features
 ---------------------------
@@ -105,7 +105,7 @@ Install library from composer:
 
 Get the command-line assetkit:
 
-    $ curl -O https://raw.github.com/c9s/php-AssetToolkit/master/assetkit
+    $ curl -O https://raw.github.com/c9s/php-AssetKit/master/assetkit
     $ chmod +x assetkit
     $ sudo mv assetkit /usr/bin
 
@@ -184,18 +184,18 @@ To use assetkit in your application, just few lines to write:
 require 'vendor/autoload.php';
 
 // load your asset config file, this contains asset manifest and types
-$config = new AssetToolkit\AssetConfig( '../assetkit.yml', array( 
+$config = new AssetKit\AssetConfig( '../assetkit.yml', array( 
     'root' => APP_ROOT // the absolute path where you run "assetkit" command.
 ));
 
 // initialize an asset loader
-$loader = new AssetToolkit\AssetLoader( $config );
+$loader = new AssetKit\AssetLoader( $config );
 
 // load the required assets (of your page, application or controller)
 $assets = $loader->loadAssets(array( 'jquery', 'jquery-ui' ));
 
 // Use AssetRender to compile and render the HTML tag
-$render = new AssetToolkit\AssetRender($config, $loader);
+$render = new AssetKit\AssetRender($config, $loader);
 
 $targetName = 'demo-page';
 $render->renderAssets($assets, $targetName); // pipe html tags to output buffer, the targetName is optional.
@@ -248,29 +248,29 @@ To symbol link assets to the `baseDir`, you may pass the `--link` flag.
 
 
 
-Then integrate the AssetToolkit API into your PHP web application,
+Then integrate the AssetKit API into your PHP web application,
 there are just few lines to write (you may check the `public/index.php` sample):
 
 ```php
-use AssetToolkit\AssetConfig;
+use AssetKit\AssetConfig;
 // Please install php-fileutil extension for beter performance, 
 
 // To use AssetCompiler, AssetLoader or AssetRender, we need to initialize AssetConfig object.
-$config = new AssetToolkit\AssetConfig( 'config/assetkit.yml',array(
+$config = new AssetKit\AssetConfig( 'config/assetkit.yml',array(
     // the application root, contains the assetkit.yml file.
     'root' => APPLICATION_ROOT,
     'cache' => new UniversalCache\ApcCache(array( 'namespace' => 'myapp_' ));
 ));
 
-$loader = new AssetToolkit\AssetLoader( $config );
+$loader = new AssetKit\AssetLoader( $config );
 
-$compiler = new AssetToolkit\AssetCompiler($config, $loader);
+$compiler = new AssetKit\AssetCompiler($config, $loader);
 $compiler->enableProductionFstatCheck();
 $compiler->defaultJsCompressor = 'uglifyjs';
 $compiler->defaultCssCompressor = 'cssmin';
 
 $assets = $loader->loadAssets(array( 'jquery', 'jquery-ui') );
-$render = new AssetToolkit\AssetRender($config,$loader, $compiler);
+$render = new AssetKit\AssetRender($config,$loader, $compiler);
 $render->renderAssets($assets,'page-id');
 ```
 
@@ -296,11 +296,11 @@ Compiling assets to target 'demo-page'...
 Stylesheet:
   MD5:  9399a997d354919cba9f84517eb7604a
   URL:  assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
-  File: /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
+  File: /Users/c9s/git/Work/AssetKit/public/assets/demo-page/9399a997d354919cba9f84517eb7604a.min.css
 Javascript:
   MD5:   4a09100517e2d98c3f462376fd69d887
   URL:   assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
-  File:  /Users/c9s/git/Work/AssetToolkit/public/assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
+  File:  /Users/c9s/git/Work/AssetKit/public/assets/demo-page/4a09100517e2d98c3f462376fd69d887.min.js
 Done
 ```
 
@@ -362,7 +362,7 @@ Filters
 ### CoffeeScriptFilter
 
 ```php
-$filter = new AssetToolkit\Filter\CoffeeScriptFilter;
+$filter = new AssetKit\Filter\CoffeeScriptFilter;
 ```
 
 ### SassFilter
@@ -381,7 +381,7 @@ API
 ### AssetConfig API
 
 ```php
-$config = new AssetToolkit\AssetConfig('assetkit.yml',array(  
+$config = new AssetKit\AssetConfig('assetkit.yml',array(  
     'cache' => true,
     'cache_id' => 'your_app_id',
     'cache_expiry' => 3600
@@ -407,7 +407,7 @@ $config->save();
 ### AssetLoader API
 
 ```php
-$loader = new AssetToolkit\AssetLoader($config);
+$loader = new AssetKit\AssetLoader($config);
 
 // load asset from a directory that might contains a manifest file,
 // Note: Since you're going to put the assetkit.yml file 
@@ -443,13 +443,13 @@ $updater->update($asset);
 ### AssetInstaller API
 
 ```php
-$installer = new AssetToolkit\Installer;
+$installer = new AssetKit\Installer;
 $installer->install( $asset );
 $installer->uninstall( $asset );
 ```
 
 ```php
-$installer = new AssetToolkit\LinkInstaller;
+$installer = new AssetKit\LinkInstaller;
 $installer->install( $asset );
 $installer->uninstall( $asset );
 ```
@@ -458,7 +458,7 @@ $installer->uninstall( $asset );
 
 ```php
 $asset = $loader->registerAssetFromPath("tests/assets/jquery-ui");
-$compiler = new AssetToolkit\AssetCompiler($config,$loader);
+$compiler = new AssetKit\AssetCompiler($config,$loader);
 $files = $compiler->compile($asset);
 
 echo $files['js_url'];  //  outputs /assets/compiled/jquery-ui.min.js
@@ -477,7 +477,7 @@ option to make your PHP application scan the modification time of asset files
 to recompile assets:
 
 ```php
-$render = new AssetToolkit\AssetRender($config,$loader);
+$render = new AssetKit\AssetRender($config,$loader);
 $compiler = $render->getCompiler();
 $compiler->enableProductionFstatCheck();
 ```
@@ -492,12 +492,12 @@ $compiler->registerDefaultFilters();
 To register filters, compressors:
 
 ```php
-$compiler->registerCompressor('jsmin', '\AssetToolkit\Compressor\JsMinCompressor');
-$compiler->registerCompressor('cssmin', '\AssetToolkit\Compressor\CssMinCompressor');
-$compiler->registerFilter( 'coffeescript','\AssetToolkit\Filter\CoffeeScriptFilter');
-$compiler->registerFilter( 'css_import', '\AssetToolkit\Filter\CssImportFilter');
-$compiler->registerFilter( 'sass', '\AssetToolkit\Filter\SassFilter');
-$compiler->registerFilter( 'scss', '\AssetToolkit\Filter\ScssFilter');
+$compiler->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinCompressor');
+$compiler->registerCompressor('cssmin', '\AssetKit\Compressor\CssMinCompressor');
+$compiler->registerFilter( 'coffeescript','\AssetKit\Filter\CoffeeScriptFilter');
+$compiler->registerFilter( 'css_import', '\AssetKit\Filter\CssImportFilter');
+$compiler->registerFilter( 'sass', '\AssetKit\Filter\SassFilter');
+$compiler->registerFilter( 'scss', '\AssetKit\Filter\ScssFilter');
 ```
 
 ### AssetRender API
@@ -506,7 +506,7 @@ This is the top level API to compile/render asset HTML tags, which
 operates AssetCompiler to compile loaded assets.
 
 ```php
-$render = new AssetToolkit\AssetRender($config,$loader);
+$render = new AssetKit\AssetRender($config,$loader);
 $render->renderAssets($assets,'demo');
 ```
 
@@ -539,8 +539,8 @@ Hacking
 Install deps:
 
 ```sh
-$ git clone git://github.com/c9s/AssetToolkit.git
-$ cd AssetToolkit
+$ git clone git://github.com/c9s/AssetKit.git
+$ cd AssetKit
 $ composer install --dev
 ```
 Make sure all staff work:

@@ -19,7 +19,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "AssetToolkit": "src"
+            "AssetKit": "src"
         }
     },
     "version": "3.0.0"

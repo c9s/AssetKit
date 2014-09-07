@@ -5,19 +5,19 @@ $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
 
 define('ROOT', dirname(__DIR__) );
 
-$config = new AssetToolkit\AssetConfig( '../assetkit.yml', array( 
+$config = new AssetKit\AssetConfig( '../assetkit.yml', array( 
     'root' => ROOT,
     'environment' => 'production',
 ));
 
-$loader = new AssetToolkit\AssetLoader( $config );
+$loader = new AssetKit\AssetLoader( $config );
 $assets = array();
 $assets[] = $loader->load( 'jquery' );
 $assets[] = $loader->load( 'jquery-ui' );
 $assets[] = $loader->load( 'underscore' );
 $assets[] = $loader->load( 'test' );
 
-$render = new AssetToolkit\AssetRender($config,$loader);
+$render = new AssetKit\AssetRender($config,$loader);
 $compiler = $render->getCompiler();
 $compiler->enableProductionFstatCheck();
 

@@ -40,7 +40,7 @@
                         <string>http://xhprof.dev/index.php</string>
                     </element>
                     <element key="appNamespace">
-                        <string>AssetToolkit</string>
+                        <string>AssetKit</string>
                     </element>
                     <element key="xhprofIgnore">
                         <string>PHPUnit_Framework_TestCase</string>

@@ -10,5 +10,5 @@
  *
  */
 $loader = require 'vendor/autoload.php';
-$app = AssetToolkit\Console::getInstance();
+$app = AssetKit\Console::getInstance();
 $app->run( $argv );
