@@ -115,6 +115,8 @@ git clone https://github.com/c9s/AssetKit
 cd public
 php -S localhost:3000
 // open your browser and go to http://localhost:3000 to see the sample app in production mode.
+
+// http://localhost:3000/index.php?force=1 to force the asset compilation
 ```
 
 The Asset Manifest File

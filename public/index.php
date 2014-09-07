@@ -13,7 +13,11 @@ $config->setBaseUrl("/assets");
 $config->setNamespace("assetkit-testing-prod");
 $config->setEnvironment("production");
 $config->setCacheDir(ROOT . "/cache"); // setup asset cache path
+
 $config->addAssetDirectory("tests/assets"); // setup asset lookup directory (based on ROOT directory)
+
+// create a cache handler based on the current config
+$config->setCache(AssetKit\CacheFactory::create($config));
 
 $loader = new \AssetKit\AssetLoader($config);
 $assets = array();
@@ -24,8 +28,11 @@ $assets[] = $loader->load( 'test' );
 
 $render = new AssetKit\AssetRender($config,$loader);
 $compiler = $render->getCompiler();
-$compiler->enableProductionFstatCheck();
-$render->force();
+
+if (isset($_GET['force'])) {
+    $compiler->enableProductionFstatCheck();
+    $render->force();
+}
 ?>
 <html>
 <head>
@@ -87,8 +94,10 @@ body { font-size: 12px; }
   </div>
 </div>
 
-<div id="dialog-confirm" title="Empty the recycle bin?">
-  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+<div id="dialog-confirm" title="Assets Compliation Succeed!">
+  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+  If you see this dialog, it means the compilation succeed, you may check public/assets/compiled directory to see the compiled assets.
+  </p>
 </div>
 
 </body>
