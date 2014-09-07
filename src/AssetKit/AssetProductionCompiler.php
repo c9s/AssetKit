@@ -92,14 +92,14 @@ class AssetProductionCompiler extends AssetCompiler
             $outfiles['js_checksum'] = hash($this->checksumAlgo, $contents['js']);
             $outfiles['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['js_checksum'] . '.min.js';
             $outfiles['js_url']  = "$compiledUrl/$target-" . $outfiles['js_checksum']  . '.min.js';
-            $this->writeFile( $outfiles['js_file'], $contents['js'] );
+            file_put_contents($outfiles['js_file'], $contents['js'] );
         }
 
         if ($contents['css']) {
             $outfiles['css_checksum'] = hash($this->checksumAlgo, $contents['css']);
             $outfiles['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['css_checksum'] . '.min.css';
             $outfiles['css_url'] = "$compiledUrl/$target-" . $outfiles['css_checksum'] . '.min.css';
-            $this->writeFile( $outfiles['css_file'], $contents['css'] );
+            file_put_contents($outfiles['css_file'], $contents['css'] );
         }
 
 
@@ -109,7 +109,7 @@ class AssetProductionCompiler extends AssetCompiler
         $outfiles['target'] = $target;
 
         $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta';
-        $this->writeFile( $outfiles['metafile'], serialize($outfiles) );
+        file_put_contents($outfiles['metafile'], serialize($outfiles));
 
         if ( $cache = $this->config->getCache() ) {
             $cache->set($cacheKey, $outfiles);

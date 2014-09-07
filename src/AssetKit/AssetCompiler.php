@@ -1,22 +1,27 @@
 <?php
 namespace AssetKit;
-use Exception;
-use RuntimeException;
-use AssetKit\Exception\UndefinedFilterException;
-use AssetKit\Exception\UndefinedCompressorException;
-use AssetKit\Exception\UnwritableFileException;
+use AssetKit\FileUtil;
+use AssetKit\AssetUrlBuilder;
+use AssetKit\Collection;
 
+// Filters
 use AssetKit\Filter\SassFilter;
 use AssetKit\Filter\ScssFilter;
 use AssetKit\Filter\CoffeeScriptFilter;
 use AssetKit\Filter\CssImportFilter;
 
+// Compressors
 use AssetKit\Compressor\Yui\JsCompressor as YuiJsCompressor;
 use AssetKit\Compressor\Yui\CssCompressor as YuiCssCompressor;
 
-use AssetKit\FileUtil;
-use AssetKit\AssetUrlBuilder;
-use AssetKit\Collection;
+// Exceptions
+use AssetKit\Exception\UndefinedFilterException;
+use AssetKit\Exception\UndefinedCompressorException;
+use AssetKit\Exception\UnwritableFileException;
+use Exception;
+use RuntimeException;
+use InvalidArgumentException;
+
 
 class AssetCompilerException extends Exception {  }
 
@@ -79,8 +84,9 @@ class AssetCompiler
 
     public $defaultJsCompressor = 'jsmin';
 
-
     public $defaultCssCompressor = 'cssmin';
+
+    public $defaultCompiledDirPermission = 0777;
 
 
     public function __construct($config,$loader)
@@ -331,8 +337,6 @@ class AssetCompiler
         }
     }
 
-    public $defaultCompiledDirPermission = 0777;
-
 
     public function prepareCompiledDir()
     {
@@ -399,6 +403,7 @@ class AssetCompiler
         } elseif ( class_exists($cb,true) ) {
             return $this->filters[ $name ] = new $cb($this->config);
         }
+        throw new InvalidArgumentException("Unsupported filter builder type.");
     }
 
     public function getFilters()
@@ -437,7 +442,7 @@ class AssetCompiler
         } else if ( is_callable($cb) ) {
             return $this->compressors[ $name ] = call_user_func($cb);
         } else {
-            throw new AssetCompilerException("Unsupported compressor builder");
+            throw new InvalidArgumentException("Unsupported compressor builder type");
         }
     }
 
