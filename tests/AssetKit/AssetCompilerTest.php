@@ -20,6 +20,8 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $compiler = new AssetProductionCompiler($config,$loader);
         $compiler->enableProductionFstatCheck();
+        $compiler->registerDefaultCompressors();
+        $compiler->registerDefaultFilters();
 
         $files = $compiler->compileAssets($assets,'myapp', $force = true);
         ok($files);
