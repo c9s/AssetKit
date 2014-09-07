@@ -1,5 +1,5 @@
 {
-    "name": "corneltek\/assettoolkit",
+    "name": "corneltek\/assetkit",
     "description": "High performance asset manager.",
     "require": {
         "php": ">=5.3.0",
