@@ -8,7 +8,7 @@ use AssetKit\AssetLoader;
 use AssetKit\Asset;
 use AssetKit\Command\BaseCommand;
 use AssetKit\AssetCompiler;
-use AssetKit\AssetProductionCompiler;
+use AssetKit\ProductionAssetCompiler;
 use CLIFramework\Command;
 
 class CompileCommand extends BaseCommand
@@ -50,7 +50,7 @@ class CompileCommand extends BaseCommand
         $this->logger->info("Loading assets " . join(', ', $assetNames));
         $assets = $loader->loadAssets($assetNames);
 
-        $compiler = new AssetProductionCompiler($config,$loader);
+        $compiler = new ProductionAssetCompiler($config,$loader);
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 

@@ -1,6 +1,6 @@
 <?php
 use AssetKit\AssetCompiler;
-use AssetKit\AssetProductionCompiler;
+use AssetKit\ProductionAssetCompiler;
 use AssetKit\AssetRender;
 
 class AssetCompilerTest extends AssetKit\TestCase
@@ -19,7 +19,7 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $this->installAssets($assets);
 
-        $compiler = new AssetProductionCompiler($config,$loader);
+        $compiler = new ProductionAssetCompiler($config,$loader);
         $compiler->enableProductionFstatCheck();
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
@@ -135,7 +135,11 @@ class AssetCompilerTest extends AssetKit\TestCase
         $asset = $loader->register("tests/assets/jquery-ui");
         ok($asset);
 
-        $compiler = $this->getCompiler();
+        $compiler = new ProductionAssetCompiler($config,$loader);
+        $compiler->enableProductionFstatCheck();
+        $compiler->registerDefaultCompressors();
+        $compiler->registerDefaultFilters();
+
         $installer = $this->getInstaller();
         $installer->install($asset);
 

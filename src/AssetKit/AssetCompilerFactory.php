@@ -5,7 +5,7 @@ use RuntimeException;
 use AssetKit\FileUtil;
 use AssetKit\AssetUrlBuilder;
 use AssetKit\Collection;
-use AssetKit\AssetProductionCompiler;
+use AssetKit\ProductionAssetCompiler;
 use AssetKit\AssetCompiler;
 
 
@@ -14,7 +14,7 @@ class AssetCompilerFactory
     static public function create($config, $loader) {
         $compiler = NULL;
         if ($config->getEnvironment() === 'production' ) {
-            $compiler = new AssetProductionCompiler($config,$loader);
+            $compiler = new ProductionAssetCompiler($config,$loader);
         } elseif ($config->getEnvironment() === 'development' ) {
             $compiler = new AssetCompiler($config, $loader);
         } else {
