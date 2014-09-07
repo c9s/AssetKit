@@ -8,7 +8,7 @@ AssetKit is a powerful asset manager, provides a simple command-line
 interface and a simple PHP library with simple API, there are many built-in
 filters and compressors in it.
 
-[![Build Status](https://travis-ci.org/c9s/php-AssetKit.png?branch=master)](https://travis-ci.org/c9s/php-AssetKit)
+[![Build Status](https://travis-ci.org/c9s/AssetKit.png?branch=master)](https://travis-ci.org/c9s/AssetKit)
 
 
 
@@ -103,7 +103,7 @@ Install library from composer:
 
 Get the command-line assetkit:
 
-    $ curl -O https://raw.github.com/c9s/php-AssetKit/master/assetkit
+    $ curl -O https://raw.github.com/c9s/AssetKit/master/assetkit
     $ chmod +x assetkit
     $ sudo mv assetkit /usr/bin
 
