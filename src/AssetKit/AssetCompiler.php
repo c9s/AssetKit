@@ -7,6 +7,9 @@ use AssetKit\AssetUrlBuilder;
 use AssetKit\Collection;
 use AssetKit\Exception\UndefinedFilterException;
 use AssetKit\Exception\UndefinedCompressorException;
+use AssetKit\Filter\SassFilter;
+use AssetKit\Filter\ScssFilter;
+use AssetKit\Filter\CoffeeScriptFilter;
 
 class AssetCompilerException extends Exception {  }
 
@@ -459,18 +462,16 @@ class AssetCompiler
      */
     public function runUserDefinedFilters(Collection $collection)
     {
-        if ( empty($this->filters) )
+        if ( empty($this->filters) ) {
             return false;
-        if ( $this->hasFilter('no') )
+        }
+        if ( $this->hasFilter('no') ) {
             return false;
-
+        }
         foreach( $this->filters as $n ) {
-            if ( $filter = $this->getFilter( $n ) ) {
-                $filter->filter($collection);
-                return true;
-            } else {
-                throw new AssetCompilerException("filter $n not found.");
-            }
+            $filter = $this->getFilter( $n );
+            $filter->filter($collection);
+            return true; // XXX: check this logic flow
         }
         return false;
     }
@@ -491,15 +492,15 @@ class AssetCompiler
         $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
 
         if ( $collection->isCoffeescript || $collection->filetype === Collection::FILETYPE_COFFEE ) {
-            $coffee = new Filter\CoffeeScriptFilter($this->config);
+            $coffee = new CoffeeScriptFilter($this->config);
             $coffee->filter( $collection );
             return true;
         } elseif ( $collection->filetype === Collection::FILETYPE_SASS ) {
-            $sass = new Filter\SassFilter($this->config, $assetBaseUrl);
+            $sass = new SassFilter($this->config, $assetBaseUrl);
             $sass->filter($collection);
             return true;
         } elseif ( $collection->filetype === Collection::FILETYPE_SCSS ) {
-            $scss = new Filter\ScssFilter($this->config, $assetBaseUrl);
+            $scss = new ScssFilter($this->config, $assetBaseUrl);
             $scss->filter( $collection );
             return true;
         }
