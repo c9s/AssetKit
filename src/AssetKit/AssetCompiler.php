@@ -2,14 +2,21 @@
 namespace AssetKit;
 use Exception;
 use RuntimeException;
-use AssetKit\FileUtil;
-use AssetKit\AssetUrlBuilder;
-use AssetKit\Collection;
 use AssetKit\Exception\UndefinedFilterException;
 use AssetKit\Exception\UndefinedCompressorException;
+use AssetKit\Exception\UnwritableFileException;
+
 use AssetKit\Filter\SassFilter;
 use AssetKit\Filter\ScssFilter;
 use AssetKit\Filter\CoffeeScriptFilter;
+use AssetKit\Filter\CssImportFilter;
+
+use AssetKit\Compressor\Yui\JsCompressor as YuiJsCompressor;
+use AssetKit\Compressor\Yui\CssCompressor as YuiCssCompressor;
+
+use AssetKit\FileUtil;
+use AssetKit\AssetUrlBuilder;
+use AssetKit\Collection;
 
 class AssetCompilerException extends Exception {  }
 
@@ -103,12 +110,12 @@ class AssetCompiler
 
         $this->registerCompressor('yui_css', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
-            return new \AssetKit\Compressor\Yui\CssCompressor($bin);
+            return new YuiCssCompressor($bin);
         });
 
         $this->registerCompressor('yui_js', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
-            return new \AssetKit\Compressor\Yui\JsCompressor($bin);
+            return new YuiJsCompressor($bin);
         });
     }
 
@@ -336,13 +343,13 @@ class AssetCompiler
         }
 
         if (!is_dir($compiledDir)) {
-            throw new AssetCompilerException("The $compiledDir is not a directory.");
+            throw new RuntimeException("The $compiledDir is not a directory.");
         }
 
         if (is_writable($compiledDir)) {
             chmod($compiledDir,$this->defaultCompiledDirPermission);
         } else {
-            throw new AssetCompilerException("The $compiledDir is not writable for asset compilation.");
+            throw new UnwritableFileException("The $compiledDir is not writable for asset compilation.");
         }
         return $compiledDir;
     }
@@ -549,7 +556,7 @@ class AssetCompiler
                 // for stylesheets, before compress it, we should import the css contents
                 elseif ( $collection->isStylesheet && $collection->filetype === Collection::FILETYPE_CSS ) {
                     // css import filter implies css rewrite
-                    $import = new Filter\CssImportFilter($this->config, $assetBaseUrl);
+                    $import = new CssImportFilter($this->config, $assetBaseUrl);
                     $import->filter( $collection );
                 } else {
                     $this->runDefaultFilters($asset, $collection);
