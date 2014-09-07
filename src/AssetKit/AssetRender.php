@@ -4,7 +4,15 @@ use Exception;
 use RuntimeException;
 use AssetKit\AssetCompilerFactory;
 
-class UnknownFragmentException extends Exception {}
+class UnknownFragmentException extends Exception {
+
+    public $fragment;
+
+    public function __construct($message, $fragment) {
+        $this->fragment = $fragment;
+        parent::__construct($message);
+    }
+}
 
 /**
  * AssetIncluder is the top-level API for including asset files.
@@ -94,16 +102,19 @@ class AssetRender
         // check for css_url and js_url
         if ( isset($out['js_url']) ) {
             $this->renderJavascriptTag($out['js_url']);
-        } if ( isset($out['css_url']) ) {
+        }
+        if ( isset($out['css_url']) ) {
             $this->renderStylesheetTag($out['css_url']);
-        } elseif ( isset($out['type']) ) {
+        }
+
+        if ( isset($out['type']) ) {
             if ( isset($out['url']) ) {
                 if ($out['type'] === "stylesheet") {
                     $this->renderStylesheetTag( $out['url'] );
                 } elseif ( $out['type'] === "javascript" ) {
                     $this->renderJavascriptTag( $out['url'] );
                 } else {
-                    throw new UnknownFragmentException("Unknown fragment type: " . $out['type']);
+                    throw new UnknownFragmentException("Unknown fragment type: " . $out['type'], $out);
                 }
             } else if ( isset($out['content']) ) {
                 if($out['type'] === "stylesheet") {
@@ -111,11 +122,9 @@ class AssetRender
                 } elseif( $out['type'] === "javascript" ) {
                     echo '<script type="text/javascript">', $out['content'] , '</script>' , PHP_EOL;
                 } else {
-                    throw new UnknownFragmentException("Unknown fragment type: " . $out['type']);
+                    throw new UnknownFragmentException("Unknown fragment type: " . $out['type'], $out);
                 }
             }
-        } else {
-            throw new UnknownFragmentException("Fragment type undefined.");
         }
     }
 

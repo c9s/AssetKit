@@ -27,9 +27,9 @@ class AssetCompilerTest extends AssetKit\TestCase
         $files = $compiler->compileAssets($assets,'myapp', $force = true);
         ok($files);
 
-        path_ok($files['js_file']);
-        path_ok($files['css_file']);
-        ok($files['mtime'], 'got mtime');
+        path_ok($files[0]['js_file']);
+        path_ok($files[0]['css_file']);
+        ok($files[0]['mtime'], 'got mtime');
 
 
         /*
@@ -45,7 +45,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         }
         */
 
-        $cssminContent = file_get_contents( $files['css_file'] );
+        $cssminContent = file_get_contents( $files[0]['css_file'] );
         ok($cssminContent);
 
         // examine these paths
