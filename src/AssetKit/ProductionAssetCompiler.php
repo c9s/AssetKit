@@ -79,7 +79,15 @@ class ProductionAssetCompiler extends AssetCompiler
      */
     public $checkFstat = false;
 
+
+    /**
+     * Cache mode: Use simple PHP config 
+     */
     const CACHE_METAFILE = 1;
+
+    /**
+     * Cache mode: Use UniversalCache\UniversalCache to caceh the compilation result.
+     */
     const CACHE_UNIVERSAL = 2;
 
     /**
@@ -146,8 +154,10 @@ class ProductionAssetCompiler extends AssetCompiler
             $cached = NULL;
             if ($this->cacheType === self::CACHE_METAFILE && file_exists($metaFile)) {
                 $cached = require $metaFile;
-            } else if ( $cache = $this->config->getCache() ) {
-                $cached = $cache->get($cacheKey);
+            } else if ($this->cacheType === self::CACHE_UNIVERSAL) { 
+                if ($cache = $this->config->getCache()) {
+                    $cached = $cache->get($cacheKey);
+                }
             }
 
             if ($cached) {
@@ -223,8 +233,11 @@ class ProductionAssetCompiler extends AssetCompiler
 
         // include entries
         $entries = array($entry);
-        if ( $cache = $this->config->getCache() ) {
-            $cache->set($cacheKey, $entries);
+
+        if ($this->cacheType === self::CACHE_UNIVERSAL) {
+            if ( $cache = $this->config->getCache() ) {
+                $cache->set($cacheKey, $entries);
+            }
         }
         // always write the meta file
         ConfigCompiler::write($entry['metafile'], $entries);
