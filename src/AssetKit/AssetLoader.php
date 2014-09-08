@@ -117,7 +117,7 @@ class AssetLoader
     }
 
 
-    public function updateAsset($asset)
+    public function updateAsset(Asset $asset)
     {
         $this->register($asset->manifestFile);
     }
@@ -137,7 +137,7 @@ class AssetLoader
         $assets = array();
         $registered = $this->entries->all();
         foreach( $registered as $name => $subconfig ) {
-            $assets[] = $this->register( dirname($subconfig['manifest']) );
+            $assets[] = $this->register($subconfig['manifest']);
         }
         return $assets;
     }

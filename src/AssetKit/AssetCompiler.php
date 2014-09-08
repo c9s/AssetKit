@@ -132,7 +132,6 @@ class AssetCompiler
 
         $root = $this->config->getRoot();
         $baseDir = $this->config->getBaseDir(true);
-
         foreach( $assets as $asset ) {
             $assetNames[] = $asset->name;
             $assetBaseUrl = $this->urlBuilder->buildBaseUrl($asset);
