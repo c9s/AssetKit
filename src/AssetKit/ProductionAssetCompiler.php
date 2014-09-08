@@ -45,6 +45,9 @@ class ProductionAssetCompiler extends AssetCompiler
 
     public $defaultCompiledDirMod = 0777;
 
+    public $autoAddUnknownTarget = false;
+
+
     public function __construct(AssetConfig $config, AssetLoader $loader) {
         parent::__construct($config, $loader);
 
@@ -189,10 +192,8 @@ class ProductionAssetCompiler extends AssetCompiler
         }
 
         // register target (assets) to the config, if it's not defaultTarget and the config file name is defined.
-        if ( $targetDefined && $this->loader->entries ) {
-            // we should always update the target, because we might change the target assets from
-            // template or php code.
-            $this->loader->addTarget($target, $assetNames);
+        if ($this->autoAddUnknownTarget && $targetDefined && ! $this->loader->entries->hasTarget($target)) {
+            $this->loader->entries->addTarget($target, $assetNames);
             $this->loader->saveEntries();
         }
 
