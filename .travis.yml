@@ -29,5 +29,3 @@ cache:
   apt: true
   directories:
     - vendor
-notifications:
-  #  webbooks: "http://wireroom.extremedev.org/=/travis-ci/Hall"
