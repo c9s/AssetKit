@@ -177,11 +177,13 @@ class AssetLoader
     /**
      * Load asset from a manifest file or a directory that contains a manifest.yml file.
      *
-     * @param string $path
+     * @param string $path absolute path
      * @parma integer $format
      */
     public function register($path)
     {
+        $path = realpath($path);
+
         if (is_dir($path) ) {
             $path = $path . DIRECTORY_SEPARATOR . 'manifest.yml';
         }
