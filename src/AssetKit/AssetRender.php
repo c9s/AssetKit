@@ -70,8 +70,6 @@ class AssetRender
     public function renderAssets($assets, $target = '')
     {
         // TODO: Get compiled info by target name from cache or mmap.
-
-
         $compiler = $this->getCompiler();
         $out = $compiler->compileAssets($assets, $target, $this->force);
         $this->renderFragments($out);

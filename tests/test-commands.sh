@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 php bin/assetkit init --baseDir "public/assets" \
     --baseUrl "/assets" \
     --dir "tests/assets" \
