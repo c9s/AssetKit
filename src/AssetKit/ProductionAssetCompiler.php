@@ -33,14 +33,6 @@ class ProductionAssetCompiler extends AssetCompiler
 
     public $defaultCompiledDirPermission = 0777;
 
-    public $urlBuilder;
-
-    public function __construct($config,$loader) {
-        parent::__construct($config,$loader);
-        $this->urlBuilder = new AssetUrlBuilder($config);
-    }
-
-
     /**
      * Set checksum algorithm for generating content checksum
      *

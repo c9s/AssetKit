@@ -74,6 +74,7 @@ class AssetCompiler
     {
         $this->config = $config;
         $this->loader = $loader;
+        $this->urlBuilder = new AssetUrlBuilder($config);
     }
 
     public function setConfig(AssetConfig $config)
@@ -125,14 +126,12 @@ class AssetCompiler
         $assetNames = array();
         $out = array();
 
-        $urlBuilder = new AssetUrlBuilder($this->config);
-
         $root = $this->config->getRoot();
         $baseDir = $this->config->getBaseDir(true);
 
         foreach( $assets as $asset ) {
             $assetNames[] = $asset->name;
-            $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+            $assetBaseUrl = $this->urlBuilder->buildBaseUrl($asset);
 
             foreach( $asset->getCollections() as $c ) {
 
@@ -359,8 +358,7 @@ class AssetCompiler
      */
     public function runDefaultFilters(Asset $asset, Collection $collection)
     {
-        $urlBuilder = new AssetUrlBuilder($this->config);
-        $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+        $assetBaseUrl = $this->urlBuilder->buildBaseUrl($asset);
 
         if ( $collection->isCoffeescript || $collection->filetype === Collection::FILETYPE_COFFEE ) {
             $coffee = new CoffeeScriptFilter($this->config);
