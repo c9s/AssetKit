@@ -215,5 +215,18 @@ class Collection
     {
         return $this->getLastModifiedTime() > $fromTime;
     }
+
+    public function __set_state($array) {
+        $c = new self;
+        $c->filters = $array['filters'];
+        $c->compressors = $array['compressors'];
+        $c->files = $array['files'];
+        $c->sourceDir = $array['sourceDir'];
+        $c->filetype = $array['filetype'];
+        $c->isStylesheet = $array['isStylesheet'];
+        $c->isJavascript = $array['isJavascript'];
+        $c->isCoffeescript = $array['isCoffeescript'];
+        return $c;
+    }
 }
 
