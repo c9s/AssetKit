@@ -69,6 +69,10 @@ class ProductionAssetCompiler extends AssetCompiler
         $this->checkFstat = true;
     }
 
+    public function fstatCheckEnabled() {
+        return $this->checkFstat;
+    }
+
 
     public function assetsAreOutOfDate($assets, $mtime) {
         foreach( $assets as $asset ) {
