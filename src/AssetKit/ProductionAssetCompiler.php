@@ -188,16 +188,12 @@ class ProductionAssetCompiler extends AssetCompiler
             }
         }
 
-        // register target (assets) to the config, if it's not defaultTarget,
-        if ( $targetDefined ) {
+        // register target (assets) to the config, if it's not defaultTarget and the config file name is defined.
+        if ( $targetDefined && $this->config->getConfigFile()) {
             // we should always update the target, because we might change the target assets from
             // template or php code.
             $this->config->addTarget($target, $assetNames);
-
-            // the config filename is defined.
-            if ($this->config->getConfigFile() ) {
-                $this->config->save();
-            }
+            $this->config->save();
         }
 
         $entry = array();
@@ -307,12 +303,16 @@ class ProductionAssetCompiler extends AssetCompiler
         if ($out['js']) {
             $out['js_file'] = $jsFile;
             $out['js_url'] = $jsUrl;
-            file_put_contents($jsFile, $out['js'], LOCK_EX);
+            if (false === file_put_contents($jsFile, $out['js'], LOCK_EX)) {
+                throw new Exception("Can't write file '$jsFile'");
+            }
         }
         if ($out['css']) {
             $out['css_file'] = $cssFile;
             $out['css_url'] = $cssUrl;
-            file_put_contents($cssFile , $out['css'], LOCK_EX);
+            if (false === file_put_contents($cssFile , $out['css'], LOCK_EX)) {
+                throw new Exception("Can't write file '$cssFile'");
+            }
         }
 
         // store cache
