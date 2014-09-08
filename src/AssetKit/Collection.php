@@ -213,7 +213,7 @@ class Collection
      */
     public function isOutOfDate($fromTime)
     {
-        return $c->getLastModifiedTime() > $fromTime;
+        return $this->getLastModifiedTime() > $fromTime;
     }
 }
 
