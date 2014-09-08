@@ -147,9 +147,9 @@ class AssetConfig implements ArrayAccess
      */
     public function getEntryFile() {
         if (isset($this->stash['EntryFile']) ) {
-            return $this->stash['EntryFile'];
+            return $this->getRoot() . DIRECTORY_SEPARATOR . $this->stash['EntryFile'];
         }
-        return '.asset-entries.php';
+        return $this->getRoot() . DIRECTORY_SEPARATOR . '.asset-entries.php';
     }
 
     public function getEnvironment() {

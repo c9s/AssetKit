@@ -45,7 +45,6 @@ class ProductionAssetCompiler extends AssetCompiler
 
     public $defaultCompiledDirMod = 0777;
 
-    public $autoAddUnknownTarget = false;
 
 
     public function __construct(AssetConfig $config, AssetLoader $loader) {

@@ -72,6 +72,8 @@ class AssetCompiler
 
     public $defaultCssCompressor = 'cssmin';
 
+    public $autoAddUnknownTarget = false;
+
     public function __construct(AssetConfig $config, AssetLoader $loader)
     {
         $this->config = $config;
@@ -182,13 +184,12 @@ class AssetCompiler
         }
 
         // if we got target name, then we should register the target to the assetkit config.
-        if ( $target ) {
+        if ( $this->autoAddUnknownTarget && $target ) {
             // we should always update the target, because we might change the target assets from
             // template or php code.
-            $this->config->addTarget($target, $assetNames);
-            $this->config->save();
+            $this->loader->addTarget($target, $assetNames);
+            $this->loader->saveEntries();
         }
-
 
         return $out;
     }
