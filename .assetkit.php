@@ -11,12 +11,22 @@
     array (
       0 => 'jquery',
     ),
-    'all' => 
+    'demo' => 
     array (
       0 => 'jquery',
-      1 => 'underscore',
-      2 => 'webtoolkit',
-      3 => 'jquery-ui',
+      1 => 'jquery-ui',
+      2 => 'underscore',
+      3 => 'test',
     ),
+  ),
+  'Environment' => 'production',
+  'Namespace' => 'assetkit-testing-prod',
+  'CacheDir' => '/Users/c9s/src/work/php/AssetKit/cache',
+  'Dirs' => 
+  array (
+    0 => 'tests/assets',
+    1 => 'tests/assets',
+    2 => 'tests/assets',
+    3 => 'tests/assets',
   ),
 );

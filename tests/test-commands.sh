@@ -14,5 +14,5 @@ php bin/assetkit add tests/assets/jquery-ui
 php bin/assetkit target add main jquery
 php bin/assetkit target list
 php bin/assetkit compile jquery
-php bin/assetkit compile --target all jquery underscore webtookit jquery-ui
+php bin/assetkit compile --target all jquery underscore webtoolkit jquery-ui
 php bin/assetkit _zsh --bind assetkit >| _assetkit
