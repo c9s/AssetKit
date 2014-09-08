@@ -91,7 +91,7 @@ class AssetLoader
             }
 
             // load the asset manifest file
-            $asset = $this->register($this->config->getRoot() . DIRECTORY_SEPARATOR . $config['manifest']);
+            $asset = $this->register($config['manifest']);
             // Save the asset object into the pool
             return $this->objects[$name] = $asset;
         }
@@ -216,7 +216,11 @@ class AssetLoader
 
     public function loadEntryCache() {
         if ($cache = $this->config->getCache()) {
-        } else {
+            if ($entries =$cache->get('asset_entries')) {
+                $this->entries = $entries;
+            }
+        }
+        if (!$this->entries) {
             $this->entries = new AssetEntryCluster;
         }
         return false;

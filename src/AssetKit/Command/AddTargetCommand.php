@@ -36,8 +36,8 @@ class AddTargetCommand extends BaseCommand {
             }
         }
         $this->logger->info("Adding target '$targetName': " . join(", ", $assetNames) );
-        $config->addTarget($targetName, $assetNames);
-        $config->save();
+        $loader->entries->addTarget($targetName, $assetNames);
+        $loader->saveEntries();
     }
 
 

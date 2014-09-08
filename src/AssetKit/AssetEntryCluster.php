@@ -19,8 +19,12 @@ class AssetEntryCluster implements ArrayAccess
      */
     public $stash = array();
 
-    public function __construct($stash = array()) {
-        $this->stash = $stash;
+    public $targets = array();
+
+    public function __construct($stash = NULL) {
+        if ($stash) {
+            $this->stash = $stash;
+        }
     }
 
     /**
@@ -135,9 +139,54 @@ class AssetEntryCluster implements ArrayAccess
     }
 
     static public function __set_state($array) {
-        $o = new self( $array['stash'] );
+        $o = new self();
+        $o->stash = $array['stash'];
+        $o->targets = $array['targets'];
         return $o;
     }
+
+
+    /**
+     * Register Assets to a target,
+     * So that we can get assets by a target Id.
+     *
+     * @param string $targetId
+     * @param string[] $assets The names of assets.
+     */
+    public function addTarget($targetId, $assetNames)
+    {
+        $this->targets[ $targetId ] = $assetNames;
+    }
+
+    /**
+     * Remove a target from the config stash
+     *
+     * @param string $targetId
+     */
+    public function removeTarget($targetId)
+    {
+        unset($this->targets[ $targetId ]);
+    }
+
+    public function hasTarget($targetId)
+    {
+        return isset($this->targets[ $targetId ]);
+    }
+
+    public function getTarget($targetId)
+    {
+        if ( isset($this->targets[ $targetId ]) ) {
+            return $this->targets[ $targetId ];
+        }
+    }
+
+    public function getTargets()
+    {
+        if ( isset($this->targets['Targets']) ) {
+            return $this->targets['Targets'];
+        }
+    }
+
 }
 
 

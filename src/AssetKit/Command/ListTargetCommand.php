@@ -21,7 +21,7 @@ class ListTargetCommand extends BaseCommand {
         $loader = $this->getAssetLoader();
 
         $this->logger->info("Available targets:");
-        if ( $targets = $config->getTargets() ) {
+        if ( $targets = $loader->entries->getTargets() ) {
             foreach( $targets as $target => $assetNames ) {
                 $this->logger->info("$target: " . join(', ', $assetNames) ,1);
             }

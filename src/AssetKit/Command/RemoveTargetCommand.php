@@ -27,8 +27,8 @@ class RemoveTargetCommand extends BaseCommand {
         $loader = $this->getAssetLoader();
         if ( $config->hasTarget($targetName) ) {
             $this->logger->info("Removing target '$targetName'");
-            $config->removeTarget($targetName);
-            $config->save();
+            $loader->entries->removeTarget($targetName);
+            $loader->saveEntries();
             $this->logger->info("Done");
         } else {
             $this->logger->warn("Target $targetName not found");
