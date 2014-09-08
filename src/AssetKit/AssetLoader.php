@@ -170,7 +170,7 @@ class AssetLoader
                 return $asset;
             }
         }
-        throw Exception("Asset $name not found. auto lookup failed.");
+        throw new Exception("Asset $name not found. auto lookup failed.");
     }
 
 
