@@ -189,11 +189,11 @@ class ProductionAssetCompiler extends AssetCompiler
         }
 
         // register target (assets) to the config, if it's not defaultTarget and the config file name is defined.
-        if ( $targetDefined && $this->config->getConfigFile()) {
+        if ( $targetDefined && $this->loader->entries ) {
             // we should always update the target, because we might change the target assets from
             // template or php code.
-            $this->config->addTarget($target, $assetNames);
-            $this->config->save();
+            $this->loader->addTarget($target, $assetNames);
+            $this->loader->saveEntries();
         }
 
         $entry = array();
