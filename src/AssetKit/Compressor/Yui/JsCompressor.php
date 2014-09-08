@@ -1,6 +1,7 @@
 <?php
 namespace AssetKit\Compressor\Yui;
 use AssetKit\Process;
+use AssetKit\Collection;
 
 class JsCompressor
 {
@@ -8,18 +9,18 @@ class JsCompressor
     public $java;
     public $charset;
 
-    function __construct($jar,$java = '/usr/bin/java')
+    public function __construct($jar,$java = '/usr/bin/java')
     {
         $this->jar = $jar;
         $this->java = $java;
     }
 
-    function setCharset($charset)
+    public function setCharset($charset)
     {
         $this->charset = $charset;
     }
 
-    function compress($collection)
+    public function compress(Collection $collection)
     { 
         $input = $collection->getContent();
         $proc = new Process( array( $this->java, '-jar', $this->jar ));

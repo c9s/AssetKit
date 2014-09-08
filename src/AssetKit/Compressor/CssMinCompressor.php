@@ -1,8 +1,8 @@
 <?php
 namespace AssetKit\Compressor;
+use AssetKit\Collection;
 require_once dirname(dirname(__FILE__)) . '/CssMin.php';
 use CssMin;
-use AssetKit\Collection;
 
 class CssMinCompressor
 {
