@@ -6,8 +6,8 @@ use AssetKit\Asset;
 
 class AssetCompilerTest extends AssetKit\TestCase
 {
-    public function testCssImportUrlFromTestAssetInProductionMode()
-    {
+
+    public function testProductionAssetCompilerCache() {
         $config = $this->getConfig();
         $loader = $this->getLoader();
 
@@ -17,14 +17,42 @@ class AssetCompilerTest extends AssetKit\TestCase
         $assets[] = $loader->register("tests/assets/test");
         $assets[] = $loader->register("tests/assets/underscore");
         $assets[] = $loader->register("tests/assets/webtoolkit");
-
         foreach($assets as $asset) {
             ok($asset);
             ok($asset instanceof Asset);
         }
 
         $this->installAssets($assets);
+        $compiler = new ProductionAssetCompiler($config,$loader);
+        $compiler->registerDefaultCompressors();
+        $compiler->registerDefaultFilters();
 
+        $entries = $compiler->compileAssets($assets,'myapp2', $force = true);
+        ok($entries);
+
+        for($i = 0; $i < 100; $i++) {
+            $entries2 = $compiler->compileAssets($assets,'myapp2', $force = false);
+            ok($entries2);
+            $this->assertSame($entries, $entries2);
+        }
+    }
+
+
+    public function testCssImportUrlFromTestAssetInProductionMode()
+    {
+        $config = $this->getConfig();
+        $loader = $this->getLoader();
+
+        $assets = array();
+        $assets[] = $loader->register("tests/assets/jquery");
+        $assets[] = $loader->register("tests/assets/jquery-ui");
+        $assets[] = $loader->register("tests/assets/test");
+        foreach($assets as $asset) {
+            ok($asset);
+            ok($asset instanceof Asset);
+        }
+
+        $this->installAssets($assets);
         $compiler = new ProductionAssetCompiler($config,$loader);
         $compiler->enableFstatCheck();
         $compiler->registerDefaultCompressors();

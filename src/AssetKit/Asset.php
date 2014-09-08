@@ -101,20 +101,13 @@ class Asset
         } else {
             $this->name         = basename($this->sourceDir);
         }
-        $this->loadFromArray($data);
+        $this->stash = $data;
+        // $this->loadFromArray($data);
     }
-
 
     public function loadFromArray($config)
     {
         $this->stash = $config;
-        // load assets
-        if( isset($this->stash['collections']) ) {
-            // create collection objects
-            $this->collections = $this->loadCollections($this->stash['collections']);
-        } else {
-            throw new Exception("the 'collections' is not defined in {$this->name}");
-        }
     }
 
 
@@ -223,7 +216,15 @@ class Asset
 
     public function getCollections()
     {
-        return $this->collections;
+        if ($this->collections) {
+            return $this->collections;
+        }
+
+        // load assets
+        if( ! isset($this->stash['collections']) ) {
+            throw new Exception("the 'collections' is not defined in {$this->name}");
+        }
+        return $this->collections = $this->loadCollections($this->stash['collections']);
     }
 
     public function export()
