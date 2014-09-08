@@ -32,8 +32,15 @@ class ProductionAssetCompiler extends AssetCompiler
     public $checksumAlgo = 'md5';
 
 
-    public $prepareCompiledDir = true;
+    /**
+     * @var boolean Create compiled directory if it does not exist.
+     */
+    public $autoCreateCompiledDir = true;
 
+    /**
+     * @var boolean Change the permission mode of compiled directory everytime 
+     *              when preparing compiled directory. this is useful for debugging.
+     */
     public $chmodCompiledDir = true;
 
     public $defaultCompiledDirMod = 0777;
@@ -41,7 +48,7 @@ class ProductionAssetCompiler extends AssetCompiler
     public function __construct(AssetConfig $config, AssetLoader $loader) {
         parent::__construct($config, $loader);
 
-        if ($this->prepareCompiledDir) {
+        if ($this->autoCreateCompiledDir) {
             $this->prepareCompiledDir();
         }
     }
