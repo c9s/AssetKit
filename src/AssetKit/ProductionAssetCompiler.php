@@ -31,12 +31,19 @@ class ProductionAssetCompiler extends AssetCompiler
      */
     public $checksumAlgo = 'md5';
 
-    public $defaultCompiledDirPermission = 0777;
 
+    public $prepareCompiledDir = true;
+
+    public $chmodCompiledDir = true;
+
+    public $defaultCompiledDirMod = 0777;
 
     public function __construct(AssetConfig $config, AssetLoader $loader) {
         parent::__construct($config, $loader);
-        $this->prepareCompiledDir();
+
+        if ($this->prepareCompiledDir) {
+            $this->prepareCompiledDir();
+        }
     }
 
 
@@ -289,7 +296,7 @@ class ProductionAssetCompiler extends AssetCompiler
         $compiledDir = $this->config->getCompiledDir();
 
         if (! file_exists($compiledDir)) {
-            mkdir($compiledDir,$this->defaultCompiledDirPermission, true);
+            mkdir($compiledDir,$this->defaultCompiledDirMod, true);
         }
 
         if (!is_dir($compiledDir)) {
@@ -299,7 +306,10 @@ class ProductionAssetCompiler extends AssetCompiler
         if (!is_writable($compiledDir)) {
             throw new UnwritableFileException("The $compiledDir is not writable for asset compilation.");
         }
-        chmod($compiledDir,$this->defaultCompiledDirPermission);
+
+        if ($this->chmodCompiledDir) {
+            chmod($compiledDir,$this->defaultCompiledDirMod);
+        }
     }
 
     /**
