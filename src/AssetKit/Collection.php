@@ -124,6 +124,7 @@ class Collection
         if ( ! empty($this->files) ) {
             return $this->_lastmtime = \futil_lastmtime($this->getFullpaths());
         }
+        return 0;
     }
 
 

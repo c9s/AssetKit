@@ -33,6 +33,13 @@ class ProductionAssetCompiler extends AssetCompiler
 
     public $defaultCompiledDirPermission = 0777;
 
+    public $urlBuilder;
+
+    public function __construct($config,$loader) {
+        parent::__construct($config,$loader);
+        $this->urlBuilder = new AssetUrlBuilder($config);
+    }
+
 
     /**
      * Set checksum algorithm for generating content checksum
@@ -247,15 +254,15 @@ class ProductionAssetCompiler extends AssetCompiler
         }
 
         $out = $this->squash($asset);
-        $name = $asset->name . '.min';
+        $prefixName = $asset->name . '.min';
 
         $compiledDir = $this->prepareCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
 
-        $jsFile = $compiledDir . DIRECTORY_SEPARATOR . $name . '.js';
-        $cssFile = $compiledDir . DIRECTORY_SEPARATOR . $name . '.css';
-        $jsUrl = $compiledUrl . "/$name.js";
-        $cssUrl = $compiledUrl . "/$name.css";
+        $jsFile = $compiledDir . DIRECTORY_SEPARATOR . $prefixName . '.js';
+        $cssFile = $compiledDir . DIRECTORY_SEPARATOR . $prefixName . '.css';
+        $jsUrl = $compiledUrl . "/$prefixName.js";
+        $cssUrl = $compiledUrl . "/$prefixName.css";
 
         if ($out['js']) {
             $out['js_file'] = $jsFile;
@@ -308,8 +315,7 @@ class ProductionAssetCompiler extends AssetCompiler
             'mtime' => 0,
         );
         $collections = $asset->getCollections();
-        $urlBuilder = new AssetUrlBuilder($this->config);
-        $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
+        $assetBaseUrl = $this->urlBuilder->buildBaseUrl($asset);
         foreach( $collections as $collection ) {
             // skip unknown collection type
             if ( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
