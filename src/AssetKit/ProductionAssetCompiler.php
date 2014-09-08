@@ -306,6 +306,7 @@ class ProductionAssetCompiler extends AssetCompiler
             if (false === file_put_contents($jsFile, $out['js'], LOCK_EX)) {
                 throw new Exception("Can't write file '$jsFile'");
             }
+            unset($out['js']);
         }
         if ($out['css']) {
             $out['css_file'] = $cssFile;
@@ -313,6 +314,7 @@ class ProductionAssetCompiler extends AssetCompiler
             if (false === file_put_contents($cssFile , $out['css'], LOCK_EX)) {
                 throw new Exception("Can't write file '$cssFile'");
             }
+            unset($out['css']);
         }
 
         // store cache
