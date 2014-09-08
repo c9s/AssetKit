@@ -79,11 +79,13 @@ class ProductionAssetCompiler extends AssetCompiler
      */
     public $checkFstat = false;
 
-    /**
-     * @var boolean serialize compilation info into a file.
-     */
-    public $useMetaFileCache = true;
+    const CACHE_METAFILE = 1;
+    const CACHE_UNIVERSAL = 2;
 
+    /**
+     * @var integer define the cache type
+     */
+    public $cacheType = self::CACHE_METAFILE;
 
     public function enableFstatCheck()
     {
@@ -142,7 +144,7 @@ class ProductionAssetCompiler extends AssetCompiler
 
         if (!$force) {
             $cached = NULL;
-            if ($this->useMetaFileCache && file_exists($metaFile)) {
+            if ($this->cacheType === self::CACHE_METAFILE && file_exists($metaFile)) {
                 $cached = require $metaFile;
             } else if ( $cache = $this->config->getCache() ) {
                 $cached = $cache->get($cacheKey);
