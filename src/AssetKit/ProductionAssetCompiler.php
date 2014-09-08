@@ -82,7 +82,7 @@ class ProductionAssetCompiler extends AssetCompiler
     /**
      * @var boolean serialize compilation info into a file.
      */
-    public $writeMetaFile = true;
+    public $useMetaFileCache = true;
 
 
     public function enableFstatCheck()
@@ -131,19 +131,24 @@ class ProductionAssetCompiler extends AssetCompiler
     public function compileAssets($assets, $target = '', $force = false)
     {
         $targetDefined = $target ? true : false;
-        if ( $target ) {
-            $cacheKey = $this->config->getNamespace() . ':target:' . $target;
-        } else {
-            $cacheKey = $this->config->getNamespace() . ':' . $this->generateTargetNameFromAssets($assets);
-            $target = $this->config->getDefaultTarget();
+        if (! $target ) {
+            $target = $this->generateTargetNameFromAssets($assets);
         }
 
+        $compiledDir = $this->config->getCompiledDir();
+        $compiledUrl = $this->config->getCompiledUrl();
+        $metaFile = $compiledDir . DIRECTORY_SEPARATOR . '.' . $target . '.meta.php';
+        $cacheKey = $this->config->getNamespace() . ':target:' . $target;
 
-        if ( $cache = $this->config->getCache() ) {
-            $cached = $cache->get($cacheKey);
+        if (!$force) {
+            $cached = NULL;
+            if ($this->useMetaFileCache && file_exists($metaFile)) {
+                $cached = require $metaFile;
+            } else if ( $cache = $this->config->getCache() ) {
+                $cached = $cache->get($cacheKey);
+            }
 
-            // cache validation
-            if ($cached && ! $force) {
+            if ($cached) {
                 if (! $this->checkFstat || ! isset($cached['mtime'])) {
                     return $cached;
                 }
@@ -151,6 +156,7 @@ class ProductionAssetCompiler extends AssetCompiler
                     return $cached;
                 }
             }
+
         }
 
         $contents = array( 'js' => '', 'css' => '' );
@@ -182,8 +188,6 @@ class ProductionAssetCompiler extends AssetCompiler
             }
         }
 
-        $compiledDir = $this->config->getCompiledDir();
-        $compiledUrl = $this->config->getCompiledUrl();
         $entry = array();
 
         // write minified results to file
@@ -212,17 +216,16 @@ class ProductionAssetCompiler extends AssetCompiler
         $entry['mtime']   = time();
         $entry['cache_key'] = $cacheKey;
         $entry['target'] = $target;
+        $entry['metafile'] = $metaFile;
 
-        if ($this->writeMetaFile) {
-            $entry['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . '.' . $target . '.meta.php';
-            ConfigCompiler::write($entry['metafile'], $entry);
-        }
 
         // include entries
         $entries = array($entry);
         if ( $cache = $this->config->getCache() ) {
             $cache->set($cacheKey, $entries);
         }
+        // always write the meta file
+        ConfigCompiler::write($entry['metafile'], $entries);
         return $entries;
     }
 
