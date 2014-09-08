@@ -362,16 +362,29 @@ class AssetConfig implements ArrayAccess
     }
 
 
+    /**
+     * @return string Return the absolute path of the compiled asset directory.
+     */
     public function getCompiledDir()
     {
         return $this->getBaseDir(true) . DIRECTORY_SEPARATOR . 'compiled';
     }
 
+
+    /**
+     * @return string Return the base url of the compiled asset directory
+     */
     public function getCompiledUrl()
     {
         return $this->getBaseUrl() . '/compiled';
     }
 
+
+    /**
+     * Set base path for assets and asset directories
+     *
+     * @param string $root
+     */
     public function setRoot($root)
     {
         $this->root = $root;
@@ -380,13 +393,17 @@ class AssetConfig implements ArrayAccess
 
     /**
      * Return the config file dir path.
+     *
+     * Or return the root path from the config file.
      */
     public function getRoot()
     {
         if ($this->root) {
             return $this->root;
         }
-        return realpath(dirname($this->file));
+        if ($this->file) {
+            return realpath(dirname($this->file));
+        }
     }
 
     public function offsetSet($name,$value)

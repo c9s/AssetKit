@@ -226,7 +226,6 @@ class ProductionAssetCompiler extends AssetCompiler
         $entry['target'] = $target;
         $entry['metafile'] = $metaFile;
 
-
         // include entries
         $entries = array($entry);
 
