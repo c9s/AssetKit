@@ -29,8 +29,8 @@ class CompileCommand extends BaseCommand
 
         $target = $this->options->target ?: $config->getDefaultTarget();
         if ( $target != $config->getDefaultTarget() ) {
-            if ( $config->hasTarget($target) ) {
-                $assetNames = $config->getTarget($target);
+            if ( $loader->entries->hasTarget($target) ) {
+                $assetNames = $loader->entries->getTarget($target);
             } else {
                 $assetNames = func_get_args();
             }
