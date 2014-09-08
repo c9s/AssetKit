@@ -10,8 +10,8 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2014-09-08</date>
-  <time>21:27:16</time>
+  <date>2014-09-09</date>
+  <time>00:43:40</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -24,7 +24,7 @@
   <notes>-</notes>
   <contents>
     <dir name="/">
-      <file name="src/AssetKit/Asset.php" role="php" md5sum="562b3c0f5dee85ad263546e45a491b91"/>
+      <file name="src/AssetKit/Asset.php" role="php" md5sum="5c71b47762fdd994a8c7938f75811716"/>
       <file name="src/AssetKit/AssetCompiler.php" role="php" md5sum="5e49cc1f269a4596bc2398b53dcc5b15"/>
       <file name="src/AssetKit/AssetCompilerFactory.php" role="php" md5sum="9c291928ec21780503ada8350344735b"/>
       <file name="src/AssetKit/AssetConfig.php" role="php" md5sum="9fe4f3a264498a825feb7f25736cbbd4"/>
@@ -33,7 +33,7 @@
       <file name="src/AssetKit/AssetRender.php" role="php" md5sum="98e8a447dae1f17eb2901151323e1e40"/>
       <file name="src/AssetKit/AssetUrlBuilder.php" role="php" md5sum="8018757c0a768a3f9f22c6bccb7d4342"/>
       <file name="src/AssetKit/CacheFactory.php" role="php" md5sum="1e8dc0607efe8a4e7e399c0089a547d9"/>
-      <file name="src/AssetKit/Collection.php" role="php" md5sum="4a26dc2d6f188ed0e841cb387519e0f9"/>
+      <file name="src/AssetKit/Collection.php" role="php" md5sum="e28a61d13156593db1d0091a01869a28"/>
       <file name="src/AssetKit/Command/AddCommand.php" role="php" md5sum="09fedab31d850405a3832f3f51d17774"/>
       <file name="src/AssetKit/Command/AddTargetCommand.php" role="php" md5sum="c0476d87b6d35346fce21d5880214fd1"/>
       <file name="src/AssetKit/Command/BaseCommand.php" role="php" md5sum="c8c576f1e014e4ca364ab3a9baf69a96"/>
@@ -52,7 +52,7 @@
       <file name="src/AssetKit/Compressor/UglifyCompressor.php" role="php" md5sum="d3c8d2c1cf840cf6ff63fe909b5ce65d"/>
       <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="9241d5fa894c1079fa215c157718e15c"/>
       <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="0463e832339ed5824468a2f6d31cf703"/>
-      <file name="src/AssetKit/Console.php" role="php" md5sum="3e3513c1b558598a5c16697c1fad9cea"/>
+      <file name="src/AssetKit/Console.php" role="php" md5sum="81bf0addb8b4efe56165b0efdbf160d7"/>
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
       <file name="src/AssetKit/Data.php" role="php" md5sum="6c955c50dd89f589771526ef38a825ec"/>
       <file name="src/AssetKit/Exception/UndefinedCompressorException.php" role="php" md5sum="54638d35f8554600e138888e21be0f76"/>
@@ -77,7 +77,7 @@
       <file name="src/AssetKit/ResourceUpdater.php" role="php" md5sum="f056aa4290e695adf766be41c144882c"/>
       <file name="src/AssetKit/TestCase.php" role="php" md5sum="f3fe6a695c4b05f1b4eba330b32e28b2"/>
       <file name="src/AssetKit/Utils.php" role="php" md5sum="665e5af733a299b65e6b33185330178b"/>
-      <file name="assetkit" role="script" md5sum="07b0b0ad9c12a963e226a1d0437e5f91"/>
+      <file name="assetkit" role="script" md5sum="1d7a744fcfde9001e4ca573f046d3b5e"/>
     </dir>
   </contents>
   <dependencies>
