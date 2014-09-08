@@ -96,7 +96,11 @@ class Asset
         $data = ConfigCompiler::load($manifestYamlFile);
         $this->manifestFile = $manifestYamlFile;
         $this->sourceDir    = dirname($manifestYamlFile);
-        $this->name         = basename($this->sourceDir);
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        } else {
+            $this->name         = basename($this->sourceDir);
+        }
         $this->loadFromArray($data);
     }
 

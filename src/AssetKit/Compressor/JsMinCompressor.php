@@ -15,7 +15,7 @@ class JsMinCompressor
         }
     }
     
-    public function compress($collection)
+    public function compress(Collection $collection)
     {
         // C version jsmin is faster,
         $content = $collection->getContent();

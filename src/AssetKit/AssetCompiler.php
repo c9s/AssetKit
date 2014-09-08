@@ -364,7 +364,7 @@ class AssetCompiler
 
 
 
-    public function runDefaultCompressors($collection)
+    public function runDefaultCompressors(Collection $collection)
     {
         if ( $this->defaultJsCompressor 
             && ($collection->isJavascript || $collection->isCoffeescript) ) 
@@ -383,7 +383,7 @@ class AssetCompiler
      * Run compressors at the end
      *
      */
-    public function runCollectionCompressors($collection)
+    public function runCollectionCompressors(Collection $collection)
     {
         // if custom compresor is not define, use default compressors
         if ( empty($collection->compressors) ) {

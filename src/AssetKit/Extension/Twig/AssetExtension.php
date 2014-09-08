@@ -2,6 +2,7 @@
 namespace AssetKit\Extension\Twig;
 use Twig_Extension;
 use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
 use AssetKit\AssetRender;
 use AssetKit\AssetCompiler;
 
@@ -14,7 +15,7 @@ class AssetExtension extends Twig_Extension
     /**
      * Set AssetKit\AssetConfig
      */
-    public function setAssetConfig($config)
+    public function setAssetConfig(AssetConfig $config)
     {
         $this->assetConfig = $config;
     }
@@ -28,7 +29,7 @@ class AssetExtension extends Twig_Extension
     /**
      * Set AssetKit\AssetLoader
      */
-    public function setAssetLoader($loader)
+    public function setAssetLoader(AssetLoader $loader)
     {
         $this->assetLoader = $loader;
     }
@@ -39,7 +40,7 @@ class AssetExtension extends Twig_Extension
     }
 
 
-    public function setAssetRender($render)
+    public function setAssetRender(AssetRender $render)
     {
         $this->render = $render;
     }
@@ -52,7 +53,7 @@ class AssetExtension extends Twig_Extension
         return $this->render = new AssetRender($this->assetConfig,$this->assetLoader);
     }
 
-    public function setAssetCompiler($compiler)
+    public function setAssetCompiler(AssetCompiler $compiler)
     {
         $this->getAssetRender()->setCompiler($compiler);
     }

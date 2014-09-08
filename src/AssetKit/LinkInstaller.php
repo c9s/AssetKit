@@ -4,7 +4,7 @@ use AssetKit\FileUtil;
 
 class LinkInstaller extends Installer 
 {
-    public function uninstall($asset)
+    public function uninstall(Asset $asset)
     {
         $name       = $asset->name;
         $targetDir = $this->getAssetInstallDir($asset, true);
@@ -18,7 +18,7 @@ class LinkInstaller extends Installer
         }
     }
 
-    public function install($asset)
+    public function install(Asset $asset)
     {
         // asset name
         $name       = $asset->name;

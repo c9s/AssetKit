@@ -15,7 +15,7 @@ class Installer
     /**
      * Get target installation dir (the target directory of public)
      */
-    public function getAssetInstallDir($asset, $absolute = false) {
+    public function getAssetInstallDir(Asset $asset, $absolute = false) {
         return $this->config->getBaseDir(true) . DIRECTORY_SEPARATOR . $asset->name;
     }
 
@@ -43,7 +43,7 @@ class Installer
     }
 
 
-    public function uninstall($asset)
+    public function uninstall(Asset $asset)
     {
         // get asset files and copy them into 
         $fromDir = $asset->sourceDir;
@@ -64,7 +64,7 @@ class Installer
         }
     }
 
-    public function install($asset)
+    public function install(Asset $asset)
     {
         // get asset files and copy them into 
         $fromDir = $asset->sourceDir;

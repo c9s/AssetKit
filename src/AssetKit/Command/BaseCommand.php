@@ -64,7 +64,7 @@ class BaseCommand extends Command
         return new \AssetKit\ResourceUpdater();
     }
 
-    public function updateAsset($asset, $fetch = false)
+    public function updateAsset(Asset $asset, $fetch = false)
     {
         $updater = $this->getAssetUpdater();
         $updater->update($asset, $fetch);

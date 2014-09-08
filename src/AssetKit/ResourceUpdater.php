@@ -1,5 +1,6 @@
 <?php
 namespace AssetKit;
+use AssetKit\Asset;
 use ZipArchive;
 use Exception;
 
@@ -13,7 +14,7 @@ class ResourceUpdater
         }
     }
 
-    public function update($asset, $update = false)
+    public function update(Asset $asset, $update = false)
     {
         if( ! isset($asset->stash['resource']) ) {
             return false;

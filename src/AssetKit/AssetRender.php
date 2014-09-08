@@ -54,7 +54,7 @@ class AssetRender
     public function renderTarget($target)
     {
         // get assets from the target
-        $assetNames = $this->config->getTarget($target);
+        $assetNames = $this->loader->getTarget($target);
         if ( ! $assetNames ) {
             throw new RuntimeException("Target $target not found.");
         }

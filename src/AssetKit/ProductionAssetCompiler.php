@@ -4,6 +4,7 @@ use ConfigKit\ConfigCompiler;
 use AssetKit\FileUtil;
 use AssetKit\AssetUrlBuilder;
 use AssetKit\Collection;
+use AssetKit\Asset;
 
 // Filters
 use AssetKit\Filter\SassFilter;
@@ -271,7 +272,7 @@ class ProductionAssetCompiler extends AssetCompiler
      *    }
      *
      */
-    public function compile($asset, $force = false) 
+    public function compile(Asset $asset, $force = false) 
     {
         $compiledDir = $this->config->getCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
@@ -367,7 +368,7 @@ class ProductionAssetCompiler extends AssetCompiler
      * @param  AssetKit\Asset $asset
      * @return array [ css: string, js: string ]
      */
-    public function squash($asset)
+    public function squash(Asset $asset)
     {
         $out = array(
             'js' => '',
