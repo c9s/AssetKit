@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+set -o pipefail
+set -o errtrace
+set -o errexit
 php bin/assetkit init --baseDir "public/assets" \
     --baseUrl "/assets" \
     --dir "tests/assets" \
