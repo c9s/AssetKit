@@ -33,6 +33,13 @@ class ProductionAssetCompiler extends AssetCompiler
 
     public $defaultCompiledDirPermission = 0777;
 
+
+    public function __construct(AssetConfig $config, AssetLoader $loader) {
+        parent::__construct($config, $loader);
+        $this->prepareCompiledDir();
+    }
+
+
     /**
      * Set checksum algorithm for generating content checksum
      *
@@ -161,7 +168,7 @@ class ProductionAssetCompiler extends AssetCompiler
             }
         }
 
-        $compiledDir = $this->prepareCompiledDir();
+        $compiledDir = $this->config->getCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
         $outfiles = array();
 
@@ -252,7 +259,7 @@ class ProductionAssetCompiler extends AssetCompiler
         $out = $this->squash($asset);
         $prefixName = $asset->name . '.min';
 
-        $compiledDir = $this->prepareCompiledDir();
+        $compiledDir = $this->config->getCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
 
         $jsFile = $compiledDir . DIRECTORY_SEPARATOR . $prefixName . '.js';
@@ -293,7 +300,6 @@ class ProductionAssetCompiler extends AssetCompiler
             throw new UnwritableFileException("The $compiledDir is not writable for asset compilation.");
         }
         chmod($compiledDir,$this->defaultCompiledDirPermission);
-        return $compiledDir;
     }
 
     /**

@@ -3,6 +3,8 @@ namespace AssetKit;
 use AssetKit\FileUtil;
 use AssetKit\AssetUrlBuilder;
 use AssetKit\Collection;
+use AssetKit\AssetConfig;
+use AssetKit\AssetLoader;
 
 // Filters
 use AssetKit\Filter\SassFilter;
@@ -70,7 +72,7 @@ class AssetCompiler
 
     public $defaultCssCompressor = 'cssmin';
 
-    public function __construct($config,$loader)
+    public function __construct(AssetConfig $config, AssetLoader $loader)
     {
         $this->config = $config;
         $this->loader = $loader;
