@@ -280,7 +280,7 @@ class ProductionAssetCompiler extends AssetCompiler
     {
         $compiledDir = $this->config->getCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
-        $metaFile = $compiledDir . DIRECTORY_SEPARATOR . "." . $asset->name . '.meta.php';
+        $metaFile = $compiledDir . DIRECTORY_SEPARATOR . ".asset-" . $asset->name . '.meta.php';
 
         if (! $force && file_exists($metaFile)) {
             $cached = require $metaFile;
