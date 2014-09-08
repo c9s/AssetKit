@@ -184,40 +184,46 @@ class ProductionAssetCompiler extends AssetCompiler
 
         $compiledDir = $this->config->getCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
-        $outfiles = array();
+        $entry = array();
 
         // write minified results to file
         if ($contents['js']) {
-            $outfiles['js_checksum'] = hash($this->checksumAlgo, $contents['js']);
-            $outfiles['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['js_checksum'] . '.min.js';
-            $outfiles['js_url']  = "$compiledUrl/$target-" . $outfiles['js_checksum']  . '.min.js';
-            file_put_contents($outfiles['js_file'], $contents['js'], LOCK_EX);
+            $entry['js_checksum'] = hash($this->checksumAlgo, $contents['js']);
+            $filename = $target . '-' . $entry['js_checksum'] . '.min.js';
+            $entry['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $filename;
+            $entry['js_url']  = "$compiledUrl/" . $filename;
+            if (false === file_put_contents($entry['js_file'], $contents['js'], LOCK_EX)) {
+                throw new Exception("Can't write file '{$entry['js_file']}'");
+            }
         }
 
         if ($contents['css']) {
-            $outfiles['css_checksum'] = hash($this->checksumAlgo, $contents['css']);
-            $outfiles['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['css_checksum'] . '.min.css';
-            $outfiles['css_url'] = "$compiledUrl/$target-" . $outfiles['css_checksum'] . '.min.css';
-            file_put_contents($outfiles['css_file'], $contents['css'], LOCK_EX);
+            $entry['css_checksum'] = hash($this->checksumAlgo, $contents['css']);
+            $filename = $target . '-' . $entry['css_checksum'] . '.min.css';
+            $entry['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $filename;
+            $entry['css_url'] = "$compiledUrl/" . $filename;
+            if (false === file_put_contents($entry['css_file'], $contents['css'], LOCK_EX) ) {
+                throw new Exception("Can't write file '{$entry['css_file']}'");
+            }
         }
 
 
-        $outfiles['assets']  = $assetNames;
-        $outfiles['mtime']   = time();
-        $outfiles['cache_key'] = $cacheKey;
-        $outfiles['target'] = $target;
+        $entry['assets']  = $assetNames;
+        $entry['mtime']   = time();
+        $entry['cache_key'] = $cacheKey;
+        $entry['target'] = $target;
 
         if ($this->writeMetaFile) {
-            $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . '.' . $target . '.meta.php';
-            ConfigCompiler::write($outfiles['metafile'], $outfiles);
+            $entry['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . '.' . $target . '.meta.php';
+            ConfigCompiler::write($entry['metafile'], $entry);
         }
 
         // include entries
-        $result = array($outfiles);
+        $entries = array($entry);
         if ( $cache = $this->config->getCache() ) {
-            $cache->set($cacheKey, $result);
+            $cache->set($cacheKey, $entries);
         }
-        return $result;
+        return $entries;
     }
 
     /**
