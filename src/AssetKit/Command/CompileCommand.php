@@ -58,7 +58,8 @@ class CompileCommand extends BaseCommand
         $this->logger->info("Compiling assets to target '$target'...");
         
         // force compile
-        $files = $compiler->compileAssets($assets, $target, true); // use force to compile.
+        $entries = $compiler->compileAssets($assets, $target, true); // use force to compile.
+        $files = $entries[0];
 
         printf( "----------------------------------------------------\n" );
         printf( "Target:            %s\n" , $files['target'] );
