@@ -20,7 +20,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         $this->installAssets($assets);
 
         $compiler = new ProductionAssetCompiler($config,$loader);
-        $compiler->enableProductionFstatCheck();
+        $compiler->enableFstatCheck();
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 
@@ -136,7 +136,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         ok($asset);
 
         $compiler = new ProductionAssetCompiler($config,$loader);
-        $compiler->enableProductionFstatCheck();
+        $compiler->enableFstatCheck();
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 

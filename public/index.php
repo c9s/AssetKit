@@ -35,7 +35,7 @@ $render = new AssetKit\AssetRender($config,$loader);
 
 if (isset($_GET['force'])) {
     $compiler = $render->getCompiler();
-    $compiler->enableProductionFstatCheck();
+    $compiler->enableFstatCheck();
     $render->force();
 }
 ?>

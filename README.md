@@ -274,7 +274,7 @@ $config = new AssetKit\AssetConfig( 'config/assetkit.yml',array(
 $loader = new AssetKit\AssetLoader( $config );
 
 $compiler = new AssetKit\AssetCompiler($config, $loader);
-$compiler->enableProductionFstatCheck();
+$compiler->enableFstatCheck();
 $compiler->defaultJsCompressor = 'uglifyjs';
 $compiler->defaultCssCompressor = 'cssmin';
 
@@ -488,7 +488,7 @@ to recompile assets:
 ```php
 $render = new AssetKit\AssetRender($config,$loader);
 $compiler = $render->getCompiler();
-$compiler->enableProductionFstatCheck();
+$compiler->enableFstatCheck();
 ```
 
 To enable builtin filters, compressors:

@@ -64,7 +64,7 @@ class ProductionAssetCompiler extends AssetCompiler
     public $writeMetaFile = false;
 
 
-    public function enableProductionFstatCheck()
+    public function enableFstatCheck()
     {
         $this->checkFstat = true;
     }
