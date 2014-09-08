@@ -224,33 +224,6 @@ class AssetConfig implements ArrayAccess
     }
 
 
-
-    /**
-     * Register Assets to a target,
-     * So that we can get assets by a target Id.
-     *
-     * @param string $targetId
-     * @param string[] $assets The names of assets.
-     */
-    public function addTarget($targetId, $assets)
-    {
-        if ( ! isset($this->stash['Targets']) ) {
-            $this->stash['Targets'] = array();
-        }
-        $this->stash['Targets'][ $targetId ] = $assets;
-    }
-
-
-    /**
-     * Remove a target from the config stash
-     *
-     * @param string $targetId
-     */
-    public function removeTarget($targetId)
-    {
-        unset($this->stash['Targets'][ $targetId ]);
-    }
-
     public function hasTarget($targetId)
     {
         return isset($this->stash['Targets'][ $targetId ]);
@@ -262,7 +235,6 @@ class AssetConfig implements ArrayAccess
             return $this->stash['Targets'][ $targetId ];
         }
     }
-
 
     public function getTargets()
     {
