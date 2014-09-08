@@ -16,7 +16,6 @@ use AssetKit\Exception\UnknownFragmentException;
  */
 class AssetRender
 {
-
     public $force = false;
 
     public $compiler;

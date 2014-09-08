@@ -1,5 +1,6 @@
 <?php
 namespace AssetKit;
+use ConfigKit\ConfigCompiler;
 use AssetKit\FileUtil;
 use AssetKit\AssetUrlBuilder;
 use AssetKit\Collection;
@@ -56,7 +57,7 @@ class ProductionAssetCompiler extends AssetCompiler
      * We prefer clean up manifest cache manually, because fstat checking
      * might consume a lot of I/O.
      */
-    public $productionFstatCheck = false;
+    public $checkFstat = false;
 
     /**
      * @var boolean serialize compilation info into a file.
@@ -64,16 +65,22 @@ class ProductionAssetCompiler extends AssetCompiler
     public $writeMetaFile = false;
 
 
-
-    public function setProductionFstatCheck($b)
-    {
-        $this->productionFstatCheck = $b;
-    }
-
     public function enableProductionFstatCheck()
     {
-        $this->productionFstatCheck = true;
+        $this->checkFstat = true;
     }
+
+
+    public function assetsAreOutOfDate($assets, $mtime) {
+        foreach( $assets as $asset ) {
+            if ( $asset->isOutOfDate($mtime) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     /**
      * Compile multiple assets into the target path.
@@ -93,14 +100,15 @@ class ProductionAssetCompiler extends AssetCompiler
      * So that if the touch time stamp is updated. AssetCompiler 
      * will re-compile these stuff.
      *
-     * @param string target name
-     * @param array Asset[]
+     * @param Asset[] $assets
+     * @param string $target target name
+     * @param boolean $force force compilation
      */
     public function compileAssets($assets, $target = '', $force = false)
     {
         $targetDefined = $target ? true : false;
         if ( $target ) {
-            $cacheKey = $this->config->getNamespace() . ':' . $target;
+            $cacheKey = $this->config->getNamespace() . ':target:' . $target;
         } else {
             $cacheKey = $this->config->getNamespace() . ':' . $this->_generateCacheKeyFromAssets($assets);
             $target = $this->config->getDefaultTarget();
@@ -111,20 +119,11 @@ class ProductionAssetCompiler extends AssetCompiler
             $cached = $cache->get($cacheKey);
 
             // cache validation
-            if ( $cached && ! $force ) {
-                if ( $this->productionFstatCheck ) {
-                    $upToDate = true;
-                    if ( $mtime = @$cached['mtime'] ) {
-                        foreach( $assets as $asset ) {
-                            if ( $asset->isOutOfDate($mtime) ) {
-                                $upToDate = false;
-                                break;
-                            }
-                        }
-                    }
-                    if ( $upToDate )
-                        return $cached;
-                } else {
+            if ($cached && ! $force) {
+                if (! $this->checkFstat || ! isset($cached['mtime'])) {
+                    return $cached;
+                }
+                if (! $this->assetsAreOutOfDate($assets, $cached['mtime'])) {
                     return $cached;
                 }
             }
@@ -185,8 +184,8 @@ class ProductionAssetCompiler extends AssetCompiler
         $outfiles['target'] = $target;
 
         if ($this->writeMetaFile) {
-            $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta';
-            file_put_contents($outfiles['metafile'], serialize($outfiles));
+            $outfiles['metafile'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '.meta.php';
+            ConfigCompiler::write($outfiles['metafile'], $outfiles);
         }
 
         // include entries
@@ -234,22 +233,15 @@ class ProductionAssetCompiler extends AssetCompiler
         $cacheKey = $this->config->getNamespace() . ':' . $asset->name;
 
         if ( ! $force && $this->config->cache ) {
-            $cache = $this->config->cache->get($cacheKey);
+            $cached = $this->config->cache->get($cacheKey);
 
             // cache validation
-            if ( $cache ) {
-                if ( ! $this->productionFstatCheck ) {
-                    return $cache;
-                } else {
-                    $upToDate = true;
-                    if ( $mtime = @$cache['mtime'] ) {
-                        if ( $asset->isOutOfDate($mtime) ) {
-                            $upToDate = false;
-                        }
-                    }
-                    if ( $upToDate ) {
-                        return $cache;
-                    }
+            if ( $cached ) {
+                if ( ! $this->checkFstat || ! isset($cached['mtime']) ) {
+                    return $cached;
+                }
+                if ( ! $asset->isOutOfDate($cached['mtime']) ) {
+                    return $cached;
                 }
             }
         }
