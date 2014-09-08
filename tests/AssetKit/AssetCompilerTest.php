@@ -2,6 +2,7 @@
 use AssetKit\AssetCompiler;
 use AssetKit\ProductionAssetCompiler;
 use AssetKit\AssetRender;
+use AssetKit\Asset;
 
 class AssetCompilerTest extends AssetKit\TestCase
 {
@@ -15,7 +16,12 @@ class AssetCompilerTest extends AssetKit\TestCase
         $assets[] = $loader->register("tests/assets/jquery-ui");
         $assets[] = $loader->register("tests/assets/test");
         $assets[] = $loader->register("tests/assets/underscore");
-        ok($assets);
+        $assets[] = $loader->register("tests/assets/webtoolkit");
+
+        foreach($assets as $asset) {
+            ok($asset);
+            ok($asset instanceof Asset);
+        }
 
         $this->installAssets($assets);
 
@@ -24,16 +30,15 @@ class AssetCompilerTest extends AssetKit\TestCase
         $compiler->registerDefaultCompressors();
         $compiler->registerDefaultFilters();
 
-        $files = $compiler->compileAssets($assets,'myapp', $force = true);
-        ok($files);
+        $entries = $compiler->compileAssets($assets,'myapp', $force = true);
+        ok($entries);
 
-        path_ok($files[0]['js_file']);
-        path_ok($files[0]['css_file']);
-        ok($files[0]['mtime'], 'got mtime');
+        path_ok($entries[0]['js_file']);
+        path_ok($entries[0]['css_file']);
+        ok($entries[0]['mtime'], 'got mtime');
 
 
         /*
-        var_dump( $files ); 
         array(7) {
             ["css_md5"]=> string(32) "07fb97faf2a7056360fb048aac109800"
             ["js_md5"]=> string(32) "d95da0fbdccc220ccb5e4949a41ec796"
@@ -45,7 +50,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         }
         */
 
-        $cssminContent = file_get_contents( $files[0]['css_file'] );
+        $cssminContent = file_get_contents( $entries[0]['css_file'] );
         ok($cssminContent);
 
         // examine these paths
@@ -127,7 +132,7 @@ class AssetCompilerTest extends AssetKit\TestCase
     }
 
 
-    public function testProductionModeForjQueryUI()
+    public function testProductionAssetCompiler()
     {
         $config = $this->getConfig();
         $loader = $this->getLoader();
@@ -143,12 +148,12 @@ class AssetCompilerTest extends AssetKit\TestCase
         $installer = $this->getInstaller();
         $installer->install($asset);
 
-        $files = $compiler->compile($asset);
-        ok($files);
-        path_ok($files['js_file']);
-        path_ok($files['css_file']);
-        is('/assets/compiled/jquery-ui.min.js', $files['js_url']);
-        is('/assets/compiled/jquery-ui.min.css', $files['css_url']);
+        $entry = $compiler->compile($asset);
+        ok($entry);
+        path_ok($entry['js_file']);
+        path_ok($entry['css_file']);
+        is('/assets/compiled/jquery-ui.min.js', $entry['js_url']);
+        is('/assets/compiled/jquery-ui.min.css', $entry['css_url']);
         $installer->uninstall($asset);
     }
 

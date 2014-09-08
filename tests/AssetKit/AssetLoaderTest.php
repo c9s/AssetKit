@@ -15,9 +15,30 @@ class AssetLoaderTest extends AssetKit\TestCase
             array("tests/assets/jquery-ui"),
             array("tests/assets/jquery"),
             array("tests/assets/underscore"),
+            array("tests/assets/webtoolkit"),
         );
     }
 
+    public function testAssetLoad() {
+        $manifestFiles = array(
+            "tests/assets/jquery-ui",
+            "tests/assets/jquery",
+            "tests/assets/underscore",
+            "tests/assets/webtoolkit"
+        );
+        $loader = $this->getLoader();
+        foreach($manifestFiles as $manifestFile) {
+            $loader->register($manifestFile);
+        }
+        $assets[] = $loader->load('jquery');
+        $assets[] = $loader->load('jquery-ui');
+        $assets[] = $loader->load('underscore');
+        $assets[] = $loader->load('webtoolkit');
+        foreach($assets as $asset) {
+            ok($asset);
+            ok($asset instanceof Asset);
+        }
+    }
 
     /**
      * @dataProvider manifestProvider
@@ -53,26 +74,6 @@ class AssetLoaderTest extends AssetKit\TestCase
         $urlBuilder = new AssetUrlBuilder($config);
         $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
         is( "/assets/" . $asset->name, $assetBaseUrl);
-
-
-
-        /*
-        $updater = new ResourceUpdater();
-        ok($updater, "Resource updater is loaded");
-        $updater->update($asset);
-
-        $installer = new AssetKit\LinkInstaller($config);
-        ob_start();
-        $installer->install( $asset );
-        $installer->uninstall( $asset );
-        ob_clean();
-
-        $installer = new AssetKit\Installer($config);
-        ob_start();
-        $installer->install( $asset );
-        $installer->uninstall( $asset );
-        ob_clean();
-        */
         $config->save();
     }
 }
