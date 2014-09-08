@@ -35,7 +35,7 @@ class ProductionAssetCompiler extends AssetCompiler
     /**
      * @var boolean Create compiled directory if it does not exist.
      */
-    public $autoCreateCompiledDir = true;
+    public $autoPrepareCompiledDir = true;
 
     /**
      * @var boolean Change the permission mode of compiled directory everytime 
@@ -48,7 +48,7 @@ class ProductionAssetCompiler extends AssetCompiler
     public function __construct(AssetConfig $config, AssetLoader $loader) {
         parent::__construct($config, $loader);
 
-        if ($this->autoCreateCompiledDir) {
+        if ($this->autoPrepareCompiledDir) {
             $this->prepareCompiledDir();
         }
     }
