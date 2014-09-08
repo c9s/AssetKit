@@ -191,14 +191,14 @@ class ProductionAssetCompiler extends AssetCompiler
             $outfiles['js_checksum'] = hash($this->checksumAlgo, $contents['js']);
             $outfiles['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['js_checksum'] . '.min.js';
             $outfiles['js_url']  = "$compiledUrl/$target-" . $outfiles['js_checksum']  . '.min.js';
-            file_put_contents($outfiles['js_file'], $contents['js'] );
+            file_put_contents($outfiles['js_file'], $contents['js'], LOCK_EX);
         }
 
         if ($contents['css']) {
             $outfiles['css_checksum'] = hash($this->checksumAlgo, $contents['css']);
             $outfiles['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $target . '-' . $outfiles['css_checksum'] . '.min.css';
             $outfiles['css_url'] = "$compiledUrl/$target-" . $outfiles['css_checksum'] . '.min.css';
-            file_put_contents($outfiles['css_file'], $contents['css'] );
+            file_put_contents($outfiles['css_file'], $contents['css'], LOCK_EX);
         }
 
 
@@ -283,12 +283,12 @@ class ProductionAssetCompiler extends AssetCompiler
         if ($out['js']) {
             $out['js_file'] = $jsFile;
             $out['js_url'] = $jsUrl;
-            file_put_contents($jsFile, $out['js']);
+            file_put_contents($jsFile, $out['js'], LOCK_EX);
         }
         if ($out['css']) {
             $out['css_file'] = $cssFile;
             $out['css_url'] = $cssUrl;
-            file_put_contents($cssFile , $out['css']);
+            file_put_contents($cssFile , $out['css'], LOCK_EX);
         }
 
         // store cache
