@@ -418,7 +418,7 @@ class ProductionAssetCompiler extends AssetCompiler
 
             // concat js and css
             if ( $collection->isJavascript || $collection->isCoffeescript ) {
-                $out['js'] .= ";" . $collection->getContent() . "\n";
+                $out['js'] .=  $collection->getContent() . ";\n";
             } elseif ( $collection->isStylesheet ) {
                 $out['css'] .= $collection->getContent() . "\n";
             }
