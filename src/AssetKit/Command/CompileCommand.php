@@ -49,6 +49,8 @@ class CompileCommand extends BaseCommand
         // initialize loader and writer
         $this->logger->info("Loading assets " . join(', ', $assetNames));
         $assets = $loader->loadAssets($assetNames);
+        $loader->entries->addTarget($target, $assetNames);
+        $loader->saveEntries();
 
         $compiler = new ProductionAssetCompiler($config,$loader);
         $compiler->registerDefaultCompressors();
@@ -56,6 +58,7 @@ class CompileCommand extends BaseCommand
 
 
         $this->logger->info("Compiling assets to target '$target'...");
+
         
         // force compile
         $entries = $compiler->compileAssets($assets, $target, true); // use force to compile.

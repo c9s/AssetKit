@@ -2,13 +2,14 @@
 namespace AssetKit;
 use ArrayAccess;
 use AssetKit\Cache;
-
+use IteratorAggregate;
+use ArrayIterator;
 
 /**
  * An asset cache container that caches the config of the 
  * assets.
  */
-class AssetEntryCluster implements ArrayAccess
+class AssetEntryCluster implements ArrayAccess, IteratorAggregate
 {
     /**
      * @array the assets array that contains the config of all assets.
@@ -25,6 +26,10 @@ class AssetEntryCluster implements ArrayAccess
         if ($stash) {
             $this->stash = $stash;
         }
+    }
+
+    public function getIterator() {
+        return new ArrayIterator($this->stash);
     }
 
     /**
@@ -182,9 +187,7 @@ class AssetEntryCluster implements ArrayAccess
 
     public function getTargets()
     {
-        if ( isset($this->targets['Targets']) ) {
-            return $this->targets['Targets'];
-        }
+        return $this->targets;
     }
 
 }
