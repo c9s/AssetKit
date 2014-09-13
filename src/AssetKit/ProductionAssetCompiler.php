@@ -383,7 +383,7 @@ class ProductionAssetCompiler extends AssetCompiler
         $assetBaseUrl = $this->urlBuilder->buildBaseUrl($asset);
         foreach( $collections as $collection ) {
             // skip unknown collection type
-            if ( ! $collection->isJavascript && ! $collection->isStylesheet && ! $collection->isCoffeescript )
+            if ( ! $collection->isScript && ! $collection->isStylesheet )
                 continue;
 
             if ( $lastm = $collection->getLastModifiedTime() ) {
@@ -403,7 +403,7 @@ class ProductionAssetCompiler extends AssetCompiler
                     $this->runUserDefinedFilters($collection);
                 }
                 // for stylesheets, before compress it, we should import the css contents
-                elseif ( $collection->isStylesheet && $collection->filetype === Collection::FILETYPE_CSS ) {
+                elseif ( $collection->isStylesheet && $collection->filetype === Collection::FileTypeCss ) {
                     // css import filter implies css rewrite
                     $import = new CssImportFilter($this->config, $assetBaseUrl);
                     $import->filter( $collection );
@@ -421,7 +421,7 @@ class ProductionAssetCompiler extends AssetCompiler
             }
 
             // concat js and css
-            if ( $collection->isJavascript || $collection->isCoffeescript ) {
+            if ( $collection->isScript ) {
                 $out['js'] .=  $collection->getContent() . ";\n";
             } elseif ( $collection->isStylesheet ) {
                 $out['css'] .= $collection->getContent() . "\n";

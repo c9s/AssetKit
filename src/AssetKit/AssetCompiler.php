@@ -139,7 +139,7 @@ class AssetCompiler
             foreach( $asset->getCollections() as $c ) {
 
                 $type = null;
-                if ( $c->isCoffeescript || $c->isJavascript ) {
+                if ( $c->isScript ) {
                     $type = 'javascript';
                 } elseif ( $c->isStylesheet ) {
                     $type = 'stylesheet';
@@ -346,15 +346,15 @@ class AssetCompiler
     {
         $assetBaseUrl = $this->urlBuilder->buildBaseUrl($asset);
 
-        if ( $collection->isCoffeescript || $collection->filetype === Collection::FILETYPE_COFFEE ) {
+        if ($collection->filetype === Collection::FileTypeCoffee) {
             $coffee = new CoffeeScriptFilter($this->config);
             $coffee->filter( $collection );
             return true;
-        } elseif ( $collection->filetype === Collection::FILETYPE_SASS ) {
+        } elseif ( $collection->filetype === Collection::FileTypeSass ) {
             $sass = new SassFilter($this->config, $assetBaseUrl);
             $sass->filter($collection);
             return true;
-        } elseif ( $collection->filetype === Collection::FILETYPE_SCSS ) {
+        } elseif ( $collection->filetype === Collection::FileTypeScss ) {
             $scss = new ScssFilter($this->config, $assetBaseUrl);
             $scss->filter( $collection );
             return true;
@@ -367,7 +367,7 @@ class AssetCompiler
     public function runDefaultCompressors(Collection $collection)
     {
         if ( $this->defaultJsCompressor 
-            && ($collection->isJavascript || $collection->isCoffeescript) ) 
+            && ($collection->isScript) ) 
         {
             if ( $com = $this->getCompressor($this->defaultJsCompressor) ) {
                 $com->compress($collection);

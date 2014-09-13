@@ -6,6 +6,18 @@ use IteratorAggregate;
 class Collection
     implements IteratorAggregate
 {
+    const FileTypeFile   = 1;
+
+    const FileTypeJs     = 2;
+
+    const FileTypeCss    = 3;
+
+    const FileTypeSass   = 4;
+
+    const FileTypeScss   = 5;
+
+    const FileTypeCoffee = 6;
+
 
     public $filters = array();
 
@@ -20,12 +32,16 @@ class Collection
      */
     public $sourceDir;
 
-    public $isJavascript;
 
+    /**
+     * @var boolean content type for <style> or rel="stylesheet"
+     */
     public $isStylesheet;
 
-    public $isCoffeescript;
-
+    /**
+     * @var boolean content type for <script>
+     */
+    public $isScript;
 
     /**
      * file content cache (content is from the getContent method)
@@ -46,12 +62,6 @@ class Collection
     // cache
     private $_lastmtime = 0;
 
-    const FILETYPE_FILE   = 1;
-    const FILETYPE_JS     = 2;
-    const FILETYPE_CSS    = 3;
-    const FILETYPE_SASS   = 4;
-    const FILETYPE_SCSS   = 5;
-    const FILETYPE_COFFEE = 6;
 
     /**
      * Return source path (with relative or absolute path)
@@ -224,8 +234,7 @@ class Collection
         $c->sourceDir = $array['sourceDir'];
         $c->filetype = $array['filetype'];
         $c->isStylesheet = $array['isStylesheet'];
-        $c->isJavascript = $array['isJavascript'];
-        $c->isCoffeescript = $array['isCoffeescript'];
+        $c->isScript = $array['isScript'];
         return $c;
     }
 }

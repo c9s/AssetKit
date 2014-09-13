@@ -28,7 +28,7 @@ class CoffeeScriptFilter extends BaseFilter
 
     public function filter(Collection $collection)
     {
-        if( ! $collection->isJavascript && ! $collection->isCoffeescript ) {
+        if( $collection->filetype !== Collection::FileTypeCoffee ) {
             return;
         }
 

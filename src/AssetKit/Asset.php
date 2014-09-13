@@ -135,38 +135,38 @@ class Asset
             // for normal static files
             if( isset($stash['files']) ) {
                 $files            = $stash['files'];
-                $collection->filetype = Collection::FILETYPE_FILE;
+                $collection->filetype = Collection::FileTypeFile;
             } elseif (isset($stash['js'])) {
                 $files                    = $stash['js'];
-                $collection->filetype     = Collection::FILETYPE_JS;
-                $collection->isJavascript = true;
+                $collection->filetype     = Collection::FileTypeJs;
+                $collection->isScript = true;
             } elseif (isset($stash['javascript'])) {
                 $files                    = $stash['javascript'];
-                $collection->filetype     = Collection::FILETYPE_JS;
-                $collection->isJavascript = true;
+                $collection->filetype     = Collection::FileTypeJs;
+                $collection->isScript = true;
             } elseif (isset($stash['coffeescript'])) {
                 $files                      = $stash['coffeescript'];
-                $collection->filetype       = Collection::FILETYPE_COFFEE;
-                $collection->isCoffeescript = true;
+                $collection->filetype       = Collection::FileTypeCoffee;
+                $collection->isScript = true;
             } elseif (isset($stash['coffee'])) {
                 $files                      = $stash['coffee'];
-                $collection->filetype       = Collection::FILETYPE_COFFEE;
-                $collection->isCoffeescript = true;
+                $collection->filetype       = Collection::FileTypeCoffee;
+                $collection->isScript = true;
             } elseif (isset($stash['css'])) {
                 $files                    = $stash['css'];
-                $collection->filetype     = Collection::FILETYPE_CSS;
+                $collection->filetype     = Collection::FileTypeCss;
                 $collection->isStylesheet = true;
             } elseif (isset($stash['sass'])) {
                 $files                    = $stash['sass'];
-                $collection->filetype     = Collection::FILETYPE_SASS;
+                $collection->filetype     = Collection::FileTypeSass;
                 $collection->isStylesheet = true;
             } elseif (isset($stash['scss'])) {
                 $files                    = $stash['scss'];
-                $collection->filetype     = Collection::FILETYPE_SCSS;
+                $collection->filetype     = Collection::FileTypeScss;
                 $collection->isStylesheet = true;
             } elseif (isset($stash['stylesheet']) ) {
                 $files                    = $stash['stylesheet'];
-                $collection->filetype     = Collection::FILETYPE_CSS;
+                $collection->filetype     = Collection::FileTypeCss;
                 $collection->isStylesheet = true;
             } else {
                 var_dump( $this ); 

@@ -94,7 +94,7 @@ class SassFilter extends BaseFilter
 
     public function filter(Collection $collection)
     {
-        if ($collection->filetype !== Collection::FILETYPE_SASS) {
+        if ($collection->filetype !== Collection::FileTypeSass) {
             return;
         }
 
