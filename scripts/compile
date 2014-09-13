@@ -11,6 +11,7 @@ onion -d compile \
     --lib vendor/symfony/yaml/Symfony/Component/Yaml \
     --lib vendor/corneltek/cliframework/src \
     --exclude Tests \
+    --no-compress \
     --classloader \
     --bootstrap scripts/assetkit.php \
     --executable \
