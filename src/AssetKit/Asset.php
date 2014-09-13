@@ -102,31 +102,31 @@ class Asset
 
         $this->manifestCacheFile = ConfigCompiler::compiled_filename($manifestYamlFile);
 
-        $config = array();
+        $stash = array();
         if ($force || ConfigCompiler::test($manifestYamlFile, $this->manifestCacheFile)) {
             // do config compile
-            $config = ConfigCompiler::parse($manifestYamlFile);
+            $stash = ConfigCompiler::parse($manifestYamlFile);
 
             // expand file list
-            foreach($config['collections'] as & $cStash) {
+            foreach($stash['collections'] as & $cStash) {
                 $key = $this->_getFileListKey($cStash);
                 $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
             }
 
             // write config back
-            ConfigCompiler::write($this->manifestCacheFile,$config);
+            ConfigCompiler::write($this->manifestCacheFile, $stash);
         } else {
-            $config = require $this->manifestCacheFile;
+            $stash = require $this->manifestCacheFile;
         }
 
-        $this->name = isset($config['name']) ? $config['name'] : basename($this->sourceDir);
-        $this->stash = $config;
-        // $this->loadFromArray($config);
+        $this->name = isset($stash['name']) ? $stash['name'] : basename($this->sourceDir);
+        $this->stash = $stash;
+        // $this->loadFromArray($stash);
     }
 
-    public function loadFromArray($config)
+    public function loadFromArray($stash)
     {
-        $this->stash = $config;
+        $this->stash = $stash;
     }
 
 
