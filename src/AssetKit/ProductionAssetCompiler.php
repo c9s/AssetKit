@@ -180,7 +180,7 @@ class ProductionAssetCompiler extends AssetCompiler
      * @param string $target target name
      * @param boolean $force force compilation
      */
-    public function compileAssets($assets, $target = '', $force = false)
+    public function compileAssets($assets, $target = null, $force = false)
     {
         $targetDefined = $target ? true : false;
         if (! $target ) {
