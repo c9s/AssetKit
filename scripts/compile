@@ -10,6 +10,7 @@ onion -d compile \
     --lib vendor/twig/twig/lib \
     --lib vendor/symfony/yaml/Symfony/Component/Yaml \
     --lib vendor/corneltek/cliframework/src \
+    --exclude Tests \
     --classloader \
     --bootstrap scripts/assetkit.php \
     --executable \
