@@ -92,8 +92,10 @@ class Asset
      *
      * @param string $manifestYamlFile related YAML manifest file path, which 
      *          should be absolute path.
+     *
+     * @param boolean $force force compile manifest file even there is a cached file.
      */
-    public function loadFromManifestFile($manifestYamlFile)
+    public function loadFromManifestFile($manifestYamlFile , $force = false)
     {
         $this->manifestFile = $manifestYamlFile;
         $this->sourceDir    = dirname($manifestYamlFile);
@@ -101,7 +103,7 @@ class Asset
         $this->manifestCacheFile = ConfigCompiler::compiled_filename($manifestYamlFile);
 
         $config = array();
-        if (ConfigCompiler::test($manifestYamlFile, $this->manifestCacheFile)) {
+        if ($force || ConfigCompiler::test($manifestYamlFile, $this->manifestCacheFile)) {
             // do config compile
             $config = ConfigCompiler::parse($manifestYamlFile);
 
