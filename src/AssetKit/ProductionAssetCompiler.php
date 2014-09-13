@@ -24,6 +24,10 @@ use Exception;
 use RuntimeException;
 use InvalidArgumentException;
 
+function str_format($format, $args) {
+    return str_replace(array_keys($args), array_values($args), $format);
+}
+
 class ProductionAssetCompiler extends AssetCompiler
 {
 
@@ -146,9 +150,11 @@ class ProductionAssetCompiler extends AssetCompiler
      * @param string $ext     content type: js, css
      */
     public function buildTargetMinFilename($target, $checksum, $ext) {
-        return str_replace(array(
-            '%target%', '%checksum%', '%ext%',
-        ), array($target, $checksum, $ext), $this->targetMinFilenameFormat);
+        return str_format($this->targetMinFilenameFormat, array(
+            '%target%' => $target,
+            '%checksum%' => $checksum,
+            '%ext%' => $ext,
+        ));
     }
 
 
