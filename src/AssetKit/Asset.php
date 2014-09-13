@@ -93,16 +93,34 @@ class Asset
      */
     public function loadFromManifestFile($manifestYamlFile)
     {
-        $data = ConfigCompiler::load($manifestYamlFile);
         $this->manifestFile = $manifestYamlFile;
         $this->sourceDir    = dirname($manifestYamlFile);
-        if (isset($data['name'])) {
-            $this->name = $data['name'];
+
+        $config = array();
+        $compiledFile = ConfigCompiler::compiled_filename($manifestYamlFile);
+        if (ConfigCompiler::test($manifestYamlFile, $compiledFile)) {
+            // do config compile
+            $config = ConfigCompiler::parse($manifestYamlFile);
+
+            // expand file list
+            foreach($config['collections'] as & $cStash) {
+                $key = $this->_getFileListKey($cStash);
+                $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
+            }
+
+            // write config back
+            ConfigCompiler::write($compiledFile,$config);
+        } else {
+            $config = require $compiledFile;
+        }
+
+        if (isset($config['name'])) {
+            $this->name = $config['name'];
         } else {
             $this->name         = basename($this->sourceDir);
         }
-        $this->stash = $data;
-        // $this->loadFromArray($data);
+        $this->stash = $config;
+        // $this->loadFromArray($config);
     }
 
     public function loadFromArray($config)
@@ -127,53 +145,52 @@ class Asset
     {
         $sourceDir = $this->sourceDir;
         $collections = array();
-
         foreach( $collectionStash as $stash ) {
             $collection = new Collection;
-            $files = array();
-
-            $key = $collection->initContentType($stash);
-            $files = $stash[$key];
 
             if (isset($stash['attrs']) ) {
                 $collection->attributes = $stash['attrs'];
             }
-
-            $expandedFiles = array();
-            foreach( $files as $p ) {
-
-                // found a glob pattern
-                if( strpos($p,'*') !== false )
-                {
-                    $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
-
-                    // should be unique
-                    $expandedFiles = array_unique( array_merge( $expandedFiles , $expanded ) );
-
-                } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
-                    $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
-
-                    // We remove the base dir becase we need to build the 
-                    // asset urls
-                    $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
-                    $expandedFiles = array_unique(array_merge( $expandedFiles , $expanded ));
-                } else {
-                    $expandedFiles[] = $p;
-                }
-            }
-
             if( isset($stash['filters']) ) {
                 $collection->filters = $stash['filters'];
             }
             if( isset($stash['compressors']) ) {
                 $collection->compressors = $stash['compressors'];
             }
-            $collection->files = $expandedFiles;
+
+            $fileKey = $collection->initContentType($stash);
+            // $collection->files = $this->expandFileList($sourceDir, $stash[$fileKey]);
+            $collection->files = $stash[$fileKey];
             $collection->sourceDir = $this->getSourceDir();
             $collections[] = $collection;
         }
         return $collections;
     }
+
+    public function expandFileList($sourceDir, $files) {
+        $expandedFiles = array();
+        foreach( $files as $p ) {
+            // if we found a glob pattern
+            if( strpos($p,'*') !== false )
+            {
+                $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
+                $expandedFiles = array_unique( array_merge( $expandedFiles , $expanded ) );
+
+            } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
+                // We remove the base dir becase we need to build the 
+                // asset urls
+                $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
+                $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
+                $expandedFiles = array_unique(array_merge( $expandedFiles , $expanded ));
+            } else {
+                $expandedFiles[] = $p;
+            }
+        }
+        return $expandedFiles;
+    }
+
+
+
 
     public function getCollections()
     {
@@ -260,6 +277,14 @@ class Asset
         // TODO: implement this
     }
 
+
+    private function _getFileListKey($stash) {
+        foreach(array('files','js','css','javascript', 'coffeescript', 'coffee', 'sass', 'scss', 'stylesheet') as $key) {
+            if (isset($stash[$key])) {
+                return $key;
+            }
+        }
+    }
 }
 
 

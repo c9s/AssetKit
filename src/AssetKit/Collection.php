@@ -226,6 +226,7 @@ class Collection
         return $this->getLastModifiedTime() > $fromTime;
     }
 
+
     public function initContentType(& $stash) {
         // for normal static files
         if( isset($stash['files']) ) {
