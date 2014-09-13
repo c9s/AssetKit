@@ -132,47 +132,8 @@ class Asset
             $collection = new Collection;
             $files = array();
 
-            // for normal static files
-            if( isset($stash['files']) ) {
-                $files            = $stash['files'];
-                $collection->filetype = Collection::FileTypeFile;
-            } elseif (isset($stash['js'])) {
-                $files                    = $stash['js'];
-                $collection->filetype     = Collection::FileTypeJs;
-                $collection->isScript = true;
-            } elseif (isset($stash['javascript'])) {
-                $files                    = $stash['javascript'];
-                $collection->filetype     = Collection::FileTypeJs;
-                $collection->isScript = true;
-            } elseif (isset($stash['coffeescript'])) {
-                $files                      = $stash['coffeescript'];
-                $collection->filetype       = Collection::FileTypeCoffee;
-                $collection->isScript = true;
-            } elseif (isset($stash['coffee'])) {
-                $files                      = $stash['coffee'];
-                $collection->filetype       = Collection::FileTypeCoffee;
-                $collection->isScript = true;
-            } elseif (isset($stash['css'])) {
-                $files                    = $stash['css'];
-                $collection->filetype     = Collection::FileTypeCss;
-                $collection->isStylesheet = true;
-            } elseif (isset($stash['sass'])) {
-                $files                    = $stash['sass'];
-                $collection->filetype     = Collection::FileTypeSass;
-                $collection->isStylesheet = true;
-            } elseif (isset($stash['scss'])) {
-                $files                    = $stash['scss'];
-                $collection->filetype     = Collection::FileTypeScss;
-                $collection->isStylesheet = true;
-            } elseif (isset($stash['stylesheet']) ) {
-                $files                    = $stash['stylesheet'];
-                $collection->filetype     = Collection::FileTypeCss;
-                $collection->isStylesheet = true;
-            } else {
-                var_dump( $this ); 
-                var_dump( $stash );
-                throw new Exception('Unknown collection file type.');
-            }
+            $key = $collection->initContentType($stash);
+            $files = $stash[$key];
 
             if (isset($stash['attrs']) ) {
                 $collection->attributes = $stash['attrs'];

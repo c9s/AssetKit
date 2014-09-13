@@ -226,6 +226,49 @@ class Collection
         return $this->getLastModifiedTime() > $fromTime;
     }
 
+    public function initContentType(& $stash) {
+        // for normal static files
+        if( isset($stash['files']) ) {
+            $this->filetype = Collection::FileTypeFile;
+            return 'files';
+        } elseif (isset($stash['js'])) {
+            $this->filetype     = Collection::FileTypeJs;
+            $this->isScript = true;
+            return 'js';
+        } elseif (isset($stash['javascript'])) {
+            $this->filetype     = Collection::FileTypeJs;
+            $this->isScript = true;
+            return 'javascript';
+        } elseif (isset($stash['coffeescript'])) {
+            $this->filetype       = Collection::FileTypeCoffee;
+            $this->isScript = true;
+            return 'coffeescript';
+        } elseif (isset($stash['coffee'])) {
+            $this->filetype       = Collection::FileTypeCoffee;
+            $this->isScript = true;
+            return 'coffee';
+        } elseif (isset($stash['css'])) {
+            $this->filetype     = Collection::FileTypeCss;
+            $this->isStylesheet = true;
+            return 'css';
+        } elseif (isset($stash['sass'])) {
+            $this->filetype     = Collection::FileTypeSass;
+            $this->isStylesheet = true;
+            return 'sass';
+        } elseif (isset($stash['scss'])) {
+            $this->filetype     = Collection::FileTypeScss;
+            $this->isStylesheet = true;
+            return 'scss';
+        } elseif (isset($stash['stylesheet']) ) {
+            $this->filetype     = Collection::FileTypeCss;
+            $this->isStylesheet = true;
+            return 'stylesheet';
+        } else {
+            var_dump( $stash );
+            throw new Exception('Unknown collection file type.');
+        }
+    }
+
     public function __set_state($array) {
         $c = new self;
         $c->filters = $array['filters'];
