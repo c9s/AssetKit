@@ -64,9 +64,11 @@ class CompileCommand extends BaseCommand
         $entries = $compiler->compileAssets($assets, $target, true); // use the force
         $files = $entries[0];
 
+
         printf( "----------------------------------------------------\n" );
         printf( "Target:            %s\n" , $files['target'] );
         printf( "Cache Key:         %s\n" , $files['cache_key'] );
+        printf( "Meta File:         %s\n" , $files['metafile'] );
         printf( "Modofication Time: %s\n" , date(\DateTime::ATOM,$files['mtime']) );
 
         if ( isset($files['css_file']) ) {
