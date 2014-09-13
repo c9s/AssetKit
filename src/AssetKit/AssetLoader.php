@@ -180,7 +180,7 @@ class AssetLoader
      * @param string $path absolute path
      * @parma integer $format
      */
-    public function register($path)
+    public function register($path, $force = false)
     {
         $path = realpath($path);
 
@@ -195,7 +195,7 @@ class AssetLoader
         $asset = new Asset;
 
         // load the asset config from manifest.php file.
-        $asset->loadFromManifestFile($path);
+        $asset->loadFromManifestFile($path, $force);
         $this->entries->add($asset);
         return $asset;
     }
