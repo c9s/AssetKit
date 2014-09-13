@@ -75,6 +75,8 @@ class Asset
      */
     public $manifestFile;
 
+    public $manifestCacheFile;
+
 
     /**
      * @var AssetKit\Collection[]
@@ -96,8 +98,10 @@ class Asset
         $this->manifestFile = $manifestYamlFile;
         $this->sourceDir    = dirname($manifestYamlFile);
 
-        $config = array();
         $compiledFile = ConfigCompiler::compiled_filename($manifestYamlFile);
+        $this->manifestCacheFile = $compiledFile;
+
+        $config = array();
         if (ConfigCompiler::test($manifestYamlFile, $compiledFile)) {
             // do config compile
             $config = ConfigCompiler::parse($manifestYamlFile);
