@@ -46,7 +46,7 @@ class ProductionAssetCompiler extends AssetCompiler
 
     public $defaultCompiledDirMod = 0777;
 
-
+    public $targetMinFilenameFormat = '%target%-%checksum%.min.%ext%';
 
     public function __construct(AssetConfig $config, AssetLoader $loader) {
         parent::__construct($config, $loader);
@@ -140,9 +140,15 @@ class ProductionAssetCompiler extends AssetCompiler
 
     /**
      * Build the filename for minified content.
+     *
+     * @param string $target
+     * @param string $checksum
+     * @param string $ext     content type: js, css
      */
-    public function buildTargetMinFilename($target, $checksum) {
-        return sprintf('%s-%s.min', $target, $checksum);
+    public function buildTargetMinFilename($target, $checksum, $ext) {
+        return str_replace(array(
+            '%target%', '%checksum%', '%ext%',
+        ), array($target, $checksum, $ext), $this->targetMinFilenameFormat);
     }
 
 
@@ -229,7 +235,7 @@ class ProductionAssetCompiler extends AssetCompiler
         // write minified results to file
         if ($contents['js']) {
             $entry['js_checksum'] = hash($this->checksumAlgo, $contents['js']);
-            $filename = $this->buildTargetMinFilename($target, $entry['js_checksum']) . '.js';
+            $filename = $this->buildTargetMinFilename($target, $entry['js_checksum'], 'js');
             $entry['js_file'] = $compiledDir . DIRECTORY_SEPARATOR . $filename;
             $entry['js_url']  = "$compiledUrl/" . $filename;
             if (false === file_put_contents($entry['js_file'], $contents['js'], LOCK_EX)) {
@@ -239,7 +245,7 @@ class ProductionAssetCompiler extends AssetCompiler
 
         if ($contents['css']) {
             $entry['css_checksum'] = hash($this->checksumAlgo, $contents['css']);
-            $filename = $this->buildTargetMinFilename($target, $entry['css_checksum']) . '.css';
+            $filename = $this->buildTargetMinFilename($target, $entry['css_checksum'], 'css');
             $entry['css_file'] = $compiledDir . DIRECTORY_SEPARATOR . $filename;
             $entry['css_url'] = "$compiledUrl/" . $filename;
             if (false === file_put_contents($entry['css_file'], $contents['css'], LOCK_EX) ) {
