@@ -4,6 +4,7 @@ use ConfigKit\ConfigCompiler;
 use AssetKit\FileUtil;
 use AssetKit\AssetUrlBuilder;
 use AssetKit\Collection;
+use AssetKit\AssetCollection;
 use AssetKit\Asset;
 
 // Filters
