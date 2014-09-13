@@ -1,6 +1,8 @@
 <?php
 namespace AssetKit;
 use PHPUnit_Framework_TestCase;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -99,7 +101,23 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         if (extension_loaded('apc') ) {
             apc_clear_cache();
         }
+        $config = $this->getConfig();
+
+        // Clean up compiled directory
+        $dir = $config->getCompiledDir();
+        if (is_dir($dir)) {
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($files as $fileinfo) {
+                $action = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+                $action($fileinfo->getRealPath());
+            }
+            rmdir($dir);
+        }
     }
+
 
     public function tearDown()
     {
