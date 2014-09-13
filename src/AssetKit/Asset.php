@@ -147,7 +147,6 @@ class Asset
         $collections = array();
         foreach( $collectionStash as $stash ) {
             $collection = new Collection;
-
             if (isset($stash['attrs']) ) {
                 $collection->attributes = $stash['attrs'];
             }
