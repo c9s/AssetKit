@@ -9,6 +9,7 @@ use AssetKit\Asset;
 use AssetKit\Cache;
 use AssetKit\CacheFactory;
 use AssetKit\Command\BaseCommand;
+use AssetKit\ProductionAssetCompiler;
 use CLIFramework\Command;
 use ConfigKit\ConfigCompiler;
 
@@ -33,10 +34,12 @@ class CleanCommand extends BaseCommand
         $cache = CacheFactory::create($config);
         $cache->clear();
 
+        $compiler = new ProductionAssetCompiler($config, $loader);
+
         $compiledDir = $config->getCompiledDir();
 
         foreach( $loader->entries->getTargets() as $targetId => $assetNames) {
-            $metaFile = $compiledDir . DIRECTORY_SEPARATOR . '.' . $targetId . '.meta.php';
+            $metaFile = $compiledDir . DIRECTORY_SEPARATOR . $compiler->buildTargetMetaFilename($targetId);
             if (file_exists($metaFile)) {
                 $entries = require $metaFile;
                 foreach($entries as $entry) {
@@ -54,7 +57,7 @@ class CleanCommand extends BaseCommand
         foreach( $loader->entries as $entry ) {
             $asset = new Asset;
             $asset->loadFromManifestFile($entry['manifest']);
-            $metaFile = $compiledDir . DIRECTORY_SEPARATOR . '.asset-' . $asset->name . '.meta.php';
+            $metaFile = $compiledDir . DIRECTORY_SEPARATOR . $compiler->buildAssetMetaFilename($asset);
             if (file_exists($metaFile)) {
                 $entries = require $metaFile;
                 foreach(array('js_file', 'css_file') as $key) {

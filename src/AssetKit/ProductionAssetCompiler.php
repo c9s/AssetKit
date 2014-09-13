@@ -120,6 +120,26 @@ class ProductionAssetCompiler extends AssetCompiler
 
 
     /**
+     * Return the meta filename for target
+     *
+     * @param string $target
+     */
+    public function buildTargetMetaFilename($target) {
+        return '.target-' . $target . '.meta.php';
+    }
+
+
+    /**
+     * Return the meta filename for asset
+     *
+     * @param Asset $asset
+     */
+    public function buildAssetMetaFilename(Asset $asset) {
+        return ".asset-" . $asset->name . '.meta.php';
+    }
+
+
+    /**
      * Compile multiple assets into the target path.
      *
      * For example, compiling:
@@ -150,7 +170,7 @@ class ProductionAssetCompiler extends AssetCompiler
 
         $compiledDir = $this->config->getCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
-        $metaFile = $compiledDir . DIRECTORY_SEPARATOR . '.' . $target . '.meta.php';
+        $metaFile = $compiledDir . DIRECTORY_SEPARATOR . $this->buildTargetMetaFilename($target);
         $cacheKey = $this->config->getNamespace() . ':target:' . $target;
 
         if (!$force) {
@@ -240,6 +260,9 @@ class ProductionAssetCompiler extends AssetCompiler
         return $entries;
     }
 
+
+
+
     /**
      * Compile single asset
      * This is for production mode.
@@ -276,7 +299,7 @@ class ProductionAssetCompiler extends AssetCompiler
     {
         $compiledDir = $this->config->getCompiledDir();
         $compiledUrl = $this->config->getCompiledUrl();
-        $metaFile = $compiledDir . DIRECTORY_SEPARATOR . ".asset-" . $asset->name . '.meta.php';
+        $metaFile = $compiledDir . DIRECTORY_SEPARATOR . $this->buildAssetMetaFilename($asset);
 
         if (! $force && file_exists($metaFile)) {
             $cached = require $metaFile;
@@ -367,7 +390,8 @@ class ProductionAssetCompiler extends AssetCompiler
 
     /**
      * Squash asset contents,
-     * run through filters, compressors ...
+     *
+     * pipe file contents through filters, compressors ...
      *
      * @param  AssetKit\Asset $asset
      * @return array [ css: string, js: string ]

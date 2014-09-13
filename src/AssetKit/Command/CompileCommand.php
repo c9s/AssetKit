@@ -61,7 +61,7 @@ class CompileCommand extends BaseCommand
 
         
         // force compile
-        $entries = $compiler->compileAssets($assets, $target, true); // use force to compile.
+        $entries = $compiler->compileAssets($assets, $target, true); // use the force
         $files = $entries[0];
 
         printf( "----------------------------------------------------\n" );
