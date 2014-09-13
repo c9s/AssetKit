@@ -98,11 +98,10 @@ class Asset
         $this->manifestFile = $manifestYamlFile;
         $this->sourceDir    = dirname($manifestYamlFile);
 
-        $compiledFile = ConfigCompiler::compiled_filename($manifestYamlFile);
-        $this->manifestCacheFile = $compiledFile;
+        $this->manifestCacheFile = ConfigCompiler::compiled_filename($manifestYamlFile);
 
         $config = array();
-        if (ConfigCompiler::test($manifestYamlFile, $compiledFile)) {
+        if (ConfigCompiler::test($manifestYamlFile, $this->manifestCacheFile)) {
             // do config compile
             $config = ConfigCompiler::parse($manifestYamlFile);
 
@@ -113,16 +112,12 @@ class Asset
             }
 
             // write config back
-            ConfigCompiler::write($compiledFile,$config);
+            ConfigCompiler::write($this->manifestCacheFile,$config);
         } else {
-            $config = require $compiledFile;
+            $config = require $this->manifestCacheFile;
         }
 
-        if (isset($config['name'])) {
-            $this->name = $config['name'];
-        } else {
-            $this->name         = basename($this->sourceDir);
-        }
+        $this->name = isset($config['name']) ? $config['name'] : basename($this->sourceDir);
         $this->stash = $config;
         // $this->loadFromArray($config);
     }
