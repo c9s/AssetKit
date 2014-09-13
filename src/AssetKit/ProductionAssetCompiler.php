@@ -223,10 +223,10 @@ class ProductionAssetCompiler extends AssetCompiler
 
             // concat results from manifest
             if (isset($m['js_file']) ) {
-                $contents['js'] .= file_get_contents($m['js_file']);
+                $contents['js'] .= file_get_contents($m['js_file']) . ";\n";
             }
             if (isset($m['css_file']) ) {
-                $contents['css'] .= file_get_contents($m['css_file']);
+                $contents['css'] .= file_get_contents($m['css_file']) . "\n";
             }
         }
 
