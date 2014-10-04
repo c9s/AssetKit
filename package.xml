@@ -10,8 +10,8 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2014-09-13</date>
-  <time>18:06:29</time>
+  <date>2014-10-04</date>
+  <time>20:15:51</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -53,7 +53,7 @@
       <file name="src/AssetKit/Compressor/UglifyCompressor.php" role="php" md5sum="d3c8d2c1cf840cf6ff63fe909b5ce65d"/>
       <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="9241d5fa894c1079fa215c157718e15c"/>
       <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="0463e832339ed5824468a2f6d31cf703"/>
-      <file name="src/AssetKit/Console.php" role="php" md5sum="2c0147ec807e9ac5bddc46aebdc4d9c5"/>
+      <file name="src/AssetKit/Console.php" role="php" md5sum="84f5ebd71fbc65988acc55fe9ec6d28e"/>
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="44ecba37acefd4ce76fac1f5835b6b93"/>
       <file name="src/AssetKit/Data.php" role="php" md5sum="6c955c50dd89f589771526ef38a825ec"/>
       <file name="src/AssetKit/Exception/UndefinedCompressorException.php" role="php" md5sum="54638d35f8554600e138888e21be0f76"/>
@@ -79,7 +79,7 @@
       <file name="src/AssetKit/Target.php" role="php" md5sum="2f76341246282e24751b696b433b7991"/>
       <file name="src/AssetKit/TestCase.php" role="php" md5sum="378c0234017d3ade6ff63a6c80e9c514"/>
       <file name="src/AssetKit/Utils.php" role="php" md5sum="665e5af733a299b65e6b33185330178b"/>
-      <file name="assetkit" role="script" md5sum="d4b79582ce05631e12cf12e66f18258a"/>
+      <file name="assetkit" role="script" md5sum="432bb8d5fb6c7ef88d322afd0018ec90"/>
     </dir>
   </contents>
   <dependencies>
