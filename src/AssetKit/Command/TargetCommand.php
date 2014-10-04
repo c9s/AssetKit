@@ -21,9 +21,9 @@ class TargetCommand extends BaseCommand
     }
 
     public function init() {
-        $this->registerCommand('list', 'AssetKit\Command\ListTargetCommand');
-        $this->registerCommand('add', 'AssetKit\Command\AddTargetCommand');
-        $this->registerCommand('remove', 'AssetKit\Command\RemoveTargetCommand');
+        $this->command('list', 'AssetKit\Command\ListTargetCommand');
+        $this->command('add', 'AssetKit\Command\AddTargetCommand');
+        $this->command('remove', 'AssetKit\Command\RemoveTargetCommand');
     }
 
     public function execute()

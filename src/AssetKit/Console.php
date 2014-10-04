@@ -17,15 +17,15 @@ class Console extends Application
     public function init()
     {
         parent::init();
-        $this->registerCommand('init');
-        $this->registerCommand('add');
-        $this->registerCommand('remove');
-        $this->registerCommand('compile');
-        $this->registerCommand('clean');
-        $this->registerCommand('update');
-        $this->registerCommand('install');
-        $this->registerCommand('target');
-        $this->registerCommand('list');
+        $this->command('init');
+        $this->command('add');
+        $this->command('remove');
+        $this->command('compile');
+        $this->command('clean');
+        $this->command('update');
+        $this->command('install');
+        $this->command('target');
+        $this->command('list');
     }
 }
 
