@@ -6,7 +6,7 @@
         "twig\/twig": "~1.12",
         "corneltek\/universal-cache": "~1",
         "corneltek\/fileutil": "~1.6",
-        "corneltek\/cliframework": "*",
+        "corneltek\/cliframework": "~2.0",
         "corneltek\/configkit": ">=1.5.4",
         "symfony\/process": "~2"
     },
