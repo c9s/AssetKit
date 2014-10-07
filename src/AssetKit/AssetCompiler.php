@@ -124,9 +124,8 @@ class AssetCompiler
      *
      * @param AssetKit\Assets[] asset objects
      */
-    public function compileAssets($assets, $target = null)
+    public function compileAssets(array $assets, $target = null)
     {
-        $assets = (array)$assets;
         $assetNames = array();
         $out = array();
 
@@ -201,7 +200,7 @@ class AssetCompiler
      *
      * @param array $meta
      */
-    public function clean($meta)
+    public function clean(array $meta)
     {
         foreach( array('css_file','js_file') as $key ) {
             if ( $meta[$key] ) {

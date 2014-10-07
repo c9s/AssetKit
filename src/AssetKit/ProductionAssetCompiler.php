@@ -113,7 +113,7 @@ class ProductionAssetCompiler extends AssetCompiler
     }
 
 
-    public function assetsAreOutOfDate($assets, $mtime) {
+    public function assetsAreOutOfDate(array $assets, $mtime) {
         foreach( $assets as $asset ) {
             if ( $asset->isOutOfDate($mtime) ) {
                 return true;
@@ -181,7 +181,7 @@ class ProductionAssetCompiler extends AssetCompiler
      * @param string $target target name
      * @param boolean $force force compilation
      */
-    public function compileAssets($assets, $target = null, $force = false)
+    public function compileAssets(array $assets, $target = null, $force = false)
     {
         $targetDefined = $target ? true : false;
         if (! $target ) {
@@ -366,7 +366,7 @@ class ProductionAssetCompiler extends AssetCompiler
     }
 
 
-    public function generateTargetNameFromAssets($assets)
+    public function generateTargetNameFromAssets(array $assets)
     {
         $names = array();
         foreach($assets as $a) {

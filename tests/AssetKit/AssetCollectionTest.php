@@ -18,10 +18,10 @@ class AssetCollectionTest extends AssetKit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
         $collection = new AssetKit\AssetCollection();
-        $collection[] = $loader->register("tests/assets/jquery");
-        $collection[] = $loader->register("tests/assets/jquery-ui");
         ok($collection);
 
+        $collection->add($loader->register("tests/assets/jquery"));
+        $collection->add($loader->register("tests/assets/jquery-ui"));
     }
 }
 

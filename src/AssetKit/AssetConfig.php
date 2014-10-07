@@ -200,7 +200,7 @@ class AssetConfig implements ArrayAccess
      *
      * @param string $filename
      */
-    public function writeFile($filepath, $config)
+    public function writeFile($filepath, array $config)
     {
         ConfigCompiler::write_yaml($filepath, $config);
     }

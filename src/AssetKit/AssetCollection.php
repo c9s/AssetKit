@@ -5,6 +5,7 @@ use AssetKit\Cache;
 use IteratorAggregate;
 use Countable;
 use ArrayIterator;
+use AssetKit\Asset;
 
 class AssetCollection implements ArrayAccess, IteratorAggregate, Countable
 {
@@ -15,6 +16,11 @@ class AssetCollection implements ArrayAccess, IteratorAggregate, Countable
         if ($assets) {
             $this->assets = $assets;
         }
+    }
+
+    public function add(Asset $asset)
+    {
+        $this->assets[] = $asset;
     }
 
     public function getIterator() {

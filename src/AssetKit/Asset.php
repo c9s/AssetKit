@@ -124,7 +124,7 @@ class Asset
         // $this->loadFromArray($stash);
     }
 
-    public function loadFromArray($stash)
+    public function loadFromArray(array $stash)
     {
         $this->stash = $stash;
     }
@@ -142,7 +142,7 @@ class Asset
      *       To save the collection objects in our APC, the objects must not depend on the config/loader object.
      *       
      */
-    public function loadCollections( $collectionStash )
+    public function loadCollections(array $collectionStash)
     {
         $sourceDir = $this->sourceDir;
         $collections = array();
@@ -278,7 +278,7 @@ class Asset
     }
 
 
-    private function _getFileListKey($stash) {
+    private function _getFileListKey(array $stash) {
         foreach(array('files','js','css','javascript', 'coffeescript', 'coffee', 'sass', 'scss', 'stylesheet') as $key) {
             if (isset($stash[$key])) {
                 return $key;

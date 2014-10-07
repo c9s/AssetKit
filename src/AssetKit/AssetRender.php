@@ -67,7 +67,7 @@ class AssetRender
      * @param Asset[] $assets
      * @param string $target
      */
-    public function renderAssets($assets, $target = '')
+    public function renderAssets(array $assets, $target = '')
     {
         // TODO: Get compiled info by target name from cache or mmap.
         $compiler = $this->getCompiler();
@@ -81,7 +81,7 @@ class AssetRender
      *
      * @param array $outs
      */
-    public function renderFragments($outs)
+    public function renderFragments(array $outs)
     {
         foreach( $outs as $out ) {
             $this->renderFragment($out);
@@ -94,7 +94,7 @@ class AssetRender
      *
      * @param array $out
      */
-    public function renderFragment($out)
+    public function renderFragment(array $out)
     {
         // check for css_url and js_url
         if ( isset($out['js_url']) ) {
