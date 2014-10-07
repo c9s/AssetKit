@@ -11,7 +11,7 @@ use AssetKit\ResourceUpdater;
 use CLIFramework\Command;
 use Exception;
 
-class BaseCommand extends Command
+abstract class BaseCommand extends Command
 {
     public $assetConfig;
     public $assetLoader;
