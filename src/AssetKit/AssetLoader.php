@@ -107,7 +107,7 @@ class AssetLoader
      * @param string[] asset names
      * @return Asset[]
      */
-    public function loadAssets($names)
+    public function loadAssets(array $names)
     {
         $assets = array();
         foreach( $names as $name ) {
