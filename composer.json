@@ -12,7 +12,8 @@
     },
     "require-dev": {
         "corneltek/universal": "dev-master",
-        "corneltek/phpunit-testmore": "dev-master"
+        "corneltek/phpunit-testmore": "dev-master",
+        "satooshi/php-coveralls": "dev-master"
     },
     "bin": [
         "assetkit"
