@@ -1,16 +1,23 @@
 <?php
 namespace AssetKit\Compressor;
 use AssetKit\Collection;
-require_once dirname(dirname(__FILE__)) . '/CssMin.php';
+use RuntimeException;
 use CssMin;
 
 class CssMinCompressor
 {
     public function compress(Collection $collection)
     {
-        $collection->setContent( CssMin::minify( 
-            $collection->getContent()
-        ));
+        $css = CssMin::minify($collection->getContent());
+        if (!$css) {
+            if (CssMin::hasErrors()) {
+                $errors = CssMin::getErrors();
+                foreach($errors as $error) {
+                    trigger_error($error->Message, E_USER_WARNING);
+                }
+            }
+        }
+        $collection->setContent($css);
     }
 }
 

@@ -93,7 +93,7 @@ class CompileCommand extends BaseCommand
         ob_start();
         $render->renderFragment($files);
         $html = ob_get_contents();
-        ob_clean();
+        ob_end_clean();
 
         if ( $outputFile = $this->options->{"html-output"} ) {
             $this->logger->info("Writing output to $outputFile");

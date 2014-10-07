@@ -6,10 +6,10 @@ class CommandTest extends CommandTestCase
 
     public function setupApplication()
     {
-        return new AssetKit\Console;
+        return AssetKit\Console::getInstance();
     }
 
-    public function setUp()
+    public function setUp() 
     {
         parent::setUp();
         ob_start();
@@ -35,11 +35,7 @@ class CommandTest extends CommandTestCase
         $this->runCommand('assetkit add tests/assets/webtoolkit');
         $this->runCommand('assetkit add tests/assets/jquery-ui');
         $this->runCommand('assetkit compile jquery');
-        ob_end_clean(); // XXX: looks like compile command didn't close its own buffer.
-
         $this->runCommand('assetkit compile --target all jquery underscore webtoolkit jquery-ui');
-        ob_end_clean(); // XXX: looks like compile command didn't close its own buffer.
-
         ob_end_clean();
     }
 }
