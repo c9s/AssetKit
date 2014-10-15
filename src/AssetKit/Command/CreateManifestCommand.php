@@ -20,14 +20,15 @@ class CreateManifestCommand extends Command
     public function brief() { return 'Create asset manifest file'; }
 
     public function options($opts) {
-        $opts->add('d|dir+', 'Possible relative paths to the manifest file that contains asset files.');
+        $opts->add('s|search+', 'Search relative paths to the manifest file that might contain asset files.');
+        $opts->add('include-min', 'Include minified asset files.')
     }
 
 
     public function execute($manifestDir = NULL)
     {
         $manifestDir = $manifestDir ?: getcwd();
-        $possiblePaths = $this->options->dir ?: array();
+        $possiblePaths = $this->options->search ?: array();
 
         $jsFiles = array();
         $cssFiles = array();
@@ -66,8 +67,8 @@ class CreateManifestCommand extends Command
                 }
             }
 
-            $di = new \RecursiveDirectoryIterator($manifestDir, RecursiveDirectoryIterator::SKIP_DOTS);
-            $it = new \RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
+            $di = new RecursiveDirectoryIterator($manifestDir, RecursiveDirectoryIterator::SKIP_DOTS);
+            $it = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
             foreach($it as $info) {
                 if ($info->isFile()) {
                     $path = $it->getSubPathname();
@@ -89,8 +90,8 @@ class CreateManifestCommand extends Command
                     continue;
                 }
 
-                $di = new \RecursiveDirectoryIterator($searchPath, RecursiveDirectoryIterator::SKIP_DOTS);
-                $it = new \RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
+                $di = new RecursiveDirectoryIterator($searchPath, RecursiveDirectoryIterator::SKIP_DOTS);
+                $it = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
                 foreach($it as $info) {
                     if ($info->isFile()) {
                         $item = $path . DIRECTORY_SEPARATOR . $it->getSubPathname();
@@ -106,13 +107,19 @@ class CreateManifestCommand extends Command
         }
 
 
-        // Remove minified files
-        $files['javascript'] = array_filter($files['javascript'], function($file) {
-            return !preg_match('/[.-](?:min|pack)\.js$/',$file);
-        });
-        $files['stylesheet'] = array_filter($files['stylesheet'], function($file) {
-            return !preg_match('/[.-](?:min|pack)\.css$/',$file);
-        });
+        // We don't include minified files by default,
+        // If users want to include these files they need to 
+        // specify the option explicitly
+        if (!$this->options->{'include-min'}) {
+            // Remove minified files
+            $files['javascript'] = array_filter($files['javascript'], function($file) {
+                return !preg_match('/[.-](?:min|pack)\.js$/',$file);
+            });
+            $files['stylesheet'] = array_filter($files['stylesheet'], function($file) {
+                return !preg_match('/[.-](?:min|pack)\.css$/',$file);
+            });
+        }
+
         foreach($files as $type => $files) {
             if (!empty($files)) {
                 $config['collections'][] = array($type => array_values($files));
