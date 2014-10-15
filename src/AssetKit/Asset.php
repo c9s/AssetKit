@@ -1,8 +1,8 @@
 <?php
 namespace AssetKit;
 use ZipArchive;
-use Exception;
 use SerializerKit;
+use Exception;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use AssetKit\FileUtil;
@@ -110,6 +110,9 @@ class Asset
             // expand file list
             foreach($stash['collections'] as & $cStash) {
                 $key = $this->_getFileListKey($cStash);
+                if (!$key) {
+                    throw new Exception("$manifestYamlFile: undefined type key");
+                }
                 $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
             }
 
