@@ -21,7 +21,7 @@ class CreateManifestCommand extends Command
 
     public function options($opts) {
         $opts->add('s|search+', 'Search relative paths to the manifest file that might contain asset files.');
-        $opts->add('include-min', 'Include minified asset files.')
+        $opts->add('include-min', 'Include minified asset files.');
     }
 
 
