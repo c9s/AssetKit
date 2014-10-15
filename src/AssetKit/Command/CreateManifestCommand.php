@@ -48,12 +48,12 @@ class CreateManifestCommand extends Command
         $files = array(
             'stylesheet' => array(),
             'javascript' => array(),
-            'file' => array(),
+            'files' => array(),
         );
         $patterns = array(
             'stylesheet' => '/\.css$/',
             'javascript' => '/\.js/',
-            'file' => '/\.(?:png|jpe?g|ico|gif|eot|svg|ttf|woff)$/',
+            'files' => '/\.(?:png|jpe?g|ico|gif|eot|svg|ttf|woff)$/',
         );
 
         if (empty($possiblePaths)) {
