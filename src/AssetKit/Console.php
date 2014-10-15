@@ -18,6 +18,7 @@ class Console extends Application
     {
         parent::init();
         $this->command('init');
+        $this->command('create-manifest');
         $this->command('add');
         $this->command('remove');
         $this->command('compile');
