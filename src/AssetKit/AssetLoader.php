@@ -6,6 +6,8 @@ use AssetKit\AssetConfig;
 use AssetKit\AssetEntryCluster;
 use ConfigKit\ConfigCompiler;
 
+class ManifestFileNotFoundException extends Exception {}
+
 /**
  * @class
  *
@@ -182,13 +184,16 @@ class AssetLoader
      */
     public function register($path, $force = false)
     {
-        $path = realpath($path);
+        if ($p = realpath($path)) {
+            $path = $p;
+        }
 
-        if (is_dir($path) ) {
+        if (is_dir($path)) {
             $path = $path . DIRECTORY_SEPARATOR . 'manifest.yml';
         }
+
         if (! file_exists($path)) {
-            throw new Exception("Manifest file not found: $path.");
+            throw new ManifestFileNotFoundException("Manifest file not found: $path");
         }
 
         // $compiledFile = ConfigCompiler::compile($path);
