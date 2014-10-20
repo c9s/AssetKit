@@ -7,7 +7,7 @@ class Utils
 
     static function findbin($bin)
     {
-        $path = getenv('PATH') . ':/usr/local/bin:/opt/local/bin';
+        $path = getenv('PATH') . ':/usr/local/bin:/opt/local/bin:/usr/bin';
         $paths = explode(':',$path);
         foreach( $paths as $path ) {
             if ( file_exists($path . DIRECTORY_SEPARATOR . $bin ) ) {

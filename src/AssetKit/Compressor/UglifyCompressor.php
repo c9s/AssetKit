@@ -18,7 +18,7 @@ class UglifyCompressor
         } else {
             $this->bin = Utils::findbin('uglifyjs');
         }
-        if ( $node ) {
+        if ($node) {
             $this->node = $node;
         } else {
             $this->node = Utils::findbin('node');
@@ -35,11 +35,11 @@ class UglifyCompressor
 
         $code = $proc->run();
         if ( $code != 0 ) {
-            throw new RuntimeException("UglifyCompressor failure: $code");
+            $command = $proc->getCommand();
+            throw new RuntimeException("UglifyCompressor failure: ($code) " . $proc->getError() . " command: $command, collection: " . $collection->sourceDir );
         }
-
-        $content = $proc->getOutput();
-        $collection->setContent($content);
+        $output = $proc->getOutput();
+        $collection->setContent($output);
     }
 }
 

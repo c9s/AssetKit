@@ -52,6 +52,11 @@ class Process
         return $this;
     }
 
+    public function getError()
+    {
+        return $this->error;
+    }
+
     public function getOutput()
     {
         return $this->output;

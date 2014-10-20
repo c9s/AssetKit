@@ -400,12 +400,13 @@ class ProductionAssetCompiler extends AssetCompiler
         }
 
         if (!is_writable($compiledDir)) {
-            throw new UnwritableFileException("The $compiledDir is not writable for asset compilation.");
+            if ($this->chmodCompiledDir) {
+                chmod($compiledDir,$this->defaultCompiledDirMod);
+            } else {
+                throw new UnwritableFileException("The $compiledDir is not writable for asset compilation.");
+            }
         }
 
-        if ($this->chmodCompiledDir) {
-            chmod($compiledDir,$this->defaultCompiledDirMod);
-        }
     }
 
     /**
