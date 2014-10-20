@@ -475,6 +475,40 @@ class ProductionAssetCompiler extends AssetCompiler
         return $out;
     }
 
+    public function runDefaultCompressors(Collection $collection)
+    {
+        if ( $this->defaultJsCompressor 
+            && ($collection->isScript) ) 
+        {
+            if ( $com = $this->getCompressor($this->defaultJsCompressor) ) {
+                $com->compress($collection);
+            }
+        } elseif ( $collection->isStylesheet && $this->defaultCssCompressor ) {
+            if ( $com = $this->getCompressor($this->defaultCssCompressor) ) {
+                $com->compress($collection);
+            }
+        }
+    }
+
+    /**
+     * Run compressors at the end
+     *
+     */
+    public function runCollectionCompressors(Collection $collection)
+    {
+        // if custom compresor is not define, use default compressors
+        if ( empty($collection->compressors) ) {
+            $this->runDefaultCompressors($collection);
+        } else {
+            if ( $collection->hasCompressor('no') ) {
+                return;
+            }
+            foreach( $collection->compressors as $n ) {
+                $compressor = $this->getCompressor( $n );
+                $compressor->compress($collection);
+            }
+        }
+    }
 
 }
 
