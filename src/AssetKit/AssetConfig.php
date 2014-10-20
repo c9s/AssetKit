@@ -66,14 +66,14 @@ class AssetConfig implements ArrayAccess
         }
         if ($options) {
             $this->options = $options;
-            if ( isset($options['root']) ) {
-                $this->root = $options['root'];
+            if ( isset($options['Root']) ) {
+                $this->root = $options['Root'];
             }
-            if ( isset($options['cache']) ) {
-                $this->cache = $options['cache'];
+            if ( isset($options['Cache']) ) {
+                $this->cache = $options['Cache'];
             }
-            if (isset($options['environment'])) {
-                $this->setEnvironment($options['environment']);
+            if (isset($options['Environment'])) {
+                $this->setEnvironment($options['Environment']);
             }
         }
     }
