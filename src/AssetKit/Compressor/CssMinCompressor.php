@@ -8,6 +8,12 @@ class CssMinCompressor
 {
     public function compress(Collection $collection)
     {
+        if (extension_loaded('cssmin')) {
+            $css = cssmin($collection->getContent());
+            $collection->setContent($css);
+            return;
+        }
+
         $css = CssMin::minify($collection->getContent());
         if (!$css) {
             if (CssMin::hasErrors()) {
