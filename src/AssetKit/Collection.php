@@ -144,7 +144,7 @@ class Collection
      *
      * @param array $chunks
      */
-    public function setChunks($chunks)
+    public function setChunks(array $chunks)
     {
         $this->chunks = $chunks;
     }
@@ -183,7 +183,7 @@ class Collection
      *
      * @return string
      */
-    public function squashChunks($chunks)
+    public function squashChunks(array $chunks)
     {
         $content = '';
         foreach( $chunks as $c ) {
@@ -230,7 +230,7 @@ class Collection
     }
 
 
-    public function initContentType(& $stash) {
+    public function initContentType(array & $stash) {
         // for normal static files
         if( isset($stash['files']) ) {
             $this->filetype = Collection::FileTypeFile;
