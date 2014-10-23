@@ -475,6 +475,20 @@ class ProductionAssetCompiler extends AssetCompiler
         return $out;
     }
 
+    public function setDefaultJsCompressor($compressorId, $compressor = NULL) {
+        $this->defaultJsCompressor = $compressorId;
+        if ($compressor) {
+            $this->registerCompressor($compressorId, $compressor);
+        }
+    }
+
+    public function setDefaultCssCompressor($compressorId, $compressor = NULL) {
+        $this->defaultCssCompressor = $compressorId;
+        if ($compressor) {
+            $this->registerCompressor($compressorId, $compressor);
+        }
+    }
+
     public function runDefaultCompressors(Collection $collection)
     {
         if ( $this->defaultJsCompressor 
