@@ -16,6 +16,10 @@ class JsMinExtCompressor
         JSMIN_ERROR_UNTERMINATED_REGEX => 'Unterminated regex.',
     );
 
+    public static function support() {
+        return extension_loaded('jsmin');
+    }
+
     public function compress(Collection $collection)
     {
         // C version jsmin is faster,
