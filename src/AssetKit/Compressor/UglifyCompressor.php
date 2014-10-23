@@ -4,6 +4,7 @@ use AssetKit\Collection;
 use AssetKit\Process;
 use AssetKit\Utils;
 use RuntimeException;
+use Exception;
 
 class UglifyCompressor
 {
@@ -13,15 +14,10 @@ class UglifyCompressor
 
     public function __construct($bin = null, $node = null)
     {
-        if ( $bin ) {
-            $this->bin = $bin;
-        } else {
-            $this->bin = Utils::findbin('uglifyjs');
-        }
-        if ($node) {
-            $this->node = $node;
-        } else {
-            $this->node = Utils::findbin('node');
+        $this->bin = $bin ?: Utils::findbin('uglifyjs');
+        $this->node = $node ?: Utils::findbin('node');
+        if (!$this->bin) {
+            throw new Exception('uglifyjs not found.');
         }
     }
     

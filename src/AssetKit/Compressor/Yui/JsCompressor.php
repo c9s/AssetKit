@@ -2,6 +2,7 @@
 namespace AssetKit\Compressor\Yui;
 use AssetKit\Process;
 use AssetKit\Collection;
+use Exception;
 
 class JsCompressor
 {
