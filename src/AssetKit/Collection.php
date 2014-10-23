@@ -195,6 +195,9 @@ class Collection
 
     public function setContent($content)
     {
+        if ($content === NULL || $content === FALSE) {
+            throw new EmptyContentException("The assigned content is empty.");
+        }
         // Warning: calling setContent to chunks might lose metadata.
         $this->chunks = array(array(
             'content' => $content, 

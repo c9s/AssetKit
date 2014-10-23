@@ -92,17 +92,20 @@ class AssetCompiler
         $this->loader = $loader;
     }
 
+
+    /**
+     * Register the default compressors that are supported from AssetKit.
+     */
     public function registerDefaultCompressors()
     {
+        // $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinExtCompressor');
         $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinCompressor');
         $this->registerCompressor('cssmin', '\AssetKit\Compressor\CssMinCompressor');
         $this->registerCompressor('uglifyjs', '\AssetKit\Compressor\UglifyCompressor');
-
         $this->registerCompressor('yui_css', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
             return new YuiCssCompressor($bin);
         });
-
         $this->registerCompressor('yui_js', function() {
             $bin = getenv('YUI_COMPRESSOR_BIN');
             return new YuiJsCompressor($bin);
