@@ -9,8 +9,14 @@ class CssCompressor
     public $java;
     public $charset;
 
-    public function __construct($jar,$java = '/usr/bin/java')
+    public function __construct($jar = NULL,$java = '/usr/bin/java')
     {
+        if (!$jar) {
+            $jar = getenv('YUI_COMPRESSOR_BIN');
+        }
+        if (!$jar) {
+            throw new Exception('YUI Compressor jar path is required.');
+        }
         $this->jar = $jar;
         $this->java = $java;
     }

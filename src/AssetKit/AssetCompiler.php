@@ -102,14 +102,8 @@ class AssetCompiler
         $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinCompressor');
         $this->registerCompressor('cssmin', '\AssetKit\Compressor\CssMinCompressor');
         $this->registerCompressor('uglifyjs', '\AssetKit\Compressor\UglifyCompressor');
-        $this->registerCompressor('yui_css', function() {
-            $bin = getenv('YUI_COMPRESSOR_BIN');
-            return new YuiCssCompressor($bin);
-        });
-        $this->registerCompressor('yui_js', function() {
-            $bin = getenv('YUI_COMPRESSOR_BIN');
-            return new YuiJsCompressor($bin);
-        });
+        $this->registerCompressor('yui_css', '\AssetKit\Compressor\Yui\CssCompressor');
+        $this->registerCompressor('yui_js', '\AssetKit\Compressor\Yui\JsCompressor');
     }
 
     public function registerDefaultFilters()
