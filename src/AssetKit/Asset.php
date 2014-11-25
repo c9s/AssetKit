@@ -103,6 +103,8 @@ class Asset
     {
         $this->setManifestFile($manifestYamlFile);
         $this->compileManifestFile($force);
+
+        // basic set up
         $this->name = isset($this->stash['name']) ? $this->stash['name'] : basename($this->sourceDir);
         // $this->loadFromArray($stash);
     }
@@ -111,6 +113,11 @@ class Asset
         $this->sourceDir = $dir;
     }
 
+
+    /**
+     *
+     * @param string $manifestYamlFile
+     */
     public function setManifestFile($manifestYamlFile) {
         $this->manifestFile = $manifestYamlFile;
         $this->sourceDir    = dirname($manifestYamlFile);
@@ -118,6 +125,11 @@ class Asset
     }
 
 
+    /**
+     * This method should only "compile" the YAML file and load the data into the "stash" property.
+     *
+     * @param bool $force
+     */
     protected function compileManifestFile($force = false) {
         if ($force || ConfigCompiler::test($this->manifestFile, $this->manifestCacheFile)) {
             $stash = ConfigCompiler::parse($this->manifestFile);
