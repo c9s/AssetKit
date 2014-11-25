@@ -84,6 +84,10 @@ class Asset
     public $collections = array();
 
 
+    /**
+     * We keep the constructor empty because sometimes we need to create an 
+     * asset object and setup later.
+     */
     public function __construct() { }
 
 
@@ -102,30 +106,41 @@ class Asset
 
         $this->manifestCacheFile = ConfigCompiler::compiled_filename($manifestYamlFile);
 
-        $stash = array();
         if ($force || ConfigCompiler::test($manifestYamlFile, $this->manifestCacheFile)) {
-            // do config compile
-            $stash = ConfigCompiler::parse($manifestYamlFile);
-
-            // expand file list
-            foreach($stash['collections'] as & $cStash) {
-                $key = $this->_getFileListKey($cStash);
-                if (!$key) {
-                    throw new Exception("$manifestYamlFile: undefined type key");
-                }
-                $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
-            }
-
-            // write config back
-            ConfigCompiler::write($this->manifestCacheFile, $stash);
+            $this->stash = $this->compileManifest($manifestYamlFile);
         } else {
-            $stash = require $this->manifestCacheFile;
+            $this->stash = require $this->manifestCacheFile;
         }
-
-        $this->name = isset($stash['name']) ? $stash['name'] : basename($this->sourceDir);
-        $this->stash = $stash;
+        $this->name = isset($this->stash['name']) ? $this->stash['name'] : basename($this->sourceDir);
         // $this->loadFromArray($stash);
     }
+
+    protected function compileManifest($manifestYamlFile) {
+        $stash = ConfigCompiler::parse($manifestYamlFile);
+
+        // expand file list
+        foreach($stash['collections'] as & $cStash) {
+            $key = $this->_getFileListKey($cStash);
+            if (!$key) {
+                throw new Exception("$manifestYamlFile: undefined type key");
+            }
+            $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
+        }
+
+        // write config back
+        ConfigCompiler::write($this->manifestCacheFile, $stash);
+        return $stash;
+    }
+
+
+    public function getDepends()
+    {
+        if (isset($this->stash['depends'])) {
+            return $this->stash['depends'];
+        }
+        return array();
+    }
+
 
     public function loadFromArray(array $stash)
     {
@@ -191,9 +206,6 @@ class Asset
         }
         return $expandedFiles;
     }
-
-
-
 
     public function getCollections()
     {
