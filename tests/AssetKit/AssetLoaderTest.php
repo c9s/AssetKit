@@ -16,6 +16,7 @@ class AssetLoaderTest extends AssetKit\TestCase
             array("tests/assets/jquery"),
             array("tests/assets/underscore"),
             array("tests/assets/webtoolkit"),
+            array("tests/assets/action-js"),
         );
     }
 
@@ -24,7 +25,8 @@ class AssetLoaderTest extends AssetKit\TestCase
             "tests/assets/jquery-ui",
             "tests/assets/jquery",
             "tests/assets/underscore",
-            "tests/assets/webtoolkit"
+            "tests/assets/webtoolkit",
+            "tests/assets/action-js"
         );
         $loader = $this->getLoader();
         foreach($manifestFiles as $manifestFile) {
@@ -34,6 +36,7 @@ class AssetLoaderTest extends AssetKit\TestCase
         $assets[] = $loader->load('jquery-ui');
         $assets[] = $loader->load('underscore');
         $assets[] = $loader->load('webtoolkit');
+        $assets[] = $loader->load('action-js');
         foreach($assets as $asset) {
             ok($asset);
             ok($asset instanceof Asset);

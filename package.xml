@@ -29,7 +29,7 @@
       <file name="src/AssetKit/AssetCompiler.php" role="php" md5sum="fb44db9bae23cfff5abb3f1d4090fe9e"/>
       <file name="src/AssetKit/AssetCompilerFactory.php" role="php" md5sum="9c291928ec21780503ada8350344735b"/>
       <file name="src/AssetKit/AssetConfig.php" role="php" md5sum="d8b8eb3213f41b5955605f1a113c56df"/>
-      <file name="src/AssetKit/AssetEntryCluster.php" role="php" md5sum="62a90985897662939b5b6495458337d4"/>
+      <file name="src/AssetKit/AssetEntryStorage.php" role="php" md5sum="62a90985897662939b5b6495458337d4"/>
       <file name="src/AssetKit/AssetLoader.php" role="php" md5sum="f6ede1ecab1f6ca15c9ee9c866fad833"/>
       <file name="src/AssetKit/AssetRender.php" role="php" md5sum="aa12fbdc75ff0429685cf55f69033afd"/>
       <file name="src/AssetKit/AssetUrlBuilder.php" role="php" md5sum="8018757c0a768a3f9f22c6bccb7d4342"/>
@@ -125,7 +125,7 @@
       <install name="src/AssetKit/AssetCompiler.php" as="AssetKit/AssetCompiler.php"/>
       <install name="src/AssetKit/AssetCompilerFactory.php" as="AssetKit/AssetCompilerFactory.php"/>
       <install name="src/AssetKit/AssetConfig.php" as="AssetKit/AssetConfig.php"/>
-      <install name="src/AssetKit/AssetEntryCluster.php" as="AssetKit/AssetEntryCluster.php"/>
+      <install name="src/AssetKit/AssetEntryStorage.php" as="AssetKit/AssetEntryStorage.php"/>
       <install name="src/AssetKit/AssetLoader.php" as="AssetKit/AssetLoader.php"/>
       <install name="src/AssetKit/AssetRender.php" as="AssetKit/AssetRender.php"/>
       <install name="src/AssetKit/AssetUrlBuilder.php" as="AssetKit/AssetUrlBuilder.php"/>

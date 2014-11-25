@@ -1,12 +1,12 @@
 <?php
-use AssetKit\AssetEntryCluster;
+use AssetKit\AssetEntryStorage;
 use AssetKit\TestCase;
 
-class AssetEntryClusterTest extends TestCase
+class AssetEntryStorageTest extends TestCase
 {
-    public function testAssetEntryCluster()
+    public function testAssetEntryStorage()
     {
-        $cache = new AssetEntryCluster;
+        $cache = new AssetEntryStorage;
         ok($cache);
         $cache['foo'] = array( 'source_file' => '1' );
         $cache['bar'] = array( 'source_file' => '2' );

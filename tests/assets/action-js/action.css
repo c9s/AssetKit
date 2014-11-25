@@ -1,0 +1,157 @@
+
+.action-progress { 
+    height: 22px;  /* original height - padding-top  */
+    margin: 3px 5px;
+    color:  #333;
+    border: 1px solid #ccc;
+    padding-left: 30px;
+    padding-top: 5px;
+    border-radius: 5px;
+}
+.aim-start { background: url(images/busy_grey_white.gif) 5px 5px no-repeat #fff; }
+.aim-complete { background: url(images/done.gif) 5px 5px no-repeat #fff; }
+
+/* message styles */
+.action-result {
+    margin: 10px;
+    text-shadow: #fff 1px 1px;
+}
+.action-result .success { 
+    color: #666;
+    background: url(images/silk/information.png) no-repeat 3px 5px;
+    background-color: #f5f5f5;
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 7px 7px;
+    padding-left: 23px;
+    /*
+    background: #64a8d1; 
+    color: #000;
+    border: 1px solid #0969a2;
+    */
+}
+
+.waiting-box,
+.action-result .waiting {
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background: url(images/busy_grey_white.gif) 3px 5px no-repeat #fff;
+    padding: 3px 3px;
+    padding-left: 25px;
+}
+
+.action-result .errors { 
+    color: #000;
+    border: 1px solid #a60000;
+    border-radius: 5px;
+}
+    .action-result .error-title {
+        font-weight: bold;
+        font-size: 12px;
+        padding: 3px 3px;
+        padding-left: 26px;
+        background: url(images/silk/error.png) no-repeat 3px 3px #f77;
+        border-radius: 5px;
+    }
+    .action-result .error-message { 
+        margin-left: 12px; 
+    }
+
+.action-field {
+    display: inline-block;
+}
+.action-field.invalid {  }
+.action-field.valid {  }
+
+.action-field-message {
+    padding: 2px 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    clear: both;
+    display: inline-block;
+}
+.action-field-message.invalid { 
+    color: #333;
+    background: #ffd000; 
+    border: 1px solid #b90; 
+    margin: 1px;
+    /*
+    color: #444;
+    background: #ff5000; 
+    border: 1px solid #a50; 
+    */
+}
+.action-field-message.valid { 
+    margin: 1px;
+    color: #444;
+    background: #55dbf4; 
+    border: 1px solid #2cf; 
+}
+
+
+
+/* action highlight plugin */
+.highlight { display: table; table-layout: auto; }
+.highlight-error { border: 1px solid red; }
+.highlight-success { border: 1px solid #D4E593; }
+
+
+div#messages {  
+    background: #f77;
+    color: #000;
+    border: 1px solid #a60000;
+}
+div#messages,  div#errors {
+     /* background-color: #ffdd73; */
+     /* border: 1px solid #a67100; */
+     margin-top: 10px;
+     margin-bottom: 10px;
+     padding: 5px 20px 5px 5px;
+/*      font-size: 1.3em; */
+     font-size: 12px;
+     position: relative;
+}
+
+html>body .error { }
+
+/*
+   http://colorschemedesigner.com/#2u11Tw0w0w0w0
+
+   var. 1 = #84E900 = rgb(132,233,0)
+   var. 2 = #76AF2C = rgb(118,175,44)
+   var. 3 = #559700 = rgb(85,151,0)
+   var. 4 = #A4F43D = rgb(164,244,61)
+   var. 5 = #BAF46E = rgb(186,244,110)
+
+*/
+
+/* default action field style */
+.field-message {   
+    margin: 1px;
+    padding: 3px; 
+    padding-left: 10px;
+/*     display: none; */
+}
+.field-message-success { 
+    color: #444;
+    background: #55dbf4; 
+    border: 1px solid #2cf; 
+}
+.field-message-error {   
+    color: #444;
+    background: #ff5000; 
+    border: 1px solid #a50; 
+}
+.field-message-warning { 
+    color: #333;
+    background: #ffd000; 
+    border: 1px solid #b90; 
+}
+
+input.action-field-error { 
+    border: 1px solid #ff5000;
+}
+
+/* .action-field { display:inline; } */
+

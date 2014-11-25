@@ -9,7 +9,7 @@ use ArrayIterator;
  * An asset cache container that caches the config of the 
  * assets.
  */
-class AssetEntryCluster implements ArrayAccess, IteratorAggregate
+class AssetEntryStorage implements ArrayAccess, IteratorAggregate
 {
     /**
      * @array the assets array that contains the config of all assets.

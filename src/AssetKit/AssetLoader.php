@@ -3,7 +3,7 @@ namespace AssetKit;
 use Exception;
 use AssetKit\Asset;
 use AssetKit\AssetConfig;
-use AssetKit\AssetEntryCluster;
+use AssetKit\AssetEntryStorage;
 use ConfigKit\ConfigCompiler;
 
 class ManifestFileNotFoundException extends Exception {}
@@ -40,7 +40,7 @@ class AssetLoader
     public $objects = array();
 
     /**
-     * @var AssetEntryCluster 
+     * @var AssetEntryStorage 
      *
      * Used for saving registered asset configs (PHP arrays)
      */
@@ -69,43 +69,11 @@ class AssetLoader
             return;
         }
 
-        $this->entries = new AssetEntryCluster;
+        $this->entries = new AssetEntryStorage;
     }
 
 
 
-    /**
-     * Load asset by name
-     *
-     * This method looks up the asset in the entry storage by the asset name.
-     *
-     * If the asset is not found, then it will fallback to lookup method (check 
-     * each asset directory) and use register method to register the found asset. (if any)
-     *
-     * @param string $name asset name
-     *
-     * @return Asset
-     */
-    public function load($name) {
-        if (isset($this->objects[$name])) {
-            return $this->objects[$name];
-        }
-
-        // Get the asset config from entries cluster
-        if ($config = $this->entries->get($name)) {
-            if (! isset($config['manifest'])) {
-                throw new Exception("manifest path is not defined in $name");
-            }
-
-            // load the asset manifest file
-            $asset = $this->register($config['manifest']);
-            // Save the asset object into the pool
-            return $this->objects[$name] = $asset;
-        }
-
-        // fallback to lookup
-        return $this->objects[$name] = $this->lookup($name);
-    }
 
 
     /**
@@ -120,14 +88,6 @@ class AssetLoader
         foreach( $names as $name ) {
             if ($asset = $this->load($name)) {
                 $assets[] = $asset;
-                $deps = $asset->getDepends();
-                if (!empty($deps)) {
-                    foreach($deps as $dep) {
-                        if ($asset = $this->load($name)) {
-                            $assets[] = $asset;
-                        }
-                    }
-                }
             }
         }
         return $assets;
@@ -176,7 +136,64 @@ class AssetLoader
         return $assets;
     }
 
+    /**
+     * Load asset by name
+     *
+     * This method looks up the asset in the entry storage by the asset name.
+     *
+     * If the asset is not found, then it will fallback to lookup method (check 
+     * each asset directory) and use register method to register the found asset. (if any)
+     *
+     * @param string $name asset name
+     *
+     * @return Asset
+     */
+    public function load($name) {
+        if (isset($this->objects[$name])) {
+            return $this->objects[$name];
+        }
 
+        // Get the asset config from entries cluster
+        if ($config = $this->entries->get($name)) {
+            if (! isset($config['manifest'])) {
+                throw new Exception("manifest path is not defined in $name");
+            }
+
+            // load the asset manifest file
+            $asset = $this->register($config['manifest']);
+            // Save the asset object into the pool
+            $this->objects[$name] = $asset;
+            $this->loadDepends($asset);
+            return $asset;
+        }
+
+        // fallback to lookup
+        if ($asset = $this->lookup($name)) {
+            $this->objects[$name] = $asset;
+            $this->loadDepends($asset);
+            return $asset;
+        } else {
+            throw new Exception("Asset $name not found. auto lookup failed.");
+        }
+    }
+
+    public function loadDepends(Asset $asset)
+    {
+        $deps = $asset->getDepends();
+        if (!empty($deps)) {
+            foreach($deps as $dep) {
+                $depAsset = $this->load($dep);
+                $this->objects[$dep] = $depAsset;
+            }
+        }
+    }
+
+
+    /**
+     * Look up an asset by its name and register the asset into the entry storage.
+     *
+     * @param string $name
+     */
     public function lookup($name)
     {
         // some code to find asset automatically.
@@ -187,7 +204,6 @@ class AssetLoader
                 return $asset;
             }
         }
-        throw new Exception("Asset $name not found. auto lookup failed.");
     }
 
 
@@ -243,7 +259,7 @@ class AssetLoader
             }
         }
         if (!$this->entries) {
-            $this->entries = new AssetEntryCluster;
+            $this->entries = new AssetEntryStorage;
         }
         return false;
     }

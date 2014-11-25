@@ -143,7 +143,7 @@ class AssetConfig implements ArrayAccess
     /**
      * @var string
      *
-     * Return the file that stores data from AssetEntryCluster.
+     * Return the file that stores data from AssetEntryStorage.
      */
     public function getEntryFile() {
         if (isset($this->stash['EntryFile']) ) {

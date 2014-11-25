@@ -1,0 +1,840 @@
+/*
+vim:fdm=marker:sw=4:et:
+
+Action.js: Javascript for submitting forms and validations.
+Depends on: region.js, jQuery.scrollTo.js
+Author: Yo-An Lin <cornelius.howl@gmail.com>
+Date: 2/16 17:04:44 2011 
+
+USAGE
+-----
+
+$(window).error( function(errorMessage, fileName, lineNumber) {
+        alert( fileName + ':' + errorMessage + '  Line:' + lineNumber );
+});
+*/
+
+var Action;
+var ActionHighlight;
+
+ActionHighlight = function(a) { 
+    this.action = a;
+    this.form = a.form();
+
+    // insert highlight wrappers
+    this.action.findFields().each(function(i,e) {
+        var el = $(this);
+        var name = el.attr('name');
+        el.wrap( '<div class="highlight highlight-' + name + '"/>' );
+    });
+};
+
+ActionHighlight.prototype = { 
+    apply: function(fields) {
+        var that = this;
+        $(fields).each(function(i,field) {
+            var name = field.name;
+            var type = field.type;
+            var el = that.form.find('.highlight-' + name );
+            el.addClass("highlight-" + type );
+        });
+    },
+    clear: function() {
+        this.form.find('.highlight')
+            .removeClass('highlight-error')
+            .removeClass('highlight-success');
+    }
+};
+
+
+$(function() {
+    if( typeof AIM == 'undefined' ) {
+        alert('AIM is required.');
+    }
+});
+
+var ActionPerfield = function(a) { 
+    this.action = a;
+    this.form = a.form();
+
+    // create highlight div wrappers 
+    // and message divs for fields
+    this.action.findFields().each(function() { 
+        var field = $(this);
+
+
+        /* this will get action name , Fix this for action name like: 'Phifty::Action::....' */
+        var name = $(this).attr('name');
+        var actionId = name.replace( /::/g , '-' )
+
+        // append message div
+        var m = $('.field-' + actionId + '-message').hide();
+        if( ! m.get(0) )
+            field.after( '<div class="action-field-message field-' + actionId + '-message"/>' );
+
+        // wrap with highlight div
+        var w = $('.field-' + name);
+        if( ! w.get(0) )
+            field.wrap( '<div class="action-field field-'+ actionId +'"/>' );
+    });
+};
+ActionPerfield.prototype = { 
+    apply: function( resp ) { 
+        /* valid || invalid */
+        var that = this;
+        for( var n in resp.validations ) {
+            var v = resp.validations[n];
+            var err = v.invalid || v.error;
+
+            var w = this.form.find('.field-' + n );
+            var msg = this.form.find('.field-' + n + '-message');
+            if( err ) {
+                w.addClass('invalid');
+                msg.addClass('invalid').html( err ).fadeIn('slow');
+            } else {
+                w.addClass('valid');
+                msg.addClass('valid').html( v.valid ).fadeIn('slow');
+            }
+        }
+    },
+    clear: function() {
+        var that = this;
+        this.action.findFields().each(function() {
+            var el = $(this);
+            var n = el.attr('name');
+            that.form.find('.field-' + n ).removeClass('invalid valid');
+            that.form.find('.field-' + n + '-message').removeClass('invalid valid').html("").hide();
+        });
+    }
+};
+
+
+(function() {
+
+Action = function(arg1,arg2) {
+    var f,opts;
+
+    if( arg1 && ( arg1.attr || arg1.nodeType == 1 ) ) {
+        f = $(arg1);
+        opts = arg2 || { };
+    }
+    else if( typeof arg1 == "object" ) {
+        opts = arg1;
+    }
+
+    if( f ) {
+        this.formEl = $(f);
+        this.formEl.attr('method','post'); // always to POST method
+        if( ! this.formEl.get(0) )
+            throw "Action form element not found";
+    }
+
+    this.plugins = [ ];
+    this.actionPath = null;
+    this.opts = $.extend({ } , opts );
+
+    this.statusTexts = {
+        "waiting": "Progressing...",
+        "error": "",
+        "success": "Success"
+        // "done":    "Done"
+    };
+
+    if( this.formEl ) {
+        this.name = this.formEl.find('*[name=action]').val();
+        if( ! this.name )
+            throw "Action name is undefined.";
+    }
+
+    /* init plugins */
+    var self = this;
+    var pgs = Action._global_plugins; // or from global plugin list
+    $(pgs).each( function(i,e) { 
+        self.plug( e.plugin, e.options );
+    });
+};
+
+Action._global_plugins = [ ];
+
+/*
+Action.plug( plugin function , plugin options )
+
+    register a plugin.
+*/
+Action.plug = function( plugin , opts ) {
+    this._global_plugins.push( { plugin: plugin, options: opts });
+};
+
+Action.reset = function() {
+    this._global_plugins = [];
+};
+
+/* factory method , create an Action object from a form. */
+Action.form = function(form,opts) {
+    opts = opts || { };
+    return new Action(form,opts);
+};
+
+Action.prototype = {
+
+    form: function(f) {
+        if(f) {
+            this.formEl = $(f);
+            this.actionName = this.formEl.find('input[name=action]').val();
+        }
+        return this.formEl;
+    },
+
+    log: function() {
+        if( window.console ) {
+            console.log( console , arguments );
+        }
+    },
+
+    plug: function(plugin,options) {
+        var p = new plugin(this, options );
+        this.plugins.push(p);
+        return p;
+    },
+
+    /**
+     * enable form inputs
+     */
+    enableInputs: function() {
+        this.findFields()
+            .removeAttr('disabled');
+    },
+
+
+    /**
+     * disable form inputs 
+     */
+    disableInputs: function() {
+        this.findFields()
+            .attr('disabled','disabled');
+    },
+
+    /** 
+     * Find text fields from form element.
+     */
+    findFields: function() {
+        return this.form().find(
+                  ' input[type=text], '
+                + ' input[type=password], '
+                + ' input[type=checkbox], '
+                + ' input[type=radio], '
+                + ' textarea, '
+                + ' select');
+    },
+
+    setPath: function(path) { this.actionPath = path; },
+
+    /**
+    * load action arguments from result 
+    *
+    * XXX: not used yet.
+    * */
+    loadResult: function(rs) {
+        var args = rs.args;
+        if( args ) {
+            var f = this.form();
+            if( ! f.get(0) )
+                if( window.console ) { console.error( 'form not found.' ); }
+
+            for ( var name in args ) {
+                var input = f.find("*[name="+name+"]");
+                if( input.attr('type') == "radio" || input.attr('type') == "checkbox" ) {
+                    input.filter("[value=" + args[name] + "]").attr('checked',true);
+                } else {
+                    input.val( args[name] );
+                }
+            }
+        } else {
+            if(window.console)
+                console.error( 'empty result args' );
+        }
+    },
+
+
+    getData: function(f) {
+        var data = {};
+        var that = this;
+
+        function isIndexed(n) {
+            return n.indexOf('[]') > 0;
+        }
+
+        // get data from text fields
+        f.find(   
+                  'select, '
+                + 'input[type=text], '
+                + 'input[type=hidden], '
+                + 'input[type=checkbox], '
+                + 'input[type=radio], '
+                + 'input[type=password], '
+                + 'textarea' ).each(function(i,n) {
+
+            var el = $(n);
+            var val = $(n).val();
+            var name = el.attr('name');
+            if( ! name ) 
+                return;
+
+            if( typeof val == "object" || typeof val == "array" )
+                val = val.toString();
+
+            // for checkbox(s), get their values.
+            if( el.attr('type') == "checkbox" ) {
+                if ( el.is(':checked') ) {
+                    if( isIndexed( name ) ) {
+                        if ( ! data[name] )
+                            data[name] = [];
+                        data[ name ].push( val );
+                    } else {
+                        data[ name ] = val;
+                    }
+                } 
+            } 
+            else if( el.attr('type') == "radio" ) { 
+                if( el.is(':checked') ) {
+                    if( isIndexed( name ) ) {
+                        if ( ! data[name] )
+                            data[name] = [];
+                        data[ name ].push( val );
+                    } else data[ name ] = val;
+                }
+                else {
+                    if( ! data[name] )
+                        data[ name ] = null;
+                }
+            }
+            else {
+                // if it's name is an array
+                if( isIndexed( name ) ) {
+                    if ( ! data[name] )
+                        data[name] = [];
+                    data[ name ].push( val );
+                } else {
+                    data[ name ] = val;
+                }
+            }
+        });
+        return data;
+    },
+
+
+    /**
+     * setup( options , callback );
+     * setup( callback );
+
+    Usage:
+
+        $(document.body).ready(function() {
+            Action.form( $('#create_user') ).setup({
+
+            });
+        });
+
+    */
+    setup: function(arg1,arg2) {
+        var that = this;
+
+        if( typeof arg1 == "object" ) {
+            this.opts = $.extend( this.opts , arg1 );
+            if( this.opts.submit ) {
+                var submit = this.opts.submit;
+                this.opts.submit = function() {
+                    return submit( that );
+                };
+            }
+        }
+
+        this.form().submit( this.opts.submit || function() {
+            try {
+                // run Action.submit method( )
+                return that.submit(arg1,arg2); 
+            } catch(e) { 
+                if( window.console ) {
+                    console.error(e);
+                } else {
+                    alert(e.message);
+                }
+            }
+            return false; // do not use default form submit.
+        });
+    },
+
+
+
+    _processElementOptions: function(options) {
+        /* remove table tr element of the event source */
+        if( options.removeTr ) {
+            var el = $(options.removeTr);
+            el = $(el.parents('tr').get(0));
+            el.fadeOut( 'fast' , function() {
+                el.remove();
+            });
+        }
+
+        /* remove elements of the event source */
+        if( options.remove ) {
+            var el = $(options.remove);
+            el.fadeOut('fast' , function(){  el.remove();  });
+        }
+    },
+    _processFormOptions: function(options,resp) {
+        // clear form
+        if( options.clear ) {
+            this.form().find( 'input[type="text"], '
+                     + 'input[type="file"], '
+                     + 'input[type="password"], '
+                     + 'textarea' ).each(function(i,e) {
+                    // it's not action name field, clear it.
+                    if( $(this).attr('name') != "action" )
+                        $(this).val("");
+            });
+        }
+    },
+
+    _processLocationOptions: function(options,resp) {
+        // reload page
+        if( options.reload ) {
+            setTimeout( function() {
+                window.location.reload();
+            } , options.delay || 0 );
+        } 
+        else if( options.redirect ) {
+            setTimeout( function() {
+                window.location = options.redirect;
+                    }, options.delay || 0 );
+        }
+        else if( resp.redirect ) {
+            setTimeout( function() {
+                window.location = resp.redirect;
+                    }, options.delay || 0 );
+        }
+    },
+
+
+    _processRegionOptions: function(options,resp) {
+
+        if( typeof Region == "undefined" )
+            throw "Region is undefined.";
+
+        // if form exists, region options should based on the region of form.
+        var form = this.form();
+        if( form ) {
+            // pre-process region of form element
+            var reg = Region.of( form );
+            var regionKeys = [ 
+                'refreshSelf', 
+                'refresh', 
+                'refreshParent',
+                'refreshWithId', 
+                'removeRegion', 
+                'emptyRegion'];
+            $(regionKeys).each(function(i,e) {
+                if( options[e] === true ) {
+                    options[e] = reg;
+                }
+            });
+        }
+
+        if( options.refreshSelf ) {
+            Region.of(options.refreshSelf).refresh();
+        }
+        else if( options.refresh ) {
+            Region.of(options.refresh).refresh();
+        }
+        else if( options.refreshParent ) {
+            Region.of(options.refreshParent).parent().refresh();
+        }
+        else if( options.refreshWithId ) {
+            Region.of(options.refreshWithId).refreshWith( { id: resp.data.id } );
+        }
+        else if( options.removeRegion ) {
+            Region.of(removeRegion).fadeRemove();
+        }
+        else if( options.emptyRegion ) {
+            Region.of(options.emptyRegion).fadeEmpty();
+        }
+    },
+
+
+
+    _createSuccessHandler: function( formEl, options, cb ) {
+        var that = this;
+        return function(resp) {
+            $(that).trigger('action.on_result',[resp]);
+
+            if( formEl && options.disableInput ) {
+                that.enableInputs();
+            }
+
+            if( options.onAjaxSuccess ) {
+                options.onAjaxSuccess( resp ); 
+            }
+
+            if( cb ) {
+                var ret = cb.call( that , resp );
+                if ( ret )
+                    return ret;
+            }
+
+            if( resp.success ) {
+                if( options.onSuccess ) {
+                    options.onSuccess(resp);
+                }
+
+                that._processFormOptions(options , resp);
+                that._processRegionOptions(options, resp);
+                that._processElementOptions(options,resp);
+                that._processLocationOptions(options, resp );
+            }
+            else if( resp.error ) {
+                if( options.onError ) {
+                    options.onError(resp);
+                }
+                if( window.console ) {
+                    console.error( resp.message );
+                } else {
+                    alert( resp.message );
+                }
+            } else {
+                throw "Unknown error:" + resp;
+            }
+            return true;
+        };
+    },
+
+    _createErrorHandler: function(formEl, options) {
+        var that = this;
+        return function(resp) {
+            if( window.console ) {
+                console.error( resp.responseText ); 
+            } else {
+                alert( resp.responseText );
+            }
+
+            if( formEl && options.disableInput ) {
+                that.enableInputs();
+            }
+        };
+    },
+
+
+    /**
+     * run method
+
+    .run() or runAction()
+        run specific action
+
+    .run( 'Delete' , { table: 'products' , id: id } , function() { ... });
+
+    
+    .run( [action name] , [arguments] , [options] or [callback] );
+    .run( [action name] , [arguments] , [options] , [callback] );
+
+
+    Event callbacks:
+
+            * onSubmit:    [callback]
+                            callback before sending request
+
+            * onSuccess:   [callback]
+                            success callback.
+
+    options:
+            * confirm:      [text]    
+                            should confirm 
+
+            * removeRegion: [element] 
+                            the element in the region. to remove region.
+
+            * emptyRegion:  [element] 
+                            the element in the region. to empty region.
+
+
+            * removeTr:     [element] 
+                            the element in the tr.
+
+            * remove:       [element] 
+                            the element to be removed.
+
+            * clear:        [bool]
+                            clear text fields
+    */
+    run: function(actionName,args,arg1,arg2) {
+        try {
+        var cb;
+        var options = {  };
+        if( typeof arg1 == "function" ) {
+            cb = arg1;
+        } else if ( typeof arg1 == "object" ) {
+            options = arg1;
+            if( typeof arg2 == "function" ) {
+                cb = arg2;
+            }
+        }
+
+        if( options.confirm ) {
+            if( ! confirm( options.confirm ) ) {
+                return false;
+            }
+        }
+
+        var data = $.extend({ action: actionName }, args );
+        this.log( "Running action: " , actionName , 'Args' , args , 'Options' , options );
+
+        if( options.onSubmit )
+            options.onSubmit();
+
+        options.disableInput = true;
+
+        var formEl = this.form();
+
+        // if we have form, disable these inputs
+        if( formEl && options.disableInput )  {
+            this.disableInputs();
+        }
+
+        var sendto = this.actionPath ? this.actionPath : window.location.pathname;
+
+        /* let pages know, we only want a json result, not a html page. */
+        data.__ajax_request = 1;
+
+        var that = this;
+        var errorHandler = this._createErrorHandler( formEl, options );
+        var successHandler = this._createSuccessHandler( formEl, options, cb );
+
+        if( window.console )
+            console.info( 'Send ajax request: ', sendto , data );
+
+        jQuery.ajax({
+            url: sendto ,
+            data: data,
+            dataType: 'json',
+            type: 'post',
+            timeout: 5000,
+            error: errorHandler,
+            success: successHandler
+        });
+        return false;
+
+        } catch (e) {
+            if( window.console )
+                console.error(e);
+            alert(e);
+        }
+    },
+
+    /**
+     * submit:
+     *
+     * submit( option , callback )
+     * submit( callback )
+     */
+    submit: function(arg1,arg2) 
+    {
+        var that = this;
+        var cb,fEl,data;
+        var options = {};
+
+        /* detect arguments */
+        if( typeof arg1 == "object" ) {
+            options = arg1;
+            if ( arg2 && typeof arg2 == "function" )
+                cb = arg2;
+        }
+        else if( typeof arg1 == "function" ) {
+            cb = arg1;
+        }
+
+        /* get form element */
+        fEl = $(this.form());
+
+        data = this.getData( fEl );
+        data['__ajax_request'] = 1;  // it's an ajax request
+
+        if( options.beforeSubmit )
+            options.beforeSubmit.call( this, data );
+
+        $(this).trigger('action.before_submit',[data]);
+
+        /* If file field detected, then we should use AIM instead of normal ajax request. */
+        // AIM {{{
+        var hasfile = fEl.find("input[type=file]").get(0);
+        if( hasfile ) {//{{{
+            var successHandler = this._createSuccessHandler( fEl, options, cb );
+
+            if( options.beforeUpload )
+                options.beforeUpload.call( this, fEl, data );
+
+            // auto setup enctype for uploading file.
+            fEl.attr( 'enctype' , "multipart/form-data" );
+            fEl.find('.action-progress').fadeOut(function() { 
+                $(this).remove();
+            });
+
+            // pass __ajax_request param to generate a html page or region.
+            if( ! options.replaceForm )
+                fEl.append( $('<input>').attr({ type:"hidden", name:"__ajax_request", value: 1 }) );
+
+
+            // AIM bridge
+            return AIM.submit( fEl.get(0) , {
+                onStart: function() { 
+                    // fEl.html( "Uploading..." );
+                    that.log( "AIM onStart" );
+                    if( $.scrollTo )
+                        $.scrollTo( fEl , 300 );
+                    return true 
+                },
+                onComplete: function(respText) { 
+                    that.log( "AIM onComplete" , respText );
+
+                    if( options.replaceForm ) {
+                        fEl.html( respText );
+                        return true;
+                    }
+
+                    var json = JSON.parse( respText );
+                    $(that).trigger('action.on_result',[json]);
+
+                    if( options.onUpload ) {
+                        options.onUpload.call( that, json );
+                    } else {
+                        successHandler.call( that, json );
+                    }
+
+                    if( options.afterUpload )
+                        options.afterUpload.call( that , fEl , json );
+
+                    return true;
+                }
+            });
+        }//}}}
+        // }}}
+
+        /* call run method, and pass our submit handler */
+        return this.run( data.action, data, options );
+    },
+
+    /* 
+    (Action object).submitWith( args, ... )
+     */
+    submitWith: function(extendData,arg1,arg2) { 
+        var options = { };
+        var cb;
+
+        // arg2 is option
+        if( typeof arg1 == "object" ) {
+            options = arg1;
+            if( typeof arg2 == "function" )
+                cb = arg2;
+        }
+        else if ( typeof arg1 == "function" ) {
+            cb = arg1;
+        }
+        var data = $.extend( this.getData( this.form() ), extendData );
+        return this.run( data.action , data , options , cb );
+    }
+
+
+};
+
+})();
+
+
+/* action helper functions */
+function submitActionWith( f , extendData , arg1 , arg2 ) {
+    return Action.form(f).submitWith( extendData, arg1, arg2);
+}
+
+function submitAction(f,arg1,arg2) {
+    return Action.form(f).submit(arg1,arg2);
+}
+
+function runAction(actionName,args,arg1,arg2) {
+    return (new Action).run( actionName, args,arg1,arg2);
+}
+
+// Export Action to jQuery.
+$.Action = Action;
+
+
+
+/* Action plugin base class 
+ **/
+var ActionPlugin = Class.extend({
+    init: function(action,config) { 
+        if( ! action )
+            throw "Action object is required.";
+        this.action = action;
+        this.form   = action.form();
+        this.config = config || {};
+
+        var self = this;
+        // init events
+        $(this.action).bind('action.on_result', function() { 
+            self.onResult.apply(self,arguments);
+        });
+
+        /* when action init */
+        $(this.action).bind('action.on_init', function(){
+            self.onInit.apply(self,arguments);
+        });
+
+        /* when the action result presents success */
+        $(this.action).bind('action.on_success',function() {
+            self.onSuccess.apply(self,arguments);
+        });
+
+        /* when the action result presents error */
+        $(this.action).bind('action.on_error', function() {
+            self.onError.apply(self,arguments);
+        });
+
+        /* before user submit the form */
+        $(this.action).bind('action.before_submit', function() {
+            self.beforeSubmit.apply(self,arguments);
+        });
+
+        /* after user submit the form */
+        $(this.action).bind('action.after_submit', function() {
+            self.afterSubmit.apply(self,arguments);
+        });
+
+        this.load();
+    },
+    config: function(config) { 
+        if( config )
+            this.opts = $.extend( this.opts , config );
+        return this.opts;
+    },
+
+    load: function()  {  
+          
+    },
+
+    /* Filters
+    */
+
+    /* filter the data before submit or run, this allow plugin to change/append
+    * some data. */
+    filterData: function(data) { return data; },
+
+
+    /*
+    * Event handlers 
+    * */
+    onInit:       function(ev) {  },
+    onResult:     function(ev, resp) {  },
+    onSuccess:    function(ev, resp) {  },
+    onError:      function(ev, resp) {  },
+    beforeSubmit: function(ev, data ) { return data; },
+    afterSubmit:  function(ev, resp ) {  },
+    onSubmit:     function(ev, data ) {  }
+});
+
+
