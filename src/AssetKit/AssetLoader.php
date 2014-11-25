@@ -75,9 +75,14 @@ class AssetLoader
 
 
     /**
-     * Load asset from assetkit config stash
+     * Load asset by name
      *
-     * @param string|array $name asset name or asset name array
+     * This method looks up the asset in the entry storage by the asset name.
+     *
+     * If the asset is not found, then it will fallback to lookup method (check 
+     * each asset directory) and use register method to register the found asset. (if any)
+     *
+     * @param string $name asset name
      *
      * @return Asset
      */
@@ -157,7 +162,7 @@ class AssetLoader
 
 
     /**
-     * Load all registered assets.
+     * Load all registered assets from the entry storage
      *
      * @return Asset[]
      */
