@@ -56,7 +56,7 @@ class CleanCommand extends BaseCommand
 
         foreach( $loader->entries as $entry ) {
             $asset = new Asset;
-            $asset->loadFromManifestFile($entry['manifest']);
+            $asset->loadManifestFile($entry['manifest']);
             $metaFile = $compiledDir . DIRECTORY_SEPARATOR . $compiler->buildAssetMetaFilename($asset);
             if (file_exists($metaFile)) {
                 $entries = require $metaFile;

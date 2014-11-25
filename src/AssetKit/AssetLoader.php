@@ -113,7 +113,17 @@ class AssetLoader
     {
         $assets = array();
         foreach( $names as $name ) {
-            $assets[] = $this->load($name);
+            if ($asset = $this->load($name)) {
+                $assets[] = $asset;
+                $deps = $asset->getDepends();
+                if (!empty($deps)) {
+                    foreach($deps as $dep) {
+                        if ($asset = $this->load($name)) {
+                            $assets[] = $asset;
+                        }
+                    }
+                }
+            }
         }
         return $assets;
     }
@@ -200,7 +210,7 @@ class AssetLoader
         $asset = new Asset;
 
         // load the asset config from manifest.php file.
-        $asset->loadFromManifestFile($path, $force);
+        $asset->loadManifestFile($path, $force);
         $this->entries->add($asset);
         return $asset;
     }

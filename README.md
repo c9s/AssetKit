@@ -425,7 +425,7 @@ $loader = new AssetKit\AssetLoader($config);
 $asset = $loader->register("tests/assets/jquery");
 
 // load asset from a manifest file directly, 
-$asset = $loader->loadFromManifestFile("tests/assets/jquery/manifest.yml");
+$asset = $loader->loadManifestFile("tests/assets/jquery/manifest.yml");
 
 // load multiple asset at one time
 $assets = $loader->loadAssets(array('jquery','jquery-ui'));

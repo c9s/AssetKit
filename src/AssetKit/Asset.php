@@ -99,37 +99,44 @@ class Asset
      *
      * @param boolean $force force compile manifest file even there is a cached file.
      */
-    public function loadFromManifestFile($manifestYamlFile , $force = false)
+    public function loadManifestFile($manifestYamlFile , $force = false)
     {
-        $this->manifestFile = $manifestYamlFile;
-        $this->sourceDir    = dirname($manifestYamlFile);
-
-        $this->manifestCacheFile = ConfigCompiler::compiled_filename($manifestYamlFile);
-
-        if ($force || ConfigCompiler::test($manifestYamlFile, $this->manifestCacheFile)) {
-            $this->stash = $this->compileManifest($manifestYamlFile);
-        } else {
-            $this->stash = require $this->manifestCacheFile;
-        }
+        $this->setManifestFile($manifestYamlFile);
+        $this->compileManifestFile($force);
         $this->name = isset($this->stash['name']) ? $this->stash['name'] : basename($this->sourceDir);
         // $this->loadFromArray($stash);
     }
 
-    protected function compileManifest($manifestYamlFile) {
-        $stash = ConfigCompiler::parse($manifestYamlFile);
+    public function setSourceDir($dir) {
+        $this->sourceDir = $dir;
+    }
 
-        // expand file list
-        foreach($stash['collections'] as & $cStash) {
-            $key = $this->_getFileListKey($cStash);
-            if (!$key) {
-                throw new Exception("$manifestYamlFile: undefined type key");
+    public function setManifestFile($manifestYamlFile) {
+        $this->manifestFile = $manifestYamlFile;
+        $this->sourceDir    = dirname($manifestYamlFile);
+        $this->manifestCacheFile = ConfigCompiler::compiled_filename($manifestYamlFile);
+    }
+
+
+    protected function compileManifestFile($force = false) {
+        if ($force || ConfigCompiler::test($this->manifestFile, $this->manifestCacheFile)) {
+            $stash = ConfigCompiler::parse($this->manifestFile);
+
+            // expand file list
+            foreach($stash['collections'] as & $cStash) {
+                $key = $this->_getFileListKey($cStash);
+                if (!$key) {
+                    throw new Exception("{$this->manifestFile}: undefined type key");
+                }
+                $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
             }
-            $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
-        }
 
-        // write config back
-        ConfigCompiler::write($this->manifestCacheFile, $stash);
-        return $stash;
+            // write config back
+            ConfigCompiler::write($this->manifestCacheFile, $stash);
+            return $this->stash = $stash;
+        } else {
+            return $this->stash = require $this->manifestCacheFile;
+        }
     }
 
 
