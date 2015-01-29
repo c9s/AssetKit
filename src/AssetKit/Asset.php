@@ -185,13 +185,26 @@ class Asset
      * TODO: Save the absolute path in our cache.
      * TODO: Save the collection object in the asset config, so we may use APC to cache the objects.
      *       To save the collection objects in our APC, the objects must not depend on the config/loader object.
-     *       
      */
     public function loadCollections(array $collectionStash)
     {
         $sourceDir = $this->sourceDir;
         $collections = array();
-        foreach( $collectionStash as $stash ) {
+
+        // if the asset name contains the file type mark #js or #css
+        //    jquery-ui:javascript
+        //    jquery-ui:stylesheet
+        //    jquery-ui#basic-theme
+        $targetId = NULL;
+        $targetType = NULL;
+        if ($p = strpos($this->name, '#')) {
+            $targetId = substr($this->name, $p + 1);
+        }
+        if ($p = strpos($this->name, ':')) {
+            $targetType = substr($this->name, $p + 1);
+        }
+
+        foreach($collectionStash as $stash) {
             $collection = new Collection;
             if (isset($stash['id']) ) {
                 $collection->id = $stash['id'];
@@ -210,6 +223,13 @@ class Asset
             // $collection->files = $this->expandFileList($sourceDir, $stash[$fileKey]);
             $collection->files = $stash[$fileKey];
             $collection->sourceDir = $this->getSourceDir();
+
+            if ($targetId && $collection->id === $targetId) {
+                return array($collection);
+            }
+            if ($targetType && $collection->filetype !== $targetType) {
+                continue;
+            }
             $collections[] = $collection;
         }
         return $collections;
