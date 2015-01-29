@@ -1,10 +1,11 @@
 <?php
 namespace AssetKit;
-use Exception;
 use AssetKit\Asset;
 use AssetKit\AssetConfig;
 use AssetKit\AssetEntryStorage;
 use ConfigKit\ConfigCompiler;
+use Exception;
+use BadMethodCallException;
 
 class ManifestFileNotFoundException extends Exception {}
 
@@ -240,7 +241,7 @@ class AssetLoader
         if (method_exists($this->entries, $method)) {
             return call_user_func_array(array($this->entries, $method), $args);
         }
-        throw new Exception("Method $method is not defined.");
+        throw new BadMethodCallException("Method $method is not defined.");
     }
 
     /**
