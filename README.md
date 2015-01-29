@@ -9,7 +9,7 @@ interface and a simple PHP library with simple API, there are many built-in
 filters and compressors in it.
 
 [![Build Status](https://travis-ci.org/c9s/AssetKit.svg?branch=master)](https://travis-ci.org/c9s/AssetKit)
-
+[![Coverage Status](https://coveralls.io/repos/c9s/AssetKit/badge.svg)](https://coveralls.io/r/c9s/AssetKit)
 
 
 Concept
