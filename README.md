@@ -215,6 +215,46 @@ Now just load the script from your browser, it should work.
 You may simply check example script in the `example` folder.
 
 
+Registering Assets
+---------------------------
+
+Assets can be registered offline, this is to reduce the online overhead. Once
+you have an AssetLoader object, you can call the `register` method to register
+an asset from the asset manifest file path:
+
+```php
+$loader = new AssetKit\AssetLoader($config);
+$asset = $loader->register("tests/assets/jquery-ui");
+```
+
+The registered assets will be added to the asset entry storage and will be cached.
+
+
+Loading Assets
+----------------------
+
+When you want to render an asset, or compile a collection of asset, you need to
+load the asset from the entry storage:
+
+```php
+$asset = $loader->load("jquery-ui");
+```
+
+Sometimes you just want to load a part of the asset, you can append a
+`filetype` string to filter out the collections you want:
+
+```php
+$asset = $loader->load("jquery-ui:stylesheet"); // Asset with stylesheet collections only
+$asset = $loader->load("jquery-ui:javascript"); // Asset with javascript collections only
+```
+
+To find a specific collection in the asset, you can predefine an ID to the
+collection, and use the ID to look up the collection in the runtime:
+
+```php
+$asset = $loader->load("jquery-ui#darkness"); // Asset with darkness theme stylesheet collections only
+```
+
 
 Advanced Usage
 ---------------------------
