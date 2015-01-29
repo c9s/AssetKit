@@ -4,5 +4,6 @@ collections:
     - jquery-ui-1.10.1.custom/css
   - stylesheet:
     - jquery-ui-1.10.1.custom/css/ui-darkness/jquery-ui-1.10.1.custom.css
+    id: darkness
   - javascript:
     - jquery-ui-1.10.1.custom/js/jquery-ui-1.10.1.custom.js

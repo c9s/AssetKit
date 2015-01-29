@@ -20,6 +20,35 @@ class AssetLoaderTest extends AssetKit\TestCase
         );
     }
 
+
+    public function testAssetFileTypeFiltering()
+    {
+        $loader = $this->getLoader();
+        $asset = $loader->register("tests/assets/jquery-ui");
+        ok($asset);
+
+        $asset = $loader->load('jquery-ui:stylesheet');
+        ok($asset instanceof Asset);
+        $collections = $asset->getCollections();
+        $this->assertNotEmpty($collections);
+        ok( $collections[0]->isStylesheet );
+
+        $asset = $loader->load('jquery-ui:javascript');
+        ok($asset instanceof Asset);
+        $collections = $asset->getCollections();
+        $this->assertNotEmpty($collections);
+        ok( $collections[0]->isScript );
+
+
+
+        $asset = $loader->load('jquery-ui#darkness');
+        ok($asset instanceof Asset);
+        $collections = $asset->getCollections();
+        $this->assertNotEmpty($collections);
+        ok( $collections[0]->isStylesheet );
+        is( 'darkness', $collections[0]->id );
+    }
+
     public function testAssetLoad() {
         $manifestFiles = array(
             "tests/assets/jquery-ui",

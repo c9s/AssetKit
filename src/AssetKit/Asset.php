@@ -227,7 +227,7 @@ class Asset
             if ($targetId && $collection->id === $targetId) {
                 return array($collection);
             }
-            if ($targetType && $collection->filetype !== $targetType) {
+            if ($targetType && $fileKey !== $targetType) {
                 continue;
             }
             $collections[] = $collection;
@@ -260,7 +260,9 @@ class Asset
     }
 
 
-
+    /**
+     * @param integer Collection::FileType*
+     */
     public function findCollectionsByFileType($filetype) {
         $collections = $this->getCollections();
         foreach($collections as $collection) {

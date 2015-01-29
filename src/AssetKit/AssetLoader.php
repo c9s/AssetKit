@@ -145,7 +145,7 @@ class AssetLoader
      * If the asset is not found, then it will fallback to lookup method (check 
      * each asset directory) and use register method to register the found asset. (if any)
      *
-     * @param string $name asset name
+     * @param string $name asset name (with ID or filetype)
      *
      * @return Asset
      */
@@ -200,8 +200,9 @@ class AssetLoader
         // some code to find asset automatically.
         // if there is not asset registered in config, we should look up from the asset paths
         $root = $this->config->getRoot();
+        $dirname = preg_replace('/[#:]\w+$/', '', $name);
         foreach ($this->config->getAssetDirectories() as $dir ) {
-            if ($asset = $this->register($root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'manifest.yml', $name)) {
+            if ($asset = $this->register($root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $dirname . DIRECTORY_SEPARATOR . 'manifest.yml', $name)) {
                 return $asset;
             }
         }
