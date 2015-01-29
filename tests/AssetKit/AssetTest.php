@@ -12,7 +12,7 @@ class AssetTest extends AssetKit\TestCase
         ok($loader);
 
         $as = new Asset($config);
-        $as->loadManifestFile('tests/assets/jquery-ui/manifest.yml');
+        $as->loadManifestFile("tests/assets/jquery-ui/manifest.yml");
         ok($as);
 
         $collections = $as->getCollections();

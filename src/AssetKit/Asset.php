@@ -97,17 +97,25 @@ class Asset
      * @param string $manifestYamlFile related YAML manifest file path, which 
      *          should be absolute path.
      *
+     * @param string $name Asset name. If any
+     *
      * @param boolean $force force compile manifest file even there is a cached file.
      */
-    public function loadManifestFile($manifestYamlFile , $force = false)
+    public function loadManifestFile($manifestYamlFile, $name = NULL, $force = false)
     {
+        $this->name = $name ?: basename($this->sourceDir);
         $this->setManifestFile($manifestYamlFile);
         $this->compileManifestFile($force);
-
-        // basic set up
-        $this->name = isset($this->stash['name']) ? $this->stash['name'] : basename($this->sourceDir);
         // $this->loadFromArray($stash);
     }
+
+    static public function createFromManifestFile($manifestYamlFile, $name = NULL, $force = false) 
+    {
+        $asset = new Asset;
+        $asset->loadManifestFile($manifestYamlFile, $name, $force);
+        return $asset;
+    }
+
 
     public function setSourceDir($dir) {
         $this->sourceDir = $dir;

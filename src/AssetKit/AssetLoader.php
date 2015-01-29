@@ -96,7 +96,7 @@ class AssetLoader
 
     public function updateAsset(Asset $asset)
     {
-        $this->register($asset->manifestFile);
+        $this->register($asset->manifestFile, $asset->name);
     }
 
     public function updateAssetByName($name)
@@ -114,7 +114,7 @@ class AssetLoader
         $assets = array();
         $registered = $this->entries->all();
         foreach( $registered as $name => $subconfig ) {
-            $assets[] = $this->register($subconfig['manifest']);
+            $assets[] = $this->register($subconfig['manifest'], $name);
         }
         return $assets;
     }
@@ -160,7 +160,7 @@ class AssetLoader
             }
 
             // load the asset manifest file
-            $asset = $this->register($config['manifest']);
+            $asset = $this->register($config['manifest'], $name);
             // Save the asset object into the pool
             $this->objects[$name] = $asset;
             $this->loadDepends($asset);
@@ -200,7 +200,7 @@ class AssetLoader
         // if there is not asset registered in config, we should look up from the asset paths
         $root = $this->config->getRoot();
         foreach ($this->config->getAssetDirectories() as $dir ) {
-            if ($asset = $this->register( $root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'manifest.yml' )) {
+            if ($asset = $this->register($root . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'manifest.yml', $name)) {
                 return $asset;
             }
         }
@@ -213,7 +213,7 @@ class AssetLoader
      * @param string $path absolute path
      * @parma integer $format
      */
-    public function register($path, $force = false)
+    public function register($path, $name = NULL, $force = false)
     {
         if ($p = realpath($path)) {
             $path = $p;
@@ -223,15 +223,15 @@ class AssetLoader
             $path = $path . DIRECTORY_SEPARATOR . 'manifest.yml';
         }
 
-        if (! file_exists($path)) {
+        if (!file_exists($path)) {
             throw new ManifestFileNotFoundException("Manifest file not found: $path");
         }
 
-        // $compiledFile = ConfigCompiler::compile($path);
-        $asset = new Asset;
+        if (!$name) {
+            $name = basename(dirname($path));
+        }
 
-        // load the asset config from manifest.php file.
-        $asset->loadManifestFile($path, $force);
+        $asset = Asset::createFromManifestFile($path, $name, $force);
         $this->entries->add($asset);
         return $asset;
     }
