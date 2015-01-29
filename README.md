@@ -8,7 +8,7 @@ AssetKit is a powerful asset manager, provides a simple command-line
 interface and a simple PHP library with simple API, there are many built-in
 filters and compressors in it.
 
-[![Build Status](https://travis-ci.org/c9s/AssetKit.png?branch=master)](https://travis-ci.org/c9s/AssetKit)
+[![Build Status](https://travis-ci.org/c9s/AssetKit.svg?branch=master)](https://travis-ci.org/c9s/AssetKit)
 
 
 
