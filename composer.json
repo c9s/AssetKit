@@ -6,8 +6,8 @@
         "twig/twig": "~1.12",
         "corneltek/universal-cache": "~1",
         "corneltek/fileutil": "~1.6",
-        "corneltek/cliframework": "~2.0",
-        "corneltek/configkit": ">=1.5.4",
+        "corneltek/cliframework": "~2",
+        "corneltek/configkit": "~1.5",
         "natxet/cssmin": "*",
         "symfony/process": "~2"
     },

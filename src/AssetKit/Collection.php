@@ -25,10 +25,13 @@ class Collection
 
     public $files = array();
 
-    // public $asset;
+    /**
+     * @var the collection ID
+     */
+    public $id;
 
     /**
-     * @param path Asset source directory
+     * @var string path Asset source directory
      */
     public $sourceDir;
 
@@ -54,7 +57,12 @@ class Collection
      */
     public $chunks;
 
+
+    /**
+     * @var int  FileTypeFile, FileTypeJs, FileTypeCoffee, FileTypeCss, FileTypeSass, FileTypeScss, FileTypeCss
+     */
     public $filetype;
+
 
     // attributes for assets rendering
     public $attributes = array();

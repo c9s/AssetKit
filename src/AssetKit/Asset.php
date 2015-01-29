@@ -185,6 +185,9 @@ class Asset
         $collections = array();
         foreach( $collectionStash as $stash ) {
             $collection = new Collection;
+            if (isset($stash['id']) ) {
+                $collection->id = $stash['id'];
+            }
             if (isset($stash['attrs']) ) {
                 $collection->attributes = $stash['attrs'];
             }
@@ -208,23 +211,52 @@ class Asset
         $expandedFiles = array();
         foreach( $files as $p ) {
             // if we found a glob pattern
-            if( strpos($p,'*') !== false )
-            {
+            if (strpos($p,'*') !== false) {
+
                 $expanded = FileUtil::expand_glob_from_dir($sourceDir, $p);
                 $expandedFiles = array_unique( array_merge( $expandedFiles , $expanded ) );
 
-            } elseif( is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p ) ) {
+            } elseif(is_dir( $sourceDir . DIRECTORY_SEPARATOR . $p )) {
+
                 // We remove the base dir becase we need to build the 
                 // asset urls
                 $expanded = FileUtil::expand_dir_recursively( $sourceDir . DIRECTORY_SEPARATOR . $p );
                 $expanded = FileUtil::remove_basedir_from_paths($expanded , $sourceDir);
                 $expandedFiles = array_unique(array_merge( $expandedFiles , $expanded ));
+
             } else {
                 $expandedFiles[] = $p;
             }
         }
         return $expandedFiles;
     }
+
+
+
+    public function findCollectionsByFileType($filetype) {
+        $collections = $this->getCollections();
+        foreach($collections as $collection) {
+            if ($filetype === $collection->filetype) {
+                return $collection;
+            }
+        }
+        return NULL;
+    }
+
+    /**
+     * Find collection by specific ID
+     */
+    public function findCollectionById($id)
+    {
+        $collections = $this->getCollections();
+        foreach($collections as $collection) {
+            if ($id === $collection->id) {
+                return $collection;
+            }
+        }
+        return NULL;
+    }
+
 
     public function getCollections()
     {
