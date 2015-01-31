@@ -79,7 +79,7 @@ class Collection
      */
     public function getSourcePaths()
     {
-        return \futil_paths_prepend($this->files,$this->sourceDir);
+        return \futil_paths_prepend($this->files, $this->sourceDir);
     }
 
 
@@ -240,9 +240,9 @@ class Collection
 
     public function initContentType(array & $stash) {
         // for normal static files
-        if( isset($stash['files']) ) {
+        if( isset($stash['file']) ) {
             $this->filetype = Collection::FileTypeFile;
-            return 'files';
+            return 'file';
         } elseif (isset($stash['js'])) {
             $this->filetype     = Collection::FileTypeJs;
             $this->isScript = true;

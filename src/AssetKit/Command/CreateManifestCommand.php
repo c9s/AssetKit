@@ -38,7 +38,7 @@ class CreateManifestCommand extends Command
         $inspectDirs = array(
             'javascript' => array('js','javascript', 'javascripts'),
             'stylesheet' => array('css', 'stylesheet', 'stylesheets'),
-            'files' => array('fonts', 'images'),
+            'file' => array('fonts', 'images'),
         );
 
         $config = array();
@@ -48,12 +48,12 @@ class CreateManifestCommand extends Command
         $files = array(
             'stylesheet' => array(),
             'javascript' => array(),
-            'files' => array(),
+            'file' => array(),
         );
         $patterns = array(
             'stylesheet' => '/\.css$/',
             'javascript' => '/\.js/',
-            'files' => '/\.(?:png|jpe?g|ico|gif|eot|svg|ttf|woff)$/',
+            'file' => '/\.(?:png|jpe?g|ico|gif|eot|svg|ttf|woff)$/',
         );
 
         if (empty($possiblePaths)) {

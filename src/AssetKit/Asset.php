@@ -375,7 +375,7 @@ class Asset
 
 
     private function _getFileListKey(array $stash) {
-        foreach(array('files','js','css','javascript', 'coffeescript', 'coffee', 'sass', 'scss', 'stylesheet') as $key) {
+        foreach(array('file','js','css','javascript', 'coffeescript', 'coffee', 'sass', 'scss', 'stylesheet') as $key) {
             if (isset($stash[$key])) {
                 return $key;
             }
