@@ -1,13 +1,23 @@
 ---
 depends: [ jquery  ]
 collections:
-  - files: [ images ]
+  - file: [ images ]
   - css:
     - action.css
+    compiler: scss
+    source:
+    - action.scss
   - js:
     - action.js
-    - search-action.js
     - action-growl.js
     - action-msgbox.js
     - action-highlight.js
     - action-loader.js
+    compiler: coffee
+    source:
+    - action.coffee
+    - action-growl.coffee
+    - action-msgbox.coffee
+    - action-highlight.coffee
+    - action-loader.coffee
+

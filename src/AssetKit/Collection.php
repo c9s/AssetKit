@@ -2,9 +2,10 @@
 namespace AssetKit;
 use Exception;
 use IteratorAggregate;
+use ArrayAccess;
 
 class Collection
-    implements IteratorAggregate
+    implements IteratorAggregate, ArrayAccess
 {
     const FileTypeFile   = 1;
 
@@ -52,6 +53,9 @@ class Collection
     public $content;
 
 
+    public $stash = array();
+
+
     /**
      * file chunks with metadata
      */
@@ -69,6 +73,10 @@ class Collection
 
     // cache
     private $_lastmtime = 0;
+
+    public function __construct(array $stash = array()) {
+        $this->stash = $stash;
+    }
 
 
     /**
@@ -291,6 +299,32 @@ class Collection
         $c->isStylesheet = $array['isStylesheet'];
         $c->isScript = $array['isScript'];
         return $c;
+    }
+
+
+    public function offsetSet($name,$value)
+    {
+        $this->stash[ $name ] = $value;
+    }
+    
+    public function offsetExists($name)
+    {
+        return isset($this->stash[ $name ]);
+    }
+    
+    public function offsetGet($name)
+    {
+        return $this->stash[ $name ];
+    }
+    
+    public function offsetUnset($name)
+    {
+        unset($this->stash[$name]);
+    }
+
+    public function getStash()
+    {
+        return $this->stash;
     }
 }
 

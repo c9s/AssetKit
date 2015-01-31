@@ -27,6 +27,7 @@ class Console extends Application
         $this->command('install');
         $this->command('target');
         $this->command('list');
+        $this->command('watch');
     }
 }
 

@@ -8,6 +8,7 @@ use RecursiveIteratorIterator;
 use AssetKit\FileUtil;
 use AssetKit\FileUtils;
 use ConfigKit\ConfigCompiler;
+use ArrayAccess;
 
 
 /**
@@ -40,7 +41,7 @@ use ConfigKit\ConfigCompiler;
  *    public/assets/jquery/jquery.min.js
  *
  */
-class Asset
+class Asset implements ArrayAccess
 {
     /**
      * @var string the asset name
@@ -146,7 +147,7 @@ class Asset
             foreach($stash['collections'] as & $cStash) {
                 $key = $this->_getFileListKey($cStash);
                 if (!$key) {
-                    throw new Exception("{$this->manifestFile}: undefined type key");
+                    throw new Exception("{$this->manifestFile}: type key undefined.");
                 }
                 $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
             }
@@ -168,6 +169,13 @@ class Asset
         return array();
     }
 
+    /**
+     * @return array the loaded manifest config array
+     */
+    public function getManifestConfig()
+    {
+        return $this->stash;
+    }
 
     public function loadFromArray(array $stash)
     {
@@ -205,7 +213,7 @@ class Asset
         }
 
         foreach($collectionStash as $stash) {
-            $collection = new Collection;
+            $collection = new Collection($stash);
             if (isset($stash['id']) ) {
                 $collection->id = $stash['id'];
             }
@@ -381,6 +389,28 @@ class Asset
             }
         }
     }
+
+
+    public function offsetSet($name,$value)
+    {
+        $this->stash[ $name ] = $value;
+    }
+    
+    public function offsetExists($name)
+    {
+        return isset($this->stash[ $name ]);
+    }
+    
+    public function offsetGet($name)
+    {
+        return $this->stash[ $name ];
+    }
+    
+    public function offsetUnset($name)
+    {
+        unset($this->stash[$name]);
+    }
+    
 }
 
 
