@@ -6,13 +6,15 @@ class CoffeeRunner implements CompilerRunnerInterface
 {
     public $bin = 'coffee';
 
-    public $targets = array();
+    protected $targets = array();
 
     public $bare = false;
 
-    public $sourceMap;
+    protected $sourceMap;
 
-    public $join;
+    protected $join;
+
+    protected $outputDir;
 
     public function __construct($bin = null) {
         if ($bin) {
@@ -20,8 +22,14 @@ class CoffeeRunner implements CompilerRunnerInterface
         }
     }
 
-    public function useJoin() {
-        $this->join = true;
+    public function setOutputDir($dir)
+    {
+        $this->outputDir = $dir;
+        return $this;
+    }
+
+    public function setJoin($file) {
+        $this->join = $file;
         return $this;
     }
 
@@ -40,6 +48,7 @@ class CoffeeRunner implements CompilerRunnerInterface
         }
         if ($this->join) {
             $cmd[] = '--join';
+            $cmd[] = $this->join;
         }
         return $cmd;
     }
