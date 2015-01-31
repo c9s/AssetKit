@@ -101,7 +101,6 @@ class AssetCompiler
         if (extension_loaded('jsmin')) {
             $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinExtCompressor');
         } else {
-            // pure php version
             $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinCompressor');
         }
         $this->registerCompressor('cssmin', '\AssetKit\Compressor\CssMinCompressor');

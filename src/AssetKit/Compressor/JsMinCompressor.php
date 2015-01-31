@@ -9,7 +9,7 @@ class JsMinCompressor
 {
     public $bin;
 
-    public function __construct($bin = null)
+    public function __construct($bin = NULL)
     {
         if ($bin) {
             $this->bin = $bin;
@@ -20,9 +20,9 @@ class JsMinCompressor
     {
         // C version jsmin is faster,
         $content = $collection->getContent();
-        if (extension_loaded('jsmin')) {
-            $content = jsmin( $content );
-        } elseif ($this->bin) {
+
+        // If the bin is specified, we will run an external process to jsmin the content.
+        if ($this->bin) {
             $proc = new Process(array($this->bin));
             $code = $proc->input($content)->run();
             if ( $code != 0 ) {
@@ -30,7 +30,7 @@ class JsMinCompressor
             }
             $content = $proc->getOutput();
         } else {
-            // pure php jsmin
+            // Pure php jsmin
             $content = JSMin::minify( $content );
         }
         $collection->setContent($content);

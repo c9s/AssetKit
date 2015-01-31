@@ -25,12 +25,14 @@ class JsMinExtCompressor
         // C version jsmin is faster,
         $content = $collection->getContent();
         $content = jsmin($content);
-        $err = jsmin_last_error_msg();
-        if ($err != JSMIN_ERROR_NONE) {
-            if (isset($this->messages[$err])) {
-                throw new Exception($this->messages[$err]);
-            } else {
-                throw new Exception("Unknown Error");
+        if (!$content) {
+            $err = jsmin_last_error();
+            if ($err != JSMIN_ERROR_NONE) {
+                if (isset($this->messages[$err])) {
+                    throw new Exception($this->messages[$err]);
+                } else {
+                    throw new Exception("Unknown Error");
+                }
             }
         }
         $collection->setContent($content);
