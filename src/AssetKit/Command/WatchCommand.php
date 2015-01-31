@@ -24,7 +24,6 @@ class WatchCommand extends BaseCommand
 
         $this->logger->info("Loading assets " . join(', ', $assetNames));
 
-
         $assets = array();
         foreach($assetNames as $assetName) {
             $this->logger->info("-> Asset $assetName loaded");
@@ -70,15 +69,14 @@ class WatchCommand extends BaseCommand
                     continue;
                 }
 
-                $this->logger->debug("Forking process to watch collection files.");
-
+                $this->logger->debug("Forking process to watch collection files...");
                 $processCnt++;
                 $pid = pcntl_fork();
                 if ($pid == -1) {
                     throw new Exception("Can't fork process");
                 } elseif ($pid == 0) {
-                    $this->logger->debug("chdir: " . $asset->getSourceDir());
-                    $this->logger->debug("command: " . $command);
+                    $this->logger->debug("Directory: " . $asset->getSourceDir());
+                    $this->logger->debug("Command: " . $command);
                     chdir($asset->getSourceDir());
                     system($command, $retval);
                     exit($retval);
