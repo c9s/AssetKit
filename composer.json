@@ -8,6 +8,7 @@
         "corneltek/fileutil": "~1.6",
         "corneltek/cliframework": "~2",
         "corneltek/configkit": "~1.5",
+        "corneltek/scss-runner": "*",
         "natxet/cssmin": "*",
         "symfony/process": "~2"
     },
