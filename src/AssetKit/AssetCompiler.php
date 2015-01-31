@@ -98,8 +98,12 @@ class AssetCompiler
      */
     public function registerDefaultCompressors()
     {
-        // $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinExtCompressor');
-        $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinCompressor');
+        if (extension_loaded('jsmin')) {
+            $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinExtCompressor');
+        } else {
+            // pure php version
+            $this->registerCompressor('jsmin', '\AssetKit\Compressor\JsMinCompressor');
+        }
         $this->registerCompressor('cssmin', '\AssetKit\Compressor\CssMinCompressor');
         $this->registerCompressor('uglifyjs', '\AssetKit\Compressor\UglifyCompressor');
         $this->registerCompressor('yui_css', '\AssetKit\Compressor\Yui\CssCompressor');
