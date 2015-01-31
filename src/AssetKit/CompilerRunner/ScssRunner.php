@@ -26,7 +26,7 @@ class ScssRunner implements CompilerRunnerInterface
     public $sourceMap;
 
     public function __construct($bin = null) {
-        if ( $bin ) {
+        if ($bin) {
             $this->bin = $bin;
         }
     }
@@ -37,23 +37,33 @@ class ScssRunner implements CompilerRunnerInterface
         return $this;
     }
 
-    public function setQuiet($quiet = true) {
+    public function setQuiet($quiet = true) 
+    {
         $this->quiet = $quiet;
         return $this;
     }
 
+    public function setForce($force = true)
+    {
+        $this->force = $force;
+        return $this;
+    }
 
-    public function setDebug($debug = true) {
+
+    public function setDebug($debug = true)
+    {
         $this->debug = $debug;
         return $this;
     }
 
-    public function enableCompass($enable = true) {
+    public function enableCompass($enable = true)
+    {
         $this->enableCompass = $enable;
         return $this;
     }
 
-    public function addTarget($from, $to = null) {
+    public function addTarget($from, $to = null) 
+    {
         $this->targets[] = array($from, $to);
         return $this;
     }
@@ -133,13 +143,13 @@ class ScssRunner implements CompilerRunnerInterface
     public function buildWatchCommand() {
         $cmd = $this->buildBaseCommand();
         $cmd[] = '--watch';
-        return $cmd + $this->buildTargetList();
+        return array_merge($cmd, $this->buildTargetList());
     }
 
     public function buildUpdateCommand() {
         $cmd = $this->buildBaseCommand();
         $cmd[] = '--update';
-        return $cmd + $this->buildTargetList());
+        return array_merge($cmd, $this->buildTargetList());
     }
 
     public function update()

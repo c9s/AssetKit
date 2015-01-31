@@ -16,3 +16,5 @@ npm-debug.log
 .asset-entries.php
 assetkit.php
 manifest.php
+tests/public
+.assetkit.php
