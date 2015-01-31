@@ -68,6 +68,7 @@ class ScssRunner implements CompilerRunnerInterface
         return $this;
     }
 
+
     public function buildBaseCommand($force = false) {
         $cmd = array($this->bin);
         if ( $this->enableCompass ) {
@@ -122,6 +123,11 @@ class ScssRunner implements CompilerRunnerInterface
 
         }
         return $list;
+    }
+
+    public function addSourceArgument($argument)
+    {
+        $this->targets[] = $argument;
     }
 
     public function buildWatchCommand() {
