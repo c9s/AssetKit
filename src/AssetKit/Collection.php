@@ -3,6 +3,8 @@ namespace AssetKit;
 use Exception;
 use IteratorAggregate;
 use ArrayAccess;
+use InvalidArgumentException;
+use AssetKit\Exception\UnknownCollectionKeyException;
 
 class Collection
     implements IteratorAggregate, ArrayAccess
@@ -285,7 +287,7 @@ class Collection
             return 'stylesheet';
         } else {
             var_dump( $stash );
-            throw new Exception('Unknown collection file type.');
+            throw new UnknownCollectionKeyException('Unknown collection key.', $stash);
         }
     }
 
