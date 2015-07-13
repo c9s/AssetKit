@@ -13,7 +13,7 @@
         "symfony/process": "~2"
     },
     "require-dev": {
-        "corneltek/universal": "dev-master",
+        "corneltek/universal": "~1.4",
         "corneltek/phpunit-testmore": "dev-master",
         "satooshi/php-coveralls": "dev-master"
     },
