@@ -1,7 +1,14 @@
 {
     "name": "corneltek/assetkit",
     "description": "High performance asset manager.",
-    "keywords": ["asset","manager","javascript", "compress", "squash", "cssmin"],
+    "keywords": [
+        "asset",
+        "manager",
+        "javascript",
+        "compress",
+        "squash",
+        "cssmin"
+    ],
     "require": {
         "php": ">=5.3.0",
         "twig/twig": "~1",
@@ -25,5 +32,5 @@
             "AssetKit\\": "src/AssetKit/"
         }
     },
-    "version": "3.2.0"
+    "version": "3.3.0"
 }
