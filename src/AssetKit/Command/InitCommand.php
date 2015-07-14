@@ -24,11 +24,11 @@ class InitCommand extends BaseCommand
             ->required()
             ;
         $opts->add('baseDir:','base directory')
-            ->isa('path')
+            // ->isa('path')
             ->required()
             ;
         $opts->add('dir+','asset directory for looking up assets.')
-            ->isa('path')
+            // ->isa('path')
             ->required()
             ;
     }
