@@ -14,7 +14,9 @@
         "twig/twig": "~1",
         "corneltek/universal-cache": "~1",
         "corneltek/fileutil": "~1",
-        "corneltek/cliframework": "~2.6",
+        "corneltek/cliframework": "dev-master",
+        "corneltek/codegen": "dev-master as 2.99",
+        "corneltek/universal": "dev-master as 1.99",
         "corneltek/configkit": "~1",
         "natxet/cssmin": "*",
         "symfony/process": "~2"
