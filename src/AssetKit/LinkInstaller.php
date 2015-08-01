@@ -2,7 +2,7 @@
 namespace AssetKit;
 use AssetKit\FileUtil;
 
-class LinkInstaller extends Installer 
+class LinkInstaller extends Installer
 {
     public function uninstall(Asset $asset)
     {
@@ -26,17 +26,17 @@ class LinkInstaller extends Installer
         $sourceDir  = $asset->getSourceDir(true);
 
         // simply use symbol link
-        FileUtil::mkdir_for_file( $targetDir );
+        FileUtil::mkdir_for_file($targetDir);
 
-        if (file_exists($targetDir)) {
-            if (is_link($targetDir)) {
-                unlink($targetDir);
-            } else if(is_dir($targetDir)) {
-                \futil_rmtree($targetDir);
-            } 
+        // Remove the previously created symlink files
+        if (is_link($targetDir)) {
+            unlink($targetDir);
+        } else if (is_dir($targetDir)) {
+            \futil_rmtree($targetDir);
+            rmdir($targetDir);
         }
 
-        # echo $sourceDir , " => " , $targetDir , "\n";
+        // echo realpath($sourceDir) , " => " , $targetDir , "\n";
         symlink(realpath($sourceDir),$targetDir) or die("$targetDir link failed.");
         return array(
             'src' => $sourceDir,
