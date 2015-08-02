@@ -33,7 +33,9 @@ class LinkInstaller extends Installer
             unlink($targetDir);
         } else if (is_dir($targetDir)) {
             \futil_rmtree($targetDir);
-            rmdir($targetDir);
+            if (file_exists($targetDir)) {
+                rmdir($targetDir);
+            }
         }
 
         // echo realpath($sourceDir) , " => " , $targetDir , "\n";
