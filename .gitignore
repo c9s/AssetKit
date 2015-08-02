@@ -3,7 +3,6 @@
 # The installed assets
 public/assets/
 public/.sass-cache
-composer.lock
 .onion
 cache
 tests/AssetConfigTest_*.php
