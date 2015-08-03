@@ -26,7 +26,7 @@ before_script:
   - composer --profile install --dev --no-interaction
 
 script:
-  - phpunit
+  - phpunit -c phpunit.xml.dist
   - tests/test-commands.sh
 
 after_script:
