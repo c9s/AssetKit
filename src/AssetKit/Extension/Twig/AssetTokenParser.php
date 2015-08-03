@@ -14,33 +14,39 @@ class AssetTokenParser extends Twig_TokenParser
             'assetNames' => array(),
             'target' => null,
         );
-        while (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
-            // take asset names
-            while (true) {
-                if ($stream->test(Twig_Token::STRING_TYPE)) {
-                    $attributes['assetNames'][] = $stream->next()->getValue();
 
-                    if ($stream->test(Twig_Token::PUNCTUATION_TYPE, ',')) {
-                        $stream->next();
-                    } else {
-                        break;
-                    }
+        // take asset names
+        while (true) {
+            if ($stream->test(Twig_Token::STRING_TYPE)) {
+                $attributes['assetNames'][] = $stream->next()->getValue();
+
+                if ($stream->test(Twig_Token::PUNCTUATION_TYPE, ',')) {
+                    $stream->next();
                 } else {
                     break;
                 }
-            }
-
-            if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {
-                $stream->next();
-                $attributes['target'] = $stream->expect(Twig_Token::STRING_TYPE)->getValue();
-            } else if ($stream->test(\Twig_Token::NAME_TYPE, 'config')) {
-                // debug=true
-                $stream->next();
-                $stream->expect(\Twig_Token::OPERATOR_TYPE, '=');
-                $attributes['debug'] =
-                    'true' == $stream->expect(Twig_Token::NAME_TYPE, array('true', 'false'))->getValue();
+            } else if ($stream->test(Twig_Token::BLOCK_END_TYPE)) {
+                break;
+            } else {
+                break;
             }
         }
+        if (empty($attributes['assetNames'])) {
+            return false;
+        }
+
+        if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {
+            $stream->next();
+            $attributes['target'] = $stream->expect(Twig_Token::STRING_TYPE)->getValue();
+        } else if ($stream->test(\Twig_Token::NAME_TYPE, 'config')) {
+            // debug=true
+            $stream->next();
+            $stream->expect(\Twig_Token::OPERATOR_TYPE, '=');
+            $attributes['debug'] =
+                'true' == $stream->expect(Twig_Token::NAME_TYPE, array('true', 'false'))->getValue();
+        }
+
+
         $stream->expect(Twig_Token::BLOCK_END_TYPE);
         return new AssetNode($attributes, $lineno, $this->getTag());
 
