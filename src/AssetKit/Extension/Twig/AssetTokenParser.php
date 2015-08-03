@@ -16,7 +16,13 @@ class AssetTokenParser extends Twig_TokenParser
         );
 
         // take asset names
-        while (true) {
+        while (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
+
+            /*
+            ;
+            var_dump( $value ); 
+            */
+
             if ($stream->test(Twig_Token::STRING_TYPE)) {
                 $attributes['assetNames'][] = $stream->next()->getValue();
 
@@ -25,14 +31,15 @@ class AssetTokenParser extends Twig_TokenParser
                 } else {
                     break;
                 }
+            } else if ($expr = $this->parser->getExpressionParser()->parsePrimaryExpression()) {
+
+                var_dump( $expr ); 
+
             } else if ($stream->test(Twig_Token::BLOCK_END_TYPE)) {
                 break;
             } else {
                 break;
             }
-        }
-        if (empty($attributes['assetNames'])) {
-            return false;
         }
 
         if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {

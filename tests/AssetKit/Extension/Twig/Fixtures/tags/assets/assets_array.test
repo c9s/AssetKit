@@ -1,7 +1,7 @@
 --TEST--
 assets tag
 --TEMPLATE(index.twig)--
-{% assets ["test", "json-js"] as "json-test" %}
+{% assets ["test", "json-js"] %}
 --DATA--
 return array();
 --EXPECT--
