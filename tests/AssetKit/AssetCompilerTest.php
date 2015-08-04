@@ -53,20 +53,20 @@ class AssetCompilerTest extends AssetKit\TestCase
 
         $entries = $compiler->compileAssets($assets, 'sass-test', $force = true);
         $this->assertNotEmpty($entries);
-        path_ok($entries[0]['js_file']);
-        path_ok($entries[0]['css_file']);
+        $this->assertCount(1, $entries);
+
+        $this->assertFileExists($entries[0]['js_file']);
+        $this->assertFileExists($entries[0]['css_file']);
         $this->assertNotNull($entries[0]['mtime'], 'got mtime');
 
+        $css = file_get_contents($entries[0]['css_file']);
+        $this->assertNotNull($css);
 
-        $cssminContent = file_get_contents($entries[0]['css_file']);
-        ok($cssminContent);
+        $this->assertContains('.subpath2{color:green}', $css, "Checking " . $entries[0]['css_file']);
+        $this->assertContains('.subpath{color:red}', $css, "Checking " . $entries[0]['css_file']);
+        $this->assertContains('.content-navigation{border-color:#3bbfce;color:#2ca2af}', $css);
+        $this->assertContains('.extended', $css);
 
-        $this->assertContains('.subpath2{color:green}', $cssminContent, "Checking " . $entries[0]['css_file']);
-        $this->assertContains('.subpath{color:red}', $cssminContent, "Checking " . $entries[0]['css_file']);
-
-        // ensure our sass is compiled.
-        $this->assertContains('.content-navigation{border-color:#3bbfce;color:#2ca2af}', $cssminContent);
-        $this->assertContains('.extended', $cssminContent);
         $this->uninstallAssets($assets);
     }
 
