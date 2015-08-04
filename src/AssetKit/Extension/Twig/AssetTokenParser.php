@@ -55,10 +55,10 @@ class AssetTokenParser extends Twig_TokenParser
 
         // skip "as" keyword
         if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {
-
             $stream->next();
-            $token = $stream->expect(Twig_Token::STRING_TYPE);
-            $attributes['target'] = new Twig_Node_Expression_Constant($token->getValue(), $token->getLine());
+
+            $targetVar = $this->parser->getExpressionParser()->parseExpression();
+            $attributes['target'] = $targetVar;
 
         } else if ($stream->test(Twig_Token::NAME_TYPE, 'config')) {
             // debug=true
