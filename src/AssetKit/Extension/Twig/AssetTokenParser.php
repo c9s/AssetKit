@@ -36,6 +36,8 @@ class AssetTokenParser extends Twig_TokenParser
                 } else {
                     break;
                 }
+            } else if($stream->test(Twig_Token::NAME_TYPE, 'as')) {
+                break;
             } else if ($expr = $this->parser->getExpressionParser()->parsePrimaryExpression()) {
 
                 $attributes['assets'][] = $expr;
