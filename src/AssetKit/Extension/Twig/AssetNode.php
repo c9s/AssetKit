@@ -6,6 +6,7 @@ use Twig_Node_Expression;
 use Twig_Node_Expression_Array;
 use Twig_Node_Expression_Constant;
 use Twig_Node_Expression_Name;
+use Twig_Node_Expression_GetAttr;
 
 class AssetNode extends Twig_Node
 {
@@ -43,7 +44,7 @@ class AssetNode extends Twig_Node
                     $compiler->subcompile($pair['value']);
                     $compiler->raw(");\n");
                 }
-            } else if ($asset instanceof Twig_Node_Expression_Name) {
+            } else if ($asset instanceof Twig_Node_Expression_Name || $asset instanceof Twig_Node_Expression_GetAttr) {
                 $compiler->addDebugInfo($asset);
                 $compiler->raw("\$var=");
                 $compiler->subcompile($asset);
@@ -55,7 +56,7 @@ class AssetNode extends Twig_Node
                 $compiler->raw("} else if (is_string(\$var)) {\n");
                 $compiler->raw("\$assets[] = \$assetloader->load(\$var);\n");
                 $compiler->raw("}\n");
-            } 
+            }
         }
         $compiler->raw('$assetrender->renderAssets($assets');
         if ($target) {

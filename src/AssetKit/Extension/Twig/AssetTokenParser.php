@@ -37,9 +37,9 @@ class AssetTokenParser extends Twig_TokenParser
                     break;
                 }
             } else if ($expr = $this->parser->getExpressionParser()->parsePrimaryExpression()) {
-                
+
                 $attributes['assets'][] = $expr;
-                
+
             } else if ($stream->test(Twig_Token::BLOCK_END_TYPE)) {
 
                 break;
