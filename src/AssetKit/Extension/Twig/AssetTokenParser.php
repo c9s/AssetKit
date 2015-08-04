@@ -54,53 +54,19 @@ class AssetTokenParser extends Twig_TokenParser
         // skip "as" keyword
         if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {
             $stream->next();
-
             $targetVar = $this->parser->getExpressionParser()->parseExpression();
             $attributes['target'] = $targetVar;
+        }
 
-        } else if ($stream->test(Twig_Token::NAME_TYPE, 'with')) {
-
+        if ($stream->test(Twig_Token::NAME_TYPE, 'with')) {
             $stream->next();
-
             $configVar = $this->parser->getExpressionParser()->parseExpression();
             $attributes['config'] = $configVar;
-
-            // debug=true
-            /*
-            $stream->expect(\Twig_Token::OPERATOR_TYPE, '=');
-            $attributes['debug'] =
-                'true' == $stream->expect(Twig_Token::NAME_TYPE, array('true', 'false'))->getValue();
-            */
         }
 
 
         $stream->expect(Twig_Token::BLOCK_END_TYPE);
         return new AssetNode($attributes, $lineno, $this->getTag());
-
-        /*
-        if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {
-            $stream->next();
-            $target = $stream->expect(Twig_Token::STRING_TYPE)->getValue();
-        } else {
-
-        }
-        while (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
-        }
-        $name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
-        $stream->expect(Twig_Token::OPERATOR_TYPE, '=');
-        $value = $this->parser->getExpressionParser()->parseExpression();
-        $stream->expect(Twig_Token::BLOCK_END_TYPE);
-        return new AssetNode($assetNames, $lineno, $this->getTag());
-        */
-
-        /*
-        $lineno = $token->getLine();
-        $name = $this->parser->getStream()->expect(Twig_Token::NAME_TYPE)->getValue();
-        $this->parser->getStream()->expect(Twig_Token::OPERATOR_TYPE, '=');
-        $value = $this->parser->getExpressionParser()->parseExpression();
-        $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
-        return new AssetNode($name, $value, $lineno, $this->getTag());
-         */
     }
 
     public function getTag()
