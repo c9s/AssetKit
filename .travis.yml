@@ -5,34 +5,30 @@ php:
   - 5.6
 #  - hhvm
 before_install:
-  - sudo apt-get -qq install coffeescript ruby-sass libyaml-dev
-before_script:
-  - echo -e "yes\nno\n" | pecl -d preferred_state=beta install apcu
-    # - ./bin/install-apcu.sh
-    # - phpenv config-add tests/$TRAVIS_PHP_VERSION.ini
-    # - phpenv config-add tests/apc.ini
-    # - echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - php -m | grep apc
-  - wget -c http://pecl.php.net/get/yaml-1.1.1.tgz
-  - tar -xzf yaml-1.1.1.tgz
-  - sh -c "cd yaml-1.1.1 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
-  - echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - phpenv rehash
-  - npm install -g coffee-script
-  - gem install sass --version "=3.2.12"
-  - gem install compass --version "=0.12.2"
-  - composer self-update
-  - composer --profile install --dev --no-interaction
-
+- sudo apt-get -qq install coffeescript ruby-sass libyaml-dev
+install:
+- npm install -g coffee-script
+- gem install sass --version "=3.2.12"
+- gem install compass --version "=0.12.2"
+- echo -e "yes\nno\n" | pecl -d preferred_state=beta install apcu
+- echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- php -m | grep apc
+- wget -c http://pecl.php.net/get/yaml-1.1.1.tgz
+- tar -xzf yaml-1.1.1.tgz
+- sh -c "cd yaml-1.1.1 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
+- echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- phpenv rehash
+- travis_retry composer self-update
+- travis_retry composer --profile install --no-interaction
 script:
   - phpunit -c phpunit.xml.dist
   - tests/test-commands.sh
-
-after_script:
+after_success:
   - php vendor/bin/coveralls -v
-
 cache:
   apt: true
   directories:
     - vendor
+notifications:
+  slack:
+    secure: OwI7PtL9OGmGvwJ8SRObkTvl0cMQqRssLJ+fWwrAUQ4HW/CxAg95q0jPZ4YHmUk6eFTp23HtYrV62icVUiw0dmbGOnsKBPKW5fMs8+rXTXcKi4lu5sP8lsak8ORBLcp75pagiMrviMS6nvAJO/l0U7XMGGGHJjbfyLa5bRkXdRo=
