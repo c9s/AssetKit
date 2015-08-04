@@ -12,12 +12,5 @@
         'media' => 'screen',
       ),
     ),
-    1 => 
-    array (
-      'coffee' => 
-      array (
-        0 => 'test.coffee',
-      ),
-    ),
   ),
 );
