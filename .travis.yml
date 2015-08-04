@@ -1,9 +1,8 @@
 language: php
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-#  - hhvm
+- 5.4
+- 5.5
+- 5.6
 install:
 - sudo apt-get -qq install coffeescript ruby-sass libyaml-dev
 - npm install -g coffee-script@1.7.1
@@ -20,15 +19,15 @@ before_script:
 - sass --version
 - compass --version
 script:
-  - phpunit --debug --testsuite AssetExtension -c phpunit.xml.dist
-  - phpunit -c phpunit.xml.dist
-  - tests/test-commands.sh
+- phpunit --debug --testsuite AssetExtension -c phpunit.xml.dist
+- phpunit -c phpunit.xml.dist
+- tests/test-commands.sh
 after_success:
-  - php vendor/bin/coveralls -v
+- php vendor/bin/coveralls -v
 cache:
   apt: true
   directories:
-    - vendor
+  - vendor
 notifications:
   slack:
-    secure: OwI7PtL9OGmGvwJ8SRObkTvl0cMQqRssLJ+fWwrAUQ4HW/CxAg95q0jPZ4YHmUk6eFTp23HtYrV62icVUiw0dmbGOnsKBPKW5fMs8+rXTXcKi4lu5sP8lsak8ORBLcp75pagiMrviMS6nvAJO/l0U7XMGGGHJjbfyLa5bRkXdRo=
+    secure: hT6xEqww/9e0qB6KBOqdIWwehO8L5JNEuzOzOf3FemTJlB7M0yN8Mg61zNjJbLMPIsgwScWEzTP4hRpDx3rUeJDnqpSG1eMruYprKmjNW6xarIFSkKM762WgjF4jg/nMaq8PXKFIGS14G893/tfAvNUOlBr9pBDuQCDZkSMUEZY=
