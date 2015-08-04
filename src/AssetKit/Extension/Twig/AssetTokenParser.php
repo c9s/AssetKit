@@ -2,6 +2,8 @@
 namespace AssetKit\Extension\Twig;
 use Twig_TokenParser;
 use Twig_Token;
+use Twig_Node_Expression_Constant;
+use Twig_Node_Expression_Array;
 
 class AssetTokenParser extends Twig_TokenParser
 {
@@ -11,7 +13,7 @@ class AssetTokenParser extends Twig_TokenParser
         $stream = $this->parser->getStream();
 
         $attributes = array(
-            'assetNames' => array(),
+            'assets' => array(),
             'target' => null,
         );
 
@@ -24,7 +26,10 @@ class AssetTokenParser extends Twig_TokenParser
             */
 
             if ($stream->test(Twig_Token::STRING_TYPE)) {
-                $attributes['assetNames'][] = $stream->next()->getValue();
+                $token = $stream->next();
+                $strNode = new Twig_Node_Expression_Constant($token->getValue(), $token->getLine());
+
+                $attributes['assets'][] = $strNode;
 
                 if ($stream->test(Twig_Token::PUNCTUATION_TYPE, ',')) {
                     $stream->next();
@@ -33,19 +38,27 @@ class AssetTokenParser extends Twig_TokenParser
                 }
             } else if ($expr = $this->parser->getExpressionParser()->parsePrimaryExpression()) {
 
-                var_dump( $expr ); 
+                $attributes['assets'][] = $expr;
 
             } else if ($stream->test(Twig_Token::BLOCK_END_TYPE)) {
+
                 break;
+
             } else {
+
                 break;
+
             }
         }
 
+        // skip "as" keyword
         if ($stream->test(Twig_Token::NAME_TYPE, 'as')) {
+
             $stream->next();
-            $attributes['target'] = $stream->expect(Twig_Token::STRING_TYPE)->getValue();
-        } else if ($stream->test(\Twig_Token::NAME_TYPE, 'config')) {
+            $token = $stream->expect(Twig_Token::STRING_TYPE);
+            $attributes['target'] = new Twig_Node_Expression_Constant($token->getValue(), $token->getLine());
+
+        } else if ($stream->test(Twig_Token::NAME_TYPE, 'config')) {
             // debug=true
             $stream->next();
             $stream->expect(\Twig_Token::OPERATOR_TYPE, '=');
