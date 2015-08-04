@@ -11,11 +11,11 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "twig/twig": "~1",
+        "twig/twig": "^1.19",
         "corneltek/universal-cache": "~1",
         "corneltek/fileutil": "~1",
         "corneltek/cliframework": "^2.6",
-        "corneltek/configkit": "~1",
+        "corneltek/configkit": "^1.5",
         "natxet/cssmin": "*",
         "symfony/process": "~2"
     },
