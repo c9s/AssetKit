@@ -4,6 +4,7 @@ use Twig_TokenParser;
 use Twig_Token;
 use Twig_Node_Expression_Constant;
 use Twig_Node_Expression_Array;
+use Twig_Node_Expression_Name;
 
 class AssetTokenParser extends Twig_TokenParser
 {
@@ -24,7 +25,6 @@ class AssetTokenParser extends Twig_TokenParser
             ;
             var_dump( $value ); 
             */
-
             if ($stream->test(Twig_Token::STRING_TYPE)) {
                 $token = $stream->next();
                 $strNode = new Twig_Node_Expression_Constant($token->getValue(), $token->getLine());
@@ -37,9 +37,9 @@ class AssetTokenParser extends Twig_TokenParser
                     break;
                 }
             } else if ($expr = $this->parser->getExpressionParser()->parsePrimaryExpression()) {
-
+                
                 $attributes['assets'][] = $expr;
-
+                
             } else if ($stream->test(Twig_Token::BLOCK_END_TYPE)) {
 
                 break;
