@@ -1,6 +1,6 @@
 ---
 collections:
-  - stylesheet:
-    - css/main.css
+  - sass:
+    - sass-test.sass
     attrs:
       media: screen

@@ -590,8 +590,16 @@ Install deps:
 ```sh
 $ git clone git://github.com/c9s/AssetKit.git
 $ cd AssetKit
-$ composer install --dev
+$ composer install
 ```
+
+Install some extensions to boost the speed:
+
+```sh
+phpbrew ext install github:sqmk/pecl-jsmin
+phpbrew ext install github:c9s/cssmin
+```
+
 Make sure all staff work:
 
 ```sh

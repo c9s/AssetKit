@@ -10,7 +10,10 @@
          convertWarningsToExceptions="true"
          >
   <testsuites>
-    <testsuite name="PHPUnit">
+    <testsuite name="AssetExtension">
+      <directory suffix="Test.php">tests/AssetKit/Extension</directory>
+    </testsuite>
+    <testsuite name="All">
       <directory suffix="Test.php">tests</directory>
     </testsuite>
   </testsuites>
