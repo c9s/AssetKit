@@ -6,4 +6,4 @@ assets tag
 return array();
 --EXPECT--
 <script type="text/javascript" src="/assets/compiled/mainpage-cac209d9c37f4d35f93397e10ac836d3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/assets/compiled/mainpage-27263f7b7954c45c1bc9cf87e7b96866.min.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/compiled/mainpage-4de95982c68728f6adc20b8624d53bf1.min.css"/>

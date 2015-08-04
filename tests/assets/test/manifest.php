@@ -14,17 +14,6 @@
     ),
     1 => 
     array (
-      'sass' => 
-      array (
-        0 => 'sass-test.sass',
-      ),
-      'attrs' => 
-      array (
-        'media' => 'screen',
-      ),
-    ),
-    2 => 
-    array (
       'coffee' => 
       array (
         0 => 'test.coffee',
