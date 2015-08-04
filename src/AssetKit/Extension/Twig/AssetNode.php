@@ -27,18 +27,21 @@ class AssetNode extends Twig_Node
         foreach($assets as $asset) {
             if (is_string($asset)) {
 
-                $compiler->raw("\$assets[] = \$assetloader->load('$asset');\n");
+                $compiler->raw("\$assets[] = \$a = \$assetloader->load('$asset');\n");
 
             } else if ($asset instanceof Twig_Node_Expression_Constant) {
 
-                $compiler->raw("\$assets[] = \$assetloader->load(");
+                $compiler->addDebugInfo($asset);
+                $compiler->raw('$assets[] = $a = $assetloader->load(');
                 $compiler->subcompile($asset);
                 $compiler->raw(");\n");
 
             } else if ($asset instanceof Twig_Node_Expression_Array) {
+                $compiler->addDebugInfo($asset);
+
                 $pairs = $asset->getKeyValuePairs();
                 foreach ($pairs as $pair) {
-                    $compiler->raw('$assets[] = $assetloader->load(');
+                    $compiler->raw('$assets[] = $a = $assetloader->load(');
                     $compiler->subcompile($pair['value']);
                     $compiler->raw(");\n");
                 }
@@ -49,7 +52,7 @@ class AssetNode extends Twig_Node
             $compiler->raw(', ');
             $compiler->subcompile($target);
         }
-        $compiler->raw(');');
+        $compiler->raw(");\n");
     }
 
     /*

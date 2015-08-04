@@ -9,7 +9,9 @@ use AssetKit\AssetCompiler;
 class AssetExtension extends Twig_Extension
 {
     protected $assetConfig;
+
     protected $assetLoader;
+
     protected $render;
 
     /**

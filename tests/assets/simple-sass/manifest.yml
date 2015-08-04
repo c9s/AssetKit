@@ -1,0 +1,6 @@
+---
+collections:
+  - sass:
+    - sass-test.sass
+    attrs:
+      media: screen

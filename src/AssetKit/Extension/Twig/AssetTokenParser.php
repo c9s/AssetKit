@@ -98,7 +98,6 @@ class AssetTokenParser extends Twig_TokenParser
 
     public function getTag()
     {
-        //return 'seta';
         return 'assets';
     }
 }
