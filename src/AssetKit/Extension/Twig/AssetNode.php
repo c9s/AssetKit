@@ -49,13 +49,22 @@ class AssetNode extends Twig_Node
                 $compiler->raw("\$var=");
                 $compiler->subcompile($asset);
                 $compiler->raw(";\n");
-                $compiler->raw("if (is_array(\$var)){\n");
-                $compiler->raw("foreach (\$var as \$asset){\n");
-                $compiler->raw("\$assets[] = \$assetloader->load(\$asset);\n");
-                $compiler->raw("}\n");
+                $compiler->raw("if (is_array(\$var)){\n")
+                    ->indent()
+                    ->raw("foreach (\$var as \$asset){\n")
+                        ->indent()
+                        ->raw("\$assets[] = \$assetloader->load(\$asset);\n")
+                        ->outdent()
+                    ->raw("}\n")
+                    ->outdent()
+                    ;
                 $compiler->raw("} else if (is_string(\$var)) {\n");
-                $compiler->raw("\$assets[] = \$assetloader->load(\$var);\n");
-                $compiler->raw("}\n");
+
+                $compiler->indent()
+                    ->raw("\$assets[] = \$assetloader->load(\$var);\n")
+                    ->outdent()
+                    ->raw("}\n")
+                ;
             }
         }
         $compiler->raw('$assetrender->renderAssets($assets');

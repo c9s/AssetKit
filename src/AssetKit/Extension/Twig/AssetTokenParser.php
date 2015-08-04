@@ -19,14 +19,12 @@ class AssetTokenParser extends Twig_TokenParser
         );
 
         // take asset names
-        while (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
+        while (!$stream->test(Twig_Token::BLOCK_END_TYPE) && !$stream->test(Twig_Token::NAME_TYPE, 'as')) {
 
-            /*
-            ;
-            var_dump( $value ); 
-            */
             if ($stream->test(Twig_Token::STRING_TYPE)) {
+
                 $token = $stream->next();
+
                 $strNode = new Twig_Node_Expression_Constant($token->getValue(), $token->getLine());
 
                 $attributes['assets'][] = $strNode;
@@ -60,12 +58,19 @@ class AssetTokenParser extends Twig_TokenParser
             $targetVar = $this->parser->getExpressionParser()->parseExpression();
             $attributes['target'] = $targetVar;
 
-        } else if ($stream->test(Twig_Token::NAME_TYPE, 'config')) {
-            // debug=true
+        } else if ($stream->test(Twig_Token::NAME_TYPE, 'with')) {
+
             $stream->next();
+
+            $configVar = $this->parser->getExpressionParser()->parseExpression();
+            $attributes['config'] = $configVar;
+
+            // debug=true
+            /*
             $stream->expect(\Twig_Token::OPERATOR_TYPE, '=');
             $attributes['debug'] =
                 'true' == $stream->expect(Twig_Token::NAME_TYPE, array('true', 'false'))->getValue();
+            */
         }
 
 
