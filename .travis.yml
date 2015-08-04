@@ -10,9 +10,9 @@ install:
 - npm install -g coffee-script
 - gem install sass --version "=3.2.12"
 - gem install compass --version "=0.12.2"
-  bash tests/travis/install-cssmin.sh
-  bash tests/travis/install-apcu.sh
-  bash tests/travis/install-yaml.sh
+- bash tests/travis/install-cssmin.sh
+- bash tests/travis/install-apcu.sh
+- bash tests/travis/install-yaml.sh
 - phpenv rehash
 - travis_retry composer self-update
 - travis_retry composer --profile install --no-interaction
