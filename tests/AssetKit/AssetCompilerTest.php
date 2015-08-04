@@ -55,7 +55,6 @@ class AssetCompilerTest extends AssetKit\TestCase
         $this->assertNotEmpty($entries);
         $this->assertCount(1, $entries);
 
-        $this->assertFileExists($entries[0]['js_file']);
         $this->assertFileExists($entries[0]['css_file']);
         $this->assertNotNull($entries[0]['mtime'], 'got mtime');
 
@@ -141,6 +140,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         $loader = $this->getLoader();
         $assets = array();
         $assets[] = $loader->register("tests/assets/test");
+        $assets[] = $loader->register("tests/assets/simple-coffee");
+        $assets[] = $loader->register("tests/assets/simple-sass");
         $assets[] = $loader->register("tests/assets/jquery");
         $assets[] = $loader->register("tests/assets/jquery-ui");
         ok($assets);
@@ -164,7 +165,6 @@ class AssetCompilerTest extends AssetKit\TestCase
     public function testAssetRenderForDevelopment($outs)
     {
         $render = new \AssetKit\AssetRender($this->getConfig(),$this->getLoader());
-        ok($render);
 
         // the below tests are only for local.
         if (getenv('TRAVIS_BUILD_ID')) {

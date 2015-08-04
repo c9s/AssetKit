@@ -21,6 +21,7 @@ class AssetExtensionTest extends Twig_Test_IntegrationTestCase
         ok($loader->register('tests/assets/jquery/manifest.yml'));
         ok($loader->register('tests/assets/jquery-ui/manifest.yml'));
         ok($loader->register('tests/assets/simple-sass/manifest.yml'));
+        ok($loader->register('tests/assets/simple-coffee/manifest.yml'));
         ok($loader->register('tests/assets/test/manifest.yml'));
         ok($loader->register('tests/assets/json-js/manifest.yml'));
 
