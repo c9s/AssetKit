@@ -10,13 +10,9 @@ install:
 - npm install -g coffee-script
 - gem install sass --version "=3.2.12"
 - gem install compass --version "=0.12.2"
-- echo -e "yes\nno\n" | pecl -d preferred_state=beta install apcu
-- echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-- php -m | grep apc
-- wget -c http://pecl.php.net/get/yaml-1.1.1.tgz
-- tar -xzf yaml-1.1.1.tgz
-- sh -c "cd yaml-1.1.1 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
-- echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  bash tests/travis/install-cssmin.sh
+  bash tests/travis/install-apcu.sh
+  bash tests/travis/install-yaml.sh
 - phpenv rehash
 - travis_retry composer self-update
 - travis_retry composer --profile install --no-interaction
