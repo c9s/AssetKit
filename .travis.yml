@@ -17,6 +17,7 @@ install:
 - travis_retry composer self-update
 - travis_retry composer --profile install --no-interaction
 script:
+  - phpunit --debug -t AssetExtension -c phpunit.xml.dist
   - phpunit -c phpunit.xml.dist
   - tests/test-commands.sh
 after_success:
