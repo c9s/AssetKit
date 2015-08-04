@@ -35,7 +35,7 @@ class AssetNode extends Twig_Node
                 $compiler->raw(");\n");
 
             } else if ($asset instanceof Twig_Node_Expression_Array) {
-                $compiler->addDebugInfo($asset);
+                //$compiler->addDebugInfo($asset);
 
                 $pairs = $asset->getKeyValuePairs();
                 foreach ($pairs as $pair) {
@@ -44,9 +44,17 @@ class AssetNode extends Twig_Node
                     $compiler->raw(");\n");
                 }
             } else if ($asset instanceof Twig_Node_Expression_Name) {
-                $compiler->raw("\$assets[] = \$assetloader->load(");
+                $compiler->addDebugInfo($asset);
+                $compiler->raw("\$var=");
                 $compiler->subcompile($asset);
-                $compiler->raw(");\n");
+                $compiler->raw(";\n");
+                $compiler->raw("if (is_array(\$var)){\n");
+                $compiler->raw("foreach (\$var as \$asset){\n");
+                $compiler->raw("\$assets[] = \$assetloader->load(\$asset);\n");
+                $compiler->raw("}\n");
+                $compiler->raw("} else if (is_string(\$var)) {\n");
+                $compiler->raw("\$assets[] = \$assetloader->load(\$var);\n");
+                $compiler->raw("}\n");
             } 
         }
         $compiler->raw('$assetrender->renderAssets($assets');
