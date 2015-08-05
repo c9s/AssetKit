@@ -46,9 +46,12 @@ class AssetNode extends Twig_Node
                 }
             } else if ($asset instanceof Twig_Node_Expression_Name || $asset instanceof Twig_Node_Expression_GetAttr) {
                 $compiler->addDebugInfo($asset);
-                $compiler->raw("\$var=");
-                $compiler->subcompile($asset);
-                $compiler->raw(";\n");
+
+                $compiler->raw("\$var = ")
+                    ->subcompile($asset)
+                    ->raw(";\n")
+                    ;
+
                 $compiler->raw("if (is_array(\$var)){\n")
                     ->indent()
                     ->raw("foreach (\$var as \$asset){\n")
@@ -58,6 +61,7 @@ class AssetNode extends Twig_Node
                     ->raw("}\n")
                     ->outdent()
                     ;
+
                 $compiler->raw("} else if (is_string(\$var)) {\n");
 
                 $compiler->indent()
