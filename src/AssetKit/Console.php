@@ -5,7 +5,7 @@ use CLIFramework\Application;
 class Console extends Application
 {
     const NAME = 'assetkit';
-    const VERSION = "3.3.0";
+    const VERSION = "3.4.0";
 
     static function getInstance()
     {
