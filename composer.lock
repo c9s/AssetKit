@@ -4,25 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ab4dc9c2f87de682daadf6bf9079d846",
+    "hash": "c07a8c4289e525f48ca596e2d2a64a1a",
     "packages": [
         {
             "name": "corneltek/class-template",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/ClassTemplate.git",
-                "reference": "b3e99f80e2291e366e0315ab6e3ee438ee6da66e"
+                "reference": "f213ff8cf772c89c13f5e6df53ea0ab60f2532b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/ClassTemplate/zipball/b3e99f80e2291e366e0315ab6e3ee438ee6da66e",
-                "reference": "b3e99f80e2291e366e0315ab6e3ee438ee6da66e",
+                "url": "https://api.github.com/repos/c9s/ClassTemplate/zipball/f213ff8cf772c89c13f5e6df53ea0ab60f2532b3",
+                "reference": "f213ff8cf772c89c13f5e6df53ea0ab60f2532b3",
                 "shasum": ""
             },
             "require": {
-                "corneltek/codegen": "~2",
-                "php": ">=5.4.0",
+                "corneltek/codegen": "^2",
+                "php": ">=5.3.0",
                 "twig/twig": "*"
             },
             "require-dev": {
@@ -47,28 +47,31 @@
             ],
             "description": "Class template Utilities",
             "homepage": "http://github.com/c9s/ClassTemplate",
-            "time": "2015-04-17 12:42:57"
+            "time": "2015-08-26 06:29:11"
         },
         {
             "name": "corneltek/cliframework",
-            "version": "2.6.2",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CLIFramework.git",
-                "reference": "b4904279a2bdbeafd186e619862edbbca81709f1"
+                "reference": "40e42ff1980124442a4ac049fba4ce21542638d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/b4904279a2bdbeafd186e619862edbbca81709f1",
-                "reference": "b4904279a2bdbeafd186e619862edbbca81709f1",
+                "url": "https://api.github.com/repos/c9s/CLIFramework/zipball/40e42ff1980124442a4ac049fba4ce21542638d4",
+                "reference": "40e42ff1980124442a4ac049fba4ce21542638d4",
                 "shasum": ""
             },
             "require": {
-                "corneltek/class-template": "*",
-                "corneltek/getoptionkit": "~2",
-                "corneltek/universal": "~1.4",
+                "corneltek/class-template": "^2",
+                "corneltek/codegen": "^2",
+                "corneltek/getoptionkit": "^2",
+                "corneltek/universal": ">= 1.4",
                 "php": ">=5.3.0",
-                "pimple/pimple": "*"
+                "pimple/pimple": "*",
+                "symfony/class-loader": "^2.7",
+                "symfony/finder": "^2.7"
             },
             "require-dev": {
                 "corneltek/phpunit-testmore": "dev-master",
@@ -76,8 +79,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "CLIFramework": "src"
+                "psr-4": {
+                    "CLIFramework\\": "src/CLIFramework/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -93,20 +96,28 @@
             ],
             "description": "Command-line framework for PHP",
             "homepage": "http://github.com/c9s/CLIFramework",
-            "time": "2015-07-30 08:05:06"
+            "keywords": [
+                "command",
+                "command-line",
+                "completion",
+                "framework",
+                "getopt",
+                "zsh"
+            ],
+            "time": "2015-08-26 06:24:15"
         },
         {
             "name": "corneltek/codegen",
-            "version": "2.1.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/CodeGen.git",
-                "reference": "ccf453a587cdbd0f68a4ab8790281e7864d00567"
+                "reference": "5458c2ce84b1dd8c3d8c0705c3cd1b89a8937857"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/ccf453a587cdbd0f68a4ab8790281e7864d00567",
-                "reference": "ccf453a587cdbd0f68a4ab8790281e7864d00567",
+                "url": "https://api.github.com/repos/c9s/CodeGen/zipball/5458c2ce84b1dd8c3d8c0705c3cd1b89a8937857",
+                "reference": "5458c2ce84b1dd8c3d8c0705c3cd1b89a8937857",
                 "shasum": ""
             },
             "require": {
@@ -136,38 +147,49 @@
             ],
             "description": "PHP Code Generation Library",
             "homepage": "http://github.com/c9s/CodeGen",
-            "time": "2015-07-17 07:10:32"
+            "time": "2015-08-25 03:48:03"
         },
         {
             "name": "corneltek/configkit",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/ConfigKit.git",
-                "reference": "7e7848788a5ee0a13c1bb48d6d741007e6124491"
+                "reference": "dd913c072045e2b466bb1fed462fd879a7cd1c59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/7e7848788a5ee0a13c1bb48d6d741007e6124491",
-                "reference": "7e7848788a5ee0a13c1bb48d6d741007e6124491",
+                "url": "https://api.github.com/repos/c9s/ConfigKit/zipball/dd913c072045e2b466bb1fed462fd879a7cd1c59",
+                "reference": "dd913c072045e2b466bb1fed462fd879a7cd1c59",
                 "shasum": ""
             },
             "require": {
-                "corneltek/fileutil": "1.*",
+                "corneltek/codegen": "^2",
+                "corneltek/fileutil": "^1",
                 "php": ">=5.3.0",
-                "symfony/yaml": "~2.3"
+                "symfony/yaml": "^2.4"
             },
             "require-dev": {
                 "corneltek/phpunit-testmore": "dev-master"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "ConfigKit": "src"
+                "psr-4": {
+                    "ConfigKit\\": "src/ConfigKit/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2015-07-03 09:37:03"
+            "license": [
+                "MIT"
+            ],
+            "description": "Fast config toolkit, which provides super lightweight config accessor and loader.",
+            "keywords": [
+                "accessor",
+                "cache",
+                "config",
+                "yaml"
+            ],
+            "time": "2015-08-23 18:01:20"
         },
         {
             "name": "corneltek/fileutil",
@@ -247,16 +269,16 @@
         },
         {
             "name": "corneltek/universal",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c9s/Universal.git",
-                "reference": "a39397bb82e432dbf9e7ccf12b1385d2ec272584"
+                "reference": "ded2149270654e36e6f04afca2df0990221485d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c9s/Universal/zipball/a39397bb82e432dbf9e7ccf12b1385d2ec272584",
-                "reference": "a39397bb82e432dbf9e7ccf12b1385d2ec272584",
+                "url": "https://api.github.com/repos/c9s/Universal/zipball/ded2149270654e36e6f04afca2df0990221485d9",
+                "reference": "ded2149270654e36e6f04afca2df0990221485d9",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +307,7 @@
             ],
             "description": "Universal library for PHP",
             "homepage": "http://github.com/c9s/Universal",
-            "time": "2015-07-17 07:04:00"
+            "time": "2015-08-22 09:54:03"
         },
         {
             "name": "corneltek/universal-cache",
@@ -490,6 +512,105 @@
             "time": "2015-07-30 09:57:46"
         },
         {
+            "name": "symfony/class-loader",
+            "version": "v2.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ClassLoader.git",
+                "reference": "2fccbc544997340808801a7410cdcb96dd12edc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/2fccbc544997340808801a7410cdcb96dd12edc4",
+                "reference": "2fccbc544997340808801a7410cdcb96dd12edc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/finder": "~2.0,>=2.0.5",
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\ClassLoader\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ClassLoader Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-06-25 12:52:11"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v2.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Finder.git",
+                "reference": "ae0f363277485094edc04c9f3cbe595b183b78e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/ae0f363277485094edc04c9f3cbe595b183b78e4",
+                "reference": "ae0f363277485094edc04c9f3cbe595b183b78e4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Finder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-07-09 16:07:40"
+        },
+        {
             "name": "symfony/process",
             "version": "v2.7.3",
             "source": {
@@ -589,25 +710,29 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.19.0",
+            "version": "v1.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90"
+                "reference": "ca8d3aa90b6a01c82e07909fe815d6b443e75a23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/edbeaf43b0a606cdaadc32a11d2673614a377b90",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ca8d3aa90b6a01c82e07909fe815d6b443e75a23",
+                "reference": "ca8d3aa90b6a01c82e07909fe815d6b443e75a23",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.7"
             },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.19-dev"
+                    "dev-master": "1.21-dev"
                 }
             },
             "autoload": {
@@ -642,7 +767,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-07-31 13:45:26"
+            "time": "2015-08-26 08:58:31"
         }
     ],
     "packages-dev": [
