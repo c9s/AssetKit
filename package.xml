@@ -10,8 +10,8 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2015-08-24</date>
-  <time>02:08:44</time>
+  <date>2015-08-30</date>
+  <time>12:34:08</time>
   <version>
     <release>2.0.12</release>
     <api>2.0.12</api>
@@ -61,7 +61,7 @@
       <file name="src/AssetKit/Compressor/UglifyCompressor.php" role="php" md5sum="353e989efb42fda0117013a4a92df85b"/>
       <file name="src/AssetKit/Compressor/Yui/CssCompressor.php" role="php" md5sum="8bd55ea64c18a757dae05cb988703dc0"/>
       <file name="src/AssetKit/Compressor/Yui/JsCompressor.php" role="php" md5sum="02d1b4e2ba05b098fd14deb2295f9ad8"/>
-      <file name="src/AssetKit/Console.php" role="php" md5sum="f32454196fcbdf12a6dd92c2ae7b5ea1"/>
+      <file name="src/AssetKit/Console.php" role="php" md5sum="cf2bb454683a08fcb1c6e0c742ed5d52"/>
       <file name="src/AssetKit/CssMin.php" role="php" md5sum="436ae19540753f5443f4b40343465d0b"/>
       <file name="src/AssetKit/Data.php" role="php" md5sum="6c955c50dd89f589771526ef38a825ec"/>
       <file name="src/AssetKit/Exception/UndefinedCompressorException.php" role="php" md5sum="54638d35f8554600e138888e21be0f76"/>
@@ -70,7 +70,7 @@
       <file name="src/AssetKit/Exception/UnknownFragmentException.php" role="php" md5sum="a42cdaf0f7fdbdbc02b620c92c28de3e"/>
       <file name="src/AssetKit/Exception/UnwritableFileException.php" role="php" md5sum="b5fe4c41dc420755cefec29ab01ae56d"/>
       <file name="src/AssetKit/Extension/Twig/AssetExtension.php" role="php" md5sum="a019f2b9efa6ec520443d1786e17a7b5"/>
-      <file name="src/AssetKit/Extension/Twig/AssetNode.php" role="php" md5sum="8424688b1d8a2068005edd37a195664d"/>
+      <file name="src/AssetKit/Extension/Twig/AssetNode.php" role="php" md5sum="e120a0205a84c46cb29c61c4e38bb2bc"/>
       <file name="src/AssetKit/Extension/Twig/AssetTokenParser.php" role="php" md5sum="0bd50a3b1855a3a767b28942a275671b"/>
       <file name="src/AssetKit/FileUtil.php" role="php" md5sum="1612f48e54b5447015eb8c02b49d17cd"/>
       <file name="src/AssetKit/Filter/BaseFilter.php" role="php" md5sum="02fe88df66cd3164fc0df1c8ccca5098"/>
