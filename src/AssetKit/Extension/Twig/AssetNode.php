@@ -22,21 +22,22 @@ class AssetNode extends Twig_Node
 
         $assets = $this->getAttribute('assets');
         $target = $this->getAttribute('target');
-        $compiler->raw("\$extension = \$this->getEnvironment()->getExtension('AssetKit');\n");
+        $compiler->raw("\$extension = \$this->env->getExtension('AssetKit');\n");
         $compiler->raw("\$assetloader = \$extension->getAssetLoader();\n");
         $compiler->raw("\$assetrender = \$extension->getAssetRender();\n");
         $compiler->raw("\$assets = array();\n");
         foreach($assets as $asset) {
-            if (is_string($asset)) { 
-                $compiler->raw("\$assets[] = \$assetloader->load('$asset');\n");
+            if (is_string($asset)) {
+
+                $compiler->raw("\$assets[] = \$a = \$assetloader->load('$asset');\n");
 
             } else if ($asset instanceof Twig_Node_Expression_Constant) {
-                $compiler->raw("\$assets[] = \$assetloader->load(");
+
+                $compiler->raw("\$assets[] = \$a = \$assetloader->load(");
                 $compiler->subcompile($asset);
                 $compiler->raw(");\n");
 
             } else if ($asset instanceof Twig_Node_Expression_Array) {
-                //$compiler->addDebugInfo($asset);
 
                 $pairs = $asset->getKeyValuePairs();
                 foreach ($pairs as $pair) {
