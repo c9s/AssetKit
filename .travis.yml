@@ -20,7 +20,6 @@ before_script:
 - sass --version
 - compass --version
 script:
-- phpunit --debug --testsuite AssetExtension -c phpunit.xml.dist
 - phpunit -c phpunit.xml.dist
 - tests/test-commands.sh
 after_success:
