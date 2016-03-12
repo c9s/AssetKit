@@ -144,12 +144,14 @@ class Asset implements ArrayAccess
             $stash = ConfigCompiler::parse($this->manifestFile);
 
             // expand file list
-            foreach($stash['collections'] as & $cStash) {
-                $key = $this->_getFileListKey($cStash);
-                if (!$key) {
-                    throw new Exception("{$this->manifestFile}: type key undefined.");
+            if (isset($stash['collections'])) {
+                foreach($stash['collections'] as & $cStash) {
+                    $key = $this->_getFileListKey($cStash);
+                    if (!$key) {
+                        throw new Exception("{$this->manifestFile}: type key undefined.");
+                    }
+                    $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
                 }
-                $cStash[$key] = $this->expandFileList($this->sourceDir, $cStash[$key]);
             }
 
             // write config back

@@ -266,7 +266,11 @@ class AssetLoader
         return false;
     }
 
-    public function saveEntries() {
+    public function saveEntries()
+    {
+        $root = $this->config->getRoot();
+        $jsonFile = $root . DIRECTORY_SEPARATOR . '.asset-entries.json';
+        file_put_contents($jsonFile, json_encode($this->entries));
         return ConfigCompiler::write($this->config->getEntryFile(), $this->entries);
     }
 
