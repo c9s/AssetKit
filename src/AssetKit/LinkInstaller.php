@@ -8,9 +8,9 @@ class LinkInstaller extends Installer
     {
         $name       = $asset->name;
         $targetDir = $this->getAssetInstallDir($asset, true);
-        if ( file_exists($targetDir) ) {
+        if (file_exists($targetDir)) {
             $this->info("Removing $targetDir");
-            if( is_link($targetDir) ) {
+            if (is_link($targetDir) ) {
                 unlink($targetDir);
             } else {
                 return \futil_rmtree($targetDir);
@@ -38,6 +38,7 @@ class LinkInstaller extends Installer
             }
         }
 
+        $this->info('Creating symlink at ' . $targetDir . ' for ' . realpath($sourceDir) );
         // echo realpath($sourceDir) , " => " , $targetDir , "\n";
         symlink(realpath($sourceDir),$targetDir) or die("$targetDir link failed.");
         return array(

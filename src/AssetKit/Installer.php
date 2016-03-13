@@ -26,19 +26,21 @@ class Installer
         $this->logger = $logger;
     }
 
-    public function enableLogger()
+    protected function debug($msg)
     {
-        $this->enableLog = true;
+        if ($this->logger) {
+            $this->logger->debug( $msg );
+        } else {
+            echo $msg , "\n";
+        }
     }
 
-    public function info($msg)
+    protected function info($msg)
     {
-        if( $this->enableLog ) {
-            if( $this->logger ) {
-                $this->logger->info( $msg );
-            } else {
-                echo $msg , "\n";
-            }
+        if( $this->logger ) {
+            $this->logger->info( $msg );
+        } else {
+            echo $msg , "\n";
         }
     }
 
