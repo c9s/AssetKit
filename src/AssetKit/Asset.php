@@ -305,10 +305,9 @@ class Asset implements ArrayAccess
         }
 
         // load assets
-        if( ! isset($this->stash['collections']) ) {
-            throw new Exception("the 'collections' is not defined in {$this->name}");
+        if (isset($this->stash['collections']) ) {
+            return $this->collections = $this->loadCollections($this->stash['collections']);
         }
-        return $this->collections = $this->loadCollections($this->stash['collections']);
     }
 
     public function export()

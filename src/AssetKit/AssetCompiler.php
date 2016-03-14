@@ -131,12 +131,15 @@ class AssetCompiler
 
         $root = $this->config->getRoot();
         $baseDir = $this->config->getBaseDir(true);
-        foreach( $assets as $asset ) {
+        foreach ($assets as $asset) {
             $assetNames[] = $asset->name;
             $assetBaseUrl = $this->urlBuilder->buildBaseUrl($asset);
 
-            foreach( $asset->getCollections() as $c ) {
-
+            $collections = $asset->getCollections();
+            if (!$collections) {
+                continue;
+            }
+            foreach ($collections as $c ) {
                 $type = null;
                 if ( $c->isScript ) {
                     $type = 'javascript';
