@@ -1,6 +1,7 @@
 {
     "name": "corneltek/assetkit",
     "description": "High performance asset manager.",
+    "license": "MIT",
     "keywords": [
         "asset",
         "manager",
@@ -23,14 +24,8 @@
         "corneltek/phpunit-testmore": "dev-master",
         "satooshi/php-coveralls": "^1"
     },
-    "bin": [
-        "bin/assetkit"
-    ],
-    "autoload": {
-        "psr-4": {
-            "AssetKit\\": "src/AssetKit/"
-        }
-    },
+    "bin": [ "bin/assetkit" ],
+    "autoload": { "psr-4": { "AssetKit\\": "src/AssetKit/" } },
     "extra": {
         "branch-alias": { "dev-master": "3.4.x-dev" }
     }
