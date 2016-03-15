@@ -1,19 +1,4 @@
 #!/bin/bash
 set -e
-onion -d compile \
-    --lib src \
-    --lib vendor/corneltek/universal/src \
-    --lib vendor/corneltek/universal-cache/src \
-    --lib vendor/corneltek/getoptionkit/src \
-    --lib vendor/corneltek/fileutil/src \
-    --lib vendor/corneltek/configkit/src \
-    --lib vendor/twig/twig/lib \
-    --lib vendor/corneltek/cliframework/src \
-    --exclude Tests \
-    --no-compress \
-    --classloader \
-    --bootstrap scripts/assetkit.php \
-    --executable \
-    --output assetkit.phar
-mv assetkit.phar assetkit
-chmod +x assetkit
+php bin/assetkit --debug archive --app-bootstrap --executable --no-compress assetkit.phar
+chmod +x assetkit.phar
