@@ -26,8 +26,8 @@ class WatchCommand extends BaseCommand
 
         $assets = array();
         foreach($assetNames as $assetName) {
-            $this->logger->info("-> Asset $assetName loaded");
             if ($a = $loader->load($assetName)) {
+                $this->logger->info("-> Asset $assetName loaded");
                 $assets[] = $a;
             } else {
                 throw new RuntimeException("Unable to load asset $assetName");
@@ -64,20 +64,24 @@ class WatchCommand extends BaseCommand
                     }
                     $cmd = $runner->buildWatchCommand();
                     $command = join(' ', $cmd);
+                } else if (isset($collection['watch'])) {
+                    $command = $collection['watch'];
                 }
                 if (!$command) {
                     continue;
                 }
 
-                $this->logger->debug("Forking process to watch collection files...");
+                $this->logger->debug("Found command: $command");
+                $this->logger->debug("Forking process #{$processCnt} to watch collection files...");
                 $processCnt++;
                 $pid = pcntl_fork();
                 if ($pid == -1) {
                     throw new Exception("Can't fork process");
                 } elseif ($pid == 0) {
-                    $this->logger->debug("Directory: " . $asset->getSourceDir());
-                    $this->logger->debug("Command: " . $command);
+                    $this->logger->debug("Changing directory to: " . $asset->getSourceDir());
                     chdir($asset->getSourceDir());
+
+                    $this->logger->debug("Executing command: " . $command);
                     system($command, $retval);
                     exit($retval);
                 }
