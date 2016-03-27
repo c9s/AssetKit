@@ -11,7 +11,7 @@ fi
 sudo apt-get install autoconf
 
 # install this version
-APCU=4.0.6
+APCU=5.1.3
 
 # compile manually, because `pecl install apcu-beta` keep asking questions
 wget http://pecl.php.net/get/apcu-$APCU.tgz
