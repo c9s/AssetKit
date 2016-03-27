@@ -1,5 +1,25 @@
 #!/bin/bash
-set -e
-echo -e "yes\nno\n" | pecl install apcu
-echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-php -m | grep apc
+
+# this script is in a `bin/` folder
+
+if [ "$TRAVIS_PHP_VERSION" == "5.3" ]
+then
+    exit 0
+fi
+
+# this is helpful to compile extension
+sudo apt-get install autoconf
+
+# install this version
+APCU_VERSION=4.0.10
+
+if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
+    # 5.1.3 is for php7
+    APCU_VERSION=5.1.3
+fi
+
+# compile manually, because `pecl install apcu-beta` keep asking questions
+wget http://pecl.php.net/get/apcu-$APCU_VERSION.tgz
+tar zxvf apcu-$APCU_VERSION.tgz
+cd "apcu-${APCU_VERSION}"
+phpize && ./configure && make install && echo "Installed ext/apcu-${APCU_VERSION}"
