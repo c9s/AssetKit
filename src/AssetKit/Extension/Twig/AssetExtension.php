@@ -14,6 +14,13 @@ class AssetExtension extends Twig_Extension
 
     protected $render;
 
+    public function __construct(AssetConfig $config, AssetLoader $loader)
+    {
+        $this->config = $config;
+        $this->loader = $loader;
+    }
+
+
     /**
      * Set AssetKit\AssetConfig
      */
