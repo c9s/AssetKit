@@ -16,8 +16,8 @@ class AssetExtension extends Twig_Extension
 
     public function __construct(AssetConfig $config, AssetLoader $loader)
     {
-        $this->config = $config;
-        $this->loader = $loader;
+        $this->assetConfig = $config;
+        $this->assetLoader = $loader;
     }
 
 
