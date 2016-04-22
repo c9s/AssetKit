@@ -5,11 +5,14 @@ use AssetKit\FileUtil;
 class Installer
 {
     public $enableLog = false;
+
     public $logger;
+
     public $config;
 
-    public function __construct(AssetConfig $config) {
+    public function __construct(AssetConfig $config, $logger = null) {
         $this->config = $config;
+        $this->logger = $logger;
     }
 
     /**
@@ -18,8 +21,6 @@ class Installer
     public function getAssetInstallDir(Asset $asset, $absolute = false) {
         return $this->config->getBaseDir(true) . DIRECTORY_SEPARATOR . $asset->name;
     }
-
-
 
     public function setLogger($logger) 
     {
@@ -30,8 +31,6 @@ class Installer
     {
         if ($this->logger) {
             $this->logger->debug( $msg );
-        } else {
-            echo $msg , "\n";
         }
     }
 
@@ -39,8 +38,6 @@ class Installer
     {
         if( $this->logger ) {
             $this->logger->info( $msg );
-        } else {
-            echo $msg , "\n";
         }
     }
 
