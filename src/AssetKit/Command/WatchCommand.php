@@ -39,6 +39,11 @@ class WatchCommand extends BaseCommand
         // Find asset that defines {'compile'} option or {'compiler','source'} option
         foreach($assets as $asset) {
             $collections = $asset->getCollections();
+
+            if (!$collections || count($collections) == 0) {
+                continue;
+            }
+
             foreach($collections as $collection) {
                 $command = NULL;
                 if (isset($collection['compile'])) {
