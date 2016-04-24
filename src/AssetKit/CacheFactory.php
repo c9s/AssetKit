@@ -1,6 +1,6 @@
 <?php
 namespace AssetKit;
-use UniversalCache\ApcCache;
+use UniversalCache\ApcuCache;
 use UniversalCache\FileSystemCache;
 use UniversalCache\UniversalCache;
 use AssetKit\AssetConfig;
@@ -14,16 +14,10 @@ class CacheFactory
     static public function create(AssetConfig $config)
     {
         $cache = new UniversalCache(array());
-
-        // since APC is faster.
-        if ( extension_loaded('apc') ) {
-            $cache->addBackend( new ApcCache(array( 
-                'namespace' => $config->getNamespace(),
-            )));
+        if (extension_loaded('apcu')) {
+            $cache->addBackend(new ApcuCache($config->getNamespace()));
         }
-        $cache->addBackend( new FileSystemCache(array(
-            'cache_dir' => $config->getCacheDir(),
-        )));
+        $cache->addBackend(new FileSystemCache($config->getCacheDir()));
         return $cache;
     }
 }

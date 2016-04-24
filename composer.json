@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.4.0",
         "twig/twig": "^1 >=1.21",
-        "corneltek/universal-cache": "~1",
+        "corneltek/universal-cache": "2.0.x-dev",
         "corneltek/fileutil": "~1",
         "corneltek/cliframework": "3.0.x-dev",
         "corneltek/configkit": "*",
