@@ -8,10 +8,6 @@ class ResourceUpdater
 {
     public function __construct()
     {
-        // check zip extension and ZipArchive class (which might be pure php version)
-        if( ! extension_loaded('zip') && ! class_exists('ZipArchive') ) {
-            throw new Exception('zip extension or ZipArchive class is required.');
-        }
     }
 
     public function update(Asset $asset, $update = false)
@@ -42,7 +38,12 @@ class ResourceUpdater
 
             echo "Stored at $targetFile\n";
 
-            if( isset($r['zip']) ) {
+            if (isset($r['zip']) ) {
+        // check zip extension and ZipArchive class (which might be pure php version)
+        if( ! extension_loaded('zip') && ! class_exists('ZipArchive') ) {
+            throw new Exception('zip extension or ZipArchive class is required.');
+        }
+
                 $zip = new ZipArchive;
                 if( $zip->open( $targetFile ) === TRUE ) {
                     echo "Extracting to {$asset->sourceDir}\n";
