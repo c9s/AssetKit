@@ -82,14 +82,5 @@ class AssetExtension extends Twig_Extension
     {
         return array( new AssetTokenParser() );
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName() {
-        return 'AssetKit';
-    }
 }
 
