@@ -13940,7 +13940,7 @@ class Twig_Test_Function extends Twig_Test
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Karma Dordrak <drak@zikula.org>
  */
-abstract class Twig_Test_IntegrationTestCase extends PHPUnit_Framework_TestCase
+abstract class Twig_Test_IntegrationTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @return string
@@ -14245,7 +14245,7 @@ class Twig_Test_Node extends Twig_Test
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-abstract class Twig_Test_NodeTestCase extends PHPUnit_Framework_TestCase
+abstract class Twig_Test_NodeTestCase extends \PHPUnit\Framework\TestCase
 {
     abstract public function getTests();
 
@@ -20799,7 +20799,7 @@ class PHPUnitFrameworkTestCase extends UserClass
     {
         $class = Inflector::classify(preg_replace('/\W+/', ' ', $title));
         parent::__construct($class);
-        $this->extendClass('PHPUnit_Framework_TestCase', true);
+        $this->extendClass('\PHPUnit\Framework\TestCase', true);
     }
 
     public function addTest($testName)
@@ -21786,9 +21786,9 @@ class UseStatement extends Statement implements Renderable
 namespace CodeGen\Testing;
 
 use CodeGen\Renderable;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-abstract class CodeGenTestCase extends PHPUnit_Framework_TestCase
+abstract class CodeGenTestCase extends \PHPUnit\Framework\TestCase
 {
 
     public function assertCodeEquals($expected, Renderable $code, array $args = array())
@@ -41960,9 +41960,9 @@ class ServiceContainer extends Container
 
 <?php
 namespace CLIFramework\Testing;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-abstract class CommandTestCase extends PHPUnit_Framework_TestCase
+abstract class CommandTestCase extends \PHPUnit\Framework\TestCase
 {
     public $app;
 
@@ -42001,7 +42001,7 @@ abstract class CommandTestCase extends PHPUnit_Framework_TestCase
 <?php
 namespace CLIFramework\Testing;
 
-class ConsoleTestCase extends \PHPUnit_Framework_TestCase
+class ConsoleTestCase extends \\PHPUnit\Framework\TestCase
 {
     protected function runScript($path, $input, $callback)
     {
@@ -64443,11 +64443,11 @@ class Target
 
 <?php
 namespace AssetKit;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
 
     public $config;

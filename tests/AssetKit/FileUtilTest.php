@@ -1,7 +1,7 @@
 <?php
 use AssetKit\FileUtil;
 
-class FileUtilTest extends PHPUnit_Framework_TestCase
+class FileUtilTest extends \PHPUnit\Framework\TestCase
 {
     public function test()
     {

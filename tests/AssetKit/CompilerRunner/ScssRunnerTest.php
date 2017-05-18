@@ -1,7 +1,7 @@
 <?php
 use AssetKit\CompilerRunner\ScssRunner;
 
-class ScssRunnerTest extends PHPUnit_Framework_TestCase
+class ScssRunnerTest extends \PHPUnit\Framework\TestCase
 {
     public function testWatchCommandBuilder()
     {

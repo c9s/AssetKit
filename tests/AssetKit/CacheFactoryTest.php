@@ -2,7 +2,7 @@
 use AssetKit\CacheFactory;
 use AssetKit\AssetConfig;
 
-class CacheFactoryTest extends PHPUnit_Framework_TestCase
+class CacheFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCacheFactory()
     {

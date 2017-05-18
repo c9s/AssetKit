@@ -1,7 +1,7 @@
 <?php
 use AssetKit\Process;
 
-class ProcessTest extends PHPUnit_Framework_TestCase
+class ProcessTest extends \PHPUnit\Framework\TestCase
 {
     function test()
     {

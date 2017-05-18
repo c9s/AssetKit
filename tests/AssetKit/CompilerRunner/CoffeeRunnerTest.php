@@ -1,7 +1,7 @@
 <?php
 use AssetKit\CompilerRunner\CoffeeRunner;
 
-class CoffeeRunnerTest extends PHPUnit_Framework_TestCase
+class CoffeeRunnerTest extends \PHPUnit\Framework\TestCase
 {
     public function testWatchCommandBuilder()
     {
