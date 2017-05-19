@@ -46,7 +46,7 @@ class AssetLoaderTest extends AssetKit\TestCase
         $collections = $asset->getCollections();
         $this->assertNotEmpty($collections);
         ok( $collections[0]->isStylesheet );
-        is( 'darkness', $collections[0]->id );
+        $this->assertEquals( 'darkness', $collections[0]->id );
     }
 
     public function testAssetLoad() {
@@ -105,7 +105,7 @@ class AssetLoaderTest extends AssetKit\TestCase
 
         $urlBuilder = new AssetUrlBuilder($config);
         $assetBaseUrl = $urlBuilder->buildBaseUrl($asset);
-        is( "/assets/" . $asset->name, $assetBaseUrl);
+        $this->assertEquals( "/assets/" . $asset->name, $assetBaseUrl);
         $config->save();
     }
 }

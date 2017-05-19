@@ -42,18 +42,18 @@ class AssetConfigTest extends TestCase
         $config->save(); // save the config
         ok($array = $config->getConfigArray());
 
-        is('/assets',$array['BaseUrl']);
-        is('tests/assets',$array['BaseDir']);
-        is('production',$array['Environment']);
+        $this->assertEquals('/assets',$array['BaseUrl']);
+        $this->assertEquals('tests/assets',$array['BaseDir']);
+        $this->assertEquals('production',$array['Environment']);
 
         $yamlContent = file_get_contents($configFile);
         ok($yamlContent);
 
         if (extension_loaded('yaml')) {
             $array = yaml_parse($yamlContent);
-            is('/assets',$array['BaseUrl']);
-            is('tests/assets',$array['BaseDir']);
-            is('production',$array['Environment']);
+            $this->assertEquals('/assets',$array['BaseUrl']);
+            $this->assertEquals('tests/assets',$array['BaseDir']);
+            $this->assertEquals('production',$array['Environment']);
         }
 
     }

@@ -7,7 +7,7 @@ class ProcessTest extends \PHPUnit\Framework\TestCase
     {
         $proc = new Process(array('ls','-1'));
         $return = $proc->run();
-        is( 0, $return );
+        $this->assertEquals( 0, $return );
 
         $output = $proc->getOutput();
         ok( $output );
@@ -35,7 +35,7 @@ class ProcessTest extends \PHPUnit\Framework\TestCase
         $input = file_get_contents('tests/assets/test/test.coffee');
         $proc = new Process(array('coffee','-cps'));
         $code = $proc->run();
-        is( 0 , $code );
+        $this->assertEquals( 0 , $code );
     }
 
 

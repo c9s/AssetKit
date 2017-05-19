@@ -127,8 +127,8 @@ class AssetCompilerTest extends AssetKit\TestCase
             ["css_url"] => string(31) "/assets/jquery-ui/jquery-ui.css"
         }
          */
-        // is('/assets/jquery-ui/jquery-ui.js', $files['js_url'][0]);
-        // is('/assets/jquery-ui/jquery-ui.css', $files['css_url'][0]);
+        // $this->assertEquals('/assets/jquery-ui/jquery-ui.js', $files['js_url'][0]);
+        // $this->assertEquals('/assets/jquery-ui/jquery-ui.css', $files['css_url'][0]);
         $this->uninstallAssets($assets);
     }
 
@@ -209,8 +209,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         ok($entry);
         path_ok($entry['js_file']);
         path_ok($entry['css_file']);
-        is('/assets/compiled/jquery-ui.min.js', $entry['js_url']);
-        is('/assets/compiled/jquery-ui.min.css', $entry['css_url']);
+        $this->assertEquals('/assets/compiled/jquery-ui.min.js', $entry['js_url']);
+        $this->assertEquals('/assets/compiled/jquery-ui.min.css', $entry['css_url']);
         $installer->uninstall($asset);
     }
 

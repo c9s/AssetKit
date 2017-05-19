@@ -37,8 +37,8 @@ class AssetTest extends AssetKit\TestCase
         $installer->enableLog = false;
         $installer->install( $as );
 
-        is('public/assets/jquery-ui',$as->getInstallDir());
-        is('assets/jquery-ui',$as->getSourceDir());
+        $this->assertEquals('public/assets/jquery-ui',$as->getInstallDir());
+        $this->assertEquals('assets/jquery-ui',$as->getSourceDir());
 
 
 #          $installer->uninstall( $as );
