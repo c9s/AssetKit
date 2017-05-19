@@ -11,7 +11,7 @@ class FileUtilTest extends \PHPUnit\Framework\TestCase
 
         $files = FileUtil::expand_dir_recursively("tests/assets/jquery");
         foreach($files as $file) {
-            path_ok( $file, $file );
+            $this->assertFileExists( $file, $file );
         }
     }
 }

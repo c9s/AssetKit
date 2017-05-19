@@ -95,8 +95,8 @@ class AssetCompilerTest extends TestCase
 
         $entries = $compiler->compileAssets($assets,'myapp', $force = true);
         $this->assertNotEmpty($entries);
-        path_ok($entries[0]['js_file']);
-        path_ok($entries[0]['css_file']);
+        $this->assertFileExists($entries[0]['js_file']);
+        $this->assertFileExists($entries[0]['css_file']);
         $this->assertNotNull($entries[0]['mtime'], 'got mtime');
 
 
@@ -210,8 +210,8 @@ class AssetCompilerTest extends TestCase
 
         $entry = $compiler->compile($asset);
         $this->assertNotNull($entry);
-        path_ok($entry['js_file']);
-        path_ok($entry['css_file']);
+        $this->assertFileExists($entry['js_file']);
+        $this->assertFileExists($entry['css_file']);
         $this->assertEquals('/assets/compiled/jquery-ui.min.js', $entry['js_url']);
         $this->assertEquals('/assets/compiled/jquery-ui.min.css', $entry['css_url']);
         $installer->uninstall($asset);

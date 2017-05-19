@@ -1,4 +1,7 @@
 <?php
+
+namespace AssetKit;
+
 use AssetKit\AssetConfig;
 use AssetKit\TestCase;
 
@@ -12,19 +15,17 @@ class AssetConfigTest extends TestCase
         ));
         $this->assertNotNull($config);
         $config->save();
-        path_ok($configFile);
+        $this->assertFileExists($configFile);
     }
 
     public function testCreateAssetConfigWithArray() {
         $configFile = $this->getConfigFile();
-        $config = new AssetConfig(array(
-            'Environment' => 'production',
-        ), array(
-            'root' => realpath('tests'),
-        ));
+        $config = new AssetConfig([
+            'Environment' => 'production'
+        ],[ 'root' => realpath('tests') ]);
         $this->assertNotNull($config);
         $config->save($configFile);
-        path_ok($configFile);
+        $this->assertFileExists($configFile);
     }
 
 
