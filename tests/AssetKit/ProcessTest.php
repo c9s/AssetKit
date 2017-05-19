@@ -10,7 +10,7 @@ class ProcessTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals( 0, $return );
 
         $output = $proc->getOutput();
-        ok( $output );
+        $this->assertNotNull( $output );
         like( '#README.md#',$output);
         return $output;
     }
@@ -23,7 +23,7 @@ class ProcessTest extends \PHPUnit\Framework\TestCase
     {
         $proc = new Process(array('grep','package'));
         $code = $proc->input($input)->run();
-        ok($code == 0);
+        $this->assertNotNull($code == 0);
 
         $output = $proc->getOutput();
         like('#package\.ini#',$output);

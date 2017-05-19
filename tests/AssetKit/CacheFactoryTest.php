@@ -11,7 +11,7 @@ class CacheFactoryTest extends \PHPUnit\Framework\TestCase
             'cache_dir' => 'cache',
         ));
         $cache = CacheFactory::create($config);
-        ok($cache);
+        $this->assertNotNull($cache);
     }
 }
 

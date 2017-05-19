@@ -14,12 +14,12 @@ class AssetExtensionTest extends Twig_Test_IntegrationTestCase
 
         $config->setEnvironment(AssetConfig::PRODUCTION);
 
-        ok($loader->register('tests/assets/jquery/manifest.yml'));
-        ok($loader->register('tests/assets/jquery-ui/manifest.yml'));
-        ok($loader->register('tests/assets/simple-sass/manifest.yml'));
-        ok($loader->register('tests/assets/simple-coffee/manifest.yml'));
-        ok($loader->register('tests/assets/test/manifest.yml'));
-        ok($loader->register('tests/assets/json-js/manifest.yml'));
+        $this->assertNotNull($loader->register('tests/assets/jquery/manifest.yml'));
+        $this->assertNotNull($loader->register('tests/assets/jquery-ui/manifest.yml'));
+        $this->assertNotNull($loader->register('tests/assets/simple-sass/manifest.yml'));
+        $this->assertNotNull($loader->register('tests/assets/simple-coffee/manifest.yml'));
+        $this->assertNotNull($loader->register('tests/assets/test/manifest.yml'));
+        $this->assertNotNull($loader->register('tests/assets/json-js/manifest.yml'));
 
         return array(
             new Twig_Extension_Debug(),

@@ -25,27 +25,27 @@ class AssetLoaderTest extends AssetKit\TestCase
     {
         $loader = $this->getLoader();
         $asset = $loader->register("tests/assets/jquery-ui");
-        ok($asset);
+        $this->assertNotNull($asset);
 
         $asset = $loader->load('jquery-ui:stylesheet');
-        ok($asset instanceof Asset);
+        $this->assertNotNull($asset instanceof Asset);
         $collections = $asset->getCollections();
         $this->assertNotEmpty($collections);
-        ok( $collections[0]->isStylesheet );
+        $this->assertNotNull( $collections[0]->isStylesheet );
 
         $asset = $loader->load('jquery-ui:javascript');
-        ok($asset instanceof Asset);
+        $this->assertNotNull($asset instanceof Asset);
         $collections = $asset->getCollections();
         $this->assertNotEmpty($collections);
-        ok( $collections[0]->isScript );
+        $this->assertNotNull( $collections[0]->isScript );
 
 
 
         $asset = $loader->load('jquery-ui#darkness');
-        ok($asset instanceof Asset);
+        $this->assertNotNull($asset instanceof Asset);
         $collections = $asset->getCollections();
         $this->assertNotEmpty($collections);
-        ok( $collections[0]->isStylesheet );
+        $this->assertNotNull( $collections[0]->isStylesheet );
         $this->assertEquals( 'darkness', $collections[0]->id );
     }
 
@@ -67,8 +67,8 @@ class AssetLoaderTest extends AssetKit\TestCase
         $assets[] = $loader->load('webtoolkit');
         $assets[] = $loader->load('action-js');
         foreach($assets as $asset) {
-            ok($asset);
-            ok($asset instanceof Asset);
+            $this->assertNotNull($asset);
+            $this->assertNotNull($asset instanceof Asset);
         }
     }
 
@@ -80,8 +80,8 @@ class AssetLoaderTest extends AssetKit\TestCase
         $loader = $this->getLoader();
         $name = basename($manifestPath);
         $asset = $loader->lookup($name);
-        ok($asset);
-        ok($asset instanceof Asset);
+        $this->assertNotNull($asset);
+        $this->assertNotNull($asset instanceof Asset);
     }
 
 
@@ -94,13 +94,13 @@ class AssetLoaderTest extends AssetKit\TestCase
         $loader = $this->getLoader();
 
         $asset = $loader->register($manifestPath);
-        ok($asset, "Asset is loaded from $manifestPath");
+        $this->assertNotNull($asset, "Asset is loaded from $manifestPath");
 
         $collections = $asset->getCollections();
-        ok($collections);
+        $this->assertNotNull($collections);
 
         foreach( $collections as $collection ) {
-            ok( $collection instanceof Collection, 'Got Collection object');
+            $this->assertNotNull( $collection instanceof Collection, 'Got Collection object');
         }
 
         $urlBuilder = new AssetUrlBuilder($config);

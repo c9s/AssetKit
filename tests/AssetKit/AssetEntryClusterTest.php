@@ -7,7 +7,7 @@ class AssetEntryStorageTest extends TestCase
     public function testAssetEntryStorage()
     {
         $cache = new AssetEntryStorage;
-        ok($cache);
+        $this->assertNotNull($cache);
         $cache['foo'] = array( 'source_file' => '1' );
         $cache['bar'] = array( 'source_file' => '2' );
     }
@@ -31,13 +31,13 @@ class AssetEntryStorageTest extends TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
         $asset = $loader->register($manifestPath);
-        ok($asset, "Asset is loaded from $manifestPath");
+        $this->assertNotNull($asset, "Asset is loaded from $manifestPath");
 
         $entries = $loader->getEntries();
         $code = '$evalEntries = ' . var_export($entries, true) . ';';
         eval($code);
-        ok($evalEntries);
-        ok(isset($evalEntries[$asset->name]));
+        $this->assertNotNull($evalEntries);
+        $this->assertNotNull(isset($evalEntries[$asset->name]));
     }
 }
 

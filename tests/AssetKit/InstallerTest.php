@@ -12,7 +12,7 @@ class InstallerTest extends AssetKit\TestCase
     public function testInstaller($assets)
     {
         $installer = new AssetKit\Installer($this->getConfig());
-        ok($installer);
+        $this->assertNotNull($installer);
         foreach($assets as $asset) {
             $installer->install($asset);
         }
@@ -27,7 +27,7 @@ class InstallerTest extends AssetKit\TestCase
     public function testLinkInstaller($assets)
     {
         $installer = new AssetKit\LinkInstaller($this->getConfig());
-        ok($installer);
+        $this->assertNotNull($installer);
         foreach($assets as $asset) {
             $installer->install($asset);
         }

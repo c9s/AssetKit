@@ -8,22 +8,22 @@ class AssetTest extends AssetKit\TestCase
     {
         $config = $this->getConfig();
         $loader = $this->getLoader();
-        ok($config);
-        ok($loader);
+        $this->assertNotNull($config);
+        $this->assertNotNull($loader);
 
         $as = new Asset($config);
         $as->loadManifestFile("tests/assets/jquery-ui/manifest.yml");
-        ok($as);
+        $this->assertNotNull($as);
 
         $collections = $as->getCollections();
-        ok($collections);
+        $this->assertNotNull($collections);
 
         foreach( $collections as $c ) {
             $paths = $c->getSourcePaths();
             foreach( $paths as $p ) {
                 file_ok( $p );
             }
-            ok( $paths );
+            $this->assertNotNull( $paths );
         }
     }
 

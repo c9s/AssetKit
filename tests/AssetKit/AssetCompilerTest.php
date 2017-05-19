@@ -18,8 +18,8 @@ class AssetCompilerTest extends AssetKit\TestCase
         $assets[] = $loader->register("tests/assets/underscore");
         $assets[] = $loader->register("tests/assets/webtoolkit");
         foreach($assets as $asset) {
-            ok($asset);
-            ok($asset instanceof Asset);
+            $this->assertNotNull($asset);
+            $this->assertInstanceOf(Asset::class, $asset);
         }
 
         $this->installAssets($assets);
@@ -28,11 +28,11 @@ class AssetCompilerTest extends AssetKit\TestCase
         $compiler->registerDefaultFilters();
 
         $entries = $compiler->compileAssets($assets,'myapp2', $force = true);
-        ok($entries);
+        $this->assertNotEmpty($entries);
 
         for($i = 0; $i < 100; $i++) {
             $entries2 = $compiler->compileAssets($assets,'myapp2', $force = false);
-            ok($entries2);
+            $this->assertNotEmpty($entries2);
             $this->assertSame($entries, $entries2);
         }
     }
@@ -80,8 +80,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         $assets[] = $loader->register("tests/assets/jquery-ui");
         $assets[] = $loader->register("tests/assets/test");
         foreach($assets as $asset) {
-            ok($asset);
-            ok($asset instanceof Asset);
+            $this->assertInstanceOf(Asset::class, $asset);
         }
 
         $this->installAssets($assets);
@@ -94,7 +93,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         $this->assertNotEmpty($entries);
         path_ok($entries[0]['js_file']);
         path_ok($entries[0]['css_file']);
-        ok($entries[0]['mtime'], 'got mtime');
+        $this->assertNotNull($entries[0]['mtime'], 'got mtime');
 
 
         /*
@@ -110,7 +109,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         */
 
         $cssminContent = file_get_contents($entries[0]['css_file']);
-        ok($cssminContent);
+        $this->assertNotNull($cssminContent);
 
         // examine these paths
         $this->assertContains('background:url(/assets/test/images/test.png)', $cssminContent, "Checking " . $entries[0]['css_file']);
@@ -144,16 +143,16 @@ class AssetCompilerTest extends AssetKit\TestCase
         $assets[] = $loader->register("tests/assets/simple-sass");
         $assets[] = $loader->register("tests/assets/jquery");
         $assets[] = $loader->register("tests/assets/jquery-ui");
-        ok($assets);
+        $this->assertNotNull($assets);
 
         $this->installAssets($assets);
 
         $compiler = new AssetCompiler($config,$loader);
         $outs = $compiler->compileAssets($assets);
-        ok($outs);
+        $this->assertNotNull($outs);
         foreach($outs as $out) {
-            ok($out['type']);
-            ok(isset($out['url']) || isset($out['content']));
+            $this->assertNotNull($out['type']);
+            $this->assertNotNull(isset($out['url']) || isset($out['content']));
         }
         return $outs;
     }
@@ -195,7 +194,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         $loader = $this->getLoader();
 
         $asset = $loader->register("tests/assets/jquery-ui");
-        ok($asset);
+        $this->assertNotNull($asset);
 
         $compiler = new ProductionAssetCompiler($config,$loader);
         $compiler->enableFstatCheck();
@@ -206,7 +205,7 @@ class AssetCompilerTest extends AssetKit\TestCase
         $installer->install($asset);
 
         $entry = $compiler->compile($asset);
-        ok($entry);
+        $this->assertNotNull($entry);
         path_ok($entry['js_file']);
         path_ok($entry['css_file']);
         $this->assertEquals('/assets/compiled/jquery-ui.min.js', $entry['js_url']);

@@ -10,7 +10,7 @@ class AssetCollectionTest extends AssetKit\TestCase
         $assets[] = $loader->register("tests/assets/jquery");
         $assets[] = $loader->register("tests/assets/jquery-ui");
         $collection = new AssetKit\AssetCollection($assets);
-        ok($collection);
+        $this->assertNotNull($collection);
     }
 
     public function testAssetCollectionAppend()
@@ -18,7 +18,7 @@ class AssetCollectionTest extends AssetKit\TestCase
         $config = $this->getConfig();
         $loader = $this->getLoader();
         $collection = new AssetKit\AssetCollection();
-        ok($collection);
+        $this->assertNotNull($collection);
 
         $collection->add($loader->register("tests/assets/jquery"));
         $collection->add($loader->register("tests/assets/jquery-ui"));

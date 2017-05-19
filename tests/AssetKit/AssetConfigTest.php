@@ -10,7 +10,7 @@ class AssetConfigTest extends TestCase
         $config = new AssetConfig($configFile, array(
             'root' => realpath('tests'),
         ));
-        ok($config);
+        $this->assertNotNull($config);
         $config->save();
         path_ok($configFile);
     }
@@ -22,7 +22,7 @@ class AssetConfigTest extends TestCase
         ), array(
             'root' => realpath('tests'),
         ));
-        ok($config);
+        $this->assertNotNull($config);
         $config->save($configFile);
         path_ok($configFile);
     }
@@ -32,7 +32,7 @@ class AssetConfigTest extends TestCase
     {
         $configFile = $this->getConfigFile();
         $config = new AssetConfig($configFile, array());
-        ok($config);
+        $this->assertNotNull($config);
 
         $config->setBaseUrl('/assets');
         $config->setBaseDir('tests/assets');
@@ -40,14 +40,14 @@ class AssetConfigTest extends TestCase
         $config->addAssetDirectory('vendor/assets');
 
         $config->save(); // save the config
-        ok($array = $config->getConfigArray());
+        $this->assertNotNull($array = $config->getConfigArray());
 
         $this->assertEquals('/assets',$array['BaseUrl']);
         $this->assertEquals('tests/assets',$array['BaseDir']);
         $this->assertEquals('production',$array['Environment']);
 
         $yamlContent = file_get_contents($configFile);
-        ok($yamlContent);
+        $this->assertNotNull($yamlContent);
 
         if (extension_loaded('yaml')) {
             $array = yaml_parse($yamlContent);

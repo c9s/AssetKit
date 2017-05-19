@@ -6,7 +6,7 @@ class CoffeeRunnerTest extends \PHPUnit\Framework\TestCase
     public function testWatchCommandBuilder()
     {
         $runner = new CoffeeRunner;
-        ok($runner);
+        $this->assertNotNull($runner);
 
         $runner->useSourceMap();
         $runner->addSourceArgument('crud.coffee');
@@ -18,7 +18,7 @@ class CoffeeRunnerTest extends \PHPUnit\Framework\TestCase
     public function testUpdateCommandBuilder()
     {
         $runner = new CoffeeRunner;
-        ok($runner);
+        $this->assertNotNull($runner);
 
         $runner->useSourceMap();
         $runner->addSourceArgument('crud.coffee');

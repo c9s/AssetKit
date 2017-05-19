@@ -13,7 +13,7 @@ class CssImportFilterTest extends AssetKit\TestCase
         $urlBuilder = new AssetKit\AssetUrlBuilder($config);
 
         $jqueryui = $loader->register('tests/assets/jquery-ui');
-        ok($jqueryui, 'jqueryui asset is loaded');
+        $this->assertNotNull($jqueryui, 'jqueryui asset is loaded');
 
         $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         $importFilter        = new CssImportFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
@@ -25,7 +25,7 @@ class CssImportFilterTest extends AssetKit\TestCase
 
                 // $importFilter->filter( $c );
                 $content = $c->getContent();
-                ok($content,"Got content");
+                $this->assertNotNull($content,"Got content");
                 // echo $content;
             }
         }
@@ -43,14 +43,14 @@ class CssImportFilterTest extends AssetKit\TestCase
         $collection->setContent("background: url(../images/file.png)");
 
         $jqueryui = $loader->register('tests/assets/jquery-ui');
-        ok($jqueryui, 'jqueryui asset is loaded');
+        $this->assertNotNull($jqueryui, 'jqueryui asset is loaded');
 
 
         $rewriteFilter = new CssRewriteFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         $importFilter        = new CssImportFilter($config, $urlBuilder->buildBaseUrl($jqueryui) );
         foreach( $jqueryui->getCollections() as $c ) {
 
-            ok( $c->getContent() ,'get content ok' );
+            $this->assertNotNull( $c->getContent() ,'get content ok' );
 
             // for css stylesheet
             if( $c->isStylesheet ) {
@@ -58,7 +58,7 @@ class CssImportFilterTest extends AssetKit\TestCase
 
                 // $importFilter->filter( $c );
                 $content = $c->getContent();
-                ok($content,"Got content");
+                $this->assertNotNull($content,"Got content");
                 // echo $content;
             }
         }
