@@ -16,14 +16,19 @@
     </testsuite>
     <testsuite name="All">
       <directory suffix="Test.php">tests</directory>
+      <directory suffix="Test.php">src</directory>
     </testsuite>
   </testsuites>
 
   <filter>
     <whitelist>
       <directory>src</directory>
+      <exclude>
+        <directory suffix="Test.php">src</directory>
+      </exclude>
     </whitelist>
   </filter>
+
   <logging>
     <log type="tap" target="build/logs/report.tap" />
     <log type="junit" target="build/logs/report.junit.xml" />

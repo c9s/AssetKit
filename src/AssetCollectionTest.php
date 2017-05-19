@@ -1,6 +1,11 @@
 <?php
+
+namespace AssetKit;
+
 use AssetKit\AssetCollection;
-class AssetCollectionTest extends AssetKit\TestCase
+use AssetKit\TestCase;
+
+class AssetCollectionTest extends TestCase
 {
     public function testAssetCollectionConstructor()
     {
@@ -9,7 +14,7 @@ class AssetCollectionTest extends AssetKit\TestCase
         $assets = array();
         $assets[] = $loader->register("tests/assets/jquery");
         $assets[] = $loader->register("tests/assets/jquery-ui");
-        $collection = new AssetKit\AssetCollection($assets);
+        $collection = new AssetCollection($assets);
         $this->assertNotNull($collection);
     }
 
@@ -17,7 +22,8 @@ class AssetCollectionTest extends AssetKit\TestCase
     {
         $config = $this->getConfig();
         $loader = $this->getLoader();
-        $collection = new AssetKit\AssetCollection();
+
+        $collection = new AssetCollection();
         $this->assertNotNull($collection);
 
         $collection->add($loader->register("tests/assets/jquery"));

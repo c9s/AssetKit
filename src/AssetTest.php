@@ -1,9 +1,12 @@
 <?php
+
+namespace AssetKit;
+
 use AssetKit\Asset;
+use AssetKit\TestCase;
 
-class AssetTest extends AssetKit\TestCase
+class AssetTest extends TestCase
 {
-
     public function testLoadFromManifestFile()
     {
         $config = $this->getConfig();
@@ -27,11 +30,7 @@ class AssetTest extends AssetKit\TestCase
         }
     }
 
-
-
-
-
-        /*
+    /*
         $config->addAsset( 'jquery-ui', $as );
         $installer = new \AssetKit\Installer($config);
         $installer->enableLog = false;
@@ -39,13 +38,9 @@ class AssetTest extends AssetKit\TestCase
 
         $this->assertEquals('public/assets/jquery-ui',$as->getInstallDir());
         $this->assertEquals('assets/jquery-ui',$as->getSourceDir());
-
-
-#          $installer->uninstall( $as );
-
+        # $installer->uninstall( $as );
         $jssha = $loader->load('jssha');
-
         // $jssha->initResource();
-         */
+    */
 }
 

@@ -1,10 +1,14 @@
 <?php
+
+namespace AssetKit;
+
 use AssetKit\AssetCompiler;
 use AssetKit\ProductionAssetCompiler;
 use AssetKit\AssetRender;
 use AssetKit\Asset;
+use AssetKit\TestCase;
 
-class AssetCompilerTest extends AssetKit\TestCase
+class AssetCompilerTest extends TestCase
 {
 
     public function testProductionAssetCompilerCache() {
