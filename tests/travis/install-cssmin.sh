@@ -12,8 +12,5 @@ else
     cd cssmin-1.0/
 fi
 
-phpize
-./configure
-make
-sudo make install
+phpize && ./configure && make && sudo make install
 echo "extension=cssmin.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
