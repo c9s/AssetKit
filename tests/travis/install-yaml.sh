@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
-wget -c http://pecl.php.net/get/yaml-1.1.1.tgz
-tar -xzf yaml-1.1.1.tgz
-cd yaml-1.1.1
-phpize
-./configure
-make
-sudo make install
+if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then
+    PACKAGE=yaml-2.0.0
+else
+    PACKAGE=yaml-1.3.0
+fi
+wget -c http://pecl.php.net/get/$PACKAGE.tgz
+tar -xzf $PACKAGE.tgz
+(cd $PACKAGE && phpize && ./configure && make && sudo make install)
 echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
