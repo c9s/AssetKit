@@ -1,13 +1,15 @@
 #!/bin/bash
 set -e
-if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then
-    wget -O cssmin-1.0.tar.gz https://github.com/c9s/cssmin/archive/master.tar.gz
-    tar xvf cssmin-master.tar.gz
-    cd cssmin-master/
-else
-    wget -O cssmin-1.0.tar.gz https://github.com/c9s/cssmin/archive/v1.0.tar.gz
-    tar xvf cssmin-1.0.tar.gz
-    cd cssmin-1.0/
+mkdir exts
+cd exts
+if [[ ! -e cssmin ]] ; then
+    if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then
+        wget https://github.com/c9s/cssmin/archive/master.tar.gz
+        tar xvf cssmin-master.tar.gz && mv cssmin-master cssmin
+    else
+        wget https://github.com/c9s/cssmin/archive/v1.0.tar.gz
+        tar xvf cssmin-1.0.tar.gz && mv cssmin-1.0 cssmin
+    fi
 fi
-(phpize && ./configure && make && sudo make install)
+(cd cssmin && phpize && ./configure && make && sudo make install)
 echo "extension=cssmin.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
