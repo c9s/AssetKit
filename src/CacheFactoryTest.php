@@ -1,6 +1,6 @@
 <?php
-use AssetKit\CacheFactory;
-use AssetKit\AssetConfig;
+
+namespace AssetKit;
 
 class CacheFactoryTest extends \PHPUnit\Framework\TestCase
 {
