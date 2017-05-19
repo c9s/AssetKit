@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-mkdir exts
+mkdir -p exts
 cd exts
 if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then
     PACKAGE=yaml-2.0.0

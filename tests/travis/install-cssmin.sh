@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-mkdir exts
+mkdir -p exts
 cd exts
 if [[ ! -e cssmin ]] ; then
     if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then
