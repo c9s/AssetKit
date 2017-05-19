@@ -11,5 +11,5 @@ if [[ ! -e cssmin ]] ; then
         tar xvf cssmin-1.0.tar.gz && mv cssmin-1.0 cssmin
     fi
 fi
-(cd cssmin && phpize && ./configure && make && sudo make install)
+(cd cssmin && phpize && ./configure && make && make install)
 echo "extension=cssmin.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini

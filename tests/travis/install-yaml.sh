@@ -11,5 +11,5 @@ if [[ ! -e $PACKAGE ]] ; then
     wget -c http://pecl.php.net/get/$PACKAGE.tgz
     tar xzf $PACKAGE.tgz
 fi
-(cd $PACKAGE && phpize && ./configure && make && sudo make install)
+(cd $PACKAGE && phpize && ./configure && make && make install)
 echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
