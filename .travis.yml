@@ -27,6 +27,7 @@ cache:
   apt: true
   directories:
   - vendor
+  - exts
 notifications:
   slack:
     secure: hT6xEqww/9e0qB6KBOqdIWwehO8L5JNEuzOzOf3FemTJlB7M0yN8Mg61zNjJbLMPIsgwScWEzTP4hRpDx3rUeJDnqpSG1eMruYprKmjNW6xarIFSkKM762WgjF4jg/nMaq8PXKFIGS14G893/tfAvNUOlBr9pBDuQCDZkSMUEZY=
