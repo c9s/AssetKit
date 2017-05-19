@@ -1,5 +1,6 @@
 <?php
-use AssetKit\FileUtil;
+
+namespace AssetKit;
 
 class FileUtilTest extends \PHPUnit\Framework\TestCase
 {

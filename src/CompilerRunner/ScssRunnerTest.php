@@ -1,5 +1,6 @@
 <?php
-use AssetKit\CompilerRunner\ScssRunner;
+
+namespace AssetKit\CompilerRunner;
 
 class ScssRunnerTest extends \PHPUnit\Framework\TestCase
 {

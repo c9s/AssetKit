@@ -1,4 +1,7 @@
 <?php
+
+namespace AssetKit\CompilerRunner;
+
 use AssetKit\CompilerRunner\CoffeeRunner;
 
 class CoffeeRunnerTest extends \PHPUnit\Framework\TestCase

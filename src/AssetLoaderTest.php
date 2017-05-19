@@ -1,12 +1,8 @@
 <?php
-use AssetKit\ResourceUpdater;
-use AssetKit\AssetConfig;
-use AssetKit\AssetLoader;
-use AssetKit\AssetUrlBuilder;
-use AssetKit\Asset;
-use AssetKit\Collection;
 
-class AssetLoaderTest extends AssetKit\TestCase
+namespace AssetKit;
+
+class AssetLoaderTest extends TestCase
 {
 
     public function manifestProvider() 
