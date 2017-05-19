@@ -1,6 +1,7 @@
 <?php
+
 namespace AssetKit;
-use PHPUnit\Framework\TestCase;
+
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 

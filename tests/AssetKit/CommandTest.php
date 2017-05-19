@@ -1,12 +1,13 @@
 <?php
+
 use CLIFramework\Testing\CommandTestCase;
 
 class CommandTest extends CommandTestCase
 {
 
-    public function setupApplication()
+    public static function setupApplication()
     {
-        return AssetKit\Console::getInstance();
+        return new \AssetKit\Console;
     }
 
     public function setUp() 
