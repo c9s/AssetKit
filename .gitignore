@@ -17,3 +17,4 @@ assetkit.php
 manifest.php
 tests/public
 .assetkit.php
+.asset-entries.json
