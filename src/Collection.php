@@ -250,7 +250,7 @@ class Collection
 
     public function initContentType(array & $stash) {
         // for normal static files
-        if( isset($stash['file']) ) {
+        if (isset($stash['file']) ) {
             $this->filetype = Collection::FileTypeFile;
             return 'file';
         } elseif (isset($stash['js'])) {
@@ -286,8 +286,13 @@ class Collection
             $this->isStylesheet = true;
             return 'stylesheet';
         } else {
-            var_dump( $stash );
-            throw new UnknownCollectionKeyException('Unknown collection key.', $stash);
+
+            if (empty($stash)) {
+                throw new UnknownCollectionKeyException("Unknown collection key: asset stash is empty.");
+            } else {
+                $keystr = join(', ',array_keys($stash));
+                throw new UnknownCollectionKeyException("Unknown collection key: keys are {$keystr}.");
+            }
         }
     }
 
