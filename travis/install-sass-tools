@@ -1,0 +1,3 @@
+#!/bin/bash
+gem install sass --version "=3.4.16"
+gem install compass --version "=1.0.1"

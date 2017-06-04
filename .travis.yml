@@ -6,8 +6,7 @@ php:
 install:
 - sudo apt-get -qq install coffeescript ruby-sass libyaml-dev
 - npm install -g coffee-script@1.7.1
-- gem install sass --version "=3.4.16"
-- gem install compass --version "=1.0.1"
+- bash travis/install-sass-tools
 - bash travis/install-cssmin
 - bash travis/install-apcu
 - bash travis/install-yaml
