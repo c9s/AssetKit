@@ -5,7 +5,7 @@ use CLIFramework\Testing\CommandTestCase;
 class CommandTest extends CommandTestCase
 {
 
-    public static function setupApplication()
+    public function setupApplication()
     {
         return new \AssetKit\Console;
     }
