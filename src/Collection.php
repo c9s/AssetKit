@@ -253,6 +253,9 @@ class Collection
         if (isset($stash['file']) ) {
             $this->filetype = Collection::FileTypeFile;
             return 'file';
+        } else if (isset($stash['files']) ) {
+            $this->filetype = Collection::FileTypeFile;
+            return 'files';
         } elseif (isset($stash['js'])) {
             $this->filetype     = Collection::FileTypeJs;
             $this->isScript = true;
