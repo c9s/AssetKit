@@ -53,9 +53,8 @@ class AssetRender
      */
     public function renderTarget($target)
     {
-        // get assets from the target
         $assetNames = $this->loader->getTarget($target);
-        if ( ! $assetNames ) {
+        if (! $assetNames) {
             throw new RuntimeException("Target $target not found.");
         }
         $assets = $this->loader->loadAssets($assetNames);
@@ -94,26 +93,31 @@ class AssetRender
      *
      * @param array $out
      */
-    public function renderFragment(array $out)
+    public function renderFragment(array $out, $media = null)
     {
         // check for css_url and js_url
         if ( isset($out['js_url']) ) {
             $this->renderJavascriptTag($out['js_url']);
         }
         if ( isset($out['css_url']) ) {
-            $this->renderStylesheetTag($out['css_url']);
+            $this->renderStylesheetTag($out['css_url'], ['media' => $media]);
         }
 
         if ( isset($out['type']) ) {
             if ( isset($out['url']) ) {
-                if ($out['type'] === "stylesheet") {
-                    $this->renderStylesheetTag( $out['url'] );
-                } elseif ( $out['type'] === "javascript" ) {
-                    $this->renderJavascriptTag( $out['url'] );
-                } else {
+
+                switch ($out['type']) {
+                case "stylesheet":
+                    $this->renderStylesheetTag($out['url'], ['media' => $media]);
+                    break;
+                case "javascript":
+                    $this->renderJavascriptTag($out['url']);
+                    break;
+                default:
                     throw new UnknownFragmentException("Unknown fragment type: " . $out['type'], $out);
+                    break;
                 }
-            } else if ( isset($out['content']) ) {
+            } else if (isset($out['content'])) {
                 if($out['type'] === "stylesheet") {
                     echo '<style type="text/css">',  $out['content'] , '</style>' , PHP_EOL;
                 } elseif( $out['type'] === "javascript" ) {
@@ -131,7 +135,7 @@ class AssetRender
      * @param string $url
      * @param array $attributes
      */
-    public function renderJavascriptTag($url, $innerContent = '' ,$attributes = array())
+    public function renderJavascriptTag($url, $innerContent = '', array $attributes = array())
     {
         echo '<script type="text/javascript" src="' . $url . '"';
         foreach( $attributes as $name => $value ) {
@@ -148,13 +152,15 @@ class AssetRender
      * @param string $url
      * @param array $attributes
      */
-    public function renderStylesheetTag($url,$attributes = array())
+    public function renderStylesheetTag($url, array $attributes = array())
     {
         // <link rel="stylesheet" href="http://static.ak.fbcdn.net/rsrc.php/v2/yJ/r/S-EheTP3T8X.css"/>
-        echo '<link rel="stylesheet" type="text/css"';
-        echo ' href="' . $url . '"';
+        echo "<link rel=\"stylesheet\" type=\"text/css\"";
+        echo " href=\"{$url}\"";
         foreach( $attributes as $name => $value ) {
-            echo ' ' . $name . '="' . $value . '"';
+            if ($value) {
+                echo " {$name} =\"{$value}\"";
+            }
         }
         echo '/>' , PHP_EOL;
     }

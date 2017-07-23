@@ -20,15 +20,16 @@ class TargetCommand extends BaseCommand
         $opts->add('add:', 'add target');
     }
 
-    public function init() {
-        $this->command('list', 'AssetKit\Command\ListTargetCommand');
-        $this->command('add', 'AssetKit\Command\AddTargetCommand');
-        $this->command('remove', 'AssetKit\Command\RemoveTargetCommand');
+    public function init()
+    {
+        $this->command('list', ListTargetCommand::class);
+        $this->command('add', AddTargetCommand::class);
+        $this->command('remove', RemoveTargetCommand::class);
     }
 
     public function execute()
     {
-        $list = $this->createCommand('AssetKit\Command\ListTargetCommand');
+        $list = $this->createCommand(ListTargetCommand::class);
         $list->execute();
     }
 }

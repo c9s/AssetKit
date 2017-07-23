@@ -229,6 +229,11 @@ class AssetConfig implements ArrayAccess
         return isset($this->stash['Targets'][ $targetId ]);
     }
 
+    public function addTarget($targetId, array $assetNames)
+    {
+        return $this->stash['Targets'][ $targetId ] = $assetNames;
+    }
+
     public function getTarget($targetId)
     {
         if ( isset($this->stash['Targets'][ $targetId ]) ) {

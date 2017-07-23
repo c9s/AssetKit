@@ -11,8 +11,9 @@ use Exception;
 
 class AddTargetCommand extends BaseCommand {
 
-    public function brief() {
-        return 'Add asset target'; 
+    public function brief()
+    {
+        return 'Add asset target';
     }
 
     /*
