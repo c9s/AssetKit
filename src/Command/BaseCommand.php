@@ -19,7 +19,7 @@ abstract class BaseCommand extends Command
 
     public function options($opts)
     {
-        $opts->add('config?','the asset config file, defualt to assetkit.yml');
+        $opts->add('c|config?', 'the asset config file, default to assetkit.yml');
     }
 
     public function getAssetConfigLink() {
