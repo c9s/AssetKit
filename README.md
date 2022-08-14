@@ -639,7 +639,7 @@ $ ./assetkit
 
 ### Setup XHProf
 
-You should install the xhprof extension from http://github.com/facebook/xhprof
+You should install the xhprof extension from https://github.com/facebook/xhprof
 
 Then setup hostname xhprof.dev to your xhprof_html directory.
 
