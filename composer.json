@@ -18,7 +18,7 @@
         "twig/twig": "~1.32.0|~2.3.2",
         "corneltek/universal-cache": "^3.0",
         "corneltek/fileutil": "^1.7",
-        "corneltek/cliframework": "4.0.x-dev",
+        "corneltek/cliframework": "4.1.x-dev",
         "corneltek/codegen": "@dev",
         "corneltek/configkit": "^1.6",
         "natxet/cssmin": "*",
